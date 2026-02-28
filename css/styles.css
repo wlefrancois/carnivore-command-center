@@ -455,3 +455,39 @@ a:hover{opacity:.92}
   .brand__logo{ width:48px; height:48px; }
   .cta__inner{ flex-direction: column; align-items: flex-start; }
 }
+/* Contain Kit form so it doesn't overpower site styling */
+.kit-wrap{
+  padding: 14px 18px 18px;
+}
+
+.kit-wrap .formkit-container{
+  max-width: 100% !important;
+  background: rgba(255,255,255,.06) !important;
+  border: 1px solid rgba(255,255,255,.14) !important;
+  border-radius: 18px !important;
+  box-shadow: none !important;
+}
+
+/* Make Kit text readable on dark site */
+.kit-wrap .formkit-header,
+.kit-wrap .formkit-content{
+  color: rgba(244,247,255,.92) !important;
+}
+
+/* Make input/button match your theme better */
+.kit-wrap input.formkit-input{
+  border-radius: 14px !important;
+  border: 1px solid rgba(255,255,255,.18) !important;
+  background: rgba(0,0,0,.28) !important;
+  color: rgba(244,247,255,.92) !important;
+}
+
+.kit-wrap input.formkit-input::placeholder{
+  color: rgba(225,236,255,.55) !important;
+}
+
+.kit-wrap button.formkit-submit{
+  border-radius: 14px !important;
+  border: 1px solid rgba(255,255,255,.14) !important;
+  background: linear-gradient(180deg, rgba(42,169,255,.95), rgba(42,169,255,.78)) !important;
+}
