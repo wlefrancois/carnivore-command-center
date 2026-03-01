@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>{{TITLE}}</title>
+
+  <meta name="description" content="{{DESCRIPTION}}" />
+  <meta name="theme-color" content="#0b1020" />
+
+  <meta property="og:title" content="{{TITLE}}" />
+  <meta property="og:description" content="{{DESCRIPTION}}" />
+  <meta property="og:type" content="website" />
+
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+
+<body data-page="{{PAGE}}">
+  <!--#include file="/partials/header.html" -->
+
+  <main>
+    {{CONTENT}}
+  </main>
+
+  <!--#include file="/partials/footer.html" -->
+
+  <script>
+    const y = document.getElementById("year");
+    if (y) y.textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
