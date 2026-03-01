@@ -3,42 +3,102 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Beta — Carnivore Command Center</title>
-  <meta name="description" content="Beta portal placeholder for Carnivore Command Center." />
-  <meta name="theme-color" content="#070b14" />
-  <meta property="og:title" content="Beta — Carnivore Command Center" />
-  <meta property="og:description" content="Beta portal placeholder for Carnivore Command Center." />
-  <meta property="og:type" content="website" />
-
-  <link rel="stylesheet" href="/assets/css/site.css" />
+  <title>Beta Program • Carnivore Command Center</title>
+  <meta name="description" content="Limited beta seats for early access members. Get access, provide feedback, shape the platform." />
+  <meta name="theme-color" content="#0b1020" />
+  <link rel="stylesheet" href="/css/styles.css" />
 </head>
 
 <body>
-  <div class="container">
-    <div id="site-header"></div>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="/">
+        <img src="/assets/img/ccc_logo_primary_transparent.png" alt="Carnivore Command Center logo" class="brand-logo" />
+        <div class="brand-text">
+          <div class="brand-title">Carnivore Command Center</div>
+          <div class="brand-subtitle">Elite performance + metabolic intelligence</div>
+        </div>
+      </a>
 
-    <main class="page">
-      <h1>Beta Portal</h1>
-      <p>
-        This is a placeholder page for beta users. When beta is live, this route can
-        become your onboarding + dashboard entrypoint.
-      </p>
+      <nav class="nav">
+        <a href="/product/">Product</a>
+        <a href="/beta/" aria-current="page">Beta</a>
+        <a href="/investor/">Investor</a>
+        <a href="/about/">About</a>
+      </nav>
 
-      <h2>Beta steps</h2>
-      <ul>
-        <li>Activate your invite</li>
-        <li>Create your profile</li>
-        <li>Start tracking daily inputs</li>
-        <li>Review weekly trends</li>
-        <li>Submit feedback</li>
-      </ul>
+      <div class="header-cta">
+        <a class="btn btn-ghost" href="/#beta">Join</a>
+      </div>
+    </div>
+  </header>
 
-      <p><a href="/auth/login/">Login →</a> &nbsp; | &nbsp; <a href="/auth/signup/">Create account →</a></p>
-    </main>
+  <main>
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <h1 style="margin:0 0 10px;">Beta Program</h1>
+          <p class="lead" style="margin:0;">
+            Limited seats. High signal feedback. This is the phase where users shape system architecture.
+          </p>
+        </div>
 
-    <div id="site-footer"></div>
-  </div>
+        <div class="grid-2">
+          <div class="panel">
+            <div class="panel-title">What you get</div>
+            <ul class="bullets">
+              <li>Early access in invite waves</li>
+              <li>Direct influence on tracking + insights</li>
+              <li>Founder updates + roadmap visibility</li>
+              <li>Early adopter pricing advantages</li>
+            </ul>
+          </div>
 
-  <script src="/assets/js/site.js"></script>
+          <div class="panel">
+            <div class="panel-title">What we need from you</div>
+            <ul class="bullets">
+              <li>Use it consistently for 2–4 weeks</li>
+              <li>Tell us what’s confusing</li>
+              <li>Tell us which signals matter</li>
+              <li>Help refine workflows</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="center-cta" style="margin-top:18px;">
+          <a class="btn" href="/beta/activate/">Activate Beta Access</a>
+          <a class="btn btn-ghost" href="/#beta">Join Waitlist</a>
+        </div>
+
+        <div class="callout" style="margin-top:18px;">
+          <div class="callout-title">Already invited?</div>
+          <p>If you received an invite email, use the activation page to continue.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-left">
+        <div class="footer-brand">Carnivore Command Center</div>
+        <div class="footer-sub">Elite performance + metabolic intelligence</div>
+      </div>
+
+      <div class="footer-links">
+        <a href="/product/">Product</a>
+        <a href="/privacy/">Privacy</a>
+        <a href="/terms/">Terms</a>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <div>© <span id="year"></span> Carnivore Command Center. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
