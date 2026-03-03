@@ -567,3 +567,14 @@ a:hover{opacity:.92}
 
   .nav__join { display: inline-flex; width: fit-content; }
 }
+.page-hero {
+  padding: 72px 0 28px;
+}
+
+.page-hero h1 {
+  margin: 0 0 10px;
+}
+
+.page-hero .lead {
+  max-width: 70ch;
+}
