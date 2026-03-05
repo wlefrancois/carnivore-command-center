@@ -1,0 +1,76 @@
+<section class="page-hero">
+  <div class="container">
+    <h1>Dashboard</h1>
+    <p class="lead">Last 7 logs + quick status.</p>
+
+    <div class="hero__cta">
+      <a class="btn btn--primary" href="/app/log/">Log Today</a>
+      <button class="btn btn--ghost" id="logoutBtn" type="button">Logout</button>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div id="status" class="micro muted" style="margin-bottom:12px;"></div>
+    <div id="logs"></div>
+  </div>
+</section>
+
+<script type="module">
+  import { supabase, getUser, signOut } from "/js/app.js";
+
+  const statusEl = document.getElementById("status");
+  const logsEl = document.getElementById("logs");
+
+  document.getElementById("logoutBtn").addEventListener("click", async () => {
+    await signOut();
+    window.location.href = "/app/";
+  });
+
+  function todayISODate() {
+    const d = new Date();
+    const yyyy = d.getFullYear();
+    const mm = String(d.getMonth() + 1).padStart(2, "0");
+    const dd = String(d.getDate()).padStart(2, "0");
+    return `${yyyy}-${mm}-${dd}`;
+  }
+
+  async function load() {
+    const user = await getUser();
+    if (!user) {
+      window.location.href = "/app/";
+      return;
+    }
+
+    statusEl.textContent = `Logged in as ${user.email}`;
+
+    const { data, error } = await supabase
+      .from("daily_logs")
+      .select("log_date, energy, sleep_hours, water_oz, digestion, inflammation, mood")
+      .order("log_date", { ascending: false })
+      .limit(7);
+
+    if (error) {
+      logsEl.innerHTML = `<div class="card">Error: ${error.message}</div>`;
+      return;
+    }
+
+    const today = todayISODate();
+    const hasToday = (data || []).some(r => r.log_date === today);
+    statusEl.textContent += hasToday ? " • Today logged ✅" : " • Today not logged yet";
+
+    logsEl.innerHTML = (data || []).map(r => `
+      <div class="card" style="margin-bottom:10px;">
+        <div style="display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;">
+          <strong>${r.log_date}</strong>
+          <span class="micro muted">
+            Energy: ${r.energy ?? "-"} • Sleep: ${r.sleep_hours ?? "-"} • Water: ${r.water_oz ?? "-"}
+          </span>
+        </div>
+      </div>
+    `).join("") || `<div class="card">No logs yet. Click “Log Today”.</div>`;
+  }
+
+  load();
+</script>
