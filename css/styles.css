@@ -637,3 +637,11 @@ a:hover{opacity:.92}
 .page-hero .lead {
   max-width: 70ch;
 }
+/* Prevent footer from crowding/overlapping content on short pages */
+main {
+  padding-bottom: 96px;
+}
+
+.footer {
+  margin-top: 72px;
+}
