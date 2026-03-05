@@ -1,18 +1,20 @@
 <section class="page-hero">
   <div class="container">
     <h1>Dashboard</h1>
-    <p class="lead">Last 7 logs + quick status.</p>
+    <p class="lead">Your last 7 logs + today’s status.</p>
 
     <div class="hero__cta">
       <a class="btn btn--primary" href="/app/log/">Log Today</a>
       <button class="btn btn--ghost" id="logoutBtn" type="button">Logout</button>
     </div>
+
+    <p id="userLine" class="micro muted" style="margin-top:10px;"></p>
   </div>
 </section>
 
 <section class="section">
   <div class="container">
-    <div id="status" class="micro muted" style="margin-bottom:12px;"></div>
+    <div id="todayCard" class="card" style="margin-bottom:14px;"></div>
     <div id="logs"></div>
   </div>
 </section>
@@ -20,7 +22,8 @@
 <script type="module">
   import { supabase, getUser, signOut } from "/js/app.js";
 
-  const statusEl = document.getElementById("status");
+  const userLine = document.getElementById("userLine");
+  const todayCard = document.getElementById("todayCard");
   const logsEl = document.getElementById("logs");
 
   document.getElementById("logoutBtn").addEventListener("click", async () => {
@@ -43,22 +46,29 @@
       return;
     }
 
-    statusEl.textContent = `Logged in as ${user.email}`;
+    userLine.textContent = `Logged in as ${user.email}`;
 
     const { data, error } = await supabase
       .from("daily_logs")
-      .select("log_date, energy, sleep_hours, water_oz, digestion, inflammation, mood")
+      .select("log_date, energy, sleep_hours, water_oz, mood, digestion, inflammation, notes")
       .order("log_date", { ascending: false })
       .limit(7);
 
     if (error) {
-      logsEl.innerHTML = `<div class="card">Error: ${error.message}</div>`;
+      todayCard.textContent = `Error loading logs: ${error.message}`;
       return;
     }
 
     const today = todayISODate();
-    const hasToday = (data || []).some(r => r.log_date === today);
-    statusEl.textContent += hasToday ? " • Today logged ✅" : " • Today not logged yet";
+    const todayLog = (data || []).find(r => r.log_date === today);
+
+    todayCard.innerHTML = todayLog
+      ? `<strong>Today logged ✅</strong><div class="micro muted" style="margin-top:6px;">
+          Energy: ${todayLog.energy ?? "-"} • Mood: ${todayLog.mood ?? "-"} • Sleep: ${todayLog.sleep_hours ?? "-"} • Water: ${todayLog.water_oz ?? "-"}
+        </div>`
+      : `<strong>Today not logged yet</strong><div class="micro muted" style="margin-top:6px;">
+          Click “Log Today” to add your entry.
+        </div>`;
 
     logsEl.innerHTML = (data || []).map(r => `
       <div class="card" style="margin-bottom:10px;">
@@ -68,8 +78,18 @@
             Energy: ${r.energy ?? "-"} • Sleep: ${r.sleep_hours ?? "-"} • Water: ${r.water_oz ?? "-"}
           </span>
         </div>
+        ${r.notes ? `<div class="micro muted" style="margin-top:6px;">${escapeHtml(r.notes).slice(0,180)}</div>` : ""}
       </div>
     `).join("") || `<div class="card">No logs yet. Click “Log Today”.</div>`;
+  }
+
+  function escapeHtml(s) {
+    return String(s)
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;")
+      .replaceAll("'","&#039;");
   }
 
   load();
