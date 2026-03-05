@@ -1,0 +1,107 @@
+<section class="page-hero">
+  <div class="container">
+    <h1>Daily Log</h1>
+    <p class="lead">Save one log per day. You can edit it later by saving again.</p>
+
+    <div class="hero__cta">
+      <a class="btn btn--ghost" href="/app/dashboard/">Back to Dashboard</a>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="card" style="max-width:640px;">
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+        <div>
+          <label class="micro muted">Energy (1–10)</label>
+          <input id="energy" type="number" min="1" max="10" style="width:100%; padding:12px; margin-top:6px;">
+        </div>
+
+        <div>
+          <label class="micro muted">Mood (1–10)</label>
+          <input id="mood" type="number" min="1" max="10" style="width:100%; padding:12px; margin-top:6px;">
+        </div>
+
+        <div>
+          <label class="micro muted">Sleep Hours</label>
+          <input id="sleep_hours" type="number" step="0.5" style="width:100%; padding:12px; margin-top:6px;">
+        </div>
+
+        <div>
+          <label class="micro muted">Water (oz)</label>
+          <input id="water_oz" type="number" style="width:100%; padding:12px; margin-top:6px;">
+        </div>
+
+        <div>
+          <label class="micro muted">Digestion (1–10)</label>
+          <input id="digestion" type="number" min="1" max="10" style="width:100%; padding:12px; margin-top:6px;">
+        </div>
+
+        <div>
+          <label class="micro muted">Inflammation (1–10)</label>
+          <input id="inflammation" type="number" min="1" max="10" style="width:100%; padding:12px; margin-top:6px;">
+        </div>
+      </div>
+
+      <div style="margin-top:12px;">
+        <label class="micro muted">Notes</label>
+        <textarea id="notes" style="width:100%; padding:12px; margin-top:6px; min-height:110px;"></textarea>
+      </div>
+
+      <div style="display:flex; gap:10px; margin-top:12px; flex-wrap:wrap;">
+        <button class="btn btn--primary" id="saveBtn" type="button">Save</button>
+        <a class="btn btn--ghost" href="/app/dashboard/">Dashboard</a>
+      </div>
+
+      <p id="msg" class="micro muted" style="margin-top:12px;"></p>
+    </div>
+  </div>
+</section>
+
+<script type="module">
+  import { supabase, getUser } from "/js/app.js";
+
+  const msg = document.getElementById("msg");
+
+  function todayISODate() {
+    const d = new Date();
+    const yyyy = d.getFullYear();
+    const mm = String(d.getMonth() + 1).padStart(2, "0");
+    const dd = String(d.getDate()).padStart(2, "0");
+    return `${yyyy}-${mm}-${dd}`;
+  }
+
+  function num(id) {
+    const v = document.getElementById(id).value;
+    if (v === "" || v == null) return null;
+    return Number(v);
+  }
+
+  document.getElementById("saveBtn").addEventListener("click", async () => {
+    msg.textContent = "Saving...";
+
+    const user = await getUser();
+    if (!user) {
+      window.location.href = "/app/";
+      return;
+    }
+
+    const payload = {
+      user_id: user.id,
+      log_date: todayISODate(),
+      energy: num("energy"),
+      mood: num("mood"),
+      sleep_hours: num("sleep_hours"),
+      water_oz: num("water_oz"),
+      digestion: num("digestion"),
+      inflammation: num("inflammation"),
+      notes: document.getElementById("notes").value || null
+    };
+
+    const { error } = await supabase.from("daily_logs").upsert(payload);
+
+    if (error) msg.textContent = `Error: ${error.message}`;
+    else msg.textContent = "Saved ✅";
+  });
+</script>
