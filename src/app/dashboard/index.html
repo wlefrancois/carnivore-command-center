@@ -1,7 +1,7 @@
 <section class="page-hero">
   <div class="container">
     <h1>Dashboard</h1>
-    <p class="lead">Your metabolic signals over the last 7 days.</p>
+    <p class="lead">Signals and trends from the last 7 days.</p>
 
     <div class="hero__cta">
       <a class="btn btn--primary" href="/app/log/">Log Today</a>
@@ -21,14 +21,41 @@
 
     <div id="insights" class="card" style="margin-bottom:18px;"></div>
 
+    <!-- CHARTS -->
+    <div class="cards cards--3" style="margin-bottom:18px;">
+      <div class="card">
+        <strong>Energy</strong>
+        <div class="micro muted" style="margin-top:6px;">Last 7 days</div>
+        <div style="margin-top:10px;">
+          <canvas id="chartEnergy" height="140"></canvas>
+        </div>
+      </div>
+
+      <div class="card">
+        <strong>Sleep</strong>
+        <div class="micro muted" style="margin-top:6px;">Hours (last 7 days)</div>
+        <div style="margin-top:10px;">
+          <canvas id="chartSleep" height="140"></canvas>
+        </div>
+      </div>
+
+      <div class="card">
+        <strong>Inflammation</strong>
+        <div class="micro muted" style="margin-top:6px;">Last 7 days</div>
+        <div style="margin-top:10px;">
+          <canvas id="chartInflam" height="140"></canvas>
+        </div>
+      </div>
+    </div>
+
     <div id="logs"></div>
 
   </div>
 </section>
 
 <script type="module">
-
 import { supabase, getUser, signOut } from "/js/app.js";
+import { Chart } from "/js/vendor/chart.js";
 
 const userLine = document.getElementById("userLine");
 const todayCard = document.getElementById("todayCard");
@@ -42,65 +69,103 @@ document.getElementById("logoutBtn").addEventListener("click", async () => {
 });
 
 function todayISODate() {
-  const d = new Date();
-  return d.toISOString().slice(0,10);
+  return new Date().toISOString().slice(0, 10);
 }
 
-function avg(arr){
-  const v = arr.filter(x=>x!=null);
-  if(!v.length) return null;
-  return (v.reduce((a,b)=>a+b,0)/v.length).toFixed(1);
+function avg(arr) {
+  const v = arr.filter((x) => x != null && !Number.isNaN(x));
+  if (!v.length) return null;
+  return (v.reduce((a, b) => a + b, 0) / v.length).toFixed(1);
 }
 
-function trend(arr){
-  if(arr.length < 2) return "";
-  const first = arr[arr.length-1];
-  const last = arr[0];
-
-  if(last > first) return "▲ improving";
-  if(last < first) return "▼ declining";
+function trend(arr) {
+  const v = arr.filter((x) => x != null && !Number.isNaN(x));
+  if (v.length < 2) return "";
+  const first = v[v.length - 1];
+  const last = v[0];
+  if (last > first) return "▲ improving";
+  if (last < first) return "▼ declining";
   return "→ steady";
 }
 
-function corrSleepEnergy(rows){
-
+function corrSleepEnergy(rows) {
   const pairs = rows
-    .filter(r=>r.sleep_hours && r.energy)
-    .map(r=>[r.sleep_hours, r.energy]);
+    .filter((r) => r.sleep_hours != null && r.energy != null)
+    .map((r) => [Number(r.sleep_hours), Number(r.energy)])
+    .filter(([a, b]) => !Number.isNaN(a) && !Number.isNaN(b));
 
-  if(pairs.length < 3) return null;
+  if (pairs.length < 3) return null;
 
-  const sleep = pairs.map(p=>p[0]);
-  const energy = pairs.map(p=>p[1]);
+  const xs = pairs.map((p) => p[0]);
+  const ys = pairs.map((p) => p[1]);
 
-  const sleepAvg = avg(sleep);
-  const energyAvg = avg(energy);
+  const xAvg = Number(avg(xs));
+  const yAvg = Number(avg(ys));
 
-  let num = 0;
-  let denA = 0;
-  let denB = 0;
-
-  for(let i=0;i<pairs.length;i++){
-    const a = sleep[i]-sleepAvg;
-    const b = energy[i]-energyAvg;
-    num += a*b;
-    denA += a*a;
-    denB += b*b;
+  let num = 0, denX = 0, denY = 0;
+  for (let i = 0; i < pairs.length; i++) {
+    const dx = xs[i] - xAvg;
+    const dy = ys[i] - yAvg;
+    num += dx * dy;
+    denX += dx * dx;
+    denY += dy * dy;
   }
 
-  const corr = num/Math.sqrt(denA*denB);
+  const corr = num / Math.sqrt(denX * denY);
+  if (!Number.isFinite(corr)) return null;
 
-  if(corr > 0.4) return "More sleep tends to increase your energy.";
-  if(corr < -0.4) return "More sleep may correlate with lower energy (check sleep quality).";
+  if (corr > 0.4) return "Sleep tends to correlate with higher energy for you.";
+  if (corr < -0.4) return "More sleep correlates with lower energy (check sleep quality/stress).";
   return null;
 }
 
-async function load(){
+function escapeHtml(s) {
+  return String(s)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
 
+function buildLineChart(canvasId, label, labels, values) {
+  const el = document.getElementById(canvasId);
+  if (!el) return;
+
+  // Destroy existing chart if hot reload / back button
+  if (el._chart) el._chart.destroy();
+
+  el._chart = new Chart(el, {
+    type: "line",
+    data: {
+      labels,
+      datasets: [
+        {
+          label,
+          data: values,
+          tension: 0.3,
+          spanGaps: true
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { display: false }
+      },
+      scales: {
+        x: {
+          ticks: { maxRotation: 0 }
+        }
+      }
+    }
+  });
+}
+
+async function load() {
   const user = await getUser();
-
-  if(!user){
-    window.location.href="/app/";
+  if (!user) {
+    window.location.href = "/app/";
     return;
   }
 
@@ -109,90 +174,120 @@ async function load(){
   const { data, error } = await supabase
     .from("daily_logs")
     .select("*")
-    .order("log_date",{ascending:false})
+    .order("log_date", { ascending: false })
     .limit(7);
 
-  if(error){
-    todayCard.textContent = error.message;
+  if (error) {
+    todayCard.textContent = `Error loading logs: ${error.message}`;
     return;
   }
 
+  const rows = data || [];
+
+  // Today status
   const today = todayISODate();
-  const todayLog = data.find(r=>r.log_date===today);
+  const todayLog = rows.find((r) => r.log_date === today);
 
   todayCard.innerHTML = todayLog
-  ? `<strong>Today logged ✅</strong>
-     <div class="micro muted" style="margin-top:6px;">
-     Energy ${todayLog.energy ?? "-"} • Sleep ${todayLog.sleep_hours ?? "-"} • Water ${todayLog.water_oz ?? "-"}
-     </div>`
-  : `<strong>Today not logged yet</strong>
-     <div class="micro muted" style="margin-top:6px;">
-     Click “Log Today” to record your day.
-     </div>`;
+    ? `<strong>Today logged ✅</strong>
+       <div class="micro muted" style="margin-top:6px;">
+         Energy ${todayLog.energy ?? "-"} • Sleep ${todayLog.sleep_hours ?? "-"} • Water ${todayLog.water_oz ?? "-"}
+       </div>`
+    : `<strong>Today not logged yet</strong>
+       <div class="micro muted" style="margin-top:6px;">Click “Log Today” to record your day.</div>`;
 
-  const energy = data.map(r=>r.energy);
-  const sleep = data.map(r=>r.sleep_hours);
-  const digestion = data.map(r=>r.digestion);
-  const inflammation = data.map(r=>r.inflammation);
+  // Stats + trends (based on newest->oldest order in rows)
+  const energy = rows.map((r) => r.energy == null ? null : Number(r.energy));
+  const sleep = rows.map((r) => r.sleep_hours == null ? null : Number(r.sleep_hours));
+  const inflam = rows.map((r) => r.inflammation == null ? null : Number(r.inflammation));
 
   stats.innerHTML = `
+    <div class="card">
+      <strong>Energy (avg)</strong>
+      <div class="lead">${avg(energy) ?? "-"}</div>
+      <div class="micro muted">${trend(energy)}</div>
+    </div>
 
-  <div class="card">
-    <strong>Energy</strong>
-    <div class="lead">${avg(energy) ?? "-"}</div>
-    <div class="micro muted">${trend(energy)}</div>
-  </div>
+    <div class="card">
+      <strong>Sleep (avg hrs)</strong>
+      <div class="lead">${avg(sleep) ?? "-"}</div>
+      <div class="micro muted">${trend(sleep)}</div>
+    </div>
 
-  <div class="card">
-    <strong>Sleep</strong>
-    <div class="lead">${avg(sleep) ?? "-"}</div>
-    <div class="micro muted">${trend(sleep)}</div>
-  </div>
-
-  <div class="card">
-    <strong>Inflammation</strong>
-    <div class="lead">${avg(inflammation) ?? "-"}</div>
-    <div class="micro muted">${trend(inflammation)}</div>
-  </div>
+    <div class="card">
+      <strong>Inflammation (avg)</strong>
+      <div class="lead">${avg(inflam) ?? "-"}</div>
+      <div class="micro muted">${trend(inflam)}</div>
+    </div>
   `;
 
+  // Insights
   let bestEnergy = null;
-  let worstInflam = null;
+  let lowestInflam = null;
 
-  data.forEach(r=>{
-    if(r.energy && (!bestEnergy || r.energy>bestEnergy.energy))
-      bestEnergy=r;
-
-    if(r.inflammation && (!worstInflam || r.inflammation<worstInflam.inflammation))
-      worstInflam=r;
+  rows.forEach((r) => {
+    if (r.energy != null) {
+      const val = Number(r.energy);
+      if (!Number.isNaN(val) && (!bestEnergy || val > Number(bestEnergy.energy))) bestEnergy = r;
+    }
+    if (r.inflammation != null) {
+      const val = Number(r.inflammation);
+      if (!Number.isNaN(val) && (!lowestInflam || val < Number(lowestInflam.inflammation))) lowestInflam = r;
+    }
   });
 
-  let insightHTML = `<strong>Insights</strong><div class="micro muted" style="margin-top:6px;">`;
+  let insightHTML = `<strong>Insights</strong><div class="micro muted" style="margin-top:6px; line-height:1.5;">`;
+  if (bestEnergy) insightHTML += `Best energy day: ${bestEnergy.log_date} (${bestEnergy.energy})<br>`;
+  if (lowestInflam) insightHTML += `Lowest inflammation day: ${lowestInflam.log_date} (${lowestInflam.inflammation})<br>`;
 
-  if(bestEnergy)
-    insightHTML += `Best energy day: ${bestEnergy.log_date} (${bestEnergy.energy})<br>`;
+  const sleepInsight = corrSleepEnergy(rows);
+  if (sleepInsight) insightHTML += `${sleepInsight}<br>`;
 
-  if(worstInflam)
-    insightHTML += `Lowest inflammation day: ${worstInflam.log_date} (${worstInflam.inflammation})<br>`;
-
-  const sleepInsight = corrSleepEnergy(data);
-
-  if(sleepInsight)
-    insightHTML += `${sleepInsight}<br>`;
-
-  insightHTML += "</div>";
-
+  insightHTML += `</div>`;
   insights.innerHTML = insightHTML;
 
-  logsEl.innerHTML = data.map(r=>`
-    <div class="card" style="margin-bottom:10px;">
-      <strong>${r.log_date}</strong><br>
-      Energy ${r.energy ?? "-"} • Sleep ${r.sleep_hours ?? "-"} • Water ${r.water_oz ?? "-"}
-    </div>
-  `).join("");
+  // Charts need oldest->newest
+  const asc = [...rows].sort((a, b) => (a.log_date > b.log_date ? 1 : -1));
+  const labels = asc.map((r) => r.log_date.slice(5)); // MM-DD
 
+  buildLineChart(
+    "chartEnergy",
+    "Energy",
+    labels,
+    asc.map((r) => (r.energy == null ? null : Number(r.energy)))
+  );
+
+  buildLineChart(
+    "chartSleep",
+    "Sleep Hours",
+    labels,
+    asc.map((r) => (r.sleep_hours == null ? null : Number(r.sleep_hours)))
+  );
+
+  buildLineChart(
+    "chartInflam",
+    "Inflammation",
+    labels,
+    asc.map((r) => (r.inflammation == null ? null : Number(r.inflammation)))
+  );
+
+  // Log list
+  logsEl.innerHTML = rows
+    .map(
+      (r) => `
+      <div class="card" style="margin-bottom:10px;">
+        <div style="display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;">
+          <strong>${r.log_date}</strong>
+          <span class="micro muted">
+            Energy: ${r.energy ?? "-"} • Sleep: ${r.sleep_hours ?? "-"} • Water: ${r.water_oz ?? "-"}
+          </span>
+        </div>
+        ${r.notes ? `<div class="micro muted" style="margin-top:6px;">${escapeHtml(r.notes).slice(0,180)}</div>` : ""}
+      </div>
+    `
+    )
+    .join("") || `<div class="card">No logs yet. Click “Log Today”.</div>`;
 }
 
 load();
-
 </script>
