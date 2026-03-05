@@ -1,17 +1,26 @@
 <section class="page-hero">
   <div class="container">
     <h1>Daily Log</h1>
-    <p class="lead">Save one log per day. You can edit it later by saving again.</p>
+    <p class="lead">Save one log per day. Saving again updates today’s entry.</p>
 
     <div class="hero__cta">
       <a class="btn btn--ghost" href="/app/dashboard/">Back to Dashboard</a>
+      <button class="btn btn--ghost" id="logoutBtn" type="button">Logout</button>
     </div>
+
+    <p id="userLine" class="micro muted" style="margin-top:10px;"></p>
   </div>
 </section>
 
 <section class="section">
   <div class="container">
-    <div class="card" style="max-width:640px;">
+
+    <div class="card" style="max-width:720px;">
+      <div class="section__head">
+        <h2 style="margin:0;">Today</h2>
+        <p class="micro muted" id="dateLine" style="margin-top:6px;"></p>
+      </div>
+
       <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
         <div>
           <label class="micro muted">Energy (1–10)</label>
@@ -56,13 +65,21 @@
 
       <p id="msg" class="micro muted" style="margin-top:12px;"></p>
     </div>
+
   </div>
 </section>
 
 <script type="module">
-  import { supabase, getUser } from "/js/app.js";
+  import { supabase, getUser, signOut } from "/js/app.js";
 
   const msg = document.getElementById("msg");
+  const userLine = document.getElementById("userLine");
+  const dateLine = document.getElementById("dateLine");
+
+  document.getElementById("logoutBtn").addEventListener("click", async () => {
+    await signOut();
+    window.location.href = "/app/";
+  });
 
   function todayISODate() {
     const d = new Date();
@@ -76,6 +93,39 @@
     const v = document.getElementById(id).value;
     if (v === "" || v == null) return null;
     return Number(v);
+  }
+
+  async function prefillToday(userId) {
+    const today = todayISODate();
+    dateLine.textContent = `Log date: ${today}`;
+
+    const { data } = await supabase
+      .from("daily_logs")
+      .select("*")
+      .eq("user_id", userId)
+      .eq("log_date", today)
+      .maybeSingle();
+
+    if (!data) return;
+
+    // Fill existing values
+    document.getElementById("energy").value = data.energy ?? "";
+    document.getElementById("mood").value = data.mood ?? "";
+    document.getElementById("sleep_hours").value = data.sleep_hours ?? "";
+    document.getElementById("water_oz").value = data.water_oz ?? "";
+    document.getElementById("digestion").value = data.digestion ?? "";
+    document.getElementById("inflammation").value = data.inflammation ?? "";
+    document.getElementById("notes").value = data.notes ?? "";
+  }
+
+  async function boot() {
+    const user = await getUser();
+    if (!user) {
+      window.location.href = "/app/";
+      return;
+    }
+    userLine.textContent = `Logged in as ${user.email}`;
+    await prefillToday(user.id);
   }
 
   document.getElementById("saveBtn").addEventListener("click", async () => {
@@ -104,4 +154,6 @@
     if (error) msg.textContent = `Error: ${error.message}`;
     else msg.textContent = "Saved ✅";
   });
+
+  boot();
 </script>
