@@ -15,47 +15,117 @@
 <section class="section">
   <div class="container">
 
-    <div class="card" style="max-width:720px;">
+    <div class="card" style="max-width:760px;">
       <div class="section__head">
         <h2 style="margin:0;">Today</h2>
         <p class="micro muted" id="dateLine" style="margin-top:6px;"></p>
       </div>
 
+      <!-- QUICK GUIDANCE -->
+      <details class="card" style="margin:12px 0;">
+        <summary><strong>How to rate your scores (quick guide)</strong></summary>
+        <div class="micro muted" style="margin-top:10px; line-height:1.5;">
+          <p><strong>Rule of thumb:</strong> rate based on how your body actually performed today, not how you “wish” it felt.</p>
+          <p><strong>Use anchors:</strong> pick the closest description (2 / 5 / 8) and adjust slightly.</p>
+          <p><strong>Consistency beats precision:</strong> if you rate the same way each day, CCC can find patterns even if you’re imperfect.</p>
+        </div>
+      </details>
+
       <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+
+        <!-- ENERGY -->
         <div>
           <label class="micro muted">Energy (1–10)</label>
           <input id="energy" type="number" min="1" max="10" style="width:100%; padding:12px; margin-top:6px;">
+          <details class="micro muted" style="margin-top:8px;">
+            <summary>Examples</summary>
+            <div style="margin-top:6px; line-height:1.5;">
+              <div><strong>2:</strong> dragging, hard to focus, basic tasks feel heavy</div>
+              <div><strong>5:</strong> functional, can do normal day but not sharp</div>
+              <div><strong>8:</strong> strong drive, clear focus, easy to initiate tasks</div>
+              <div style="margin-top:6px;"><strong>Tip:</strong> if you needed caffeine just to feel normal, you’re probably ≤5.</div>
+            </div>
+          </details>
         </div>
 
+        <!-- MOOD -->
         <div>
           <label class="micro muted">Mood (1–10)</label>
           <input id="mood" type="number" min="1" max="10" style="width:100%; padding:12px; margin-top:6px;">
+          <details class="micro muted" style="margin-top:8px;">
+            <summary>Examples</summary>
+            <div style="margin-top:6px; line-height:1.5;">
+              <div><strong>2:</strong> irritable/low, short fuse, overwhelmed</div>
+              <div><strong>5:</strong> neutral, steady, not great not bad</div>
+              <div><strong>8:</strong> upbeat, resilient, calm under stress</div>
+              <div style="margin-top:6px;"><strong>Tip:</strong> rate “emotional stability,” not “how exciting the day was.”</div>
+            </div>
+          </details>
         </div>
 
+        <!-- SLEEP HOURS -->
         <div>
           <label class="micro muted">Sleep Hours</label>
           <input id="sleep_hours" type="number" step="0.5" style="width:100%; padding:12px; margin-top:6px;">
+          <details class="micro muted" style="margin-top:8px;">
+            <summary>How to estimate</summary>
+            <div style="margin-top:6px; line-height:1.5;">
+              <div>Use “time asleep,” not time in bed.</div>
+              <div>If unsure: (time in bed) minus ~30–60 minutes.</div>
+              <div><strong>Example:</strong> 10:30pm–6:30am = 8 hrs in bed → estimate 7–7.5 hrs.</div>
+            </div>
+          </details>
         </div>
 
+        <!-- WATER -->
         <div>
           <label class="micro muted">Water (oz)</label>
           <input id="water_oz" type="number" style="width:100%; padding:12px; margin-top:6px;">
+          <details class="micro muted" style="margin-top:8px;">
+            <summary>Examples</summary>
+            <div style="margin-top:6px; line-height:1.5;">
+              <div>Typical bottle sizes:</div>
+              <div><strong>16.9 oz</strong> (standard bottle), <strong>20 oz</strong>, <strong>32 oz</strong>, <strong>40 oz</strong></div>
+              <div style="margin-top:6px;"><strong>Tip:</strong> 3 × 32oz bottles ≈ 96oz.</div>
+            </div>
+          </details>
         </div>
 
+        <!-- DIGESTION -->
         <div>
           <label class="micro muted">Digestion (1–10)</label>
           <input id="digestion" type="number" min="1" max="10" style="width:100%; padding:12px; margin-top:6px;">
+          <details class="micro muted" style="margin-top:8px;">
+            <summary>Examples</summary>
+            <div style="margin-top:6px; line-height:1.5;">
+              <div><strong>2:</strong> cramps, urgent issues, significant discomfort</div>
+              <div><strong>5:</strong> mild bloating/gas, manageable but noticeable</div>
+              <div><strong>8:</strong> calm stomach, normal routine, no drama</div>
+              <div style="margin-top:6px;"><strong>Tip:</strong> rate “comfort + normal function” as a whole.</div>
+            </div>
+          </details>
         </div>
 
+        <!-- INFLAMMATION -->
         <div>
           <label class="micro muted">Inflammation (1–10)</label>
           <input id="inflammation" type="number" min="1" max="10" style="width:100%; padding:12px; margin-top:6px;">
+          <details class="micro muted" style="margin-top:8px;">
+            <summary>Examples</summary>
+            <div style="margin-top:6px; line-height:1.5;">
+              <div><strong>2:</strong> stiff/sore, joints ache, movement feels “rusty”</div>
+              <div><strong>5:</strong> some tightness, mild pain, noticeable after sitting</div>
+              <div><strong>8:</strong> loose, pain minimal, movement feels easy</div>
+              <div style="margin-top:6px;"><strong>Tip:</strong> think “how easy does my body move today?”</div>
+            </div>
+          </details>
         </div>
+
       </div>
 
       <div style="margin-top:12px;">
         <label class="micro muted">Notes</label>
-        <textarea id="notes" style="width:100%; padding:12px; margin-top:6px; min-height:110px;"></textarea>
+        <textarea id="notes" style="width:100%; padding:12px; margin-top:6px; min-height:110px;" placeholder="Anything notable today? (foods, stress, sleep disruptions, workouts, symptoms)"></textarea>
       </div>
 
       <div style="display:flex; gap:10px; margin-top:12px; flex-wrap:wrap;">
@@ -108,7 +178,6 @@
 
     if (!data) return;
 
-    // Fill existing values
     document.getElementById("energy").value = data.energy ?? "";
     document.getElementById("mood").value = data.mood ?? "";
     document.getElementById("sleep_hours").value = data.sleep_hours ?? "";
