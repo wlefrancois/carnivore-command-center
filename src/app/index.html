@@ -1,34 +1,3 @@
-<section class="page-hero">
-  <div class="container">
-    <h1>CCC App</h1>
-    <p class="lead">Login or create your account.</p>
-  </div>
-</section>
-
-<section class="section">
-  <div class="container">
-    <div class="card" style="max-width:460px;">
-      <h3>Login</h3>
-
-      <div class="divider" style="margin:12px 0;"></div>
-
-      <label class="micro muted">Email</label>
-      <input id="email" type="email" placeholder="you@domain.com" style="width:100%; padding:12px; margin:6px 0 12px;">
-
-      <label class="micro muted">Password</label>
-      <input id="password" type="password" placeholder="••••••••" style="width:100%; padding:12px; margin:6px 0 12px;">
-
-      <div style="display:flex; gap:10px; flex-wrap:wrap;">
-        <button class="btn btn--primary" id="loginBtn" type="button">Login</button>
-        <button class="btn btn--ghost" id="signupBtn" type="button">Create Account</button>
-        <a class="btn btn--ghost" href="/">Back to site</a>
-      </div>
-
-      <p id="authMsg" class="micro muted" style="margin-top:12px;"></p>
-    </div>
-  </div>
-</section>
-
 <script type="module">
   import { signIn, signUp } from "/js/app.js";
 
@@ -37,16 +6,24 @@
   const msg = document.getElementById("authMsg");
 
   document.getElementById("loginBtn").addEventListener("click", async () => {
-    msg.textContent = "Logging in...";
-    const { error } = await signIn(email.value.trim(), password.value);
-    if (error) msg.textContent = error.message;
-    else window.location.href = "/app/dashboard/";
+    try {
+      msg.textContent = "Logging in...";
+      const { error } = await signIn(email.value.trim(), password.value);
+      if (error) msg.textContent = error.message;
+      else window.location.href = "/app/dashboard/";
+    } catch (e) {
+      msg.textContent = "JS error: " + (e?.message || e);
+    }
   });
 
   document.getElementById("signupBtn").addEventListener("click", async () => {
-    msg.textContent = "Creating account...";
-    const { error } = await signUp(email.value.trim(), password.value);
-    if (error) msg.textContent = error.message;
-    else msg.textContent = "Account created. Check your email to confirm (if enabled), then login.";
+    try {
+      msg.textContent = "Creating account...";
+      const { error } = await signUp(email.value.trim(), password.value);
+      if (error) msg.textContent = error.message;
+      else msg.textContent = "Account created. Check your email (if confirmation is enabled), then login.";
+    } catch (e) {
+      msg.textContent = "JS error: " + (e?.message || e);
+    }
   });
 </script>
