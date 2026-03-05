@@ -22,7 +22,7 @@
       </div>
 
       <!-- QUICK GUIDANCE -->
-      <details class="card" style="margin:12px 0;">
+      <details id="ratingGuide" class="card" style="margin:12px 0;">
         <summary><strong>How to rate your scores (quick guide)</strong></summary>
         <div class="micro muted" style="margin-top:10px; line-height:1.5;">
           <p><strong>Rule of thumb:</strong> rate based on how your body actually performed today, not how you “wish” it felt.</p>
@@ -141,7 +141,17 @@
 
 <script type="module">
   import { supabase, getUser, signOut } from "/js/app.js";
+// Open the rating guide the first time someone uses the app
+const guide = document.getElementById("ratingGuide");
 
+if (guide) {
+  const seenGuide = localStorage.getItem("ccc_seen_rating_guide");
+
+  if (!seenGuide) {
+    guide.open = true;
+    localStorage.setItem("ccc_seen_rating_guide", "true");
+  }
+}
   const msg = document.getElementById("msg");
   const userLine = document.getElementById("userLine");
   const dateLine = document.getElementById("dateLine");
