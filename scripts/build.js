@@ -93,10 +93,12 @@ for (const folder of ["css", "assets", "js"]) {
   if (fs.existsSync(p)) copyDir(p, path.join(DIST_DIR, folder));
 }
 
-// Copy favicon if present
-const favicon = path.join(ROOT, "favicon.ico");
-if (fs.existsSync(favicon)) {
-  fs.copyFileSync(favicon, path.join(DIST_DIR, "favicon.ico"));
+// Copy selected root static files into dist (if present)
+for (const file of ["favicon.ico", "site.webmanifest", "robots.txt", "sitemap.xml"]) {
+  const srcFile = path.join(ROOT, file);
+  if (fs.existsSync(srcFile)) {
+    fs.copyFileSync(srcFile, path.join(DIST_DIR, file));
+  }
 }
  if (!fs.existsSync(SRC_DIR)) {
   console.error(
