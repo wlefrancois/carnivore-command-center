@@ -47,7 +47,7 @@
   try {
     // Try importing your auth functions
     const mod = await import("/js/app.js");
-    const { signIn, signUp } = mod;
+    const { signIn, signUp, supabase } = mod;
 
     dbg.textContent = "Imported /js/app.js ✅";
 
@@ -58,11 +58,29 @@
     const signupBtn = document.getElementById("signupBtn");
 
     loginBtn.addEventListener("click", async () => {
-      msg.textContent = "Logging in...";
-      try {
-        const { error } = await signIn(email.value.trim(), password.value);
-        if (error) msg.textContent = error.message;
-       const { data } = await supabase
+  msg.textContent = "Logging in...";
+  try {
+    const { error } = await signIn(email.value.trim(), password.value);
+
+    if (error) {
+      msg.textContent = error.message;
+      return;
+    }
+
+    const { data } = await supabase
+      .from("daily_logs")
+      .select("id")
+      .limit(1);
+
+    if (!data || data.length === 0) {
+      window.location.href = "/app/onboarding/";
+    } else {
+      window.location.href = "/app/dashboard/";
+    }
+  } catch (e) {
+    msg.textContent = "Login error: " + (e?.message || e);
+  }
+});
   .from("daily_logs")
   .select("id")
   .limit(1);
