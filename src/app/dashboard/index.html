@@ -22,6 +22,7 @@
     <div id="stats" class="cards cards--3" style="margin-bottom:18px;"></div>
     <div id="weeklyCard" class="card" style="margin-bottom:18px;"></div>
     <div id="insights" class="card" style="margin-bottom:18px;"></div>
+    <div id="forecastCard" class="card" style="margin-bottom:18px;"></div>
 
     <div class="cards cards--3" style="margin-bottom:18px;">
       <div class="card">
@@ -65,6 +66,7 @@ const todayCard = document.getElementById("todayCard");
 const stats = document.getElementById("stats");
 const weeklyCard = document.getElementById("weeklyCard");
 const insights = document.getElementById("insights");
+const forecastCard = document.getElementById("forecastCard");
 const logsEl = document.getElementById("logs");
 
 document.getElementById("logoutBtn").addEventListener("click", async () => {
@@ -336,6 +338,60 @@ async function load() {
       const yesterdayScore = yesterdayLog ? computeScore(yesterdayLog).total : null;
       const delta = yesterdayScore != null ? todayScore.total - yesterdayScore : null;
       const limiter = getLimiter(todayScore.parts);
+      let forecastText = "";
+
+if (limiter === "hydration") {
+  forecastText = "If hydration reaches 80–100 oz tomorrow, readiness could increase by ~4–7 points.";
+}
+
+if (limiter === "sleep") {
+  forecastText = "If sleep reaches 7–8 hours tonight, readiness could increase by ~6–10 points.";
+}
+
+if (limiter === "energy") {
+  forecastText = "If stress is reduced and recovery improves, readiness could increase by ~3–6 points.";
+}
+
+if (limiter === "inflammation") {
+  forecastText = "Lower inflammation tomorrow could raise readiness by ~4–8 points.";
+}
+
+if (limiter === "digestion") {
+  forecastText = "Simplifying meals tomorrow may improve readiness by ~3–5 points.";
+}
+
+if (limiter === "mood") {
+  forecastText = "Improved mood and lower stress tomorrow could increase readiness by ~2–4 points.";
+}
+
+forecastCard.innerHTML = `
+  <div style="display:flex; gap:14px; align-items:flex-start;">
+    
+    <div style="
+      width:38px;
+      height:38px;
+      border-radius:12px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background: rgba(124,140,255,0.14);
+      border: 1px solid rgba(124,140,255,0.28);
+      font-size:18px;">
+      ⌁
+    </div>
+
+    <div>
+      <strong style="display:block; margin-bottom:6px;">
+        Tomorrow Forecast
+      </strong>
+
+      <div class="micro muted" style="line-height:1.6;">
+        ${forecastText}
+      </div>
+    </div>
+
+  </div>
+`;
       const recommendation = getRecommendation(limiter);
       const { helped, hurt } = categorizeParts(todayScore.parts);
 
@@ -521,6 +577,13 @@ async function load() {
           </div>
         </div>
       `;
+
+      forecastCard.innerHTML = `
+  <strong>Tomorrow Forecast</strong>
+  <div class="micro muted" style="margin-top:8px;">
+    Log today to generate your readiness forecast.
+  </div>
+`;
     } else {
       weeklyCard.innerHTML = `
         <strong>Weekly Report</strong>
