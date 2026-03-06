@@ -22,6 +22,7 @@
     <div id="stats" class="cards cards--3" style="margin-bottom:18px;"></div>
     <div id="weeklyCard" class="card" style="margin-bottom:18px;"></div>
     <div id="insights" class="card" style="margin-bottom:18px;"></div>
+    <div id="experimentCard" class="card" style="margin-bottom:18px;"></div>
     <div id="forecastCard" class="card" style="margin-bottom:18px;"></div>
     <div id="trainingCard" class="card" style="margin-bottom:18px;"></div>
     <div id="recoveryCard" class="card" style="margin-bottom:18px;"></div>
@@ -69,7 +70,8 @@
 import { supabase, getUser, signOut } from "/js/app.js";
 import { Chart } from "/js/vendor/chart.js";
 
- const recoveryCard = document.getElementById("recoveryCard"); 
+const experimentCard = document.getElementById("experimentCard");
+const recoveryCard = document.getElementById("recoveryCard"); 
 const streakCard = document.getElementById("streakCard");  
 const userLine = document.getElementById("userLine");
 const scoreCard = document.getElementById("scoreCard");
@@ -405,6 +407,32 @@ ${priorities.map((p,i)=>`
       if (limiter === "digestion") forecastText = "Simplifying meals tomorrow may improve readiness by ~3–5 points.";
       if (limiter === "mood") forecastText = "Improved mood and lower stress tomorrow could increase readiness by ~2–4 points.";
 
+      experimentCard.innerHTML = `
+<strong>Experiment Mode</strong>
+
+<div class="micro muted" style="margin:8px 0 14px;">
+Run controlled experiments to see what improves your metabolic readiness.
+</div>
+
+<div class="cards cards--3">
+
+<div class="card">
+<strong>Electrolyte Boost</strong>
+<div class="micro muted">7 day hydration experiment</div>
+</div>
+
+<div class="card">
+<strong>Strict Carnivore</strong>
+<div class="micro muted">14 day elimination reset</div>
+</div>
+
+<div class="card">
+<strong>Sleep Optimization</strong>
+<div class="micro muted">Improve sleep consistency</div>
+</div>
+
+</div>
+`;
       scoreCard.innerHTML = `
         <div style="display:flex; justify-content:space-between; gap:24px; flex-wrap:wrap; align-items:center;">
           <div style="display:flex; align-items:center; gap:22px; flex-wrap:wrap;">
