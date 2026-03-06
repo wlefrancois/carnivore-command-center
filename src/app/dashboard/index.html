@@ -15,17 +15,12 @@
 <section class="section">
   <div class="container">
     <div id="scoreCard" class="card" style="margin-bottom:14px;"></div>
-
     <div id="actionCard" class="card" style="margin-bottom:14px;"></div>
-
     <div id="breakdownCard" class="card" style="margin-bottom:14px;"></div>
-
     <div id="todayCard" class="card" style="margin-bottom:14px;"></div>
 
     <div id="stats" class="cards cards--3" style="margin-bottom:18px;"></div>
-
     <div id="weeklyCard" class="card" style="margin-bottom:18px;"></div>
-
     <div id="insights" class="card" style="margin-bottom:18px;"></div>
 
     <div class="cards cards--3" style="margin-bottom:18px;">
@@ -236,32 +231,10 @@ function getLimiter(parts) {
 }
 
 function getScoreBand(score) {
-  if (score >= 80) {
-    return {
-      label: "Elite",
-      color1: "#35d07f",
-      color2: "#7cf0a7"
-    };
-  }
-  if (score >= 60) {
-    return {
-      label: "Good",
-      color1: "#5ea2ff",
-      color2: "#7c8cff"
-    };
-  }
-  if (score >= 40) {
-    return {
-      label: "Recover",
-      color1: "#ffb347",
-      color2: "#ffd089"
-    };
-  }
-  return {
-    label: "Low",
-    color1: "#ff6b6b",
-    color2: "#ff9a9a"
-  };
+  if (score >= 80) return { label: "Elite", color1: "#35d07f", color2: "#7cf0a7" };
+  if (score >= 60) return { label: "Good", color1: "#5ea2ff", color2: "#7c8cff" };
+  if (score >= 40) return { label: "Recover", color1: "#ffb347", color2: "#ffd089" };
+  return { label: "Low", color1: "#ff6b6b", color2: "#ff9a9a" };
 }
 
 function corrSleepEnergy(rows) {
@@ -278,10 +251,7 @@ function corrSleepEnergy(rows) {
   const xAvg = Number(avg(xs));
   const yAvg = Number(avg(ys));
 
-  let num = 0;
-  let denX = 0;
-  let denY = 0;
-
+  let num = 0, denX = 0, denY = 0;
   for (let i = 0; i < pairs.length; i++) {
     const dx = xs[i] - xAvg;
     const dy = ys[i] - yAvg;
@@ -321,9 +291,7 @@ function buildLineChart(canvasId, label, labels, values, yMin = null, yMax = nul
     },
     options: {
       responsive: true,
-      plugins: {
-        legend: { display: false }
-      },
+      plugins: { legend: { display: false } },
       scales: {
         x: { ticks: { maxRotation: 0 } },
         y: {
@@ -337,334 +305,302 @@ function buildLineChart(canvasId, label, labels, values, yMin = null, yMax = nul
 }
 
 async function load() {
-  const user = await getUser();
-  if (!user) {
-    window.location.href = "/app/";
-    return;
-  }
-
-  userLine.textContent = `Logged in as ${user.email}`;
-
-  const { data, error } = await supabase
-    .from("daily_logs")
-    .select("*")
-    .order("log_date", { ascending: false })
-    .limit(7);
-
-  if (error) {
-    scoreCard.textContent = `Error loading logs: ${error.message}`;
-    return;
-  }
-
-  const rows = data || [];
-  const today = todayISODate();
-  const todayLog = rows.find((r) => r.log_date === today);
-
- scoreCard.innerHTML = `
-  <div style="display:flex; justify-content:space-between; gap:24px; flex-wrap:wrap; align-items:center;">
-    
-    <div style="display:flex; align-items:center; gap:22px; flex-wrap:wrap;">
-      <div
-        class="score-gauge"
-        style="
-          --score:${todayScore.total};
-          --g1:${band.color1};
-          --g2:${band.color2};
-        "
-      >
-        <div class="score-gauge__inner">
-          <div class="score-gauge__value">${todayScore.total}</div>
-          <div class="score-gauge__sub">/ 100</div>
-        </div>
-      </div>
-
-      <div>
-        <div class="micro muted" style="text-transform:uppercase; letter-spacing:.08em;">
-          Metabolic Readiness • ${band.label}
-        </div>
-
-        <div class="micro muted" style="margin-top:10px;">
-          ${delta == null ? "First score logged" : delta > 0 ? `▲ +${delta} from last log` : delta < 0 ? `▼ ${delta} from last log` : "→ unchanged from last log"}
-        </div>
-      </div>
-    </div>
-
-    <div style="min-width:280px;">
-      <div style="height:10px; border-radius:999px; background: rgba(255,255,255,0.08); overflow:hidden; margin-bottom:14px;">
-        <div style="width:${todayScore.total}%; height:100%; border-radius:999px; background: linear-gradient(90deg, ${band.color1}, ${band.color2});"></div>
-      </div>
-
-      <div class="micro muted" style="line-height:1.7;">
-        <div><strong>Main limiter:</strong> ${limiter}</div>
-        <div>Sleep: ${todayScore.parts.sleep.toFixed(0)}/25</div>
-        <div>Energy: ${todayScore.parts.energy.toFixed(0)}/25</div>
-        <div>Inflammation: ${todayScore.parts.inflammation.toFixed(0)}/20</div>
-        <div>Digestion: ${todayScore.parts.digestion.toFixed(0)}/15</div>
-        <div>Mood: ${todayScore.parts.mood.toFixed(0)}/10</div>
-        <div>Hydration: ${todayScore.parts.water.toFixed(0)}/5</div>
-      </div>
-    </div>
-  </div>
-`;
-    actionCard.innerHTML = `
-      <div style="display:flex; gap:14px; align-items:flex-start;">
-        <div style="width:38px; height:38px; border-radius:12px; display:flex; align-items:center; justify-content:center; background: rgba(94,162,255,0.14); border: 1px solid rgba(94,162,255,0.28); font-size:18px;">
-          ✦
-        </div>
-
-        <div>
-          <strong style="display:block; margin-bottom:6px;">${recommendation.title}</strong>
-          <div class="micro muted" style="line-height:1.6;">
-            ${recommendation.body}
-          </div>
-        </div>
-      </div>
-    `;
-
-    breakdownCard.innerHTML = `
-      <strong style="display:block; margin-bottom:10px;">Score Breakdown</strong>
-
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:18px;">
-        <div>
-          <div class="micro muted" style="margin-bottom:8px;">Helped Your Score</div>
-          <div style="display:flex; flex-direction:column; gap:8px;">
-            ${
-              helped.length
-                ? helped.map(x => `
-                  <div style="padding:8px 10px; border-radius:12px; background: rgba(53,208,127,0.08); border:1px solid rgba(53,208,127,0.18);">
-                    + ${x}
-                  </div>
-                `).join("")
-                : `<div class="micro muted">—</div>`
-            }
-          </div>
-        </div>
-
-        <div>
-          <div class="micro muted" style="margin-bottom:8px;">Limited Your Score</div>
-          <div style="display:flex; flex-direction:column; gap:8px;">
-            ${
-              hurt.length
-                ? hurt.map(x => `
-                  <div style="padding:8px 10px; border-radius:12px; background: rgba(255,179,71,0.08); border:1px solid rgba(255,179,71,0.18);">
-                    - ${x}
-                  </div>
-                `).join("")
-                : `<div class="micro muted">—</div>`
-            }
-          </div>
-        </div>
-      </div>
-    `;
-
-    scoreCard.innerHTML = `
-      <div style="display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap; align-items:center;">
-        <div>
-          <div class="micro muted" style="text-transform:uppercase; letter-spacing:.08em;">Metabolic Readiness • ${band.label}</div>
-          <div style="display:flex; align-items:end; gap:10px; margin-top:8px;">
-            <div style="font-size:64px; font-weight:800; line-height:1; letter-spacing:-0.03em;">${todayScore.total}</div>
-            <div style="font-size:22px; opacity:.7; padding-bottom:8px;">/ 100</div>
-          </div>
-          <div class="micro muted" style="margin-top:10px;">
-            ${delta == null ? "First score logged" : delta > 0 ? `▲ +${delta} from last log` : delta < 0 ? `▼ ${delta} from last log` : "→ unchanged from last log"}
-          </div>
-        </div>
-
-        <div style="min-width:280px;">
-          <div style="height:10px; border-radius:999px; background: rgba(255,255,255,0.08); overflow:hidden; margin-bottom:14px;">
-            <div style="width:${todayScore.total}%; height:100%; border-radius:999px; background: linear-gradient(90deg, ${band.color1}, ${band.color2});"></div>
-          </div>
-
-          <div class="micro muted" style="line-height:1.7;">
-            <div><strong>Main limiter:</strong> ${limiter}</div>
-            <div>Sleep: ${todayScore.parts.sleep.toFixed(0)}/25</div>
-            <div>Energy: ${todayScore.parts.energy.toFixed(0)}/25</div>
-            <div>Inflammation: ${todayScore.parts.inflammation.toFixed(0)}/20</div>
-            <div>Digestion: ${todayScore.parts.digestion.toFixed(0)}/15</div>
-            <div>Mood: ${todayScore.parts.mood.toFixed(0)}/10</div>
-            <div>Hydration: ${todayScore.parts.water.toFixed(0)}/5</div>
-          </div>
-        </div>
-      </div>
-    `;
-  } else {
-    actionCard.innerHTML = `
-      <strong>Today's Recommendation</strong>
-      <div class="micro muted" style="margin-top:8px;">
-        Log today to generate your first personalized recommendation.
-      </div>
-    `;
-
-    breakdownCard.innerHTML = `
-      <strong>Score Breakdown</strong>
-      <div class="micro muted" style="margin-top:8px;">
-        Log today to see what helped and what limited your score.
-      </div>
-    `;
-
-    scoreCard.innerHTML = `
-      <strong>No readiness score yet</strong>
-      <div class="micro muted" style="margin-top:6px;">
-        Log today to generate your first Metabolic Readiness score.
-      </div>
-    `;
-  }
-
-  todayCard.innerHTML = todayLog
-    ? `<strong>Today logged ✅</strong>
-       <div class="micro muted" style="margin-top:6px;">
-         Energy ${todayLog.energy ?? "-"} • Sleep ${todayLog.sleep_hours ?? "-"} • Water ${todayLog.water_oz ?? "-"}
-       </div>`
-    : `<strong>Today not logged yet</strong>
-       <div class="micro muted" style="margin-top:6px;">Click “Log Today” to record your day.</div>`;
-
-  const energy = rows.map((r) => r.energy == null ? null : Number(r.energy));
-  const sleep = rows.map((r) => r.sleep_hours == null ? null : Number(r.sleep_hours));
-  const inflam = rows.map((r) => r.inflammation == null ? null : Number(r.inflammation));
-  const scores = rows.map((r) => computeScore(r).total);
-
-  stats.innerHTML = `
-    <div class="card">
-      <strong>Readiness (avg)</strong>
-      <div class="lead">${avg(scores) ?? "-"}</div>
-      <div class="micro muted">${trend(scores)}</div>
-    </div>
-
-    <div class="card">
-      <strong>Sleep (avg hrs)</strong>
-      <div class="lead">${avg(sleep) ?? "-"}</div>
-      <div class="micro muted">${trend(sleep)}</div>
-    </div>
-
-    <div class="card">
-      <strong>Inflammation (avg)</strong>
-      <div class="lead">${avg(inflam) ?? "-"}</div>
-      <div class="micro muted">${trend(inflam)}</div>
-    </div>
-  `;
-
-  if (rows.length > 0) {
-    const avgScore = avg(scores);
-
-    let best = rows[0];
-    rows.forEach(r => {
-      if (computeScore(r).total > computeScore(best).total) best = r;
-    });
-
-    const bestScore = computeScore(best).total;
-
-    const limiters = rows.map(r => getLimiter(computeScore(r).parts));
-    const limiterCounts = {};
-    limiters.forEach(l => {
-      limiterCounts[l] = (limiterCounts[l] || 0) + 1;
-    });
-
-    let mostCommonLimiter = null;
-    let maxCount = 0;
-
-    for (const key in limiterCounts) {
-      if (limiterCounts[key] > maxCount) {
-        mostCommonLimiter = key;
-        maxCount = limiterCounts[key];
-      }
+  try {
+    const user = await getUser();
+    if (!user) {
+      window.location.href = "/app/";
+      return;
     }
 
-    weeklyCard.innerHTML = `
-      <strong>Weekly Report</strong>
+    userLine.textContent = `Logged in as ${user.email}`;
 
-      <div class="cards cards--3" style="margin-top:14px;">
-        <div>
-          <div class="micro muted">Average Score</div>
-          <div style="font-size:28px;font-weight:700;">${avgScore}</div>
-        </div>
+    const { data, error } = await supabase
+      .from("daily_logs")
+      .select("*")
+      .order("log_date", { ascending: false })
+      .limit(7);
 
-        <div>
-          <div class="micro muted">Best Day</div>
-          <div style="font-size:18px;font-weight:600;">
-            ${best.log_date} (${bestScore})
+    if (error) {
+      scoreCard.textContent = `Error loading logs: ${error.message}`;
+      return;
+    }
+
+    const rows = data || [];
+    const today = todayISODate();
+    const todayLog = rows.find((r) => r.log_date === today);
+
+    if (todayLog) {
+      const todayScore = computeScore(todayLog);
+      const band = getScoreBand(todayScore.total);
+      const yesterdayLog = rows.find((r) => r.log_date !== today);
+      const yesterdayScore = yesterdayLog ? computeScore(yesterdayLog).total : null;
+      const delta = yesterdayScore != null ? todayScore.total - yesterdayScore : null;
+      const limiter = getLimiter(todayScore.parts);
+      const recommendation = getRecommendation(limiter);
+      const { helped, hurt } = categorizeParts(todayScore.parts);
+
+      scoreCard.innerHTML = `
+        <div style="display:flex; justify-content:space-between; gap:24px; flex-wrap:wrap; align-items:center;">
+          <div style="display:flex; align-items:center; gap:22px; flex-wrap:wrap;">
+            <div
+              class="score-gauge"
+              style="--score:${todayScore.total}; --g1:${band.color1}; --g2:${band.color2};"
+            >
+              <div class="score-gauge__inner">
+                <div class="score-gauge__value">${todayScore.total}</div>
+                <div class="score-gauge__sub">/ 100</div>
+              </div>
+            </div>
+
+            <div>
+              <div class="micro muted" style="text-transform:uppercase; letter-spacing:.08em;">
+                Metabolic Readiness • ${band.label}
+              </div>
+              <div class="micro muted" style="margin-top:10px;">
+                ${delta == null ? "First score logged" : delta > 0 ? `▲ +${delta} from last log` : delta < 0 ? `▼ ${delta} from last log` : "→ unchanged from last log"}
+              </div>
+            </div>
           </div>
-        </div>
 
-        <div>
-          <div class="micro muted">Most Common Limiter</div>
-          <div style="font-size:18px;font-weight:600;">
-            ${mostCommonLimiter || "-"}
+          <div style="min-width:280px;">
+            <div style="height:10px; border-radius:999px; background: rgba(255,255,255,0.08); overflow:hidden; margin-bottom:14px;">
+              <div style="width:${todayScore.total}%; height:100%; border-radius:999px; background: linear-gradient(90deg, ${band.color1}, ${band.color2});"></div>
+            </div>
+
+            <div class="micro muted" style="line-height:1.7;">
+              <div><strong>Main limiter:</strong> ${limiter}</div>
+              <div>Sleep: ${todayScore.parts.sleep.toFixed(0)}/25</div>
+              <div>Energy: ${todayScore.parts.energy.toFixed(0)}/25</div>
+              <div>Inflammation: ${todayScore.parts.inflammation.toFixed(0)}/20</div>
+              <div>Digestion: ${todayScore.parts.digestion.toFixed(0)}/15</div>
+              <div>Mood: ${todayScore.parts.mood.toFixed(0)}/10</div>
+              <div>Hydration: ${todayScore.parts.water.toFixed(0)}/5</div>
+            </div>
           </div>
-        </div>
-      </div>
-    `;
-  } else {
-    weeklyCard.innerHTML = `
-      <strong>Weekly Report</strong>
-      <div class="micro muted" style="margin-top:8px;">
-        Log consistently this week to generate your weekly report.
-      </div>
-    `;
-  }
-
-  let bestScore = null;
-  rows.forEach((r) => {
-    const score = computeScore(r).total;
-    if (!bestScore || score > bestScore.score) bestScore = { row: r, score };
-  });
-
-  let insightHTML = `<strong>Insights</strong><div class="micro muted" style="margin-top:6px; line-height:1.5;">`;
-  if (bestScore) insightHTML += `Best readiness day: ${bestScore.row.log_date} (${bestScore.score}/100)<br>`;
-
-  const sleepInsight = corrSleepEnergy(rows);
-  if (sleepInsight) insightHTML += `${sleepInsight}<br>`;
-
-  if (todayLog) {
-    const limiter = getLimiter(computeScore(todayLog).parts);
-    insightHTML += `Biggest opportunity today: improve ${limiter}.<br>`;
-  }
-
-  insightHTML += `</div>`;
-  insights.innerHTML = insightHTML;
-
-  const asc = [...rows].sort((a, b) => (a.log_date > b.log_date ? 1 : -1));
-  const labels = asc.map((r) => r.log_date.slice(5));
-
-  buildLineChart(
-    "chartEnergy",
-    "Energy",
-    labels,
-    asc.map((r) => (r.energy == null ? null : Number(r.energy))),
-    1, 10
-  );
-
-  buildLineChart(
-    "chartSleep",
-    "Sleep Hours",
-    labels,
-    asc.map((r) => (r.sleep_hours == null ? null : Number(r.sleep_hours))),
-    0, 10
-  );
-
-  buildLineChart(
-    "chartInflam",
-    "Inflammation",
-    labels,
-    asc.map((r) => (r.inflammation == null ? null : Number(r.inflammation))),
-    1, 10
-  );
-
-  logsEl.innerHTML = rows
-    .map((r) => {
-      const score = computeScore(r).total;
-      return `
-        <div class="card" style="margin-bottom:10px;">
-          <div style="display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;">
-            <strong>${r.log_date}</strong>
-            <span class="micro muted">
-              Score: ${score}/100 • Energy: ${r.energy ?? "-"} • Sleep: ${r.sleep_hours ?? "-"} • Water: ${r.water_oz ?? "-"}
-            </span>
-          </div>
-          ${r.notes ? `<div class="micro muted" style="margin-top:6px;">${escapeHtml(r.notes).slice(0,180)}</div>` : ""}
         </div>
       `;
-    })
-    .join("") || `<div class="card">No logs yet. Click “Log Today”.</div>`;
+
+      actionCard.innerHTML = `
+        <div style="display:flex; gap:14px; align-items:flex-start;">
+          <div style="width:38px; height:38px; border-radius:12px; display:flex; align-items:center; justify-content:center; background: rgba(94,162,255,0.14); border: 1px solid rgba(94,162,255,0.28); font-size:18px;">✦</div>
+          <div>
+            <strong style="display:block; margin-bottom:6px;">${recommendation.title}</strong>
+            <div class="micro muted" style="line-height:1.6;">${recommendation.body}</div>
+          </div>
+        </div>
+      `;
+
+      breakdownCard.innerHTML = `
+        <strong style="display:block; margin-bottom:10px;">Score Breakdown</strong>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:18px;">
+          <div>
+            <div class="micro muted" style="margin-bottom:8px;">Helped Your Score</div>
+            <div style="display:flex; flex-direction:column; gap:8px;">
+              ${helped.length ? helped.map(x => `
+                <div style="padding:8px 10px; border-radius:12px; background: rgba(53,208,127,0.08); border:1px solid rgba(53,208,127,0.18);">
+                  + ${x}
+                </div>
+              `).join("") : `<div class="micro muted">—</div>`}
+            </div>
+          </div>
+
+          <div>
+            <div class="micro muted" style="margin-bottom:8px;">Limited Your Score</div>
+            <div style="display:flex; flex-direction:column; gap:8px;">
+              ${hurt.length ? hurt.map(x => `
+                <div style="padding:8px 10px; border-radius:12px; background: rgba(255,179,71,0.08); border:1px solid rgba(255,179,71,0.18);">
+                  - ${x}
+                </div>
+              `).join("") : `<div class="micro muted">—</div>`}
+            </div>
+          </div>
+        </div>
+      `;
+    } else {
+      scoreCard.innerHTML = `
+        <strong>No readiness score yet</strong>
+        <div class="micro muted" style="margin-top:6px;">
+          Log today to generate your first Metabolic Readiness score.
+        </div>
+      `;
+
+      actionCard.innerHTML = `
+        <strong>Today's Recommendation</strong>
+        <div class="micro muted" style="margin-top:8px;">
+          Log today to generate your first personalized recommendation.
+        </div>
+      `;
+
+      breakdownCard.innerHTML = `
+        <strong>Score Breakdown</strong>
+        <div class="micro muted" style="margin-top:8px;">
+          Log today to see what helped and what limited your score.
+        </div>
+      `;
+    }
+
+    todayCard.innerHTML = todayLog
+      ? `<strong>Today logged ✅</strong>
+         <div class="micro muted" style="margin-top:6px;">
+           Energy ${todayLog.energy ?? "-"} • Sleep ${todayLog.sleep_hours ?? "-"} • Water ${todayLog.water_oz ?? "-"}
+         </div>`
+      : `<strong>Today not logged yet</strong>
+         <div class="micro muted" style="margin-top:6px;">Click “Log Today” to record your day.</div>`;
+
+    const energy = rows.map((r) => r.energy == null ? null : Number(r.energy));
+    const sleep = rows.map((r) => r.sleep_hours == null ? null : Number(r.sleep_hours));
+    const inflam = rows.map((r) => r.inflammation == null ? null : Number(r.inflammation));
+    const scores = rows.map((r) => computeScore(r).total);
+
+    stats.innerHTML = `
+      <div class="card">
+        <strong>Readiness (avg)</strong>
+        <div class="lead">${avg(scores) ?? "-"}</div>
+        <div class="micro muted">${trend(scores)}</div>
+      </div>
+
+      <div class="card">
+        <strong>Sleep (avg hrs)</strong>
+        <div class="lead">${avg(sleep) ?? "-"}</div>
+        <div class="micro muted">${trend(sleep)}</div>
+      </div>
+
+      <div class="card">
+        <strong>Inflammation (avg)</strong>
+        <div class="lead">${avg(inflam) ?? "-"}</div>
+        <div class="micro muted">${trend(inflam)}</div>
+      </div>
+    `;
+
+    if (rows.length > 0) {
+      const avgScore = avg(scores);
+
+      let best = rows[0];
+      rows.forEach(r => {
+        if (computeScore(r).total > computeScore(best).total) best = r;
+      });
+
+      const bestScoreForWeek = computeScore(best).total;
+
+      const limiters = rows.map(r => getLimiter(computeScore(r).parts));
+      const limiterCounts = {};
+      limiters.forEach(l => {
+        limiterCounts[l] = (limiterCounts[l] || 0) + 1;
+      });
+
+      let mostCommonLimiter = null;
+      let maxCount = 0;
+
+      for (const key in limiterCounts) {
+        if (limiterCounts[key] > maxCount) {
+          mostCommonLimiter = key;
+          maxCount = limiterCounts[key];
+        }
+      }
+
+      weeklyCard.innerHTML = `
+        <strong>Weekly Report</strong>
+        <div class="cards cards--3" style="margin-top:14px;">
+          <div>
+            <div class="micro muted">Average Score</div>
+            <div style="font-size:28px;font-weight:700;">${avgScore}</div>
+          </div>
+
+          <div>
+            <div class="micro muted">Best Day</div>
+            <div style="font-size:18px;font-weight:600;">
+              ${best.log_date} (${bestScoreForWeek})
+            </div>
+          </div>
+
+          <div>
+            <div class="micro muted">Most Common Limiter</div>
+            <div style="font-size:18px;font-weight:600;">
+              ${mostCommonLimiter || "-"}
+            </div>
+          </div>
+        </div>
+      `;
+    } else {
+      weeklyCard.innerHTML = `
+        <strong>Weekly Report</strong>
+        <div class="micro muted" style="margin-top:8px;">
+          Log consistently this week to generate your weekly report.
+        </div>
+      `;
+    }
+
+    let bestScore = null;
+    rows.forEach((r) => {
+      const score = computeScore(r).total;
+      if (!bestScore || score > bestScore.score) bestScore = { row: r, score };
+    });
+
+    let insightHTML = `<strong>Insights</strong><div class="micro muted" style="margin-top:6px; line-height:1.5;">`;
+    if (bestScore) insightHTML += `Best readiness day: ${bestScore.row.log_date} (${bestScore.score}/100)<br>`;
+
+    const sleepInsight = corrSleepEnergy(rows);
+    if (sleepInsight) insightHTML += `${sleepInsight}<br>`;
+
+    if (todayLog) {
+      const limiter = getLimiter(computeScore(todayLog).parts);
+      insightHTML += `Biggest opportunity today: improve ${limiter}.<br>`;
+    }
+
+    insightHTML += `</div>`;
+    insights.innerHTML = insightHTML;
+
+    const asc = [...rows].sort((a, b) => (a.log_date > b.log_date ? 1 : -1));
+    const labels = asc.map((r) => r.log_date.slice(5));
+
+    buildLineChart(
+      "chartEnergy",
+      "Energy",
+      labels,
+      asc.map((r) => (r.energy == null ? null : Number(r.energy))),
+      1, 10
+    );
+
+    buildLineChart(
+      "chartSleep",
+      "Sleep Hours",
+      labels,
+      asc.map((r) => (r.sleep_hours == null ? null : Number(r.sleep_hours))),
+      0, 10
+    );
+
+    buildLineChart(
+      "chartInflam",
+      "Inflammation",
+      labels,
+      asc.map((r) => (r.inflammation == null ? null : Number(r.inflammation))),
+      1, 10
+    );
+
+    logsEl.innerHTML = rows
+      .map((r) => {
+        const score = computeScore(r).total;
+        return `
+          <div class="card" style="margin-bottom:10px;">
+            <div style="display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;">
+              <strong>${r.log_date}</strong>
+              <span class="micro muted">
+                Score: ${score}/100 • Energy: ${r.energy ?? "-"} • Sleep: ${r.sleep_hours ?? "-"} • Water: ${r.water_oz ?? "-"}
+              </span>
+            </div>
+            ${r.notes ? `<div class="micro muted" style="margin-top:6px;">${escapeHtml(r.notes).slice(0,180)}</div>` : ""}
+          </div>
+        `;
+      })
+      .join("") || `<div class="card">No logs yet. Click “Log Today”.</div>`;
+  } catch (e) {
+    scoreCard.innerHTML = `
+      <strong>Dashboard error</strong>
+      <div class="micro muted" style="margin-top:8px;">
+        ${(e && e.message) ? e.message : e}
+      </div>
+    `;
+  }
 }
 
 load();
