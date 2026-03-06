@@ -27,6 +27,14 @@
     <div id="recoveryCard" class="card" style="margin-bottom:18px;"></div>
     <div id="streakCard" class="card" style="margin-bottom:18px;"></div>
 
+    <div class="card" style="margin-bottom:18px;">
+  <div style="font-weight:700; font-size:18px;">Readiness Trend</div>
+  <div class="micro muted" style="margin-top:4px;">Last 7 days</div>
+  <div style="margin-top:12px;">
+    <canvas id="chartReadiness" height="140"></canvas>
+  </div>
+</div>
+
     <div class="cards cards--3" style="margin-bottom:18px;">
       <div class="card">
         <div style="font-weight:700; font-size:18px;">Energy</div>
@@ -694,6 +702,7 @@ trainingCard.innerHTML = `
     buildLineChart("chartEnergy", "Energy", labels, asc.map((r) => (r.energy == null ? null : Number(r.energy))), 1, 10);
     buildLineChart("chartSleep", "Sleep Hours", labels, asc.map((r) => (r.sleep_hours == null ? null : Number(r.sleep_hours))), 0, 10);
     buildLineChart("chartInflam", "Inflammation", labels, asc.map((r) => (r.inflammation == null ? null : Number(r.inflammation))), 1, 10);
+    buildLineChart("chartReadiness", "Readiness", labels, asc.map((r) => computeScore(r).total), 0, 100);
 
     logsEl.innerHTML = rows
       .map((r) => {
