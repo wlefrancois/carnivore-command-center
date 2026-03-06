@@ -328,6 +328,12 @@ async function load() {
       </div>
     `;
   } else {
+    actionCard.innerHTML = `
+  <strong>Today's Recommendation</strong>
+  <div class="micro muted" style="margin-top:8px;">
+    Log today to generate your first personalized recommendation.
+  </div>
+`;
     scoreCard.innerHTML = `
       <strong>No readiness score yet</strong>
       <div class="micro muted" style="margin-top:6px;">
@@ -383,6 +389,14 @@ async function load() {
 
   if (todayLog) {
     const limiter = getLimiter(computeScore(todayLog).parts);
+    const recommendation = getRecommendation(limiter);
+
+actionCard.innerHTML = `
+  <strong>${recommendation.title}</strong>
+  <div class="micro muted" style="margin-top:8px; line-height:1.5;">
+    ${recommendation.body}
+  </div>
+`;
     insightHTML += `Biggest opportunity today: improve ${limiter}.<br>`;
   }
 
