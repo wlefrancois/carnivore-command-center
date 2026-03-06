@@ -645,6 +645,66 @@ main{
   color:var(--muted);
 }
 
+/* READINESS SCORE GAUGE */
+
+.score-gauge {
+  --score: 50;
+  --g1: #5ea2ff;
+  --g2: #7c8cff;
+
+  width: 132px;
+  height: 132px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  position: relative;
+
+  background:
+    radial-gradient(circle at center, rgba(255,255,255,0.04) 0 58%, transparent 59% 100%),
+    conic-gradient(
+      from -90deg,
+      var(--g1) 0deg,
+      var(--g2) calc(var(--score) * 3.6deg),
+      rgba(255,255,255,0.08) calc(var(--score) * 3.6deg),
+      rgba(255,255,255,0.08) 360deg
+    );
+
+  box-shadow:
+    inset 0 0 18px rgba(255,255,255,0.05),
+    0 14px 34px rgba(0,0,0,0.28);
+}
+
+.score-gauge::before {
+  content: "";
+  position: absolute;
+  inset: 12px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 30% 20%, rgba(255,255,255,0.08), transparent 55%),
+    linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.015));
+  border: 1px solid rgba(255,255,255,0.08);
+  backdrop-filter: blur(6px);
+}
+
+.score-gauge__inner {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+}
+
+.score-gauge__value {
+  font-size: 38px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.score-gauge__sub {
+  margin-top: 4px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
 /* MOBILE */
 @media (max-width: 980px){
   .hero__grid{ grid-template-columns: 1fr; }
