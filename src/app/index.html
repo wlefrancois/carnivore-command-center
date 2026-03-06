@@ -1,3 +1,44 @@
+<section class="page-hero">
+  <div class="container">
+    <h1>Carnivore Command Center</h1>
+    <p class="lead">Login or create your CCC account.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="card" style="max-width:480px; margin:auto;">
+      <h3>Account Access</h3>
+      <div class="divider" style="margin:14px 0;"></div>
+
+      <label class="micro muted">Email</label>
+      <input
+        id="email"
+        type="email"
+        placeholder="you@email.com"
+        style="width:100%; padding:12px; margin-top:6px; margin-bottom:12px;"
+      />
+
+      <label class="micro muted">Password</label>
+      <input
+        id="password"
+        type="password"
+        placeholder="Enter password"
+        style="width:100%; padding:12px; margin-top:6px; margin-bottom:16px;"
+      />
+
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <button class="btn btn--primary" id="loginBtn" type="button">Login</button>
+        <button class="btn btn--ghost" id="signupBtn" type="button">Create Account</button>
+        <a class="btn btn--ghost" href="/">Back to site</a>
+      </div>
+
+      <p id="authMsg" class="micro muted" style="margin-top:14px;"></p>
+      <p id="debugMsg" class="micro muted" style="margin-top:8px; opacity:.9;"></p>
+    </div>
+  </div>
+</section>
+
 <script type="module">
   const msg = document.getElementById("authMsg");
   const dbg = document.getElementById("debugMsg");
@@ -25,10 +66,15 @@
           return;
         }
 
-        const { data } = await supabase
+        const { data, error: logError } = await supabase
           .from("daily_logs")
           .select("id")
           .limit(1);
+
+        if (logError) {
+          msg.textContent = "Login succeeded, but log check failed: " + logError.message;
+          return;
+        }
 
         if (!data || data.length === 0) {
           window.location.href = "/app/onboarding/";
@@ -44,8 +90,11 @@
       msg.textContent = "Creating account...";
       try {
         const { error } = await signUp(email.value.trim(), password.value);
-        if (error) msg.textContent = error.message;
-        else msg.textContent = "Account created. Check your email to confirm, then login.";
+        if (error) {
+          msg.textContent = error.message;
+        } else {
+          msg.textContent = "Account created. Check your email to confirm, then login.";
+        }
       } catch (e) {
         msg.textContent = "Signup error: " + (e?.message || e);
       }
