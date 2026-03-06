@@ -33,3 +33,12 @@ export async function signIn(email, password) {
 export async function signOut() {
   return supabase.auth.signOut();
 }
+async function applyAuthNav(){
+  const { data } = await supabase.auth.getSession();
+
+  if(data?.session){
+    document.body.classList.add("is-logged-in");
+  }
+}
+
+applyAuthNav();
