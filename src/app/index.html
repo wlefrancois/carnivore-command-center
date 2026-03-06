@@ -62,7 +62,16 @@
       try {
         const { error } = await signIn(email.value.trim(), password.value);
         if (error) msg.textContent = error.message;
-        else window.location.href = "/app/dashboard/";
+       const { data } = await supabase
+  .from("daily_logs")
+  .select("id")
+  .limit(1);
+
+if (!data || data.length === 0) {
+  window.location.href = "/app/onboarding/";
+} else {
+  window.location.href = "/app/dashboard/";
+}
       } catch (e) {
         msg.textContent = "Login error: " + (e?.message || e);
       }
