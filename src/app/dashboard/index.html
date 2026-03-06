@@ -14,12 +14,13 @@
 
 <section class="section">
   <div class="container">
+    <div id="scoreCard" class="card" style="margin-bottom:14px;"></div>
 
-   <div id="scoreCard" class="card" style="margin-bottom:14px;"></div>
+    <div id="actionCard" class="card" style="margin-bottom:14px;"></div>
 
-<div id="actionCard" class="card" style="margin-bottom:14px;"></div>
+    <div id="breakdownCard" class="card" style="margin-bottom:14px;"></div>
 
-<div id="todayCard" class="card" style="margin-bottom:14px;"></div>
+    <div id="todayCard" class="card" style="margin-bottom:14px;"></div>
 
     <div id="stats" class="cards cards--3" style="margin-bottom:18px;"></div>
 
@@ -52,7 +53,6 @@
     </div>
 
     <div id="logs"></div>
-
   </div>
 </section>
 
@@ -63,6 +63,7 @@ import { Chart } from "/js/vendor/chart.js";
 const userLine = document.getElementById("userLine");
 const scoreCard = document.getElementById("scoreCard");
 const actionCard = document.getElementById("actionCard");
+const breakdownCard = document.getElementById("breakdownCard");
 const todayCard = document.getElementById("todayCard");
 const stats = document.getElementById("stats");
 const insights = document.getElementById("insights");
@@ -154,6 +155,28 @@ function computeScore(row) {
   return { total, parts };
 }
 
+function categorizeParts(parts) {
+  const helped = [];
+  const hurt = [];
+
+  for (const [key, value] of Object.entries(parts)) {
+    const max =
+      key === "sleep" ? 25 :
+      key === "energy" ? 25 :
+      key === "inflammation" ? 20 :
+      key === "digestion" ? 15 :
+      key === "mood" ? 10 :
+      key === "water" ? 5 : 10;
+
+    const ratio = value / max;
+
+    if (ratio >= 0.6) helped.push(key);
+    if (ratio <= 0.4) hurt.push(key);
+  }
+
+  return { helped, hurt };
+}
+
 function getRecommendation(limiter) {
   switch (limiter) {
     case "sleep":
@@ -205,7 +228,6 @@ function getLimiter(parts) {
   ];
   entries.sort((a, b) => a[1] - b[1]);
   return entries[0][0];
-  
 }
 
 function corrSleepEnergy(rows) {
@@ -222,7 +244,10 @@ function corrSleepEnergy(rows) {
   const xAvg = Number(avg(xs));
   const yAvg = Number(avg(ys));
 
-  let num = 0, denX = 0, denY = 0;
+  let num = 0;
+  let denX = 0;
+  let denY = 0;
+
   for (let i = 0; i < pairs.length; i++) {
     const dx = xs[i] - xAvg;
     const dy = ys[i] - yAvg;
@@ -307,6 +332,35 @@ async function load() {
     const yesterdayScore = yesterdayLog ? computeScore(yesterdayLog).total : null;
     const delta = yesterdayScore != null ? todayScore.total - yesterdayScore : null;
     const limiter = getLimiter(todayScore.parts);
+    const recommendation = getRecommendation(limiter);
+    const { helped, hurt } = categorizeParts(todayScore.parts);
+
+    actionCard.innerHTML = `
+      <strong>${recommendation.title}</strong>
+      <div class="micro muted" style="margin-top:8px; line-height:1.5;">
+        ${recommendation.body}
+      </div>
+    `;
+
+    breakdownCard.innerHTML = `
+      <strong>Score Breakdown</strong>
+
+      <div style="display:flex; gap:30px; margin-top:10px; flex-wrap:wrap;">
+        <div>
+          <div class="micro muted">Helped Your Score</div>
+          <div style="margin-top:6px;">
+            ${helped.length ? helped.map(x => `• ${x}`).join("<br>") : "—"}
+          </div>
+        </div>
+
+        <div>
+          <div class="micro muted">Limited Your Score</div>
+          <div style="margin-top:6px;">
+            ${hurt.length ? hurt.map(x => `• ${x}`).join("<br>") : "—"}
+          </div>
+        </div>
+      </div>
+    `;
 
     scoreCard.innerHTML = `
       <div style="display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; align-items:end;">
@@ -331,11 +385,19 @@ async function load() {
     `;
   } else {
     actionCard.innerHTML = `
-  <strong>Today's Recommendation</strong>
-  <div class="micro muted" style="margin-top:8px;">
-    Log today to generate your first personalized recommendation.
-  </div>
-`;
+      <strong>Today's Recommendation</strong>
+      <div class="micro muted" style="margin-top:8px;">
+        Log today to generate your first personalized recommendation.
+      </div>
+    `;
+
+    breakdownCard.innerHTML = `
+      <strong>Score Breakdown</strong>
+      <div class="micro muted" style="margin-top:8px;">
+        Log today to see what helped and what limited your score.
+      </div>
+    `;
+
     scoreCard.innerHTML = `
       <strong>No readiness score yet</strong>
       <div class="micro muted" style="margin-top:6px;">
@@ -391,14 +453,6 @@ async function load() {
 
   if (todayLog) {
     const limiter = getLimiter(computeScore(todayLog).parts);
-    const recommendation = getRecommendation(limiter);
-
-actionCard.innerHTML = `
-  <strong>${recommendation.title}</strong>
-  <div class="micro muted" style="margin-top:8px; line-height:1.5;">
-    ${recommendation.body}
-  </div>
-`;
     insightHTML += `Biggest opportunity today: improve ${limiter}.<br>`;
   }
 
