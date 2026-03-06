@@ -743,3 +743,18 @@ main{
     width:fit-content;
   }
 }
+.nav__loggedIn{
+  display:none;
+}
+
+.nav__loggedOut{
+  display:inline-flex;
+}
+
+body.is-logged-in .nav__loggedOut{
+  display:none;
+}
+
+body.is-logged-in .nav__loggedIn{
+  display:inline-flex;
+}
