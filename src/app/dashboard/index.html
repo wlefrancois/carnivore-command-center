@@ -1,7 +1,7 @@
 <section class="page-hero">
   <div class="container">
     <h1>Dashboard</h1>
-    <p class="lead">Signals and trends from the last 7 days.</p>
+    <p class="lead">Your metabolic signals over the last 7 days.</p>
 
     <div class="hero__cta">
       <a class="btn btn--primary" href="/app/log/">Log Today</a>
@@ -15,13 +15,14 @@
 <section class="section">
   <div class="container">
 
+    <div id="scoreCard" class="card" style="margin-bottom:14px;"></div>
+
     <div id="todayCard" class="card" style="margin-bottom:14px;"></div>
 
     <div id="stats" class="cards cards--3" style="margin-bottom:18px;"></div>
 
     <div id="insights" class="card" style="margin-bottom:18px;"></div>
 
-    <!-- CHARTS -->
     <div class="cards cards--3" style="margin-bottom:18px;">
       <div class="card">
         <strong>Energy</strong>
@@ -58,6 +59,7 @@ import { supabase, getUser, signOut } from "/js/app.js";
 import { Chart } from "/js/vendor/chart.js";
 
 const userLine = document.getElementById("userLine");
+const scoreCard = document.getElementById("scoreCard");
 const todayCard = document.getElementById("todayCard");
 const stats = document.getElementById("stats");
 const insights = document.getElementById("insights");
@@ -88,6 +90,80 @@ function trend(arr) {
   return "→ steady";
 }
 
+function escapeHtml(s) {
+  return String(s)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+function normalizeSleep(hours) {
+  if (hours == null || Number.isNaN(Number(hours))) return 0;
+  const h = Number(hours);
+  if (h >= 8) return 25;
+  if (h >= 7) return 22;
+  if (h >= 6) return 18;
+  if (h >= 5) return 12;
+  return 6;
+}
+
+function normalizeTenScale(value, maxPoints) {
+  if (value == null || Number.isNaN(Number(value))) return 0;
+  return (Number(value) / 10) * maxPoints;
+}
+
+function normalizeReverseTenScale(value, maxPoints) {
+  if (value == null || Number.isNaN(Number(value))) return 0;
+  return ((11 - Number(value)) / 10) * maxPoints;
+}
+
+function normalizeWater(oz) {
+  if (oz == null || Number.isNaN(Number(oz))) return 0;
+  const w = Number(oz);
+  if (w >= 100) return 5;
+  if (w >= 80) return 4;
+  if (w >= 60) return 3;
+  if (w >= 40) return 2;
+  return 1;
+}
+
+function computeScore(row) {
+  const parts = {
+    sleep: normalizeSleep(row.sleep_hours),
+    energy: normalizeTenScale(row.energy, 25),
+    inflammation: normalizeReverseTenScale(row.inflammation, 20),
+    digestion: normalizeTenScale(row.digestion, 15),
+    mood: normalizeTenScale(row.mood, 10),
+    water: normalizeWater(row.water_oz)
+  };
+
+  const total = Math.round(
+    parts.sleep +
+    parts.energy +
+    parts.inflammation +
+    parts.digestion +
+    parts.mood +
+    parts.water
+  );
+
+  return { total, parts };
+}
+
+function getLimiter(parts) {
+  const entries = [
+    ["sleep", parts.sleep],
+    ["energy", parts.energy],
+    ["inflammation", parts.inflammation],
+    ["digestion", parts.digestion],
+    ["mood", parts.mood],
+    ["hydration", parts.water]
+  ];
+  entries.sort((a, b) => a[1] - b[1]);
+  return entries[0][0];
+}
+
 function corrSleepEnergy(rows) {
   const pairs = rows
     .filter((r) => r.sleep_hours != null && r.energy != null)
@@ -115,17 +191,8 @@ function corrSleepEnergy(rows) {
   if (!Number.isFinite(corr)) return null;
 
   if (corr > 0.4) return "Sleep tends to correlate with higher energy for you.";
-  if (corr < -0.4) return "More sleep correlates with lower energy (check sleep quality/stress).";
+  if (corr < -0.4) return "More sleep correlates with lower energy for you. Check sleep quality or timing.";
   return null;
-}
-
-function escapeHtml(s) {
-  return String(s)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
 }
 
 function buildLineChart(canvasId, label, labels, values, yMin = null, yMax = null) {
@@ -165,6 +232,7 @@ function buildLineChart(canvasId, label, labels, values, yMin = null, yMax = nul
     }
   });
 }
+
 async function load() {
   const user = await getUser();
   if (!user) {
@@ -181,15 +249,50 @@ async function load() {
     .limit(7);
 
   if (error) {
-    todayCard.textContent = `Error loading logs: ${error.message}`;
+    scoreCard.textContent = `Error loading logs: ${error.message}`;
     return;
   }
 
   const rows = data || [];
-
-  // Today status
   const today = todayISODate();
   const todayLog = rows.find((r) => r.log_date === today);
+
+  if (todayLog) {
+    const todayScore = computeScore(todayLog);
+    const yesterdayLog = rows.find((r) => r.log_date !== today);
+    const yesterdayScore = yesterdayLog ? computeScore(yesterdayLog).total : null;
+    const delta = yesterdayScore != null ? todayScore.total - yesterdayScore : null;
+    const limiter = getLimiter(todayScore.parts);
+
+    scoreCard.innerHTML = `
+      <div style="display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; align-items:end;">
+        <div>
+          <div class="micro muted">Metabolic Readiness</div>
+          <div style="font-size:48px; font-weight:700; line-height:1;">${todayScore.total}<span style="font-size:20px; opacity:.7;"> / 100</span></div>
+          <div class="micro muted" style="margin-top:8px;">
+            ${delta == null ? "First score logged" : delta > 0 ? `▲ +${delta} from last log` : delta < 0 ? `▼ ${delta} from last log` : "→ unchanged from last log"}
+          </div>
+        </div>
+
+        <div class="micro muted" style="line-height:1.6;">
+          <div><strong>Main limiter:</strong> ${limiter}</div>
+          <div>Sleep: ${todayScore.parts.sleep.toFixed(0)}/25</div>
+          <div>Energy: ${todayScore.parts.energy.toFixed(0)}/25</div>
+          <div>Inflammation: ${todayScore.parts.inflammation.toFixed(0)}/20</div>
+          <div>Digestion: ${todayScore.parts.digestion.toFixed(0)}/15</div>
+          <div>Mood: ${todayScore.parts.mood.toFixed(0)}/10</div>
+          <div>Hydration: ${todayScore.parts.water.toFixed(0)}/5</div>
+        </div>
+      </div>
+    `;
+  } else {
+    scoreCard.innerHTML = `
+      <strong>No readiness score yet</strong>
+      <div class="micro muted" style="margin-top:6px;">
+        Log today to generate your first Metabolic Readiness score.
+      </div>
+    `;
+  }
 
   todayCard.innerHTML = todayLog
     ? `<strong>Today logged ✅</strong>
@@ -199,16 +302,16 @@ async function load() {
     : `<strong>Today not logged yet</strong>
        <div class="micro muted" style="margin-top:6px;">Click “Log Today” to record your day.</div>`;
 
-  // Stats + trends (based on newest->oldest order in rows)
   const energy = rows.map((r) => r.energy == null ? null : Number(r.energy));
   const sleep = rows.map((r) => r.sleep_hours == null ? null : Number(r.sleep_hours));
   const inflam = rows.map((r) => r.inflammation == null ? null : Number(r.inflammation));
+  const scores = rows.map((r) => computeScore(r).total);
 
   stats.innerHTML = `
     <div class="card">
-      <strong>Energy (avg)</strong>
-      <div class="lead">${avg(energy) ?? "-"}</div>
-      <div class="micro muted">${trend(energy)}</div>
+      <strong>Readiness (avg)</strong>
+      <div class="lead">${avg(scores) ?? "-"}</div>
+      <div class="micro muted">${trend(scores)}</div>
     </div>
 
     <div class="card">
@@ -224,74 +327,68 @@ async function load() {
     </div>
   `;
 
-  // Insights
-  let bestEnergy = null;
-  let lowestInflam = null;
-
+  let bestScore = null;
   rows.forEach((r) => {
-    if (r.energy != null) {
-      const val = Number(r.energy);
-      if (!Number.isNaN(val) && (!bestEnergy || val > Number(bestEnergy.energy))) bestEnergy = r;
-    }
-    if (r.inflammation != null) {
-      const val = Number(r.inflammation);
-      if (!Number.isNaN(val) && (!lowestInflam || val < Number(lowestInflam.inflammation))) lowestInflam = r;
-    }
+    const score = computeScore(r).total;
+    if (!bestScore || score > bestScore.score) bestScore = { row: r, score };
   });
 
   let insightHTML = `<strong>Insights</strong><div class="micro muted" style="margin-top:6px; line-height:1.5;">`;
-  if (bestEnergy) insightHTML += `Best energy day: ${bestEnergy.log_date} (${bestEnergy.energy})<br>`;
-  if (lowestInflam) insightHTML += `Lowest inflammation day: ${lowestInflam.log_date} (${lowestInflam.inflammation})<br>`;
+  if (bestScore) insightHTML += `Best readiness day: ${bestScore.row.log_date} (${bestScore.score}/100)<br>`;
 
   const sleepInsight = corrSleepEnergy(rows);
   if (sleepInsight) insightHTML += `${sleepInsight}<br>`;
 
+  if (todayLog) {
+    const limiter = getLimiter(computeScore(todayLog).parts);
+    insightHTML += `Biggest opportunity today: improve ${limiter}.<br>`;
+  }
+
   insightHTML += `</div>`;
   insights.innerHTML = insightHTML;
 
-  // Charts need oldest->newest
   const asc = [...rows].sort((a, b) => (a.log_date > b.log_date ? 1 : -1));
-  const labels = asc.map((r) => r.log_date.slice(5)); // MM-DD
+  const labels = asc.map((r) => r.log_date.slice(5));
 
   buildLineChart(
-  "chartEnergy",
-  "Energy",
-  labels,
-  asc.map(r => (r.energy == null ? null : Number(r.energy))),
-  1, 10
-);
+    "chartEnergy",
+    "Energy",
+    labels,
+    asc.map((r) => (r.energy == null ? null : Number(r.energy))),
+    1, 10
+  );
 
-buildLineChart(
-  "chartSleep",
-  "Sleep Hours",
-  labels,
-  asc.map(r => (r.sleep_hours == null ? null : Number(r.sleep_hours))),
-  0, 10
-);
+  buildLineChart(
+    "chartSleep",
+    "Sleep Hours",
+    labels,
+    asc.map((r) => (r.sleep_hours == null ? null : Number(r.sleep_hours))),
+    0, 10
+  );
 
-buildLineChart(
-  "chartInflam",
-  "Inflammation",
-  labels,
-  asc.map(r => (r.inflammation == null ? null : Number(r.inflammation))),
-  1, 10
-);
+  buildLineChart(
+    "chartInflam",
+    "Inflammation",
+    labels,
+    asc.map((r) => (r.inflammation == null ? null : Number(r.inflammation))),
+    1, 10
+  );
 
-  // Log list
   logsEl.innerHTML = rows
-    .map(
-      (r) => `
-      <div class="card" style="margin-bottom:10px;">
-        <div style="display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;">
-          <strong>${r.log_date}</strong>
-          <span class="micro muted">
-            Energy: ${r.energy ?? "-"} • Sleep: ${r.sleep_hours ?? "-"} • Water: ${r.water_oz ?? "-"}
-          </span>
+    .map((r) => {
+      const score = computeScore(r).total;
+      return `
+        <div class="card" style="margin-bottom:10px;">
+          <div style="display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;">
+            <strong>${r.log_date}</strong>
+            <span class="micro muted">
+              Score: ${score}/100 • Energy: ${r.energy ?? "-"} • Sleep: ${r.sleep_hours ?? "-"} • Water: ${r.water_oz ?? "-"}
+            </span>
+          </div>
+          ${r.notes ? `<div class="micro muted" style="margin-top:6px;">${escapeHtml(r.notes).slice(0,180)}</div>` : ""}
         </div>
-        ${r.notes ? `<div class="micro muted" style="margin-top:6px;">${escapeHtml(r.notes).slice(0,180)}</div>` : ""}
-      </div>
-    `
-    )
+      `;
+    })
     .join("") || `<div class="card">No logs yet. Click “Log Today”.</div>`;
 }
 
