@@ -1,8 +1,4 @@
 {
   "name": "carnivore-command-center",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "build": "node scripts/build.js"
-  }
-} 
+  "private": true
+}
