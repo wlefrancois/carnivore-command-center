@@ -5,275 +5,500 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Carnivore Command Center</title>
 
-  <meta name="description" content="Elite performance + metabolic intelligence. Track what matters, see patterns, and execute with confidence." />
+  <meta name="description" content="Understand your body. Win more days. Track readiness, recovery, digestion, sleep, and performance with simple daily signals." />
   <meta name="theme-color" content="#0b1020" />
 
   <meta property="og:title" content="Carnivore Command Center" />
-  <meta property="og:description" content="Elite performance + metabolic intelligence. Track what matters, see patterns, and execute with confidence." />
+  <meta property="og:description" content="Track metabolic signals, choose your mode, and discover what improves energy, recovery, and readiness." />
   <meta property="og:type" content="website" />
 
-  <link rel="stylesheet" href="/css/styles.css" />
+  <link rel="stylesheet" href="css/styles.css" />
 </head>
 
 <body>
 
-  <!-- NAV (matches your CSS) -->
   <header class="nav">
     <div class="container nav__inner">
-      <a class="brand" href="/">
-        <img class="brand__logo" src="/assets/img/ccc_logo_primary_transparent.png" alt="Carnivore Command Center logo" />
+      <a class="brand" href="index.html">
+        <img class="brand__logo" src="assets/img/ccc_logo_primary_transparent.png" alt="Carnivore Command Center logo" />
         <div>
           <div class="brand__name">Carnivore Command Center</div>
-          <div class="brand__tag">Elite performance + metabolic intelligence</div>
+          <div class="brand__tag">Stop Guessing. Start Understanding.</div>
         </div>
       </a>
 
- <nav class="nav-links">
+      <nav class="nav-links">
   <a href="/product/">Product</a>
+  <a href="/dashboard/">Dashboard</a>
   <a href="/beta/">Beta Program</a>
   <a href="/investor/">Investor</a>
   <a href="/about/">About</a>
 </nav>
 
-      <a class="btn btn--ghost btn--sm" href="#beta">Join</a>
+      <div style="display:flex; gap:10px; align-items:center;">
+  <a class="btn btn--ghost btn--sm" href="/app/">Login</a>
+  <a class="btn btn--primary btn--sm" href="#beta">Join</a>
+</div>
     </div>
   </header>
 
-  <!-- HERO -->
   <main>
-    <section class="hero" id="top">
-      <div class="container hero__grid">
-        <!-- LEFT -->
-        <div>
-          <div class="badge">Early Access • Building now</div>
-          <h1>Metabolic clarity.<br/>Performance intelligence.</h1>
+
+    <!-- HERO -->
+    <section class="hero hero--metabo hero--elite" id="top">
+      <div class="container hero__grid hero__grid--elite">
+
+        <div class="hero__copy">
+          <div class="badge">Early Access • Beta</div>
+
+          <h1>
+            Understand Your Body.<br />
+            Win More Days.
+          </h1>
+
           <p class="lead">
-            CCC helps you track the variables that actually move energy, symptoms, and performance — then turns patterns
-            into decisions you can act on.
+            Carnivore Command Center helps you track the daily signals that drive
+            energy, recovery, digestion, sleep, and performance — then turns those
+            patterns into decisions you can actually use.
           </p>
 
           <div class="hero__cta">
-            <a class="btn btn--primary" href="#beta">Join Early Access</a>
-            <a class="btn btn--ghost" href="/investor/">Investor</a>
+  <a class="btn btn--primary" href="#beta">Join Early Access</a>
+  <a class="btn btn--ghost" href="#how-it-works">See How It Works</a>
+  <a class="btn btn--ghost" href="/dashboard/">View Live Demo</a>
+</div>
+          <div class="hero__proof">
+            Built for real people building real momentum.
           </div>
 
-          <div class="trust">
+          <div class="trust trust--hero">
             <div class="trust__item">
-              <div class="trust__title">Decision-focused tracking</div>
-              <div class="trust__text">Signals that actually drive outcomes — not vanity metrics.</div>
+              <div class="trust__title">Built for</div>
+              <div class="trust__text">Busy adults • Carnivore • Keto • Performance • Real life</div>
             </div>
+
             <div class="trust__item">
-              <div class="trust__title">Patterns over time</div>
-              <div class="trust__text">Trends across days/weeks/cycles so you can act with confidence.</div>
+              <div class="trust__title">Tracks</div>
+              <div class="trust__text">Sleep • Hydration • Digestion • Energy • Readiness</div>
             </div>
+
             <div class="trust__item">
-              <div class="trust__title">Family profiles</div>
-              <div class="trust__text">Track yourself and your family under one system.</div>
+              <div class="trust__title">Guides</div>
+              <div class="trust__text">Focus • Recovery • Workout • Travel • Damage Control</div>
             </div>
           </div>
 
           <div class="divider"></div>
+
           <div class="micro">
-            <strong>Note:</strong> CCC is an information and tracking platform, not medical advice.
-            Always consult your clinician for health decisions.
+            <strong>Note:</strong> Carnivore Command Center is an informational and tracking platform,
+            not medical advice. Always consult a qualified healthcare professional for medical concerns.
           </div>
         </div>
 
-        <!-- RIGHT PANEL (matches your CSS hero__panel + panel) -->
-        <div class="hero__panel" id="beta">
-          <div class="panel">
-            <div class="panel__top">
-              <div class="panel__title">Join Early Access</div>
-              <div class="panel__subtitle">Get beta invites + build updates.</div>
+        <div class="hero__visual">
+          <div class="metabo-card metabo-card--hero metabo-card--hero-elite">
+            <img
+              class="metabo-card__img metabo-card__img--hero"
+              src="assets/img/mascot/metabo-focus.png"
+              alt="Metabo Focus Mode"
+            />
+            <div class="metabo-card__label">
+              <div class="metabo-card__name">Meet Metabo</div>
+              <div class="metabo-card__role">Your metabolic performance coach</div>
             </div>
+          </div>
+        </div>
 
-            <ul class="checklist">
-              <li><span class="check"></span><span>Invite waves (limited seats)</span></li>
-              <li><span class="check"></span><span>Founder updates + roadmap visibility</span></li>
-              <li><span class="check"></span><span>Early adopter pricing advantages</span></li>
-            </ul>
+      </div>
+    </section>
 
-            <!-- Embed shell you already styled -->
-            <div class="embedShell">
-              <div class="kit-wrap">
-                <!-- KIT EMBED (ONLY ONCE) -->
-                <script async src="https://f.convertkit.com/ckjs/ck.5.js"></script>
+    <!-- STATS STRIP -->
+    <section class="stats-strip">
+      <div class="container">
+        <div class="stats-strip__grid">
+          <div class="stats-chip">
+            <strong>23</strong>
+            <span>Founding users joined</span>
+          </div>
+          <div class="stats-chip">
+            <strong>5</strong>
+            <span>Daily modes</span>
+          </div>
+          <div class="stats-chip">
+            <strong>1 min</strong>
+            <span>Check-in flow</span>
+          </div>
+          <div class="stats-chip">
+            <strong>Beta</strong>
+            <span>Access open now</span>
+          </div>
+        </div>
+      </div>
+    </section>
 
-                <form action="https://app.kit.com/forms/9117546/subscriptions"
-                      class="seva-form formkit-form"
-                      method="post"
-                      data-sv-form="9117546"
-                      data-uid="bfb8567a55"
-                      data-format="inline"
-                      data-version="5"
-                      data-options="{&quot;settings&quot;:{&quot;after_subscribe&quot;:{&quot;action&quot;:&quot;message&quot;,&quot;success_message&quot;:&quot;You’re officially on the Carnivore Command Center early access list. Watch your inbox.&quot;,&quot;redirect_url&quot;:&quot;&quot;},&quot;analytics&quot;:{&quot;google&quot;:null,&quot;fathom&quot;:null,&quot;facebook&quot;:null,&quot;segment&quot;:null,&quot;pinterest&quot;:null,&quot;sparkloop&quot;:null,&quot;googletagmanager&quot;:null},&quot;modal&quot;:{&quot;trigger&quot;:&quot;timer&quot;,&quot;scroll_percentage&quot;:null,&quot;timer&quot;:5,&quot;devices&quot;:&quot;all&quot;,&quot;show_once_every&quot;:15},&quot;powered_by&quot;:{&quot;show&quot;:true,&quot;url&quot;:&quot;https://kit.com/features/forms?utm_campaign=poweredby&amp;utm_content=form&amp;utm_medium=referral&amp;utm_source=dynamic&quot;},&quot;recaptcha&quot;:{&quot;enabled&quot;:false},&quot;return_visitor&quot;:{&quot;action&quot;:&quot;show&quot;,&quot;custom_content&quot;:&quot;&quot;},&quot;slide_in&quot;:{&quot;display_in&quot;:&quot;bottom_right&quot;,&quot;trigger&quot;:&quot;timer&quot;,&quot;scroll_percentage&quot;:null,&quot;timer&quot;:5,&quot;devices&quot;:&quot;all&quot;,&quot;show_once_every&quot;:15},&quot;sticky_bar&quot;:{&quot;display_in&quot;:&quot;top&quot;,&quot;trigger&quot;:&quot;timer&quot;,&quot;scroll_percentage&quot;:null,&quot;timer&quot;:5,&quot;devices&quot;:&quot;all&quot;,&quot;show_once_every&quot;:15}},&quot;version&quot;:&quot;5&quot;}"
-                      min-width="400 500 600 700 800">
+    <!-- HOW IT WORKS -->
+    <section class="section" id="how-it-works">
+      <div class="container">
+        <div class="section__head section__head--center">
+          <h2>How Carnivore Command Center Works</h2>
+          <p>
+            A simple system for turning daily signals into better performance decisions.
+          </p>
+        </div>
 
-                  <div class="formkit-container" data-style="full" style="background-color: rgb(255, 255, 255);">
-                    <div class="formkit-hero">
-                      <div class="formkit-hero-bg-color" style="background-color: rgb(16, 16, 16);"></div>
-                      <div class="formkit-hero-bg-img" style="background-color: rgb(16, 16, 16); background-image: url(&quot;//pages.convertkit.com/assets/rainier/bg.jpg&quot;); opacity: 0.3;"></div>
-                      <div class="formkit-header" data-element="header" style="color: rgb(255, 255, 255); font-size: 25px; font-weight: 700;">
-                        <p>Early Access — Carnivore Command Center</p>
-                      </div>
-                      <div class="formkit-content" data-element="content" style="color: rgb(255, 255, 255); font-size: 18px; font-weight: 400;">
-                        <p>Join the beta and be first to access the data-driven metabolic health platform.</p>
-                      </div>
-                    </div>
+        <div class="cards cards--3 cards--feature">
+          <div class="card card--feature">
+            <img class="card__mascot" src="assets/img/mascot/metabo-scientist.png" alt="Metabo Scientist" />
+            <div class="card__kicker">1</div>
+            <h3>Log Signals</h3>
+            <p>
+              Track sleep, hydration, digestion, mood, soreness, and energy in under 60 seconds.
+            </p>
+          </div>
 
-                    <div>
-                      <ul class="formkit-alert formkit-alert-error" data-element="errors" data-group="alert"></ul>
+          <div class="card card--feature">
+            <img class="card__mascot" src="assets/img/mascot/metabo-focus.png" alt="Metabo Focus" />
+            <div class="card__kicker">2</div>
+            <h3>See Readiness</h3>
+            <p>
+              CCC converts your signals into a daily readiness score and shows what is limiting you.
+            </p>
+          </div>
 
-                      <div data-element="fields" data-stacked="false" class="seva-fields formkit-fields">
-                        <div class="formkit-field">
-                          <input class="formkit-input"
-                                 name="email_address"
-                                 aria-label="Email Address"
-                                 placeholder="Email Address"
-                                 required
-                                 type="email"
-                                 style="color: rgb(146, 146, 146); border-color: rgb(228, 231, 234); border-radius: 0px; font-weight: 400;">
-                        </div>
+          <div class="card card--feature">
+            <img class="card__mascot" src="assets/img/mascot/metabo-recovery.png" alt="Metabo Recovery" />
+            <div class="card__kicker">3</div>
+            <h3>Improve Daily</h3>
+            <p>
+              Get simple next-step actions that help improve tomorrow’s score without overcomplicating your day.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-                        <button data-element="submit"
-                                class="formkit-submit formkit-submit"
-                                style="color: rgb(255, 255, 255); background-color: rgb(199, 92, 86); border-radius: 0px; font-weight: 700;">
-                          <div class="formkit-spinner"><div></div><div></div><div></div></div>
-                          <span>Join Early Access</span>
-                        </button>
-                      </div>
+    <!-- MODES -->
+    <section class="section section--alt" id="modes">
+      <div class="container">
+        <div class="section__head section__head--center">
+          <h2>Choose Your Mode Today</h2>
+          <p>
+            CCC is built for real life. Some days are for focus. Some are for recovery. Some are for bouncing back.
+          </p>
+        </div>
 
-                      <div class="formkit-powered-by-convertkit-container">
-                        <a href="https://kit.com/features/forms?utm_campaign=poweredby&amp;utm_content=form&amp;utm_medium=referral&amp;utm_source=dynamic"
-                           data-element="powered-by"
-                           class="formkit-powered-by-convertkit"
-                           data-variant="dark"
-                           target="_blank"
-                           rel="nofollow">Built with Kit</a>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Keeping Kit's style block OUTSIDE here is fine because your theme overrides are already in styles.css.
-                       If Kit gave you a huge <style> block, you can paste it here if you want, but it is optional. -->
-                </form>
-              </div>
+        <div class="mode-grid mode-grid--elite">
+          <div class="mode-card mode-card--elite">
+            <img class="mode-card__img" src="assets/img/mascot/metabo-focus.png" alt="Focus Mode" />
+            <div class="mode-card__body">
+              <h3>Focus Mode</h3>
+              <p>Protect attention, reduce noise, and build momentum.</p>
+              <span class="mode-card__tag">Enter Focus Mode</span>
             </div>
+          </div>
 
-            <div class="micro muted" style="margin-top:10px;">
-              No spam. Unsubscribe anytime. If you don’t see confirmation, check Promotions/Junk.
+          <div class="mode-card mode-card--elite">
+            <img class="mode-card__img" src="assets/img/mascot/metabo-recovery.png" alt="Recovery Mode" />
+            <div class="mode-card__body">
+              <h3>Recovery Mode</h3>
+              <p>Reset after stress, poor sleep, or a hard training block.</p>
+              <span class="mode-card__tag">Recover Smarter</span>
+            </div>
+          </div>
+
+          <div class="mode-card mode-card--elite">
+            <img class="mode-card__img" src="assets/img/mascot/metabo-workout.png" alt="Workout Mode" />
+            <div class="mode-card__body">
+              <h3>Workout Mode</h3>
+              <p>Train with purpose when your body is ready to perform.</p>
+              <span class="mode-card__tag">Train With Intent</span>
+            </div>
+          </div>
+
+          <div class="mode-card mode-card--elite">
+            <img class="mode-card__img" src="assets/img/mascot/metabo-damage-control.png" alt="Damage Control Mode" />
+            <div class="mode-card__body">
+              <h3>Damage Control</h3>
+              <p>Bounce back after weekends, setbacks, bad sleep, or off-plan days.</p>
+              <span class="mode-card__tag">Bounce Back Fast</span>
+            </div>
+          </div>
+
+          <div class="mode-card mode-card--elite">
+            <img class="mode-card__img" src="assets/img/mascot/metabo-travel.png" alt="Travel Mode" />
+            <div class="mode-card__body">
+              <h3>Travel Mode</h3>
+              <p>Stay consistent when flights, hotels, and time zones disrupt your routine.</p>
+              <span class="mode-card__tag">Stay On Track</span>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- PRODUCT -->
-    <section class="section" id="product">
+    <!-- DASHBOARD PREVIEW -->
+    <section class="section" id="dashboard-preview">
       <div class="container">
-        <div class="section__head">
-          <h2>Stop guessing. Start measuring.</h2>
-          <p>Most tracking collects data without producing understanding. CCC connects inputs → outcomes and surfaces what to do next.</p>
+        <div class="split dashboard-split">
+          <div>
+            <div class="section__head">
+              <h2>Real Signals. Real Decisions.</h2>
+              <p>
+                CCC is not fluff. It helps you understand what your body is telling you and what to do next.
+              </p>
+            </div>
+
+            <div class="stack">
+              <div class="mini mini--bright">
+                <div class="mini__title">What CCC helps you answer</div>
+                <ul class="bullets">
+                  <li>Why was energy lower today?</li>
+                  <li>Is hydration affecting readiness?</li>
+                  <li>Should today be a workout day or a recovery day?</li>
+                  <li>What pattern keeps repeating?</li>
+                </ul>
+              </div>
+
+              <div class="pillrow">
+                <span class="pill">Readiness Score</span>
+                <span class="pill">Daily Logging</span>
+                <span class="pill">Experiments</span>
+                <span class="pill">Mode-Based Guidance</span>
+              </div>
+
+              <div style="margin-top: 8px;">
+                <a class="btn btn--primary" href="beta/index.html">See Beta Program</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="dashboard-preview-card">
+            <img
+              class="dashboard-preview-card__img"
+              src="assets/img/dashboard-preview.png"
+              alt="CCC dashboard preview"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TRANSFORMATION -->
+    <section class="section section--alt" id="transformation">
+      <div class="container">
+        <div class="section__head section__head--center">
+          <h2>From Guessing To Momentum</h2>
+          <p>
+            CCC helps turn random ups and downs into a more intentional daily system.
+          </p>
+        </div>
+
+        <div class="cards cards--2 cards--compare">
+          <div class="card card--compare card--compare-bad">
+            <h3>Before CCC</h3>
+            <ul class="bullets bullets--tight">
+              <li>Random fatigue</li>
+              <li>Inconsistent workouts</li>
+              <li>Weekend setbacks</li>
+              <li>Guessing what went wrong</li>
+              <li>No clear daily plan</li>
+            </ul>
+          </div>
+
+          <div class="card card--compare card--compare-good">
+            <h3>After CCC</h3>
+            <ul class="bullets bullets--tight">
+              <li>Clear daily readiness</li>
+              <li>Smarter workout decisions</li>
+              <li>Better recovery habits</li>
+              <li>Faster bounce-back after setbacks</li>
+              <li>More consistency, less guesswork</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BUILT FOR REAL LIFE -->
+    <section class="section" id="real-life">
+      <div class="container">
+        <div class="split built-for-split">
+          <div class="built-for-visual">
+            <div class="metabo-card metabo-card--support">
+              <img
+                class="metabo-card__img metabo-card__img--support"
+                src="assets/img/mascot/metabo-recovery.png"
+                alt="Metabo Recovery"
+              />
+            </div>
+          </div>
+
+          <div>
+            <div class="section__head">
+              <h2>Built for Real Life</h2>
+              <p>
+                CCC is designed for people balancing work, family, travel, workouts, stress, and imperfect weekends.
+              </p>
+            </div>
+
+            <div class="cards cards--2">
+              <div class="card">
+                <h3>For busy adults</h3>
+                <p>
+                  Get useful insight fast without turning health into a second full-time job.
+                </p>
+              </div>
+
+              <div class="card">
+                <h3>For performance-minded users</h3>
+                <p>
+                  Train harder when readiness is high and recover smarter when it is not.
+                </p>
+              </div>
+
+              <div class="card">
+                <h3>For carnivore / keto / low-carb lifestyles</h3>
+                <p>
+                  Track how your current way of eating affects sleep, digestion, energy, and recovery.
+                </p>
+              </div>
+
+              <div class="card">
+                <h3>For real setbacks</h3>
+                <p>
+                  Use damage control and recovery modes when life is messy, not just when everything is perfect.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIAL PLACEHOLDERS -->
+    <section class="section" id="proof">
+      <div class="container">
+        <div class="section__head section__head--center">
+          <h2>What Users Will Say</h2>
+          <p>
+            Replace these with real beta feedback as it comes in.
+          </p>
         </div>
 
         <div class="cards cards--3">
           <div class="card">
-            <div class="card__kicker">1</div>
-            <h3>Signals that matter</h3>
-            <p>Energy, symptoms, sleep, performance — and the behaviors that drive them.</p>
+            <p>
+              “CCC helped me finally see why my energy kept crashing in the afternoon.”
+            </p>
           </div>
+
           <div class="card">
-            <div class="card__kicker">2</div>
-            <h3>Patterns over time</h3>
-            <p>Trends across days/weeks/cycles instead of single-day noise.</p>
+            <p>
+              “The readiness score changed how I decide between training hard and backing off.”
+            </p>
           </div>
+
           <div class="card">
-            <div class="card__kicker">3</div>
-            <h3>Decisions, not dashboards</h3>
-            <p>Clear interpretations so you know what to change next.</p>
+            <p>
+              “Damage Control mode helped me recover from weekends without feeling like I failed.”
+            </p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- HOW -->
-    <section class="section section--alt" id="how">
-      <div class="container">
-        <div class="section__head">
-          <h2>How it works</h2>
-          <p>A simple loop: track → observe → adjust → repeat.</p>
-        </div>
-
-        <div class="split">
-          <div class="card">
-            <h3>Daily loop</h3>
-            <ul class="bullets">
-              <li>Capture inputs (nutrition, hydration, electrolytes, sleep, training)</li>
-              <li>Log outcomes (energy, mood, digestion, inflammation, performance)</li>
-              <li>Spot patterns and run smarter experiments</li>
-            </ul>
-            <div class="pillrow">
-              <span class="pill">Family profiles</span>
-              <span class="pill">Experiment-friendly</span>
-              <span class="pill">Decision-focused</span>
-            </div>
-          </div>
-
-          <div class="stack">
-            <div class="mini mini--bright">
-              <div class="mini__title">Built for consistency</div>
-              <ul class="bullets">
-                <li>Fast daily entry</li>
-                <li>Minimal friction</li>
-                <li>Clear “what to do next”</li>
-              </ul>
-            </div>
-            <div class="mini">
-              <div class="mini__title">Data you can act on</div>
-              <ul class="bullets">
-                <li>Patterns across time</li>
-                <li>Triggers and wins</li>
-                <li>Cleaner decision-making</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- CTA -->
+    <!-- FINAL CTA -->
     <section class="cta" id="cta">
       <div class="container">
-        <div class="cta__inner">
-          <div>
-            <div class="panel__title">Ready for early access?</div>
-            <div class="panel__subtitle">Join the list and get invites in waves.</div>
+        <div class="cta__inner cta__inner--metabo">
+          <div class="cta__content">
+            <div class="panel__title">Ready to know what your body is telling you?</div>
+            <div class="panel__subtitle">
+              Join early access and help shape Carnivore Command Center.
+            </div>
+            <div class="cta__actions" style="margin-top:14px;">
+              <a class="btn btn--primary" href="#beta">Join Early Access</a>
+              <a class="btn btn--ghost" href="investor/index.html">Investor Info</a>
+            </div>
           </div>
-          <div class="cta__actions">
-            <a class="btn btn--primary" href="#beta">Join Early Access</a>
-            <a class="btn btn--ghost" href="/investor/">Investor</a>
+
+          <div class="cta__mascot">
+            <img src="assets/img/mascot/metabo-welcome.png" alt="Metabo Welcome" />
           </div>
         </div>
       </div>
     </section>
+
+    <!-- BETA -->
+    <section id="beta" class="section">
+  <div class="container">
+    <div class="card beta-card beta-card--elite">
+
+      <div class="beta-card__top">
+        <div>
+          <h2>Join Founding Early Access</h2>
+          <p class="muted">
+            Get beta invites, build updates, and a first look at the platform.
+          </p>
+        </div>
+
+        <div class="founders-counter founders-counter--elite">
+          <strong>23 of 100</strong> founding users joined the beta
+        </div>
+      </div>
+
+      <div class="embedShell">
+        <div class="beta-inline">
+
+          <div>
+            <div class="beta-inline__title">Get Early Access</div>
+            <div class="beta-inline__text">
+              Join founding users and get first access, updates, and beta invites.
+            </div>
+          </div>
+
+          <form action="https://app.kit.com/forms/9117546/subscriptions" method="post">
+            <input
+              type="email"
+              name="email_address"
+              placeholder="Enter your email"
+              required
+              class="beta-input"
+            >
+
+            <button type="submit" class="btn btn--primary">
+              Join Early Access
+            </button>
+          </form>
+
+        </div>
+      </div>
+
+      <div class="beta-card__foot micro muted">
+        Free during beta. No spam. Unsubscribe anytime. If you don’t see confirmation, check Promotions/Junk.
+      </div>
+
+    </div>
+  </div>
+</section>
 
   </main>
 
-  <!-- FOOTER -->
   <footer class="footer">
     <div class="container footer__inner">
       <div>
         <div class="footer__brand">Carnivore Command Center</div>
-        <div class="footer__muted">Elite performance + metabolic intelligence</div>
+        <div class="footer__muted">Stop Guessing. Start Understanding.</div>
         <div class="footer__muted">© <span id="year"></span> All rights reserved.</div>
+        <div class="footer__muted">Built under WDC LLC</div>
       </div>
 
       <div class="footer__links">
-        <a href="/about/">About</a>
-        <a href="/investor/">Investor</a>
-        <a href="/privacy/">Privacy</a>
-        <a href="/terms/">Terms</a>
+        <a href="about/index.html">About</a>
+        <a href="investor/index.html">Investor</a>
+        <a href="privacy/index.html">Privacy</a>
+        <a href="terms/index.html">Terms</a>
       </div>
     </div>
   </footer>
