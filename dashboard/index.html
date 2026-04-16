@@ -12,17 +12,6 @@
       </div>
 
       <div class="dashboard-hero">
-        <div class="card stat-card stat-card--big">
-          <div class="micro">Today</div>
-          <div class="stat-card__value stat-card__value--green">82</div>
-          <div class="stat-card__sub">Readiness Score • Optimal Zone</div>
-
-          <div class="dashboard-actions">
-            <a class="btn btn--primary" href="/beta/">Join Early Access</a>
-            <a class="btn btn--ghost" href="/app/">Open App</a>
-          </div>
-        </div>
-
         <div class="card dashboard-mode">
           <div class="dashboard-mode__top">
             <div>
@@ -43,6 +32,36 @@
             <span class="pill">Deep Work</span>
             <span class="pill">Hydrate</span>
             <span class="pill">Protein</span>
+          </div>
+
+          <div class="dashboard-actions">
+            <a class="btn btn--primary" href="/beta/">Join Early Access</a>
+            <a class="btn btn--ghost" href="/app/">Open App</a>
+          </div>
+        </div>
+
+        <div class="card dashboard-score-card">
+          <div class="micro">Today</div>
+
+          <div class="dashboard-score-wrap">
+            <div class="score-gauge" style="--score:82;">
+              <div class="score-gauge__inner">
+                <div class="score-gauge__value">82</div>
+                <div class="score-gauge__sub">Optimal Zone</div>
+              </div>
+            </div>
+
+            <div class="dashboard-score-meta">
+              <h3>Readiness Score</h3>
+              <p class="muted">
+                Strong enough for focus, clean execution, and a productive training window if recovery stays on track.
+              </p>
+
+              <div class="dashboard-score-tags">
+                <span class="pill">+6 vs yesterday</span>
+                <span class="pill">Sleep helped</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -67,9 +86,9 @@
         </div>
 
         <div class="card stat-card">
-          <div class="micro">Limiting Factor</div>
-          <div class="stat-card__value">Stress</div>
-          <div class="stat-card__sub">Mild but manageable</div>
+          <div class="micro">Stress</div>
+          <div class="stat-card__value">Manageable</div>
+          <div class="stat-card__sub">Mild but controlled</div>
         </div>
       </div>
 
@@ -111,6 +130,27 @@
           </div>
         </div>
 
+        <div class="card dashboard-driver-card">
+          <h2 style="margin-top:0;">What’s Driving Today</h2>
+          <p class="muted">The biggest positive and negative levers right now.</p>
+
+          <div class="driver-grid">
+            <div class="driver driver--good">
+              <div class="driver__label">Helping</div>
+              <div class="driver__title">Sleep + Hydration</div>
+              <p>Both are supporting stronger readiness and steadier energy today.</p>
+            </div>
+
+            <div class="driver driver--warn">
+              <div class="driver__label">Limiting</div>
+              <div class="driver__title">Stress Load</div>
+              <p>Mild pressure is manageable, but it could drag energy later if ignored.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dashboard-grid dashboard-grid--2">
         <div class="card">
           <h2 style="margin-top:0;">Top Insight</h2>
           <p class="muted">What seems to matter most right now.</p>
@@ -134,6 +174,19 @@
               </div>
             </div>
           </div>
+        </div>
+
+        <div class="card">
+          <h2 style="margin-top:0;">Today’s Game Plan</h2>
+          <p class="muted">Simple next steps based on today’s score.</p>
+
+          <ul class="bullets bullets--tight">
+            <li>Hydrate early and stay ahead.</li>
+            <li>Prioritize protein at first meal.</li>
+            <li>Use Focus Mode for the first 90 minutes.</li>
+            <li>Walk after meals if possible.</li>
+            <li>Protect tonight’s sleep window.</li>
+          </ul>
         </div>
       </div>
 
@@ -166,16 +219,16 @@
         </div>
 
         <div class="card">
-          <h2 style="margin-top:0;">Today’s Game Plan</h2>
-          <p class="muted">Simple next steps based on today’s score.</p>
+          <h2 style="margin-top:0;">Mode History</h2>
+          <p class="muted">How the last few days have played out.</p>
 
-          <ul class="bullets bullets--tight">
-            <li>Hydrate early and stay ahead.</li>
-            <li>Prioritize protein at first meal.</li>
-            <li>Use Focus Mode for the first 90 minutes.</li>
-            <li>Walk after meals if possible.</li>
-            <li>Protect tonight’s sleep window.</li>
-          </ul>
+          <div class="pillrow">
+            <span class="pill">Fri • Focus</span>
+            <span class="pill">Thu • Workout</span>
+            <span class="pill">Wed • Recovery</span>
+            <span class="pill">Tue • Focus</span>
+            <span class="pill">Mon • Damage Control</span>
+          </div>
         </div>
       </div>
 
