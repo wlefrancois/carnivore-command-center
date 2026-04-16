@@ -1944,3 +1944,89 @@ body.is-logged-in .nav__loggedIn{
     grid-template-columns:1fr;
   }
 }
+/* =========================================================
+   CCC DASHBOARD ELITE REAL V2
+========================================================= */
+
+.dashboard-score-card{
+  min-height:100%;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  background:
+    radial-gradient(500px 180px at 20% 0%, rgba(94,162,255,.14), transparent 60%),
+    linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.025));
+}
+
+.dashboard-score-wrap{
+  display:grid;
+  grid-template-columns:160px 1fr;
+  gap:22px;
+  align-items:center;
+  margin-top:14px;
+}
+
+.dashboard-score-meta h3{
+  margin:0 0 8px;
+  font-size:28px;
+  line-height:1.08;
+}
+
+.dashboard-score-tags{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:12px;
+}
+
+.dashboard-driver-card .driver-grid{
+  display:grid;
+  gap:14px;
+  margin-top:10px;
+}
+
+.driver{
+  padding:18px;
+  border-radius:18px;
+  border:1px solid rgba(255,255,255,.08);
+  background:rgba(255,255,255,.03);
+}
+
+.driver__label{
+  font-size:13px;
+  font-weight:800;
+  letter-spacing:.02em;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-bottom:6px;
+}
+
+.driver__title{
+  font-size:22px;
+  font-weight:900;
+  line-height:1.1;
+  margin-bottom:8px;
+}
+
+.driver p{
+  margin:0;
+  color:var(--muted);
+  line-height:1.6;
+}
+
+.driver--good{
+  border-color:rgba(53,208,127,.20);
+  box-shadow:inset 0 0 0 1px rgba(53,208,127,.03);
+}
+
+.driver--warn{
+  border-color:rgba(255,179,71,.20);
+  box-shadow:inset 0 0 0 1px rgba(255,179,71,.03);
+}
+
+@media (max-width: 980px){
+  .dashboard-score-wrap{
+    grid-template-columns:1fr;
+    justify-items:start;
+  }
+}
