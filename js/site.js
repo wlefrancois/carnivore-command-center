@@ -36,3 +36,34 @@
     });
   }
 })();
+document.addEventListener("DOMContentLoaded", () => {
+  const toggle = document.querySelector(".nav__toggle");
+  const nav = document.querySelector("[data-nav]");
+
+  if (toggle && nav) {
+    toggle.addEventListener("click", () => {
+      const isOpen = nav.classList.toggle("is-open");
+      toggle.classList.toggle("is-open", isOpen);
+      toggle.setAttribute("aria-expanded", String(isOpen));
+    });
+
+    nav.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => {
+        nav.classList.remove("is-open");
+        toggle.classList.remove("is-open");
+        toggle.setAttribute("aria-expanded", "false");
+      });
+    });
+
+    document.addEventListener("click", (event) => {
+      const clickedInsideNav = nav.contains(event.target);
+      const clickedToggle = toggle.contains(event.target);
+
+      if (!clickedInsideNav && !clickedToggle) {
+        nav.classList.remove("is-open");
+        toggle.classList.remove("is-open");
+        toggle.setAttribute("aria-expanded", "false");
+      }
+    });
+  }
+});
