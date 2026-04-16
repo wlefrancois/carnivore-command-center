@@ -1513,7 +1513,7 @@ main{
 /* footer */
 .footer{
   margin-top:72px;
-  padding:34px 0;
+  padding:40px 0;
   border-top:1px solid rgba(255,255,255,.08);
   background:rgba(0,0,0,.08);
 }
@@ -2662,4 +2662,24 @@ main{
   line-height: .96;
   letter-spacing: -0.03em;
   max-width: 8ch;
+}
+@media (max-width: 560px){
+  .hero__cta{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:12px;
+  }
+
+  .hero__cta .btn{
+    width:100%;
+    justify-content:center;
+  }
+}
+.footer{
+  padding:40px 0;
+}
+
+.footer a,
+.footer p{
+  font-size:14px;
 }
