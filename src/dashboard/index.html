@@ -1,232 +1,276 @@
-<!doctype html>
-<html lang="en">
+<section class="section">
+  <div class="container">
+    <div class="dashboard-shell">
 
-
-  <main class="section">
-    <div class="container">
-
-      <div class="dashboard-shell">
-
-        <!-- top hero -->
-        <section class="dashboard-hero card">
-          <div class="dashboard-hero__left">
-            <div class="badge">Today</div>
-            <h1 class="dashboard-title">You’ve Got This.</h1>
-            <p class="lead dashboard-lead">
-              Your signals look solid. Stay sharp, execute well, and protect your momentum.
-            </p>
-
-            <div class="dashboard-actions">
-              <a class="btn btn--primary" href="#">Log Signals</a>
-              <a class="btn btn--ghost" href="#">View Trends</a>
-            </div>
-          </div>
-
-          <div class="dashboard-hero__right">
-            <div class="dashboard-mode card">
-              <div class="dashboard-mode__top">
-                <div>
-                  <div class="micro">Today’s Recommendation</div>
-                  <h2>Focus Mode</h2>
-                </div>
-                <img src="/assets/img/mascot/metabo-focus.png" alt="Metabo Focus" class="dashboard-mode__img" />
-              </div>
-              <p class="muted">Readiness is solid. Good day for deep work, cleaner decisions, and execution.</p>
-              <div class="pillrow">
-                <span class="pill">Deep Work</span>
-                <span class="pill">Hydrate</span>
-                <span class="pill">Protein</span>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- score cards -->
-        <section class="dashboard-grid dashboard-grid--4">
-          <article class="card stat-card stat-card--big">
-            <div class="micro">Readiness Score</div>
-            <div class="stat-card__value stat-card__value--green">82</div>
-            <div class="stat-card__sub">Optimal Zone</div>
-          </article>
-
-          <article class="card stat-card">
-            <div class="micro">Sleep</div>
-            <div class="stat-card__value">7h 43m</div>
-            <div class="stat-card__sub">Good</div>
-          </article>
-
-          <article class="card stat-card">
-            <div class="micro">Hydration</div>
-            <div class="stat-card__value">88%</div>
-            <div class="stat-card__sub">On Target</div>
-          </article>
-
-          <article class="card stat-card">
-            <div class="micro">Energy</div>
-            <div class="stat-card__value">Strong</div>
-            <div class="stat-card__sub">Up vs. yesterday</div>
-          </article>
-        </section>
-
-        <!-- middle row -->
-        <section class="dashboard-grid dashboard-grid--2">
-          <article class="card">
-            <div class="section__head">
-              <h2>Signals</h2>
-              <p>Quick read on what is driving the day.</p>
-            </div>
-
-            <div class="signal-list">
-              <div class="signal-row">
-                <div class="signal-row__label">Sleep</div>
-                <div class="signal-row__bar"><span style="width: 78%"></span></div>
-                <div class="signal-row__value">78</div>
-              </div>
-
-              <div class="signal-row">
-                <div class="signal-row__label">Hydration</div>
-                <div class="signal-row__bar"><span style="width: 88%"></span></div>
-                <div class="signal-row__value">88</div>
-              </div>
-
-              <div class="signal-row">
-                <div class="signal-row__label">Digestion</div>
-                <div class="signal-row__bar"><span style="width: 74%"></span></div>
-                <div class="signal-row__value">74</div>
-              </div>
-
-              <div class="signal-row">
-                <div class="signal-row__label">Mood</div>
-                <div class="signal-row__bar"><span style="width: 81%"></span></div>
-                <div class="signal-row__value">81</div>
-              </div>
-
-              <div class="signal-row">
-                <div class="signal-row__label">Soreness</div>
-                <div class="signal-row__bar"><span style="width: 42%"></span></div>
-                <div class="signal-row__value">42</div>
-              </div>
-            </div>
-          </article>
-
-          <article class="card">
-            <div class="section__head">
-              <h2>Top Insight</h2>
-              <p>Your biggest lever today.</p>
-            </div>
-
-            <div class="insight-box">
-              <img src="/assets/img/mascot/metabo-recovery.png" alt="Metabo Recovery" class="insight-box__img" />
-              <div>
-                <h3>Better sleep = better readiness</h3>
-                <p class="muted">
-                  Your best scores this week all followed nights with 7+ hours of sleep and better hydration.
-                </p>
-                <div class="pillrow">
-                  <span class="pill">+12 point trend</span>
-                  <span class="pill">Repeat tonight</span>
-                </div>
-              </div>
-            </div>
-          </article>
-        </section>
-
-        <!-- trends -->
-        <section class="dashboard-grid dashboard-grid--2">
-          <article class="card">
-            <div class="section__head">
-              <h2>7-Day Trend</h2>
-              <p>Momentum over the last week.</p>
-            </div>
-
-            <div class="trend-chart">
-              <div class="trend-bars">
-                <div class="bar" style="height: 58%"></div>
-                <div class="bar" style="height: 52%"></div>
-                <div class="bar" style="height: 66%"></div>
-                <div class="bar" style="height: 74%"></div>
-                <div class="bar" style="height: 81%"></div>
-                <div class="bar" style="height: 69%"></div>
-                <div class="bar" style="height: 76%"></div>
-              </div>
-              <div class="trend-days">
-                <span>Sat</span>
-                <span>Sun</span>
-                <span>Mon</span>
-                <span>Tue</span>
-                <span>Wed</span>
-                <span>Thu</span>
-                <span>Fri</span>
-              </div>
-            </div>
-          </article>
-
-          <article class="card">
-            <div class="section__head">
-              <h2>Today’s Game Plan</h2>
-              <p>Simple next steps.</p>
-            </div>
-
-            <ul class="checklist">
-              <li><span class="check"></span><span>Hydrate early and stay ahead.</span></li>
-              <li><span class="check"></span><span>Prioritize protein at first meal.</span></li>
-              <li><span class="check"></span><span>Use Focus Mode for the first 90 minutes.</span></li>
-              <li><span class="check"></span><span>Walk after meals if possible.</span></li>
-              <li><span class="check"></span><span>Protect tonight’s sleep window.</span></li>
-            </ul>
-          </article>
-        </section>
-
-        <!-- recent logs -->
-        <section class="card">
-          <div class="section__head">
-            <h2>Recent Logs</h2>
-            <p>Latest entries from the last few days.</p>
-          </div>
-
-          <div class="logs-table">
-            <div class="logs-row logs-row--head">
-              <div>Date</div>
-              <div>Mode</div>
-              <div>Readiness</div>
-              <div>Sleep</div>
-              <div>Note</div>
-            </div>
-
-            <div class="logs-row">
-              <div>Fri</div>
-              <div>Focus</div>
-              <div>82</div>
-              <div>7h 43m</div>
-              <div>Solid morning. Energy stable.</div>
-            </div>
-
-            <div class="logs-row">
-              <div>Thu</div>
-              <div>Workout</div>
-              <div>76</div>
-              <div>7h 08m</div>
-              <div>Training felt good. Hydration improved.</div>
-            </div>
-
-            <div class="logs-row">
-              <div>Wed</div>
-              <div>Recovery</div>
-              <div>69</div>
-              <div>6h 11m</div>
-              <div>Kept it lighter. Early night helped.</div>
-            </div>
-          </div>
-        </section>
-
+      <div>
+        <div class="badge">Live Product Demo</div>
+        <h1 class="dashboard-title">You’ve Got This.</h1>
+        <p class="lead dashboard-lead">
+          CCC turns daily signals into a simple readiness score, a recommended mode,
+          and practical next steps you can actually use.
+        </p>
       </div>
+
+      <div class="dashboard-hero">
+        <div class="card dashboard-mode">
+          <div class="dashboard-mode__top">
+            <div>
+              <div class="micro">Today’s Recommendation</div>
+              <h2>Focus Mode</h2>
+              <p class="muted">
+                Readiness is solid. Protect attention, execute well, and keep momentum high.
+              </p>
+            </div>
+
+            <img
+              class="dashboard-mode__img"
+              src="/assets/img/mascot/metabo-focus.png"
+              alt="Metabo Focus Mode" />
+          </div>
+
+          <div class="pillrow">
+            <span class="pill">Deep Work</span>
+            <span class="pill">Hydrate</span>
+            <span class="pill">Protein</span>
+          </div>
+
+          <div class="dashboard-actions">
+            <a class="btn btn--primary" href="/beta/">Join Early Access</a>
+            <a class="btn btn--ghost" href="/app/">Open App</a>
+          </div>
+        </div>
+
+        <div class="card dashboard-score-card">
+          <div class="micro">Today</div>
+
+          <div class="dashboard-score-wrap">
+            <div class="score-gauge" style="--score:82;">
+              <div class="score-gauge__inner">
+                <div class="score-gauge__value">82</div>
+                <div class="score-gauge__sub">Optimal Zone</div>
+              </div>
+            </div>
+
+            <div class="dashboard-score-meta">
+              <h3>Readiness Score</h3>
+              <p class="muted">
+                Strong enough for focus, clean execution, and a productive training window if recovery stays on track.
+              </p>
+
+              <div class="dashboard-score-tags">
+                <span class="pill">+6 vs yesterday</span>
+                <span class="pill">Sleep helped</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dashboard-grid dashboard-grid--4">
+        <div class="card stat-card">
+          <div class="micro">Sleep</div>
+          <div class="stat-card__value">7h 43m</div>
+          <div class="stat-card__sub">Good recovery window</div>
+        </div>
+
+        <div class="card stat-card">
+          <div class="micro">Hydration</div>
+          <div class="stat-card__value">88%</div>
+          <div class="stat-card__sub">On target today</div>
+        </div>
+
+        <div class="card stat-card">
+          <div class="micro">Energy</div>
+          <div class="stat-card__value">Strong</div>
+          <div class="stat-card__sub">Up vs. yesterday</div>
+        </div>
+
+        <div class="card stat-card">
+          <div class="micro">Stress</div>
+          <div class="stat-card__value">Manageable</div>
+          <div class="stat-card__sub">Mild but controlled</div>
+        </div>
+      </div>
+
+      <div class="dashboard-grid dashboard-grid--2">
+        <div class="card">
+          <h2 style="margin-top:0;">Signals</h2>
+          <p class="muted">Quick read on what is driving the day.</p>
+
+          <div class="signal-list">
+            <div class="signal-row">
+              <div class="signal-row__label">Sleep</div>
+              <div class="signal-row__bar"><span style="width:78%;"></span></div>
+              <div class="signal-row__value">78</div>
+            </div>
+
+            <div class="signal-row">
+              <div class="signal-row__label">Hydration</div>
+              <div class="signal-row__bar"><span style="width:88%;"></span></div>
+              <div class="signal-row__value">88</div>
+            </div>
+
+            <div class="signal-row">
+              <div class="signal-row__label">Digestion</div>
+              <div class="signal-row__bar"><span style="width:74%;"></span></div>
+              <div class="signal-row__value">74</div>
+            </div>
+
+            <div class="signal-row">
+              <div class="signal-row__label">Mood</div>
+              <div class="signal-row__bar"><span style="width:81%;"></span></div>
+              <div class="signal-row__value">81</div>
+            </div>
+
+            <div class="signal-row">
+              <div class="signal-row__label">Soreness</div>
+              <div class="signal-row__bar"><span style="width:42%;"></span></div>
+              <div class="signal-row__value">42</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card dashboard-driver-card">
+          <h2 style="margin-top:0;">What’s Driving Today</h2>
+          <p class="muted">The biggest positive and negative levers right now.</p>
+
+          <div class="driver-grid">
+            <div class="driver driver--good">
+              <div class="driver__label">Helping</div>
+              <div class="driver__title">Sleep + Hydration</div>
+              <p>Both are supporting stronger readiness and steadier energy today.</p>
+            </div>
+
+            <div class="driver driver--warn">
+              <div class="driver__label">Limiting</div>
+              <div class="driver__title">Stress Load</div>
+              <p>Mild pressure is manageable, but it could drag energy later if ignored.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dashboard-grid dashboard-grid--2">
+        <div class="card">
+          <h2 style="margin-top:0;">Top Insight</h2>
+          <p class="muted">What seems to matter most right now.</p>
+
+          <div class="insight-box">
+            <img
+              class="insight-box__img"
+              src="/assets/img/mascot/metabo-recovery.png"
+              alt="Metabo Recovery" />
+
+            <div>
+              <h3 style="margin-top:0;">Better sleep = better readiness</h3>
+              <p class="muted">
+                Your best scores this week all followed nights with 7+ hours of sleep
+                and stronger hydration.
+              </p>
+
+              <div class="pillrow">
+                <span class="pill">+12 point trend</span>
+                <span class="pill">Repeat tonight</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2 style="margin-top:0;">Today’s Game Plan</h2>
+          <p class="muted">Simple next steps based on today’s score.</p>
+
+          <ul class="bullets bullets--tight">
+            <li>Hydrate early and stay ahead.</li>
+            <li>Prioritize protein at first meal.</li>
+            <li>Use Focus Mode for the first 90 minutes.</li>
+            <li>Walk after meals if possible.</li>
+            <li>Protect tonight’s sleep window.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="dashboard-grid dashboard-grid--2">
+        <div class="card">
+          <h2 style="margin-top:0;">7-Day Trend</h2>
+          <p class="muted">Momentum over the last week.</p>
+
+          <div class="trend-chart">
+            <div class="trend-bars">
+              <div class="bar" style="height:62%;"></div>
+              <div class="bar" style="height:56%;"></div>
+              <div class="bar" style="height:72%;"></div>
+              <div class="bar" style="height:81%;"></div>
+              <div class="bar" style="height:88%;"></div>
+              <div class="bar" style="height:75%;"></div>
+              <div class="bar" style="height:84%;"></div>
+            </div>
+
+            <div class="trend-days">
+              <span>Sat</span>
+              <span>Sun</span>
+              <span>Mon</span>
+              <span>Tue</span>
+              <span>Wed</span>
+              <span>Thu</span>
+              <span>Fri</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2 style="margin-top:0;">Mode History</h2>
+          <p class="muted">How the last few days have played out.</p>
+
+          <div class="pillrow">
+            <span class="pill">Fri • Focus</span>
+            <span class="pill">Thu • Workout</span>
+            <span class="pill">Wed • Recovery</span>
+            <span class="pill">Tue • Focus</span>
+            <span class="pill">Mon • Damage Control</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 style="margin-top:0;">Recent Logs</h2>
+        <p class="muted">Latest entries from the last few days.</p>
+
+        <div class="logs-table">
+          <div class="logs-row logs-row--head">
+            <div>Date</div>
+            <div>Mode</div>
+            <div>Readiness</div>
+            <div>Sleep</div>
+            <div>Note</div>
+          </div>
+
+          <div class="logs-row">
+            <div>Fri</div>
+            <div>Focus</div>
+            <div>82</div>
+            <div>7h 43m</div>
+            <div>Solid morning. Energy stable.</div>
+          </div>
+
+          <div class="logs-row">
+            <div>Thu</div>
+            <div>Workout</div>
+            <div>76</div>
+            <div>7h 08m</div>
+            <div>Training felt good. Hydration improved.</div>
+          </div>
+
+          <div class="logs-row">
+            <div>Wed</div>
+            <div>Recovery</div>
+            <div>69</div>
+            <div>6h 11m</div>
+            <div>Kept it lighter. Early night helped.</div>
+          </div>
+        </div>
+      </div>
+
     </div>
-  </main>
-
- 
-
-  <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
-  </script>
-</body>
-</html>
+  </div>
+</section>
