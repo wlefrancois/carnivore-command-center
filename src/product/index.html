@@ -1,232 +1,249 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Product Demo — Carnivore Command Center</title>
-  <meta name="description" content="See how Carnivore Command Center helps track readiness, recovery, signals, and daily momentum." />
-  <meta name="theme-color" content="#0b1020" />
-  <link rel="stylesheet" href="/css/styles.css" />
-</head>
+<section class="section">
+  <div class="container">
 
-<body>
-  <header class="nav">
-    <div class="container nav__inner">
-      <a class="brand" href="/">
-        <img class="brand__logo" src="/assets/img/ccc_logo_primary_transparent.png" alt="Carnivore Command Center logo" />
-        <div>
-          <div class="brand__name">Carnivore Command Center</div>
-          <div class="brand__tag">Product Demo</div>
-        </div>
-      </a>
+    <div class="section__head section__head--center">
+      <div class="badge">Live Product Preview</div>
 
-      <nav class="nav-links">
-        <a href="/">Home</a>
-        <a href="/beta/">Beta Program</a>
-        <a href="/investor/">Investor</a>
-        <a href="/about/">About</a>
-      </nav>
+      <h1 style="margin-top:16px;">
+        Stop Guessing.<br>
+        Start Understanding What Actually Improves Your Day.
+      </h1>
 
-      <div style="display:flex; gap:10px; align-items:center;">
-  <a class="btn btn--ghost btn--sm" href="/app/">Login</a>
-  <a class="btn btn--primary btn--sm" href="/#beta">Join</a>
-</div>
+      <p class="lead" style="max-width:900px;margin:18px auto 0;">
+        Carnivore Command Center turns confusing daily signals into a readiness score,
+        recommended mode, and simple next actions that help users perform better in real life.
+      </p>
+
+      <div style="margin-top:22px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+        <a class="btn btn--primary" href="/beta/">Join Early Access</a>
+        <a class="btn btn--ghost" href="/dashboard/">Open Demo Dashboard</a>
+      </div>
     </div>
-  </header>
 
-  <main>
-    <section class="section">
-      <div class="container">
+  </div>
+</section>
 
-        <div class="section__head">
-          <div class="badge">Live Product Preview</div>
-          <h1 style="margin:14px 0 10px; font-size: clamp(40px, 5vw, 64px); line-height:1.04; letter-spacing:-0.03em;">
-            See CCC In Action
-          </h1>
-          <p class="lead">
-            Carnivore Command Center helps users understand readiness, track daily signals,
-            and choose the right mode for the day.
-          </p>
+<section class="section section--alt">
+  <div class="container">
+
+    <div class="dashboard-grid dashboard-grid--2">
+
+      <div class="card">
+        <h2 style="margin-top:0;">What CCC Does</h2>
+
+        <div class="signal-list">
+
+          <div class="signal-row">
+            <div class="signal-row__label">Tracks Signals</div>
+            <div class="signal-row__bar"><span style="width:92%;"></span></div>
+          </div>
+
+          <div class="signal-row">
+            <div class="signal-row__label">Readiness Score</div>
+            <div class="signal-row__bar"><span style="width:86%;"></span></div>
+          </div>
+
+          <div class="signal-row">
+            <div class="signal-row__label">Mode Guidance</div>
+            <div class="signal-row__bar"><span style="width:90%;"></span></div>
+          </div>
+
+          <div class="signal-row">
+            <div class="signal-row__label">Daily Actions</div>
+            <div class="signal-row__bar"><span style="width:84%;"></span></div>
+          </div>
+
         </div>
 
-        <div class="split dashboard-split">
-          <div>
-            <div class="mini mini--bright">
-              <div class="mini__title">What the product does</div>
-              <ul class="bullets">
-                <li>Tracks daily signals in under a minute</li>
-                <li>Calculates a readiness score</li>
-                <li>Surfaces limiting factors like sleep or hydration</li>
-                <li>Guides users into Focus, Recovery, Workout, Travel, or Damage Control mode</li>
-              </ul>
-            </div>
-
-            <div class="pillrow">
-              <span class="pill">Readiness</span>
-              <span class="pill">Signals</span>
-              <span class="pill">Modes</span>
-              <span class="pill">Experiments</span>
-              <span class="pill">Insights</span>
-            </div>
-
-            <div style="margin-top:16px; display:flex; gap:12px; flex-wrap:wrap;">
-              <a class="btn btn--primary" href="/#beta">Join Early Access</a>
-              <a class="btn btn--ghost" href="/investor/">Investor Info</a>
-            </div>
-          </div>
-
-          <div class="dashboard-preview-card">
-            <img
-              class="dashboard-preview-card__img"
-              src="/assets/img/dashboard-preview.png"
-              alt="CCC dashboard preview"
-            />
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <section class="section section--alt">
-      <div class="container">
-        <div class="section__head section__head--center">
-          <h2>How Users Interact With CCC</h2>
-          <p>
-            A simple workflow that turns confusing daily signals into useful action.
-          </p>
-        </div>
-
-        <div class="cards cards--3 cards--feature">
-          <div class="card card--feature">
-            <img class="card__mascot" src="/assets/img/mascot/metabo-scientist.png" alt="Metabo Scientist" />
-            <div class="card__kicker">1</div>
-            <h3>Log Signals</h3>
-            <p>
-              Sleep, hydration, digestion, mood, soreness, and energy are logged quickly.
-            </p>
-          </div>
-
-          <div class="card card--feature">
-            <img class="card__mascot" src="/assets/img/mascot/metabo-focus.png" alt="Metabo Focus" />
-            <div class="card__kicker">2</div>
-            <h3>See Readiness</h3>
-            <p>
-              CCC turns those signals into a readiness score and identifies limiting factors.
-            </p>
-          </div>
-
-          <div class="card card--feature">
-            <img class="card__mascot" src="/assets/img/mascot/metabo-recovery.png" alt="Metabo Recovery" />
-            <div class="card__kicker">3</div>
-            <h3>Choose Your Mode</h3>
-            <p>
-              Users get a clearer daily direction instead of guessing what to do next.
-            </p>
-          </div>
+        <div class="pillrow" style="margin-top:18px;">
+          <span class="pill">Sleep</span>
+          <span class="pill">Hydration</span>
+          <span class="pill">Recovery</span>
+          <span class="pill">Stress</span>
+          <span class="pill">Energy</span>
         </div>
       </div>
-    </section>
 
-    <section class="section">
-      <div class="container">
-        <div class="section__head section__head--center">
-          <h2>Metabo Modes</h2>
-          <p>
-            Built for real life, not perfect life.
-          </p>
-        </div>
+      <div class="card dashboard-preview-card">
+        <img
+          class="dashboard-preview-card__img"
+          src="/assets/img/dashboard-preview.png"
+          alt="CCC Dashboard Preview">
+      </div>
 
-        <div class="mode-grid mode-grid--elite">
-          <div class="mode-card mode-card--elite">
-            <img class="mode-card__img" src="/assets/img/mascot/metabo-focus.png" alt="Focus Mode" />
-            <div class="mode-card__body">
-              <h3>Focus Mode</h3>
-              <p>Protect attention, reduce noise, and build momentum.</p>
-              <span class="mode-card__tag">Enter Focus</span>
-            </div>
-          </div>
+    </div>
 
-          <div class="mode-card mode-card--elite">
-            <img class="mode-card__img" src="/assets/img/mascot/metabo-recovery.png" alt="Recovery Mode" />
-            <div class="mode-card__body">
-              <h3>Recovery Mode</h3>
-              <p>Reset after stress, poor sleep, or a hard training block.</p>
-              <span class="mode-card__tag">Recover Smarter</span>
-            </div>
-          </div>
+  </div>
+</section>
 
-          <div class="mode-card mode-card--elite">
-            <img class="mode-card__img" src="/assets/img/mascot/metabo-workout.png" alt="Workout Mode" />
-            <div class="mode-card__body">
-              <h3>Workout Mode</h3>
-              <p>Train with purpose when your body is ready to perform.</p>
-              <span class="mode-card__tag">Train With Intent</span>
-            </div>
-          </div>
+<section class="section">
+  <div class="container">
 
-          <div class="mode-card mode-card--elite">
-            <img class="mode-card__img" src="/assets/img/mascot/metabo-damage-control.png" alt="Damage Control Mode" />
-            <div class="mode-card__body">
-              <h3>Damage Control</h3>
-              <p>Bounce back after setbacks, poor sleep, or off-plan days.</p>
-              <span class="mode-card__tag">Bounce Back</span>
-            </div>
-          </div>
+    <div class="section__head section__head--center">
+      <h2>How It Works</h2>
+      <p>A simple system for turning daily signals into better performance decisions.</p>
+    </div>
 
-          <div class="mode-card mode-card--elite">
-            <img class="mode-card__img" src="/assets/img/mascot/metabo-travel.png" alt="Travel Mode" />
-            <div class="mode-card__body">
-              <h3>Travel Mode</h3>
-              <p>Stay consistent when flights, hotels, and time zones disrupt routine.</p>
-              <span class="mode-card__tag">Stay On Track</span>
-            </div>
-          </div>
+    <div class="cards cards--3">
+
+      <div class="card">
+        <img class="card__mascot" src="/assets/img/mascot/metabo-scientist.png">
+        <div class="card__kicker">1</div>
+        <h3>Log Signals</h3>
+        <p>
+          Track sleep, hydration, digestion, mood, soreness, and energy in under 60 seconds.
+        </p>
+      </div>
+
+      <div class="card">
+        <img class="card__mascot" src="/assets/img/mascot/metabo-focus.png">
+        <div class="card__kicker">2</div>
+        <h3>See Readiness</h3>
+        <p>
+          CCC converts your signals into a daily readiness score and shows what is limiting you.
+        </p>
+      </div>
+
+      <div class="card">
+        <img class="card__mascot" src="/assets/img/mascot/metabo-recovery.png">
+        <div class="card__kicker">3</div>
+        <h3>Improve Daily</h3>
+        <p>
+          Get simple next-step actions that help improve tomorrow’s score without overcomplicating your day.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<section class="section section--alt">
+  <div class="container">
+
+    <div class="section__head section__head--center">
+      <h2>Choose Your Mode Today</h2>
+      <p>CCC is built for real life. Some days are for focus. Some are for recovery. Some are for bouncing back.</p>
+    </div>
+
+    <div class="mode-grid mode-grid--elite">
+
+      <div class="mode-card mode-card--elite">
+        <img class="mode-card__img" src="/assets/img/mascot/metabo-focus.png">
+        <div class="mode-card__body">
+          <h3>Focus Mode</h3>
+          <p>Protect attention, reduce noise, and build momentum.</p>
+          <span class="mode-card__tag">Enter Focus</span>
         </div>
       </div>
-    </section>
 
-    <section class="cta">
-      <div class="container">
-        <div class="cta__inner cta__inner--metabo">
-          <div class="cta__content">
-            <div class="panel__title">Want early access to the full experience?</div>
-            <div class="panel__subtitle">
-              Join the beta and help shape Carnivore Command Center.
-            </div>
-            <div class="cta__actions" style="margin-top:14px;">
-              <a class="btn btn--primary" href="/#beta">Join Early Access</a>
-              <a class="btn btn--ghost" href="/">Back to Homepage</a>
-            </div>
-          </div>
-
-          <div class="cta__mascot">
-            <img src="/assets/img/mascot/metabo-welcome.png" alt="Metabo Welcome" />
-          </div>
+      <div class="mode-card mode-card--elite">
+        <img class="mode-card__img" src="/assets/img/mascot/metabo-recovery.png">
+        <div class="mode-card__body">
+          <h3>Recovery Mode</h3>
+          <p>Reset after stress, poor sleep, or hard training blocks.</p>
+          <span class="mode-card__tag">Recover Smarter</span>
         </div>
       </div>
-    </section>
-  </main>
 
-  <footer class="footer">
-    <div class="container footer__inner">
+      <div class="mode-card mode-card--elite">
+        <img class="mode-card__img" src="/assets/img/mascot/metabo-workout.png">
+        <div class="mode-card__body">
+          <h3>Workout Mode</h3>
+          <p>Train with purpose when your body is ready.</p>
+          <span class="mode-card__tag">Train With Intent</span>
+        </div>
+      </div>
+
+      <div class="mode-card mode-card--elite">
+        <img class="mode-card__img" src="/assets/img/mascot/metabo-damage-control.png">
+        <div class="mode-card__body">
+          <h3>Damage Control</h3>
+          <p>Our reset mode after setbacks, bad sleep, or rough days.</p>
+          <span class="mode-card__tag">Bounce Back</span>
+        </div>
+      </div>
+
+      <div class="mode-card mode-card--elite">
+        <img class="mode-card__img" src="/assets/img/mascot/metabo-travel.png">
+        <div class="mode-card__body">
+          <h3>Travel Mode</h3>
+          <p>Stay consistent when life gets chaotic and routines disappear.</p>
+          <span class="mode-card__tag">Stay On Track</span>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+
+    <div class="dashboard-grid dashboard-grid--2">
+
       <div>
-        <div class="footer__brand">Carnivore Command Center</div>
-        <div class="footer__muted">Stop Guessing. Start Understanding.</div>
-        <div class="footer__muted">© <span id="year"></span> All rights reserved.</div>
-        <div class="footer__muted">Built under WDC LLC</div>
+        <h2>Real Signals. Real Decisions.</h2>
+        <p class="lead">
+          CCC is not built to help you understand your body in a way you can actually use.
+        </p>
+
+        <ul class="bullets bullets--tight">
+          <li>What CCC helps you answer</li>
+          <li>Why was energy lower today?</li>
+          <li>Is hydration driving performance?</li>
+          <li>Should today be workout day or recovery day?</li>
+          <li>What pattern keeps repeating?</li>
+        </ul>
+
+        <div class="pillrow" style="margin-top:18px;">
+          <span class="pill">Readiness</span>
+          <span class="pill">Sleep</span>
+          <span class="pill">Hydration</span>
+          <span class="pill">Experiments</span>
+        </div>
+
+        <div style="margin-top:20px;">
+          <a class="btn btn--primary" href="/beta/">See Beta Program</a>
+        </div>
       </div>
 
-      <div class="footer__links">
-        <a href="/about/">About</a>
-        <a href="/investor/">Investor</a>
-        <a href="/privacy/">Privacy</a>
-        <a href="/terms/">Terms</a>
+      <div class="card dashboard-preview-card">
+        <img
+          class="dashboard-preview-card__img"
+          src="/assets/img/dashboard-screen-main.png"
+          alt="CCC App Screen">
       </div>
+
     </div>
-  </footer>
 
-  <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
-  </script>
-</body>
-</html>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="container">
+
+    <div class="cta__inner cta__inner--metabo">
+
+      <div class="cta__content">
+        <div class="panel__title">Ready to know what your body is telling you?</div>
+
+        <div class="panel__subtitle">
+          Join early access and help shape Carnivore Command Center.
+        </div>
+
+        <div class="cta__actions" style="margin-top:18px;">
+          <a class="btn btn--primary" href="/beta/">Join Early Access</a>
+          <a class="btn btn--ghost" href="/investor/">Investor Info</a>
+        </div>
+      </div>
+
+      <div class="cta__mascot">
+        <img src="/assets/img/mascot/metabo-welcome.png">
+      </div>
+
+    </div>
+
+  </div>
+</section>
