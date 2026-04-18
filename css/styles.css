@@ -2427,3 +2427,9 @@ body.is-logged-in .nav__loggedIn{
     display:none;
   }
 }
+.hero--home,
+.hero--product,
+.hero--beta,
+.hero--dashboard{
+  padding-top:140px;
+}
