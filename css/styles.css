@@ -470,7 +470,6 @@ body.is-logged-in .nav__loggedIn{
   border-radius:18px;
   object-fit:cover;
 }
-}
 
 .metabo-card__label{
   padding:14px 8px 4px;
@@ -484,7 +483,6 @@ body.is-logged-in .nav__loggedIn{
 .metabo-card__role{
   font-size:14px;
   opacity:.78;
-}
 }
 
 /* =========================================================
@@ -2047,8 +2045,9 @@ body.is-logged-in .nav__loggedIn{
     grid-template-columns:1fr;
   }
 }
+
 .hero-title--v47{
-  font-size:clamp(58px,7vw,88px);
+  font-size:clamp(58px, 7vw, 88px);
   line-height:.95;
   letter-spacing:-2px;
   max-width:720px;
@@ -2153,6 +2152,10 @@ body.is-logged-in .nav__loggedIn{
   color:#fff;
 }
 
+.beta-form--v47 input::placeholder{
+  color:rgba(255,255,255,.45);
+}
+
 .beta-card__image{
   display:flex;
   justify-content:flex-end;
@@ -2194,9 +2197,3 @@ body.is-logged-in .nav__loggedIn{
     line-height:.98;
   }
 }
-body{font-size:18px;}
-p{font-size:17px; line-height:1.65;}
-.card p{font-size:16px;}
-
-section{padding:84px 0;}
-.card{padding:26px;}
