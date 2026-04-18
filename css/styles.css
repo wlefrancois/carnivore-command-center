@@ -457,51 +457,31 @@ body.is-logged-in .nav__loggedIn{
 }
 
 .metabo-card--hero{
-  min-height:520px;
-  display:flex;
-  align-items:flex-end;
-  justify-content:center;
-}
-
-.metabo-card__img{
-  width:100%;
-  height:auto;
-  display:block;
-  border-radius:20px;
+  padding:12px;
+  border-radius:24px;
+  overflow:hidden;
+  background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));
+  border:1px solid rgba(255,255,255,.08);
 }
 
 .metabo-card__img--hero{
-  max-width:470px;
-  object-fit:contain;
-  object-position:center bottom;
-  filter:
-    drop-shadow(0 26px 55px rgba(0,0,0,.42))
-    drop-shadow(0 0 24px rgba(94,162,255,.16));
+  aspect-ratio: 4 / 5;
+}
 }
 
 .metabo-card__label{
-  position:absolute;
-  left:18px;
-  right:18px;
-  bottom:18px;
-  padding:16px 18px;
-  border-radius:18px;
-  border:1px solid rgba(255,255,255,.10);
-  background:rgba(8,16,33,.82);
-  backdrop-filter:blur(8px);
+  padding:14px 8px 4px;
 }
 
 .metabo-card__name{
   font-size:22px;
-  font-weight:900;
-  line-height:1;
+  font-weight:800;
 }
 
 .metabo-card__role{
-  margin-top:6px;
-  color:rgba(230,238,255,.78);
-  font-size:15px;
-  line-height:1.45;
+  font-size:14px;
+  opacity:.78;
+}
 }
 
 /* =========================================================
