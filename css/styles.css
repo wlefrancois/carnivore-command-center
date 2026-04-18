@@ -2433,3 +2433,21 @@ body.is-logged-in .nav__loggedIn{
 .hero--dashboard{
   padding-top:140px;
 }
+@media (max-width: 768px){
+  .hero--home,
+  .hero--product,
+  .hero--beta,
+  .hero--dashboard{
+    padding-top:110px;
+  }
+}
+.cta__mascot img{
+  width:220px;
+  max-width:100%;
+  height:auto;
+}
+@media (max-width: 768px){
+  .cta__mascot img{
+    width:170px;
+  }
+}
