@@ -1,20 +1,18 @@
-<header class="nav nav--elite">
-  <div class="container nav__inner">
-
-    <a class="brand" href="/">
+<header class="site-header">
+  <div class="container site-header__inner">
+    <a class="site-brand" href="/">
       <img
-        class="brand__logo"
+        class="site-brand__logo"
         src="/assets/img/ccc_logo_primary_transparent.png"
         alt="Carnivore Command Center logo" />
-
-      <div class="brand__text">
-        <div class="brand__name">Carnivore Command Center</div>
-        <div class="brand__tag">Stop Guessing. Start Understanding.</div>
+      <div class="site-brand__text">
+        <div class="site-brand__name">Carnivore Command Center</div>
+        <div class="site-brand__tag">Stop Guessing. Start Understanding.</div>
       </div>
     </a>
 
     <button
-      class="nav__toggle"
+      class="site-header__toggle"
       type="button"
       aria-label="Open navigation"
       aria-expanded="false"
@@ -24,15 +22,16 @@
       <span></span>
     </button>
 
-    <nav class="nav-links" id="site-nav" data-nav>
+    <nav class="site-nav" id="site-nav" data-nav>
       <a href="/product/">Product</a>
       <a href="/dashboard/">Dashboard</a>
       <a href="/beta/">Beta</a>
       <a href="/about/">About</a>
 
-      <a href="/app/" class="btn btn--ghost btn--sm nav__loggedOut">Login</a>
-      <a href="/beta/" class="btn btn--primary btn--sm nav__loggedOut">Join Beta</a>
+      <div class="site-nav__actions">
+        <a href="/app/" class="btn btn--ghost btn--sm nav__loggedOut">Login</a>
+        <a href="/beta/" class="btn btn--primary btn--sm nav__loggedOut">Join Beta</a>
+      </div>
     </nav>
-
   </div>
 </header>
