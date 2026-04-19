@@ -1,0 +1,361 @@
+<section class="hero hero--home">
+  <div class="container">
+
+    <div class="hero__grid hero__grid--v47">
+
+      <div class="hero__copy">
+        <div class="badge">Founding Beta • Limited Spots Open</div>
+
+        <h1 class="hero-title hero-title--v47">
+          Stop Guessing
+          Why You Feel Off.
+        </h1>
+
+        <p class="lead lead--v47">
+          Sleep, hydration, digestion, recovery, stress, and energy finally make sense.
+          CCC helps you understand what is helping, what is hurting, and what to do next.
+        </p>
+
+        <div class="hero__cta">
+          <a href="/beta/" class="btn btn--primary">Get My Score</a>
+          <a href="/dashboard/" class="btn btn--ghost">See Live Dashboard</a>
+        </div>
+
+        <div class="hero__proof">
+          23 founding users joined beta this month.
+        </div>
+
+        <div class="trust trust--v47">
+          <div class="trust__item">
+            <div class="trust__title">60 sec</div>
+            <div class="trust__text">Daily check-in</div>
+          </div>
+
+          <div class="trust__item">
+            <div class="trust__title">Smart Score</div>
+            <div class="trust__text">Daily readiness rating</div>
+          </div>
+
+          <div class="trust__item">
+            <div class="trust__title">Built Real</div>
+            <div class="trust__text">Busy life friendly</div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="hero__visual">
+        <div class="metabo-card metabo-card--hero metabo-card--hero-lg">
+          <img
+            src="/assets/img/mascot/metabo-focus.png"
+            class="metabo-card__img metabo-card__img--hero"
+            alt="Meet Metabo">
+
+          <div class="metabo-card__label">
+            <div class="metabo-card__name">Meet Metabo</div>
+            <div class="metabo-card__role">Your readiness + performance guide</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<section class="stats-strip">
+  <div class="container">
+    <div class="stats-strip__grid">
+
+      <div class="stats-chip">
+        <strong>23</strong>
+        <span>Founding users</span>
+      </div>
+
+      <div class="stats-chip">
+        <strong>5</strong>
+        <span>Daily modes</span>
+      </div>
+
+      <div class="stats-chip">
+        <strong>1 min</strong>
+        <span>Check-in flow</span>
+      </div>
+
+      <div class="stats-chip">
+        <strong>Beta</strong>
+        <span>Open now</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="section section--alt">
+  <div class="container">
+
+    <div class="section__head section__head--center">
+      <h2>How It Works</h2>
+      <p>Simple enough to use daily. Powerful enough to improve your week.</p>
+    </div>
+
+    <div class="cards cards--3">
+      <div class="card">
+        <div class="card__kicker">1</div>
+        <h3>Log Signals</h3>
+        <p>
+          Enter sleep, hydration, digestion, energy, soreness, mood, and recovery.
+        </p>
+      </div>
+
+      <div class="card">
+        <div class="card__kicker">2</div>
+        <h3>Get Your Score</h3>
+        <p>
+          CCC converts signals into a readiness score and recommends your mode.
+        </p>
+      </div>
+
+      <div class="card">
+        <div class="card__kicker">3</div>
+        <h3>Win The Day</h3>
+        <p>
+          Know whether to push, recover, focus, train, or reset.
+        </p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+
+    <div class="section__head section__head--center">
+      <h2>Built For Real Life</h2>
+      <p>Not influencers. Not robots. Real people with real schedules.</p>
+    </div>
+
+    <div class="cards cards--4">
+      <div class="card">
+        <h3>Busy Adults</h3>
+        <p>Low energy, inconsistent habits, no extra time.</p>
+      </div>
+
+      <div class="card">
+        <h3>Professionals</h3>
+        <p>Need sharper mornings and steadier focus.</p>
+      </div>
+
+      <div class="card">
+        <h3>Men 40+</h3>
+        <p>Recovery, momentum, hormones, consistency.</p>
+      </div>
+
+      <div class="card">
+        <h3>Carnivore / Keto</h3>
+        <p>See what actually improves your output.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="section section--alt">
+  <div class="container">
+
+    <div class="split split--v47">
+
+      <div>
+        <div class="section__head">
+          <h2>Your Body Has Data. Use It.</h2>
+          <p>
+            CCC gives users a clearer way to understand what improves readiness,
+            what hurts momentum, and what to do next.
+          </p>
+        </div>
+
+        <div class="card mini mini--bright">
+          <div class="mini__title">What the dashboard shows</div>
+          <ul class="bullets">
+            <li>Daily readiness score</li>
+            <li>Sleep + hydration trends</li>
+            <li>Suggested mode for today</li>
+            <li>Limiting factor alerts</li>
+            <li>Simple next-step actions</li>
+          </ul>
+        </div>
+
+        <div class="pillrow">
+          <span class="pill">Readiness</span>
+          <span class="pill">Signals</span>
+          <span class="pill">Trends</span>
+          <span class="pill">Actions</span>
+        </div>
+      </div>
+
+      <div class="dashboard-preview-card">
+        <img
+          src="/assets/img/dashboard-preview.png"
+          class="dashboard-preview-card__img"
+          alt="CCC Dashboard"
+          loading="lazy"
+          decoding="async">
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+
+    <div class="split split--v47">
+
+      <div>
+        <div class="section__head">
+          <h2>Meet Metabo</h2>
+          <p>
+            Built by someone who got tired of guessing and wanted a smarter system.
+          </p>
+        </div>
+
+        <div class="card mini mini--bright">
+          <div class="mini__title">Why people connect with this</div>
+          <ul class="bullets">
+            <li>Built from personal frustration</li>
+            <li>Not generic fitness fluff</li>
+            <li>Simple system for better days</li>
+            <li>Looks premium and real</li>
+          </ul>
+        </div>
+
+        <div class="hero__cta" style="margin-top:18px;">
+          <a href="/beta/" class="btn btn--primary">Join Founding Access</a>
+        </div>
+      </div>
+
+      <div class="dashboard-preview-card">
+        <img
+          src="/assets/img/mascot/metabo-welcome.png"
+          class="dashboard-preview-card__img"
+          alt="Meet Metabo"
+          loading="lazy"
+          decoding="async">
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<section class="section section--alt">
+  <div class="container">
+
+    <div class="section__head section__head--center">
+      <h2>What Early Users Say</h2>
+      <p>Early traction starts with real clarity.</p>
+    </div>
+
+    <div class="cards cards--3">
+      <div class="card">
+        <p>“I realized bad sleep was wrecking my workouts.”</p>
+      </div>
+
+      <div class="card">
+        <p>“This helped me stop wasting good days.”</p>
+      </div>
+
+      <div class="card">
+        <p>“I thought motivation was the problem. It was recovery.”</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+
+    <div class="card beta-card beta-card--v47">
+      <div class="beta-card__grid">
+
+        <div>
+          <div class="section__head">
+            <h2>Join Founding Beta Access</h2>
+            <p>
+              Early users get access first, lower pricing,
+              feature influence, and founding member status.
+            </p>
+          </div>
+
+          <ul class="bullets">
+            <li>Early access before launch</li>
+            <li>Lower locked founding pricing</li>
+            <li>Help shape future features</li>
+            <li>Priority invites + updates</li>
+            <li>First 100 founding badge</li>
+          </ul>
+
+          <form
+            action="https://app.kit.com/forms/9117546/subscriptions"
+            method="post"
+            class="beta-form beta-form--v47">
+
+            <input
+              type="email"
+              name="email_address"
+              placeholder="Enter your email"
+              required>
+
+            <button type="submit" class="btn btn--primary">
+              Join Beta Now
+            </button>
+
+          </form>
+        </div>
+
+        <div class="beta-card__image">
+          <img
+            src="/assets/img/mascot/metabo-welcome.png"
+            alt="Join CCC"
+            loading="lazy"
+            decoding="async">
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="cta">
+  <div class="container">
+
+    <div class="cta__inner cta__inner--metabo">
+
+      <div class="cta__content">
+        <div class="panel__title">Start Understanding Your Body Again.</div>
+        <div class="panel__subtitle">
+          Join beta now. Win more days. Feel better. Perform better.
+        </div>
+
+        <div class="cta__actions" style="margin-top:18px;">
+          <a href="/beta/" class="btn btn--primary">Join Beta Now</a>
+          <a href="/product/" class="btn btn--ghost">Explore Product</a>
+        </div>
+      </div>
+
+      <div class="cta__mascot">
+        <img
+          src="/assets/img/mascot/metabo-focus.png"
+          alt=""
+          loading="lazy"
+          decoding="async">
+      </div>
+
+    </div>
+
+  </div>
+</section>
