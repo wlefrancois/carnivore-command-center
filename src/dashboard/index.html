@@ -75,6 +75,83 @@
       background: rgba(255, 122, 0, 0.14);
     }
 
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      backdrop-filter: blur(16px);
+      background: rgba(7, 14, 28, 0.82);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .topbar__inner {
+      width: min(calc(100% - 28px), var(--max));
+      margin: 0 auto;
+      min-height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-width: 0;
+    }
+
+    .brand__logo {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      object-fit: contain;
+      background: rgba(255,255,255,0.03);
+      padding: 5px;
+    }
+
+    .brand__name {
+      font-size: 1rem;
+      font-weight: 800;
+      line-height: 1.05;
+    }
+
+    .brand__tag {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 3px;
+    }
+
+    .topnav {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .topnav a,
+    .topnav button {
+      border: 1px solid rgba(255,255,255,0.06);
+      background: rgba(255,255,255,0.02);
+      color: var(--text);
+      border-radius: 14px;
+      padding: 10px 14px;
+      cursor: pointer;
+    }
+
+    .topnav .is-active {
+      background: rgba(255,255,255,0.06);
+      border-color: rgba(255,255,255,0.14);
+    }
+
+    .topnav .btn-primary {
+      background: linear-gradient(180deg, var(--orange-2), var(--orange));
+      color: #08101d;
+      font-weight: 800;
+      box-shadow: 0 14px 32px rgba(255,122,0,.24);
+    }
+
     .page {
       width: min(calc(100% - 28px), var(--max));
       margin: 0 auto;
@@ -275,6 +352,12 @@
       letter-spacing: 0.06em;
       color: #bfd3ff;
       font-weight: 800;
+    }
+
+    .field__hint {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-top: -2px;
     }
 
     .field input,
@@ -523,11 +606,30 @@
     }
 
     @media (max-width: 760px) {
+      .topbar__inner {
+        min-height: 70px;
+      }
+
+      .brand__tag {
+        display: none;
+      }
+
+      .topnav {
+        gap: 8px;
+      }
+
+      .topnav a,
+      .topnav button {
+        padding: 9px 12px;
+        font-size: 0.84rem;
+      }
+
       .metrics-grid {
         grid-template-columns: 1fr;
       }
 
-      .toggle-row {
+      .toggle-row,
+      .signal-grid {
         grid-template-columns: 1fr;
       }
 
@@ -544,6 +646,27 @@
 </head>
 <body>
   <div class="app-shell">
+    <header class="topbar">
+      <div class="topbar__inner">
+        <a class="brand" href="/">
+          <img class="brand__logo" src="/assets/img/ccc_logo_primary_transparent.png" alt="CCC logo" />
+          <div>
+            <div class="brand__name">Carnivore Command Center</div>
+            <div class="brand__tag">Metabolic Dashboard powered by Savage Metabo</div>
+          </div>
+        </a>
+
+        <nav class="topnav">
+          <a class="is-active" href="#">Dashboard</a>
+          <a href="#checkin">Check-In</a>
+          <a href="#trends">Trends</a>
+          <a href="#programs">Programs</a>
+          <button type="button">Settings</button>
+          <a class="btn-primary" href="/beta/">Upgrade</a>
+        </nav>
+      </div>
+    </header>
+
     <main class="page">
       <section class="hero-grid">
         <aside class="sidebar">
@@ -572,22 +695,22 @@
           <div class="metrics-grid">
             <article class="metric-card">
               <div class="metric-card__label">Readiness Score</div>
-              <div class="metric-card__value is-green">87</div>
+              <div class="metric-card__value is-green" id="readinessScoreTop">87</div>
               <div class="metric-card__sub">Optimal zone · ready to execute</div>
             </article>
             <article class="metric-card">
               <div class="metric-card__label">Today’s Mode</div>
-              <div class="metric-card__value is-orange">Execute</div>
+              <div class="metric-card__value is-orange" id="modeTop">Execute</div>
               <div class="metric-card__sub">Push with discipline, not chaos</div>
             </article>
             <article class="metric-card">
               <div class="metric-card__label">Priority Focus</div>
-              <div class="metric-card__value">Upper Body</div>
+              <div class="metric-card__value" id="focusTop">Upper Body</div>
               <div class="metric-card__sub">Lift · deep work · hydrate early</div>
             </article>
             <article class="metric-card">
               <div class="metric-card__label">Momentum</div>
-              <div class="metric-card__value is-yellow">82%</div>
+              <div class="metric-card__value is-yellow" id="momentumTop">82%</div>
               <div class="metric-card__sub">5-day streak · +8 vs last week</div>
             </article>
           </div>
@@ -600,14 +723,17 @@
                 <div class="field">
                   <label for="sleep">Sleep Hours</label>
                   <input id="sleep" type="range" min="0" max="10" value="7" />
+                  <div class="field__hint"><span id="sleepValue">7.0</span> hours</div>
                 </div>
                 <div class="field">
                   <label for="mood">Mood</label>
                   <input id="mood" type="range" min="1" max="10" value="8" />
+                  <div class="field__hint"><span id="moodValue">8</span>/10</div>
                 </div>
                 <div class="field">
                   <label for="stress">Stress</label>
                   <input id="stress" type="range" min="1" max="10" value="3" />
+                  <div class="field__hint"><span id="stressValue">3</span>/10</div>
                 </div>
                 <div class="field">
                   <label for="digestion">Digestion</label>
@@ -630,11 +756,11 @@
                 <div class="field">
                   <label>Workout Yesterday</label>
                   <div class="toggle-row">
-                    <button class="toggle is-active" type="button">Yes</button>
-                    <button class="toggle" type="button">No</button>
+                    <button class="toggle is-active" type="button" data-workout="yes">Yes</button>
+                    <button class="toggle" type="button" data-workout="no">No</button>
                   </div>
                 </div>
-                <button class="btn btn--primary" type="button">Submit Check-In</button>
+                <button class="btn btn--primary" id="submitCheckin" type="button">Submit Check-In</button>
               </form>
             </article>
 
@@ -644,29 +770,29 @@
 
               <div class="score-rail">
                 <div class="score-box">
-                  <div class="score-box__value">87</div>
-                  <strong>Execute Mode</strong>
-                  <p style="margin-top:8px; color: var(--muted);">Strong readiness. Push today, but do it with structure. Lift upper body, protect protein, and get one clean deep work block done before noon.</p>
+                  <div class="score-box__value" id="readinessScoreMain">87</div>
+                  <strong id="modeMain">Execute Mode</strong>
+                  <p id="recommendationText" style="margin-top:8px; color: var(--muted);">Strong readiness. Push today, but do it with structure. Lift upper body, protect protein, and get one clean deep work block done before noon.</p>
                 </div>
               </div>
 
               <div class="checklist">
-                <div class="checklist__item"><strong>Mission 1</strong><span>Lift upper body</span></div>
-                <div class="checklist__item"><strong>Mission 2</strong><span>90 min deep work</span></div>
-                <div class="checklist__item"><strong>Mission 3</strong><span>Hydrate before coffee 2</span></div>
-                <div class="checklist__item"><strong>Mission 4</strong><span>Hit protein target</span></div>
+                <div class="checklist__item"><strong>Mission 1</strong><span id="mission1">Lift upper body</span></div>
+                <div class="checklist__item"><strong>Mission 2</strong><span id="mission2">90 min deep work</span></div>
+                <div class="checklist__item"><strong>Mission 3</strong><span id="mission3">Hydrate before coffee 2</span></div>
+                <div class="checklist__item"><strong>Mission 4</strong><span id="mission4">Hit protein target</span></div>
               </div>
             </article>
 
             <article class="coach-card" id="coach">
               <div class="coach-card__top">
-                <img class="coach-card__image" src="/assets/img/mascot/metabo-home-hero.webp" alt="Savage Metabo coach" />
+                <img class="coach-card__image" src="/assets/img/mascot/metabo-focus.webp" alt="Savage Metabo coach" />
                 <div>
                   <div class="coach-card__name">Savage Metabo</div>
                   <div class="coach-card__mode">Coach Mode · Premium Layer</div>
                 </div>
               </div>
-              <div class="coach-card__quote">
+              <div class="coach-card__quote" id="coachQuote">
                 You’re at 87 and still thinking? Good. Stop negotiating. Lift. Focus. Protein. Momentum is hot. Don’t waste it.
               </div>
               <div class="coach-card__actions">
@@ -722,9 +848,9 @@
               <div class="panel__title">Today’s Missions</div>
               <div class="panel__sub">A simple win-the-day loop users can follow every morning.</div>
               <div class="mission-list">
-                <div class="mission"><strong>Win 1 · Protein</strong><span>Hit target before dinner.</span></div>
-                <div class="mission"><strong>Win 2 · Training</strong><span>Upper body lift + short walk.</span></div>
-                <div class="mission"><strong>Win 3 · Recovery</strong><span>Hydrate and protect sleep tonight.</span></div>
+                <div class="mission"><strong>Win 1 · Protein</strong><span id="win1">Hit target before dinner.</span></div>
+                <div class="mission"><strong>Win 2 · Training</strong><span id="win2">Upper body lift + short walk.</span></div>
+                <div class="mission"><strong>Win 3 · Recovery</strong><span id="win3">Hydrate and protect sleep tonight.</span></div>
               </div>
             </article>
           </div>
@@ -732,5 +858,180 @@
       </section>
     </main>
   </div>
+  <script>
+    (() => {
+      const els = {
+        sleep: document.getElementById('sleep'),
+        mood: document.getElementById('mood'),
+        stress: document.getElementById('stress'),
+        digestion: document.getElementById('digestion'),
+        soreness: document.getElementById('soreness'),
+        sleepValue: document.getElementById('sleepValue'),
+        moodValue: document.getElementById('moodValue'),
+        stressValue: document.getElementById('stressValue'),
+        workoutButtons: Array.from(document.querySelectorAll('[data-workout]')),
+        submit: document.getElementById('submitCheckin'),
+        readinessScoreTop: document.getElementById('readinessScoreTop'),
+        readinessScoreMain: document.getElementById('readinessScoreMain'),
+        modeTop: document.getElementById('modeTop'),
+        modeMain: document.getElementById('modeMain'),
+        focusTop: document.getElementById('focusTop'),
+        momentumTop: document.getElementById('momentumTop'),
+        recommendationText: document.getElementById('recommendationText'),
+        mission1: document.getElementById('mission1'),
+        mission2: document.getElementById('mission2'),
+        mission3: document.getElementById('mission3'),
+        mission4: document.getElementById('mission4'),
+        win1: document.getElementById('win1'),
+        win2: document.getElementById('win2'),
+        win3: document.getElementById('win3'),
+        coachQuote: document.getElementById('coachQuote')
+      };
+
+      let workoutYesterday = 'yes';
+      let entries = JSON.parse(localStorage.getItem('cccEntries') || '[]');
+
+      const clamp = (n, min, max) => Math.max(min, Math.min(max, n));
+
+      function computeScore() {
+        const sleep = parseFloat(els.sleep.value);
+        const mood = parseFloat(els.mood.value);
+        const stress = parseFloat(els.stress.value);
+        const digestionMap = { Bad: -14, Okay: -6, Good: 4, Great: 8 };
+        const sorenessMap = { None: 6, Mild: 2, Medium: -5, High: -12 };
+
+        let score = 50;
+        score += (sleep - 7) * 8;
+        score += (mood - 5) * 4;
+        score -= (stress - 3) * 5;
+        score += digestionMap[els.digestion.value] || 0;
+        score += sorenessMap[els.soreness.value] || 0;
+        score += workoutYesterday === 'yes' ? 4 : -2;
+
+        return Math.round(clamp(score, 35, 98));
+      }
+
+      function buildState(score) {
+        if (score >= 80) {
+          return {
+            mode: 'Execute',
+            focus: 'Upper Body',
+            momentum: '82%',
+            recommendation: 'Strong readiness. Push today, but do it with structure. Lift upper body, protect protein, and get one clean deep work block done before noon.',
+            missions: ['Lift upper body', '90 min deep work', 'Hydrate before coffee 2', 'Hit protein target'],
+            wins: ['Hit target before dinner.', 'Upper body lift + short walk.', 'Hydrate and protect sleep tonight.'],
+            quote: 'You\'re hot right now. Don\'t waste it. Lift. Focus. Protein. Win before lunch.'
+          };
+        }
+        if (score >= 65) {
+          return {
+            mode: 'Build',
+            focus: 'Structured Day',
+            momentum: '74%',
+            recommendation: 'Good day to execute, but stay measured. Moderate training, lock in protein, and keep your work blocks clean.',
+            missions: ['Moderate lift or walk', '2 focused work blocks', 'Hydrate early', 'Early dinner'],
+            wins: ['Protein target on time.', 'Moderate session completed.', 'Protect sleep tonight.'],
+            quote: 'Solid enough to move. Don\'t get sloppy. Be sharp, be clean, and stack a disciplined day.'
+          };
+        }
+        if (score >= 50) {
+          return {
+            mode: 'Recover',
+            focus: 'Recovery',
+            momentum: '61%',
+            recommendation: 'Recovery should lead today. Walk, hydrate, lower training intensity, and make tonight\'s sleep the real win.',
+            missions: ['20 min walk', 'Heavy hydration', 'Mobility or light movement', 'Sleep priority'],
+            wins: ['Walk complete.', 'Hydration improved.', 'Sleep setup protected.'],
+            quote: 'Not every win is a hard push. Recover on purpose so tomorrow doesn\'t have to pay for today.'
+          };
+        }
+        return {
+          mode: 'Reset',
+          focus: 'Stabilize',
+          momentum: '48%',
+          recommendation: 'Bad inputs detected. Reset today. No ego training, no chaos. Hydrate, walk, simplify food, and protect sleep tonight.',
+          missions: ['Hydrate aggressively', 'Light walk only', 'Simple food choices', 'Get to bed early'],
+          wins: ['Electrolytes + water done.', 'Walk complete.', 'Early sleep locked in.'],
+          quote: 'You\'re not behind. You\'re unstable. Reset the system, stop forcing it, and win the basics.'
+        };
+      }
+
+      function render(save = false) {
+        els.sleepValue.textContent = Number(els.sleep.value).toFixed(1);
+        els.moodValue.textContent = els.mood.value;
+        els.stressValue.textContent = els.stress.value;
+
+        const score = computeScore();
+        const state = buildState(score);
+
+        els.readinessScoreTop.textContent = score;
+        els.readinessScoreMain.textContent = score;
+        els.modeTop.textContent = state.mode;
+        els.modeMain.textContent = `${state.mode} Mode`;
+        els.focusTop.textContent = state.focus;
+        els.momentumTop.textContent = state.momentum;
+        els.recommendationText.textContent = state.recommendation;
+        els.mission1.textContent = state.missions[0];
+        els.mission2.textContent = state.missions[1];
+        els.mission3.textContent = state.missions[2];
+        els.mission4.textContent = state.missions[3];
+        els.win1.textContent = state.wins[0];
+        els.win2.textContent = state.wins[1];
+        els.win3.textContent = state.wins[2];
+        els.coachQuote.textContent = state.quote;
+
+        const scoreClass = score >= 80 ? 'is-green' : score >= 65 ? 'is-orange' : 'is-yellow';
+        els.readinessScoreTop.className = `metric-card__value ${scoreClass}`;
+
+        if (save) {
+          const entry = {
+            ts: new Date().toISOString(),
+            sleep: Number(els.sleep.value),
+            mood: Number(els.mood.value),
+            stress: Number(els.stress.value),
+            digestion: els.digestion.value,
+            soreness: els.soreness.value,
+            workoutYesterday,
+            score,
+            mode: state.mode
+          };
+          entries.push(entry);
+          entries = entries.slice(-30);
+          localStorage.setItem('cccEntries', JSON.stringify(entries));
+          els.submit.textContent = 'Check-In Saved';
+          setTimeout(() => { els.submit.textContent = 'Submit Check-In'; }, 1400);
+        }
+      }
+
+      els.workoutButtons.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          workoutYesterday = btn.dataset.workout;
+          els.workoutButtons.forEach((b) => b.classList.remove('is-active'));
+          btn.classList.add('is-active');
+          render(false);
+        });
+      });
+
+      [els.sleep, els.mood, els.stress, els.digestion, els.soreness].forEach((el) => {
+        el.addEventListener('input', () => render(false));
+        el.addEventListener('change', () => render(false));
+      });
+
+      els.submit.addEventListener('click', () => render(true));
+
+      if (entries.length) {
+        const last = entries[entries.length - 1];
+        els.sleep.value = last.sleep;
+        els.mood.value = last.mood;
+        els.stress.value = last.stress;
+        els.digestion.value = last.digestion;
+        els.soreness.value = last.soreness;
+        workoutYesterday = last.workoutYesterday;
+        els.workoutButtons.forEach((b) => b.classList.toggle('is-active', b.dataset.workout === workoutYesterday));
+      }
+
+      render(false);
+    })();
+  </script>
 </body>
 </html>
