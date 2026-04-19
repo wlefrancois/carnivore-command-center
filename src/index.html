@@ -1,361 +1,921 @@
-<section class="hero hero--home">
-  <div class="container">
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Carnivore Command Center | Stop Guessing. Start Understanding.</title>
+  <meta name="description" content="CCC turns your daily signals into a readiness score, practical next steps, and momentum you can actually keep." />
+  <style>
+    :root {
+      --bg: #07101f;
+      --bg-soft: #0b1830;
+      --card: rgba(16, 29, 54, 0.92);
+      --card-2: rgba(10, 20, 39, 0.92);
+      --line: rgba(82, 122, 194, 0.28);
+      --text: #eef4ff;
+      --muted: #a6b7d8;
+      --orange: #ff7a00;
+      --orange-2: #ff9b3f;
+      --blue: #4c8dff;
+      --green: #22d07a;
+      --shadow: 0 18px 60px rgba(0, 0, 0, 0.45);
+      --radius-xl: 28px;
+      --radius-lg: 22px;
+      --radius-md: 18px;
+      --max: 1240px;
+    }
 
-    <div class="hero__grid hero__grid--v47">
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top right, rgba(255, 122, 0, 0.12), transparent 28%),
+        radial-gradient(circle at top left, rgba(76, 141, 255, 0.12), transparent 24%),
+        linear-gradient(180deg, #060c17 0%, #081121 38%, #07101f 100%);
+      line-height: 1.5;
+    }
 
-      <div class="hero__copy">
-        <div class="badge">Founding Beta • Limited Spots Open</div>
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
 
-        <h1 class="hero-title hero-title--v47">
-          Stop Guessing
-          Why You Feel Off.
-        </h1>
+    .container {
+      width: min(calc(100% - 32px), var(--max));
+      margin: 0 auto;
+    }
 
-        <p class="lead lead--v47">
-          Sleep, hydration, digestion, recovery, stress, and energy finally make sense.
-          CCC helps you understand what is helping, what is hurting, and what to do next.
-        </p>
+    .site-shell {
+      position: relative;
+      overflow: hidden;
+    }
 
-        <div class="hero__cta">
-          <a href="/beta/" class="btn btn--primary">Get My Score</a>
-          <a href="/dashboard/" class="btn btn--ghost">See Live Dashboard</a>
-        </div>
+    .site-shell::before,
+    .site-shell::after {
+      content: "";
+      position: fixed;
+      inset: auto;
+      pointer-events: none;
+      z-index: 0;
+      filter: blur(80px);
+      opacity: 0.6;
+    }
 
-        <div class="hero__proof">
-          23 founding users joined beta this month.
-        </div>
+    .site-shell::before {
+      width: 340px;
+      height: 340px;
+      top: 110px;
+      left: -100px;
+      background: rgba(76, 141, 255, 0.16);
+    }
 
-        <div class="trust trust--v47">
-          <div class="trust__item">
-            <div class="trust__title">60 sec</div>
-            <div class="trust__text">Daily check-in</div>
+    .site-shell::after {
+      width: 360px;
+      height: 360px;
+      right: -120px;
+      top: 220px;
+      background: rgba(255, 122, 0, 0.16);
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      backdrop-filter: blur(18px);
+      background: rgba(6, 12, 23, 0.72);
+      border-bottom: 1px solid rgba(95, 132, 199, 0.15);
+    }
+
+    .nav {
+      min-height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-width: 0;
+    }
+
+    .brand__logo {
+      width: 48px;
+      height: 48px;
+      object-fit: contain;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.03);
+      padding: 6px;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05);
+    }
+
+    .brand__name {
+      font-size: 1.02rem;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+    }
+
+    .brand__tag {
+      color: var(--muted);
+      font-size: 0.88rem;
+      margin-top: 2px;
+    }
+
+    .nav__links {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .nav__links a {
+      color: var(--muted);
+      font-weight: 600;
+      padding: 10px 14px;
+      border-radius: 999px;
+      transition: 180ms ease;
+    }
+
+    .nav__links a:hover {
+      color: var(--text);
+      background: rgba(255,255,255,0.04);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 20px;
+      border-radius: 16px;
+      border: 1px solid transparent;
+      font-weight: 800;
+      letter-spacing: 0.01em;
+      transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease, border-color 180ms ease;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .btn:hover { transform: translateY(-1px); }
+
+    .btn--primary {
+      color: #08101d;
+      background: linear-gradient(180deg, #ff9b3f 0%, var(--orange) 100%);
+      box-shadow: 0 16px 34px rgba(255, 122, 0, 0.25);
+    }
+
+    .btn--secondary {
+      color: var(--text);
+      background: rgba(255,255,255,0.02);
+      border-color: rgba(122, 155, 215, 0.22);
+    }
+
+    .hero {
+      position: relative;
+      z-index: 1;
+      padding: 46px 0 26px;
+    }
+
+    .hero__frame {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .hero__image-card,
+    .hero__panel {
+      border-radius: var(--radius-xl);
+      border: 1px solid rgba(103, 142, 213, 0.2);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+      background: linear-gradient(180deg, rgba(13, 24, 46, 0.98), rgba(9, 18, 34, 0.98));
+    }
+
+    .hero__image-card {
+      min-height: 670px;
+    }
+
+    .hero__image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+    }
+
+    .hero__overlay {
+      position: absolute;
+      inset: auto 0 0 0;
+      padding: 28px;
+      background: linear-gradient(180deg, transparent 0%, rgba(4, 10, 18, 0.24) 10%, rgba(4, 10, 18, 0.9) 100%);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(76, 141, 255, 0.12);
+      color: #bfd3ff;
+      font-weight: 800;
+      font-size: 0.82rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      border: 1px solid rgba(106, 145, 219, 0.25);
+    }
+
+    .hero__headline {
+      margin: 16px 0 10px;
+      font-size: clamp(2.3rem, 5vw, 4.3rem);
+      line-height: 0.96;
+      letter-spacing: -0.04em;
+      max-width: 11ch;
+    }
+
+    .hero__headline span { color: var(--orange-2); }
+
+    .hero__sub {
+      max-width: 58ch;
+      color: var(--muted);
+      font-size: 1.05rem;
+      margin: 0 0 20px;
+    }
+
+    .hero__cta {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+
+    .hero__stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      max-width: 760px;
+    }
+
+    .mini-stat {
+      padding: 14px 16px;
+      border-radius: 18px;
+      background: rgba(12, 24, 46, 0.78);
+      border: 1px solid rgba(112, 146, 208, 0.16);
+    }
+
+    .mini-stat strong {
+      display: block;
+      font-size: 1.1rem;
+      margin-bottom: 4px;
+    }
+
+    .mini-stat span {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .hero__panel {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .signal-board {
+      border-radius: 24px;
+      border: 1px solid rgba(255, 122, 0, 0.18);
+      background: linear-gradient(180deg, rgba(9, 15, 29, 0.96), rgba(7, 13, 25, 0.98));
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02);
+      overflow: hidden;
+    }
+
+    .signal-board__head {
+      padding: 18px 20px;
+      border-bottom: 1px solid rgba(120, 148, 201, 0.12);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .signal-board__head strong {
+      font-size: 1rem;
+      letter-spacing: 0.02em;
+    }
+
+    .signal-chip {
+      color: #0d1422;
+      background: linear-gradient(180deg, #ff9b3f, #ff7a00);
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 0.8rem;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .signal-board__body {
+      padding: 18px 20px 20px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .readiness {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: end;
+      gap: 12px;
+      padding: 16px;
+      border-radius: 18px;
+      background: linear-gradient(180deg, rgba(15, 29, 56, 0.88), rgba(9, 18, 34, 0.88));
+      border: 1px solid rgba(111, 149, 218, 0.14);
+    }
+
+    .readiness__score {
+      font-size: 3rem;
+      line-height: 1;
+      font-weight: 900;
+      color: var(--green);
+      margin-bottom: 6px;
+    }
+
+    .readiness__label {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .trend-bars {
+      display: grid;
+      grid-template-columns: repeat(7, 8px);
+      gap: 7px;
+      align-items: end;
+      height: 66px;
+    }
+
+    .trend-bars span {
+      border-radius: 999px;
+      background: linear-gradient(180deg, #38d97e, #0a934d);
+      opacity: 0.95;
+    }
+
+    .signal-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .signal-item {
+      padding: 14px;
+      border-radius: 16px;
+      background: rgba(12, 24, 46, 0.86);
+      border: 1px solid rgba(104, 140, 210, 0.12);
+    }
+
+    .signal-item__label {
+      color: var(--muted);
+      font-size: 0.82rem;
+      margin-bottom: 7px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .signal-item__value {
+      font-size: 1.15rem;
+      font-weight: 800;
+    }
+
+    .signal-list {
+      display: grid;
+      gap: 10px;
+      padding: 14px;
+      border-radius: 18px;
+      background: rgba(12, 24, 46, 0.86);
+      border: 1px solid rgba(104, 140, 210, 0.12);
+    }
+
+    .signal-list__row {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .signal-list__row strong { color: var(--text); }
+
+    .section {
+      position: relative;
+      z-index: 1;
+      padding: 28px 0;
+    }
+
+    .section__head {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: end;
+      margin-bottom: 20px;
+    }
+
+    .section__title {
+      margin: 0;
+      font-size: clamp(1.75rem, 4vw, 2.8rem);
+      line-height: 1;
+      letter-spacing: -0.04em;
+    }
+
+    .section__sub {
+      margin: 8px 0 0;
+      max-width: 56ch;
+      color: var(--muted);
+    }
+
+    .cards-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      padding: 22px;
+      border-radius: var(--radius-lg);
+      background: linear-gradient(180deg, rgba(15, 27, 51, 0.95), rgba(9, 17, 31, 0.95));
+      border: 1px solid rgba(104, 140, 210, 0.16);
+      box-shadow: var(--shadow);
+    }
+
+    .card__step {
+      width: 36px;
+      height: 36px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      background: rgba(76, 141, 255, 0.12);
+      color: #c6d7ff;
+      font-weight: 900;
+      margin-bottom: 16px;
+      border: 1px solid rgba(106, 145, 219, 0.18);
+    }
+
+    .card h3 {
+      margin: 0 0 10px;
+      font-size: 1.2rem;
+      letter-spacing: -0.02em;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .problem-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 0.9fr) minmax(320px, 1.1fr);
+      gap: 20px;
+      align-items: stretch;
+    }
+
+    .problem-list {
+      margin: 16px 0 0;
+      padding-left: 18px;
+      color: var(--muted);
+    }
+
+    .problem-list li + li { margin-top: 10px; }
+
+    .dashboard-card {
+      padding: 18px;
+      border-radius: 26px;
+      background: linear-gradient(180deg, rgba(15, 27, 51, 0.96), rgba(9, 17, 31, 0.96));
+      border: 1px solid rgba(104, 140, 210, 0.16);
+      box-shadow: var(--shadow);
+      display: grid;
+      gap: 16px;
+    }
+
+    .dashboard-card__shot {
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid rgba(108, 144, 207, 0.12);
+      background: #081120;
+      min-height: 280px;
+    }
+
+    .dashboard-card__shot img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .cta-band {
+      margin-top: 8px;
+      padding: 22px;
+      border-radius: 28px;
+      background: linear-gradient(135deg, rgba(21, 37, 69, 0.98), rgba(10, 19, 37, 0.98));
+      border: 1px solid rgba(109, 144, 207, 0.18);
+      box-shadow: var(--shadow);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(260px, 0.4fr);
+      gap: 18px;
+      align-items: center;
+    }
+
+    .cta-band__title {
+      margin: 0 0 8px;
+      font-size: clamp(1.7rem, 4vw, 2.5rem);
+      line-height: 1;
+      letter-spacing: -0.04em;
+      max-width: 14ch;
+    }
+
+    .cta-band__sub {
+      margin: 0 0 18px;
+      color: var(--muted);
+      max-width: 50ch;
+    }
+
+    .cta-band__media {
+      min-height: 180px;
+      border-radius: 22px;
+      overflow: hidden;
+      border: 1px solid rgba(111, 149, 218, 0.16);
+      background: rgba(7, 13, 25, 0.9);
+    }
+
+    .cta-band__media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+    }
+
+    .proof {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 14px;
+    }
+
+    .proof .card {
+      padding: 18px;
+      border-radius: 20px;
+    }
+
+    .proof strong {
+      display: block;
+      font-size: 1.35rem;
+      margin-bottom: 6px;
+    }
+
+    .footer {
+      padding: 44px 0 60px;
+      color: var(--muted);
+      position: relative;
+      z-index: 1;
+    }
+
+    .footer__inner {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+      padding-top: 20px;
+      border-top: 1px solid rgba(107, 142, 203, 0.12);
+    }
+
+    .mobile-nav-toggle {
+      display: none;
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      border: 1px solid rgba(111, 149, 218, 0.16);
+      background: rgba(255,255,255,0.02);
+      color: var(--text);
+    }
+
+    @media (max-width: 1100px) {
+      .hero__frame,
+      .problem-grid,
+      .cta-band {
+        grid-template-columns: 1fr;
+      }
+
+      .hero__image-card { min-height: 560px; }
+      .proof { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 840px) {
+      .mobile-nav-toggle {
+        display: inline-grid;
+        place-items: center;
+      }
+
+      .nav {
+        position: relative;
+        align-items: center;
+      }
+
+      .nav__links {
+        position: absolute;
+        top: calc(100% + 10px);
+        left: 0;
+        right: 0;
+        padding: 12px;
+        border-radius: 20px;
+        background: rgba(8, 15, 28, 0.97);
+        border: 1px solid rgba(111, 149, 218, 0.14);
+        box-shadow: var(--shadow);
+        display: none;
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .nav__links.is-open { display: flex; }
+      .nav__links a, .nav__links .btn { width: 100%; }
+      .hero { padding-top: 24px; }
+      .hero__overlay { padding: 20px; }
+      .cards-3 { grid-template-columns: 1fr; }
+      .signal-grid { grid-template-columns: 1fr 1fr; }
+      .hero__stats { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 560px) {
+      .container { width: min(calc(100% - 20px), var(--max)); }
+      .nav { min-height: 70px; }
+      .brand__name { font-size: 0.95rem; }
+      .brand__tag { display: none; }
+      .hero__image-card { min-height: 470px; }
+      .hero__headline { max-width: 10ch; }
+      .signal-grid,
+      .proof { grid-template-columns: 1fr; }
+      .hero__panel { padding: 16px; }
+      .signal-board__head,
+      .signal-board__body { padding-left: 16px; padding-right: 16px; }
+      .cta-band { padding: 18px; }
+      .btn { width: 100%; }
+      .hero__cta { display: grid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="site-shell">
+    <header class="topbar">
+      <div class="container nav">
+        <a class="brand" href="#top">
+          <img class="brand__logo" src="/assets/img/logo/ccc-mark.png" alt="CCC logo" />
+          <div>
+            <div class="brand__name">Carnivore Command Center</div>
+            <div class="brand__tag">Stop Guessing. Start Understanding.</div>
           </div>
+        </a>
 
-          <div class="trust__item">
-            <div class="trust__title">Smart Score</div>
-            <div class="trust__text">Daily readiness rating</div>
-          </div>
+        <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Open navigation" aria-expanded="false">☰</button>
 
-          <div class="trust__item">
-            <div class="trust__title">Built Real</div>
-            <div class="trust__text">Busy life friendly</div>
-          </div>
+        <nav class="nav__links" id="siteNav">
+          <a href="#how-it-works">How It Works</a>
+          <a href="#dashboard">Dashboard</a>
+          <a href="#why-ccc">Why CCC</a>
+          <a href="/product/">Product</a>
+          <a href="/beta/">Beta</a>
+          <a class="btn btn--secondary" href="/dashboard/">See Demo</a>
+          <a class="btn btn--primary" href="/beta/">Join Early Access</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <div class="container hero__frame">
+          <article class="hero__image-card">
+            <img
+              class="hero__image"
+              src="/assets/img/mascot/metabo-home-hero.webp"
+              alt="Metabo in the Carnivore Command Center"
+              loading="eager"
+              fetchpriority="high"
+              width="1600"
+              height="1400"
+            />
+            <div class="hero__overlay">
+              <div class="eyebrow">Founder-built readiness system</div>
+              <h1 class="hero__headline">Stop guessing. <span>Start understanding.</span></h1>
+              <p class="hero__sub">CCC turns sleep, hydration, digestion, soreness, recovery, stress, and training data into a daily readiness score and a clear next move.</p>
+              <div class="hero__cta">
+                <a class="btn btn--primary" href="/beta/">Join Early Access</a>
+                <a class="btn btn--secondary" href="#dashboard">See What It Does</a>
+              </div>
+              <div class="hero__stats">
+                <div class="mini-stat"><strong>Daily Readiness</strong><span>Know whether to push, recover, or reset.</span></div>
+                <div class="mini-stat"><strong>Actionable Guidance</strong><span>No more vague tracking with no next step.</span></div>
+                <div class="mini-stat"><strong>Built for Momentum</strong><span>Simple signals. Better decisions. Better weeks.</span></div>
+              </div>
+            </div>
+          </article>
+
+          <aside class="hero__panel">
+            <div class="signal-board">
+              <div class="signal-board__head">
+                <strong>Your body has data. CCC gives it direction.</strong>
+                <span class="signal-chip">Today</span>
+              </div>
+              <div class="signal-board__body">
+                <div class="readiness">
+                  <div>
+                    <div class="readiness__score">87</div>
+                    <div class="readiness__label">Optimal zone · ready to execute</div>
+                  </div>
+                  <div class="trend-bars" aria-hidden="true">
+                    <span style="height:32px"></span>
+                    <span style="height:44px"></span>
+                    <span style="height:40px"></span>
+                    <span style="height:52px"></span>
+                    <span style="height:48px"></span>
+                    <span style="height:56px"></span>
+                    <span style="height:62px"></span>
+                  </div>
+                </div>
+
+                <div class="signal-grid">
+                  <div class="signal-item">
+                    <div class="signal-item__label">Sleep</div>
+                    <div class="signal-item__value">7h 43m</div>
+                  </div>
+                  <div class="signal-item">
+                    <div class="signal-item__label">Hydration</div>
+                    <div class="signal-item__value">88%</div>
+                  </div>
+                  <div class="signal-item">
+                    <div class="signal-item__label">Digestion</div>
+                    <div class="signal-item__value">Good</div>
+                  </div>
+                  <div class="signal-item">
+                    <div class="signal-item__label">Stress</div>
+                    <div class="signal-item__value">Low</div>
+                  </div>
+                </div>
+
+                <div class="signal-list">
+                  <div class="signal-list__row"><span>Hydrate early</span><strong>Priority</strong></div>
+                  <div class="signal-list__row"><span>Deep work block</span><strong>90 min</strong></div>
+                  <div class="signal-list__row"><span>Lift upper body</span><strong>Yes</strong></div>
+                  <div class="signal-list__row"><span>Protein target</span><strong>On track</strong></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="eyebrow">Why this is different</div>
+              <h3 style="margin:14px 0 10px; font-size:1.55rem; letter-spacing:-0.03em;">Most trackers collect data. CCC helps you act on it.</h3>
+              <p style="margin:0; color:var(--muted);">Instead of dumping more numbers on you, CCC shows what matters most right now, what is improving, and what to do next.</p>
+            </div>
+          </aside>
         </div>
+      </section>
 
-      </div>
-
-      <div class="hero__visual">
-        <div class="metabo-card metabo-card--hero metabo-card--hero-lg">
-          <img
-            src="/assets/img/mascot/metabo-focus.png"
-            class="metabo-card__img metabo-card__img--hero"
-            alt="Meet Metabo">
-
-          <div class="metabo-card__label">
-            <div class="metabo-card__name">Meet Metabo</div>
-            <div class="metabo-card__role">Your readiness + performance guide</div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-  </div>
-</section>
-
-<section class="stats-strip">
-  <div class="container">
-    <div class="stats-strip__grid">
-
-      <div class="stats-chip">
-        <strong>23</strong>
-        <span>Founding users</span>
-      </div>
-
-      <div class="stats-chip">
-        <strong>5</strong>
-        <span>Daily modes</span>
-      </div>
-
-      <div class="stats-chip">
-        <strong>1 min</strong>
-        <span>Check-in flow</span>
-      </div>
-
-      <div class="stats-chip">
-        <strong>Beta</strong>
-        <span>Open now</span>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<section class="section section--alt">
-  <div class="container">
-
-    <div class="section__head section__head--center">
-      <h2>How It Works</h2>
-      <p>Simple enough to use daily. Powerful enough to improve your week.</p>
-    </div>
-
-    <div class="cards cards--3">
-      <div class="card">
-        <div class="card__kicker">1</div>
-        <h3>Log Signals</h3>
-        <p>
-          Enter sleep, hydration, digestion, energy, soreness, mood, and recovery.
-        </p>
-      </div>
-
-      <div class="card">
-        <div class="card__kicker">2</div>
-        <h3>Get Your Score</h3>
-        <p>
-          CCC converts signals into a readiness score and recommends your mode.
-        </p>
-      </div>
-
-      <div class="card">
-        <div class="card__kicker">3</div>
-        <h3>Win The Day</h3>
-        <p>
-          Know whether to push, recover, focus, train, or reset.
-        </p>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<section class="section">
-  <div class="container">
-
-    <div class="section__head section__head--center">
-      <h2>Built For Real Life</h2>
-      <p>Not influencers. Not robots. Real people with real schedules.</p>
-    </div>
-
-    <div class="cards cards--4">
-      <div class="card">
-        <h3>Busy Adults</h3>
-        <p>Low energy, inconsistent habits, no extra time.</p>
-      </div>
-
-      <div class="card">
-        <h3>Professionals</h3>
-        <p>Need sharper mornings and steadier focus.</p>
-      </div>
-
-      <div class="card">
-        <h3>Men 40+</h3>
-        <p>Recovery, momentum, hormones, consistency.</p>
-      </div>
-
-      <div class="card">
-        <h3>Carnivore / Keto</h3>
-        <p>See what actually improves your output.</p>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<section class="section section--alt">
-  <div class="container">
-
-    <div class="split split--v47">
-
-      <div>
-        <div class="section__head">
-          <h2>Your Body Has Data. Use It.</h2>
-          <p>
-            CCC gives users a clearer way to understand what improves readiness,
-            what hurts momentum, and what to do next.
-          </p>
-        </div>
-
-        <div class="card mini mini--bright">
-          <div class="mini__title">What the dashboard shows</div>
-          <ul class="bullets">
-            <li>Daily readiness score</li>
-            <li>Sleep + hydration trends</li>
-            <li>Suggested mode for today</li>
-            <li>Limiting factor alerts</li>
-            <li>Simple next-step actions</li>
-          </ul>
-        </div>
-
-        <div class="pillrow">
-          <span class="pill">Readiness</span>
-          <span class="pill">Signals</span>
-          <span class="pill">Trends</span>
-          <span class="pill">Actions</span>
-        </div>
-      </div>
-
-      <div class="dashboard-preview-card">
-        <img
-          src="/assets/img/dashboard-preview.png"
-          class="dashboard-preview-card__img"
-          alt="CCC Dashboard"
-          loading="lazy"
-          decoding="async">
-      </div>
-
-    </div>
-
-  </div>
-</section>
-
-<section class="section">
-  <div class="container">
-
-    <div class="split split--v47">
-
-      <div>
-        <div class="section__head">
-          <h2>Meet Metabo</h2>
-          <p>
-            Built by someone who got tired of guessing and wanted a smarter system.
-          </p>
-        </div>
-
-        <div class="card mini mini--bright">
-          <div class="mini__title">Why people connect with this</div>
-          <ul class="bullets">
-            <li>Built from personal frustration</li>
-            <li>Not generic fitness fluff</li>
-            <li>Simple system for better days</li>
-            <li>Looks premium and real</li>
-          </ul>
-        </div>
-
-        <div class="hero__cta" style="margin-top:18px;">
-          <a href="/beta/" class="btn btn--primary">Join Founding Access</a>
-        </div>
-      </div>
-
-      <div class="dashboard-preview-card">
-        <img
-          src="/assets/img/mascot/metabo-welcome.png"
-          class="dashboard-preview-card__img"
-          alt="Meet Metabo"
-          loading="lazy"
-          decoding="async">
-      </div>
-
-    </div>
-
-  </div>
-</section>
-
-<section class="section section--alt">
-  <div class="container">
-
-    <div class="section__head section__head--center">
-      <h2>What Early Users Say</h2>
-      <p>Early traction starts with real clarity.</p>
-    </div>
-
-    <div class="cards cards--3">
-      <div class="card">
-        <p>“I realized bad sleep was wrecking my workouts.”</p>
-      </div>
-
-      <div class="card">
-        <p>“This helped me stop wasting good days.”</p>
-      </div>
-
-      <div class="card">
-        <p>“I thought motivation was the problem. It was recovery.”</p>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<section class="section">
-  <div class="container">
-
-    <div class="card beta-card beta-card--v47">
-      <div class="beta-card__grid">
-
-        <div>
+      <section class="section" id="how-it-works">
+        <div class="container">
           <div class="section__head">
-            <h2>Join Founding Beta Access</h2>
-            <p>
-              Early users get access first, lower pricing,
-              feature influence, and founding member status.
-            </p>
+            <div>
+              <div class="eyebrow">How it works</div>
+              <h2 class="section__title">What CCC actually does</h2>
+              <p class="section__sub">CCC is not just another tracker. It is a decision system designed to turn noisy signals into practical action.</p>
+            </div>
           </div>
 
-          <ul class="bullets">
-            <li>Early access before launch</li>
-            <li>Lower locked founding pricing</li>
-            <li>Help shape future features</li>
-            <li>Priority invites + updates</li>
-            <li>First 100 founding badge</li>
-          </ul>
-
-          <form
-            action="https://app.kit.com/forms/9117546/subscriptions"
-            method="post"
-            class="beta-form beta-form--v47">
-
-            <input
-              type="email"
-              name="email_address"
-              placeholder="Enter your email"
-              required>
-
-            <button type="submit" class="btn btn--primary">
-              Join Beta Now
-            </button>
-
-          </form>
+          <div class="cards-3">
+            <article class="card">
+              <div class="card__step">1</div>
+              <h3>Collects daily signals</h3>
+              <p>Sleep, steps, hydration, digestion, soreness, mood, recovery, stress, and energy all feed the system.</p>
+            </article>
+            <article class="card">
+              <div class="card__step">2</div>
+              <h3>Creates a readiness score</h3>
+              <p>CCC weighs your inputs and shows where you are today so you can push, recover, or reset with confidence.</p>
+            </article>
+            <article class="card">
+              <div class="card__step">3</div>
+              <h3>Guides the next move</h3>
+              <p>It turns your score, mode, and trends into a clear plan instead of leaving you with more confusion.</p>
+            </article>
+          </div>
         </div>
+      </section>
 
-        <div class="beta-card__image">
-          <img
-            src="/assets/img/mascot/metabo-welcome.png"
-            alt="Join CCC"
-            loading="lazy"
-            decoding="async">
+      <section class="section" id="why-ccc">
+        <div class="container problem-grid">
+          <article class="card">
+            <div class="eyebrow">Why people need this</div>
+            <h2 class="section__title" style="font-size:clamp(1.7rem, 4vw, 2.55rem); margin-top:14px;">Most people know something feels off. They just do not know which signal matters most.</h2>
+            <p class="section__sub" style="margin-top:10px;">That is where CCC helps. It reduces noise, spots patterns faster, and gives you a practical way to improve consistency.</p>
+            <ul class="problem-list">
+              <li>Low energy without a clear reason</li>
+              <li>Inconsistent workouts and recovery</li>
+              <li>Poor sleep wrecking momentum</li>
+              <li>Guessing which habits or foods are helping</li>
+              <li>Feeling off without knowing why</li>
+            </ul>
+          </article>
+
+          <article class="dashboard-card" id="dashboard">
+            <div>
+              <div class="eyebrow">See the dashboard</div>
+              <h2 class="section__title" style="font-size:clamp(1.7rem, 4vw, 2.45rem); margin-top:14px;">A clear view of what matters today</h2>
+              <p class="section__sub" style="margin-top:10px;">Readiness, focus, top recommendations, and momentum trends in one view.</p>
+            </div>
+            <div class="dashboard-card__shot">
+              <img
+                src="/assets/img/mascot/metabo-dashboard.webp"
+                alt="CCC dashboard preview"
+                loading="lazy"
+                width="1400"
+                height="900"
+              />
+            </div>
+          </article>
         </div>
+      </section>
 
+      <section class="section">
+        <div class="container">
+          <div class="cta-band">
+            <div>
+              <div class="eyebrow">Early access</div>
+              <h2 class="cta-band__title">See for yourself. Then join early access.</h2>
+              <p class="cta-band__sub">Explore the dashboard, see the results, and get invited before the public launch.</p>
+              <div class="hero__cta" style="margin-bottom:0;">
+                <a class="btn btn--secondary" href="/dashboard/">See Demo</a>
+                <a class="btn btn--primary" href="/beta/">Join Beta</a>
+              </div>
+            </div>
+            <div class="cta-band__media">
+              <img
+                src="/assets/img/mascot/metabo-welcome.webp"
+                alt="Metabo welcoming users to CCC"
+                loading="lazy"
+                width="1000"
+                height="800"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="section__head">
+            <div>
+              <div class="eyebrow">Positioning</div>
+              <h2 class="section__title">Built to feel like a real system, not just another habit app</h2>
+            </div>
+          </div>
+          <div class="proof">
+            <article class="card"><strong>Founder-led</strong><span style="color:var(--muted);">A human brand with a recognizable face and point of view.</span></article>
+            <article class="card"><strong>Signal-driven</strong><span style="color:var(--muted);">Turns daily body inputs into a practical operating picture.</span></article>
+            <article class="card"><strong>Action-first</strong><span style="color:var(--muted);">The value is not tracking. The value is what to do next.</span></article>
+            <article class="card"><strong>Premium visual identity</strong><span style="color:var(--muted);">Distinctive, memorable, and strong enough to carry the brand.</span></article>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container footer__inner">
+        <div>© 2026 Carnivore Command Center. All rights reserved.</div>
+        <div>
+          <a href="/about/">About</a>
+          &nbsp;·&nbsp;
+          <a href="/privacy/">Privacy</a>
+          &nbsp;·&nbsp;
+          <a href="/terms/">Terms</a>
+        </div>
       </div>
-    </div>
-
+    </footer>
   </div>
-</section>
 
-<section class="cta">
-  <div class="container">
+  <script>
+    const toggle = document.getElementById('mobileNavToggle');
+    const nav = document.getElementById('siteNav');
 
-    <div class="cta__inner cta__inner--metabo">
+    if (toggle && nav) {
+      toggle.addEventListener('click', () => {
+        const isOpen = nav.classList.toggle('is-open');
+        toggle.setAttribute('aria-expanded', String(isOpen));
+      });
 
-      <div class="cta__content">
-        <div class="panel__title">Start Understanding Your Body Again.</div>
-        <div class="panel__subtitle">
-          Join beta now. Win more days. Feel better. Perform better.
-        </div>
-
-        <div class="cta__actions" style="margin-top:18px;">
-          <a href="/beta/" class="btn btn--primary">Join Beta Now</a>
-          <a href="/product/" class="btn btn--ghost">Explore Product</a>
-        </div>
-      </div>
-
-      <div class="cta__mascot">
-        <img
-          src="/assets/img/mascot/metabo-focus.png"
-          alt=""
-          loading="lazy"
-          decoding="async">
-      </div>
-
-    </div>
-
-  </div>
-</section>
+      nav.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', () => {
+          nav.classList.remove('is-open');
+          toggle.setAttribute('aria-expanded', 'false');
+        });
+      });
+    }
+  </script>
+</body>
+</html>
