@@ -178,7 +178,7 @@
     .hero {
       position: relative;
       z-index: 1;
-      padding: 46px 0 26px;
+      padding: 34px 0 26px;
     }
 
     .hero__frame {
@@ -243,7 +243,7 @@
 
     .hero__headline {
       margin: 16px 0 10px;
-      font-size: clamp(2.3rem, 5vw, 4.3rem);
+      font-size: clamp(2.1rem, 4.4vw, 3.85rem);
       line-height: 0.96;
       letter-spacing: -0.04em;
       max-width: 11ch;
@@ -676,30 +676,6 @@
 </head>
 <body>
   <div class="site-shell">
-    <header class="topbar" style="position:sticky; top:0;">
-      <div class="container nav">
-        <a class="brand" href="#top">
-          <img class="brand__logo" src="/assets/img/logo/ccc-mark.png" alt="CCC logo" />
-          <div>
-            <div class="brand__name">Carnivore Command Center</div>
-            <div class="brand__tag">Stop Guessing. Start Understanding.</div>
-          </div>
-        </a>
-
-        <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Open navigation" aria-expanded="false">☰</button>
-
-        <nav class="nav__links" id="siteNav">
-          <a href="#how-it-works">How It Works</a>
-          <a href="#dashboard">Dashboard</a>
-          <a href="#why-ccc">Why CCC</a>
-          <a href="/product/">Product</a>
-          <a href="/beta/">Beta</a>
-          <a class="btn btn--secondary" href="/dashboard/">See Demo</a>
-          <a class="btn btn--primary" href="/beta/">Join Early Access</a>
-        </nav>
-      </div>
-    </header>
-
     <main id="top">
       <section class="hero">
         <div class="container hero__frame">
@@ -898,19 +874,7 @@
       </section>
     </main>
 
-    <footer class="footer">
-      <div class="container footer__inner">
-        <div>© 2026 Carnivore Command Center. Stop Guessing. Start Understanding.</div>
-        <div>
-          <a href="/about/">About</a>
-          &nbsp;·&nbsp;
-          <a href="/privacy/">Privacy</a>
-          &nbsp;·&nbsp;
-          <a href="/terms/">Terms</a>
-        </div>
       </div>
-    </footer>
-  </div>
 
   <script>
     const toggle = document.getElementById('mobileNavToggle');
