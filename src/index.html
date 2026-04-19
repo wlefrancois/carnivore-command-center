@@ -199,7 +199,7 @@
     }
 
     .hero__image-card {
-      min-height: 670px;
+      min-height: 640px;
     }
 
     .hero__image {
@@ -213,7 +213,17 @@
       position: absolute;
       inset: auto 0 0 0;
       padding: 28px;
-      background: linear-gradient(180deg, transparent 0%, rgba(4, 10, 18, 0.24) 10%, rgba(4, 10, 18, 0.9) 100%);
+      background: linear-gradient(180deg, transparent 0%, rgba(4, 10, 18, 0.18) 8%, rgba(4, 10, 18, 0.82) 100%);
+    }
+
+    .hero__copy {
+      max-width: 760px;
+      padding: 22px;
+      border-radius: 26px;
+      background: linear-gradient(180deg, rgba(7, 14, 27, 0.78), rgba(7, 14, 27, 0.9));
+      border: 1px solid rgba(111, 149, 218, 0.14);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.32);
+      backdrop-filter: blur(10px);
     }
 
     .eyebrow {
@@ -411,7 +421,7 @@
     .section {
       position: relative;
       z-index: 1;
-      padding: 28px 0;
+      padding: 34px 0;
     }
 
     .section__head {
@@ -503,7 +513,7 @@
       overflow: hidden;
       border: 1px solid rgba(108, 144, 207, 0.12);
       background: #081120;
-      min-height: 280px;
+      min-height: 320px;
     }
 
     .dashboard-card__shot img {
@@ -541,7 +551,7 @@
     }
 
     .cta-band__media {
-      min-height: 180px;
+      min-height: 220px;
       border-radius: 22px;
       overflow: hidden;
       border: 1px solid rgba(111, 149, 218, 0.16);
@@ -650,7 +660,7 @@
       .nav { min-height: 70px; }
       .brand__name { font-size: 0.95rem; }
       .brand__tag { display: none; }
-      .hero__image-card { min-height: 470px; }
+      .hero__image-card { min-height: 500px; }
       .hero__headline { max-width: 10ch; }
       .signal-grid,
       .proof { grid-template-columns: 1fr; }
@@ -703,17 +713,19 @@
               height="1400"
             />
             <div class="hero__overlay">
-              <div class="eyebrow">Founder-built readiness system</div>
-              <h1 class="hero__headline">Stop guessing. <span>Start understanding.</span></h1>
-              <p class="hero__sub">CCC turns sleep, hydration, digestion, soreness, recovery, stress, and training data into a daily readiness score and a clear next move.</p>
-              <div class="hero__cta">
-                <a class="btn btn--primary" href="/beta/">Join Early Access</a>
-                <a class="btn btn--secondary" href="#dashboard">See What It Does</a>
-              </div>
-              <div class="hero__stats">
-                <div class="mini-stat"><strong>Daily Readiness</strong><span>Know whether to push, recover, or reset.</span></div>
-                <div class="mini-stat"><strong>Actionable Guidance</strong><span>No more vague tracking with no next step.</span></div>
-                <div class="mini-stat"><strong>Built for Momentum</strong><span>Simple signals. Better decisions. Better weeks.</span></div>
+              <div class="hero__copy">
+                <div class="eyebrow">Founder-built readiness system</div>
+                <h1 class="hero__headline">Stop guessing. <span>Start understanding.</span></h1>
+                <p class="hero__sub">CCC turns sleep, hydration, digestion, soreness, recovery, stress, and training data into a daily readiness score and a clear next move.</p>
+                <div class="hero__cta">
+                  <a class="btn btn--primary" href="/beta/">Join Early Access</a>
+                  <a class="btn btn--secondary" href="#dashboard">See What It Does</a>
+                </div>
+                <div class="hero__stats">
+                  <div class="mini-stat"><strong>Daily Readiness</strong><span>Know whether to push, recover, or reset.</span></div>
+                  <div class="mini-stat"><strong>Actionable Guidance</strong><span>No more vague tracking with no next step.</span></div>
+                  <div class="mini-stat"><strong>Built for Momentum</strong><span>Simple signals. Better decisions. Better weeks.</span></div>
+                </div>
               </div>
             </div>
           </article>
