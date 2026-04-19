@@ -495,11 +495,79 @@
       object-position: center top;
     }
 
+    .positioning-section {
+      padding-top: 22px;
+    }
+
+    .positioning-hero {
+      position: relative;
+      margin-bottom: 18px;
+      padding: 6px 0 8px;
+      overflow: hidden;
+    }
+
+    .positioning-hero__glow {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 18% 20%, rgba(76, 141, 255, 0.10), transparent 34%),
+        radial-gradient(circle at 84% 40%, rgba(255, 122, 0, 0.08), transparent 28%),
+        linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0));
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .positioning-hero .section__head,
+    .positioning-points {
+      position: relative;
+      z-index: 1;
+    }
+
+    .positioning-hero__title {
+      max-width: 16ch;
+      font-size: clamp(2rem, 5vw, 4rem);
+      line-height: 0.98;
+    }
+
+    .positioning-hero__sub {
+      max-width: 64ch;
+      margin-top: 14px;
+      font-size: 1.03rem;
+    }
+
+    .positioning-points {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 14px;
+    }
+
+    .positioning-point {
+      padding: 18px 18px 16px;
+      border-radius: 18px;
+      background: linear-gradient(180deg, rgba(18, 31, 57, 0.86), rgba(10, 19, 37, 0.9));
+      border: 1px solid rgba(104, 140, 210, 0.14);
+      box-shadow: 0 14px 34px rgba(0, 0, 0, 0.24);
+    }
+
+    .positioning-point strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 1rem;
+      letter-spacing: -0.02em;
+    }
+
+    .positioning-point span {
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.55;
+    }
+
     .proof {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 16px;
-      margin-top: 14px;
+      margin-top: 10px;
     }
 
     .proof .card {
@@ -522,6 +590,12 @@
 
       .hero__image-card { min-height: 560px; }
       .proof { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 980px) {
+      .positioning-points {
+        grid-template-columns: 1fr;
+      }
     }
 
     @media (max-width: 840px) {
@@ -798,12 +872,30 @@
         </div>
       </section>
 
-      <section class="section">
+      <section class="section positioning-section">
         <div class="container">
-          <div class="section__head">
-            <div>
-              <div class="eyebrow">Positioning</div>
-              <h2 class="section__title">Built to feel like a real system, not just another habit app</h2>
+          <div class="positioning-hero">
+            <div class="positioning-hero__glow"></div>
+            <div class="section__head">
+              <div>
+                <div class="eyebrow">Positioning</div>
+                <h2 class="section__title positioning-hero__title">Built to feel like a real system, not just another habit app</h2>
+                <p class="section__sub positioning-hero__sub">CCC is designed to feel human, useful, and decisive — not like another generic tracker that gives you more charts and no real next step.</p>
+              </div>
+            </div>
+            <div class="positioning-points">
+              <article class="positioning-point">
+                <strong>Founder-built brand</strong>
+                <span>A recognizable face, a clear point of view, and a product that feels real.</span>
+              </article>
+              <article class="positioning-point">
+                <strong>Signal to action</strong>
+                <span>Turns sleep, recovery, stress, and habits into practical daily direction.</span>
+              </article>
+              <article class="positioning-point">
+                <strong>Built for momentum</strong>
+                <span>Helps you decide whether to push, recover, reset, or stay on track.</span>
+              </article>
             </div>
           </div>
           <div class="proof">
