@@ -1,0 +1,962 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>Carnivore Command Center</title>
+
+  <meta name="description" content="Elite performance + metabolic intelligence. Track what matters, see patterns, and execute with confidence." />
+  <meta name="theme-color" content="#0b1020" />
+
+  <meta property="og:title" content="Carnivore Command Center" />
+  <meta property="og:description" content="Elite performance + metabolic intelligence. Track what matters, see patterns, and execute with confidence." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+
+<body data-page="app/dashboard/index.html">
+  <header class="site-header">
+  <div class="container site-header__inner">
+    <a class="site-brand" href="/">
+      <img
+        class="site-brand__logo"
+        src="/assets/img/ccc_logo_primary_transparent.png"
+        alt="Carnivore Command Center logo" />
+      <div class="site-brand__text">
+        <div class="site-brand__name">Carnivore Command Center</div>
+        <div class="site-brand__tag">Stop Guessing. Start Understanding.</div>
+      </div>
+    </a>
+
+    <button
+      class="site-header__toggle"
+      type="button"
+      aria-label="Open navigation"
+      aria-expanded="false"
+      aria-controls="site-nav">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <nav class="site-nav" id="site-nav" data-nav>
+      <a href="/product/">Product</a>
+      <a href="/dashboard/">Dashboard</a>
+      <a href="/beta/">Beta</a>
+      <a href="/about/">About</a>
+
+      <div class="site-nav__actions">
+        <a href="/app/" class="btn btn--ghost btn--sm nav__loggedOut">Login</a>
+        <a href="/beta/" class="btn btn--primary btn--sm nav__loggedOut">Join Beta</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+
+  <main>
+    <section class="page-hero">
+  <div class="container">
+    <h1>Dashboard</h1>
+    <p class="lead">Your metabolic signals over the last 7 days.</p>
+
+    <div class="hero__cta">
+      <a class="btn btn--primary" href="/app/log/">Log Today</a>
+      <button class="btn btn--ghost" id="logoutBtn" type="button">Logout</button>
+    </div>
+
+    <p id="userLine" class="micro muted" style="margin-top:10px;"></p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div id="scoreCard" class="card" style="margin-bottom:14px;"></div>
+    <div id="actionCard" class="card" style="margin-bottom:14px;"></div>
+    <div id="breakdownCard" class="card" style="margin-bottom:14px;"></div>
+    <div id="todayCard" class="card" style="margin-bottom:14px;"></div>
+
+    <div id="stats" class="cards cards--3" style="margin-bottom:18px;"></div>
+    <div id="weeklyCard" class="card" style="margin-bottom:18px;"></div>
+    <div id="insights" class="card" style="margin-bottom:18px;"></div>
+    <div id="experimentCard" class="card" style="margin-bottom:18px;"></div>
+    <div id="forecastCard" class="card" style="margin-bottom:18px;"></div>
+    <div id="trainingCard" class="card" style="margin-bottom:18px;"></div>
+    <div id="recoveryCard" class="card" style="margin-bottom:18px;"></div>
+    <div id="streakCard" class="card" style="margin-bottom:18px;"></div>
+
+    <div class="card" style="margin-bottom:18px;">
+  <div style="font-weight:700; font-size:18px;">Readiness Trend</div>
+  <div class="micro muted" style="margin-top:4px;">Last 7 days</div>
+  <div style="margin-top:12px;">
+    <canvas id="chartReadiness" height="140"></canvas>
+  </div>
+</div>
+
+    <div class="cards cards--3" style="margin-bottom:18px;">
+      <div class="card">
+        <div style="font-weight:700; font-size:18px;">Energy</div>
+        <div class="micro muted" style="margin-top:4px;">Last 7 days</div>
+        <div style="margin-top:10px;">
+          <canvas id="chartEnergy" height="180"></canvas>
+        </div>
+      </div>
+
+      <div class="card">
+        <div style="font-weight:700; font-size:18px;">Sleep</div>
+        <div class="micro muted" style="margin-top:4px;">Hours (last 7 days)</div>
+        <div style="margin-top:10px;">
+          <canvas id="chartSleep" height="180"></canvas>
+        </div>
+      </div>
+
+      <div class="card">
+        <div style="font-weight:700; font-size:18px;">Inflammation</div>
+        <div class="micro muted" style="margin-top:4px;">Last 7 days</div>
+        <div style="margin-top:10px;">
+          <canvas id="chartInflam" height="180"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div id="logs"></div>
+  </div>
+</section>
+
+<script type="module">
+import { supabase, getUser, signOut } from "/js/app.js";
+import { Chart } from "/js/vendor/chart.js";
+
+const experimentCard = document.getElementById("experimentCard");
+const recoveryCard = document.getElementById("recoveryCard"); 
+const streakCard = document.getElementById("streakCard");  
+const userLine = document.getElementById("userLine");
+const scoreCard = document.getElementById("scoreCard");
+const actionCard = document.getElementById("actionCard");
+const breakdownCard = document.getElementById("breakdownCard");
+const todayCard = document.getElementById("todayCard");
+const stats = document.getElementById("stats");
+const weeklyCard = document.getElementById("weeklyCard");
+const insights = document.getElementById("insights");
+const forecastCard = document.getElementById("forecastCard");
+const trainingCard = document.getElementById("trainingCard");
+const logsEl = document.getElementById("logs");
+
+document.getElementById("logoutBtn").addEventListener("click", async () => {
+  await signOut();
+  window.location.href = "/app/";
+});
+
+function todayISODate() {
+  const now = new Date();
+  return (
+    now.getFullYear() + "-" +
+    String(now.getMonth() + 1).padStart(2, "0") + "-" +
+    String(now.getDate()).padStart(2, "0")
+  );
+}
+
+function avg(arr) {
+  const v = arr.filter((x) => x != null && !Number.isNaN(x));
+  if (!v.length) return null;
+  return (v.reduce((a, b) => a + b, 0) / v.length).toFixed(1);
+}
+
+function trend(arr) {
+  const v = arr.filter((x) => x != null && !Number.isNaN(x));
+  if (v.length < 2) return `<span class="trend-flat">→ steady</span>`;
+
+  const first = v[v.length - 1];
+  const last = v[0];
+
+  if (last > first) return `<span class="trend-up">▲ improving</span>`;
+  if (last < first) return `<span class="trend-down">▼ declining</span>`;
+  return `<span class="trend-flat">→ steady</span>`;
+}
+
+function escapeHtml(s) {
+  return String(s)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+function normalizeSleep(hours) {
+  if (hours == null || Number.isNaN(Number(hours))) return 0;
+  const h = Number(hours);
+  if (h >= 8) return 25;
+  if (h >= 7) return 22;
+  if (h >= 6) return 18;
+  if (h >= 5) return 12;
+  return 6;
+}
+
+function normalizeTenScale(value, maxPoints) {
+  if (value == null || Number.isNaN(Number(value))) return 0;
+  return (Number(value) / 10) * maxPoints;
+}
+
+function normalizeReverseTenScale(value, maxPoints) {
+  if (value == null || Number.isNaN(Number(value))) return 0;
+  return ((11 - Number(value)) / 10) * maxPoints;
+}
+
+function normalizeWater(oz) {
+  if (oz == null || Number.isNaN(Number(oz))) return 0;
+  const w = Number(oz);
+  if (w >= 100) return 5;
+  if (w >= 80) return 4;
+  if (w >= 60) return 3;
+  if (w >= 40) return 2;
+  return 1;
+}
+
+function computeScore(row) {
+  const parts = {
+    sleep: normalizeSleep(row.sleep_hours),
+    energy: normalizeTenScale(row.energy, 25),
+    inflammation: normalizeReverseTenScale(row.inflammation, 20),
+    digestion: normalizeTenScale(row.digestion, 15),
+    mood: normalizeTenScale(row.mood, 10),
+    water: normalizeWater(row.water_oz)
+  };
+
+  const total = Math.round(
+    parts.sleep +
+    parts.energy +
+    parts.inflammation +
+    parts.digestion +
+    parts.mood +
+    parts.water
+  );
+
+  return { total, parts };
+}
+
+function categorizeParts(parts) {
+  const helped = [];
+  const hurt = [];
+
+  for (const [key, value] of Object.entries(parts)) {
+    const max =
+      key === "sleep" ? 25 :
+      key === "energy" ? 25 :
+      key === "inflammation" ? 20 :
+      key === "digestion" ? 15 :
+      key === "mood" ? 10 :
+      key === "water" ? 5 : 10;
+
+    const ratio = value / max;
+
+    if (ratio >= 0.6) helped.push(key);
+    if (ratio <= 0.4) hurt.push(key);
+  }
+
+  return { helped, hurt };
+}
+
+function getRecommendation(limiter) {
+  switch (limiter) {
+    case "sleep":
+      return {
+        title: "Today's Recommendation",
+        body: "Sleep is limiting your metabolic score. Aim for 7–8 hours tonight and reduce late-night stimulation."
+      };
+    case "energy":
+      return {
+        title: "Today's Recommendation",
+        body: "Energy is running low. Keep today simpler, reduce unnecessary stress, and support recovery."
+      };
+    case "inflammation":
+      return {
+        title: "Today's Recommendation",
+        body: "Inflammation is limiting your score. Focus on recovery, lower training intensity, and keep food choices clean and consistent."
+      };
+    case "digestion":
+      return {
+        title: "Today's Recommendation",
+        body: "Digestion is limiting your score. Keep meals simple today and avoid stacking too many variables."
+      };
+    case "mood":
+      return {
+        title: "Today's Recommendation",
+        body: "Mood is weighing on your readiness. Reduce friction today and focus on a calm, steady routine."
+      };
+    case "hydration":
+      return {
+        title: "Today's Recommendation",
+        body: "Hydration is limiting your score. Increase water intake and aim for at least 80 oz today."
+      };
+    default:
+      return {
+        title: "Today's Recommendation",
+        body: "Log consistently so CCC can generate more accurate recommendations."
+      };
+  }
+}
+
+function getLimiter(parts) {
+  const entries = [
+    ["sleep", parts.sleep],
+    ["energy", parts.energy],
+    ["inflammation", parts.inflammation],
+    ["digestion", parts.digestion],
+    ["mood", parts.mood],
+    ["hydration", parts.water]
+  ];
+  entries.sort((a, b) => a[1] - b[1]);
+  return entries[0][0];
+}
+
+function getScoreBand(score) {
+  if (score >= 80) return { label: "Elite", color1: "#35d07f", color2: "#7cf0a7" };
+  if (score >= 60) return { label: "Good", color1: "#5ea2ff", color2: "#7c8cff" };
+  if (score >= 40) return { label: "Recover", color1: "#ffb347", color2: "#ffd089" };
+  return { label: "Low", color1: "#ff6b6b", color2: "#ff9a9a" };
+}
+
+function corrSleepEnergy(rows) {
+  const pairs = rows
+    .filter((r) => r.sleep_hours != null && r.energy != null)
+    .map((r) => [Number(r.sleep_hours), Number(r.energy)])
+    .filter(([a, b]) => !Number.isNaN(a) && !Number.isNaN(b));
+
+  if (pairs.length < 3) return null;
+
+  const xs = pairs.map((p) => p[0]);
+  const ys = pairs.map((p) => p[1]);
+
+  const xAvg = Number(avg(xs));
+  const yAvg = Number(avg(ys));
+
+  let num = 0, denX = 0, denY = 0;
+  for (let i = 0; i < pairs.length; i++) {
+    const dx = xs[i] - xAvg;
+    const dy = ys[i] - yAvg;
+    num += dx * dy;
+    denX += dx * dx;
+    denY += dy * dy;
+  }
+
+  const corr = num / Math.sqrt(denX * denY);
+  if (!Number.isFinite(corr)) return null;
+
+  if (corr > 0.4) return "Sleep tends to correlate with higher energy for you.";
+  if (corr < -0.4) return "More sleep correlates with lower energy for you. Check sleep quality or timing.";
+  return null;
+}
+
+function buildLineChart(canvasId, label, labels, values, yMin = null, yMax = null) {
+  const el = document.getElementById(canvasId);
+  if (!el) return;
+
+  if (el._chart) el._chart.destroy();
+
+  el._chart = new Chart(el, {
+    type: "line",
+    data: {
+      labels,
+      datasets: [
+        {
+          label,
+          data: values,
+          tension: 0.35,
+          spanGaps: true,
+          pointRadius: 4,
+          pointHoverRadius: 6
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { ticks: { maxRotation: 0 } },
+        y: {
+          beginAtZero: false,
+          suggestedMin: yMin ?? undefined,
+          suggestedMax: yMax ?? undefined
+        }
+      }
+    }
+  });
+}
+
+async function load() {
+  try {
+    const user = await getUser();
+    if (!user) {
+      window.location.href = "/app/";
+      return;
+    }
+
+    userLine.textContent = `Logged in as ${user.email}`;
+
+    const { data, error } = await supabase
+      .from("daily_logs")
+      .select("*")
+      .order("log_date", { ascending: false })
+      .limit(7);
+
+    if (error) {
+      scoreCard.innerHTML = `<strong>Error loading logs</strong><div class="micro muted" style="margin-top:8px;">${error.message}</div>`;
+      return;
+    }
+
+    const rows = data || [];
+    const today = todayISODate();
+    const todayLog = rows.find((r) => r.log_date === today);
+    const streak = calculateStreak(rows, today);
+
+    if (todayLog) {
+      const todayScore = computeScore(todayLog);
+      const band = getScoreBand(todayScore.total);
+      const yesterdayLog = rows.find((r) => r.log_date !== today);
+      const yesterdayScore = yesterdayLog ? computeScore(yesterdayLog).total : null;
+      const delta = yesterdayScore != null ? todayScore.total - yesterdayScore : null;
+      const limiter = getLimiter(todayScore.parts);
+      const recommendation = getRecommendation(limiter);
+      const { helped, hurt } = categorizeParts(todayScore.parts);
+      const priorities = getRecoveryPriorities(todayScore.parts);
+
+recoveryCard.innerHTML = `
+<strong>Recovery Priorities</strong>
+
+<div class="micro muted" style="margin:8px 0 14px;">
+Focus on these areas today to improve tomorrow’s readiness.
+</div>
+
+<div style="display:grid; gap:10px;">
+${priorities.map((p,i)=>`
+  <div style="
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:10px 12px;
+    border-radius:12px;
+    background:rgba(255,255,255,.04);
+    border:1px solid rgba(255,255,255,.10);
+  ">
+    <div style="
+      width:28px;
+      height:28px;
+      border-radius:8px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:rgba(94,162,255,.18);
+      font-weight:700;
+    ">${i+1}</div>
+
+    <div>${p.name}</div>
+  </div>
+`).join("")}
+</div>
+`;
+
+      let forecastText = "";
+      if (limiter === "hydration") forecastText = "If hydration reaches 80–100 oz tomorrow, readiness could increase by ~4–7 points.";
+      if (limiter === "sleep") forecastText = "If sleep reaches 7–8 hours tonight, readiness could increase by ~6–10 points.";
+      if (limiter === "energy") forecastText = "If stress is reduced and recovery improves, readiness could increase by ~3–6 points.";
+      if (limiter === "inflammation") forecastText = "Lower inflammation tomorrow could raise readiness by ~4–8 points.";
+      if (limiter === "digestion") forecastText = "Simplifying meals tomorrow may improve readiness by ~3–5 points.";
+      if (limiter === "mood") forecastText = "Improved mood and lower stress tomorrow could increase readiness by ~2–4 points.";
+
+      experimentCard.innerHTML = `
+<strong>Experiment Mode</strong>
+
+<div class="micro muted">
+  Metabolic Readiness
+  <a href="/science/" class="micro muted" style="margin-left:8px;">
+    What is this?
+  </a>
+</div>
+
+<div class="cards cards--3">
+
+<div class="card">
+<strong>Electrolyte Boost</strong>
+<div class="micro muted">7 day hydration experiment</div>
+</div>
+
+<div class="card">
+<strong>Strict Carnivore</strong>
+<div class="micro muted">14 day elimination reset</div>
+</div>
+
+<div class="card">
+<strong>Sleep Optimization</strong>
+<div class="micro muted">Improve sleep consistency</div>
+</div>
+
+</div>
+`;
+      scoreCard.innerHTML = `
+        <div style="display:flex; justify-content:space-between; gap:24px; flex-wrap:wrap; align-items:center;">
+          <div style="display:flex; align-items:center; gap:22px; flex-wrap:wrap;">
+            <div class="score-gauge" style="--score:${todayScore.total}; --g1:${band.color1}; --g2:${band.color2};">
+              <div class="score-gauge__inner">
+                <div class="score-gauge__value">${todayScore.total}</div>
+                <div class="score-gauge__sub">/ 100</div>
+              </div>
+            </div>
+
+            <div>
+              <div class="micro muted" style="text-transform:uppercase; letter-spacing:.08em;">
+                Metabolic Readiness • ${band.label}
+              </div>
+              <div class="micro muted" style="margin-top:10px;">
+                ${delta == null ? "First score logged" : delta > 0 ? `▲ +${delta} from last log` : delta < 0 ? `▼ ${delta} from last log` : "→ unchanged from last log"}
+              </div>
+            </div>
+          </div>
+
+          <div style="min-width:280px;">
+            <div style="height:10px; border-radius:999px; background: rgba(255,255,255,0.08); overflow:hidden; margin-bottom:14px;">
+              <div style="width:${todayScore.total}%; height:100%; border-radius:999px; background: linear-gradient(90deg, ${band.color1}, ${band.color2});"></div>
+            </div>
+
+            <div class="micro muted" style="line-height:1.7;">
+              <div><strong>Main limiter:</strong> ${limiter}</div>
+              <div>Sleep: ${todayScore.parts.sleep.toFixed(0)}/25</div>
+              <div>Energy: ${todayScore.parts.energy.toFixed(0)}/25</div>
+              <div>Inflammation: ${todayScore.parts.inflammation.toFixed(0)}/20</div>
+              <div>Digestion: ${todayScore.parts.digestion.toFixed(0)}/15</div>
+              <div>Mood: ${todayScore.parts.mood.toFixed(0)}/10</div>
+              <div>Hydration: ${todayScore.parts.water.toFixed(0)}/5</div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      actionCard.innerHTML = `
+        <div style="display:flex; gap:14px; align-items:flex-start;">
+          <div style="width:38px; height:38px; border-radius:12px; display:flex; align-items:center; justify-content:center; background: rgba(94,162,255,0.14); border: 1px solid rgba(94,162,255,0.28); font-size:18px;">✦</div>
+          <div>
+            <strong style="display:block; margin-bottom:6px;">${recommendation.title}</strong>
+            <div class="micro muted" style="line-height:1.6;">${recommendation.body}</div>
+          </div>
+        </div>
+      `;
+
+      breakdownCard.innerHTML = `
+        <strong style="display:block; margin-bottom:10px;">Score Breakdown</strong>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:18px;">
+          <div>
+            <div class="micro muted" style="margin-bottom:8px;">Helped Your Score</div>
+            <div style="display:flex; flex-direction:column; gap:8px;">
+              ${helped.length ? helped.map(x => `
+                <div style="padding:8px 10px; border-radius:12px; background: rgba(53,208,127,0.08); border:1px solid rgba(53,208,127,0.18);">
+                  + ${x}
+                </div>
+              `).join("") : `<div class="micro muted">—</div>`}
+            </div>
+          </div>
+
+          <div>
+            <div class="micro muted" style="margin-bottom:8px;">Limited Your Score</div>
+            <div style="display:flex; flex-direction:column; gap:8px;">
+              ${hurt.length ? hurt.map(x => `
+                <div style="padding:8px 10px; border-radius:12px; background: rgba(255,179,71,0.08); border:1px solid rgba(255,179,71,0.18);">
+                  - ${x}
+                </div>
+              `).join("") : `<div class="micro muted">—</div>`}
+            </div>
+          </div>
+        </div>
+      `;
+
+      forecastCard.innerHTML = `
+        <div style="display:flex; gap:14px; align-items:flex-start;">
+          <div style="width:38px; height:38px; border-radius:12px; display:flex; align-items:center; justify-content:center; background: rgba(124,140,255,0.14); border: 1px solid rgba(124,140,255,0.28); font-size:18px;">⌁</div>
+          <div>
+            <strong style="display:block; margin-bottom:6px;">Tomorrow Forecast</strong>
+            <div class="micro muted" style="line-height:1.6;">${forecastText}</div>
+          </div>
+        </div>
+      `;
+      const training = getTrainingGuidance(todayScore.total, limiter);
+
+trainingCard.innerHTML = `
+  <div style="display:flex; gap:14px; align-items:flex-start;">
+    <div style="
+      width:38px;
+      height:38px;
+      border-radius:12px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:${training.color};
+      border:1px solid ${training.border};
+      font-size:18px;
+    ">✓</div>
+
+    <div style="flex:1;">
+      <strong style="display:block; margin-bottom:6px;">
+        Training Readiness • ${training.level}
+      </strong>
+
+      <div class="micro muted" style="line-height:1.6; margin-bottom:10px;">
+        ${training.body}
+      </div>
+
+      <div style="display:grid; gap:8px;">
+        ${training.bullets.map(item => `
+          <div style="padding:8px 10px; border-radius:12px; background: rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08);">
+            ${item}
+          </div>
+        `).join("")}
+      </div>
+    </div>
+  </div>
+`;
+    } else {
+      scoreCard.innerHTML = `
+        <strong>No readiness score yet</strong>
+        <div class="micro muted" style="margin-top:6px;">
+          Log today to generate your first Metabolic Readiness score.
+        </div>
+      `;
+
+      actionCard.innerHTML = `
+        <strong>Today's Recommendation</strong>
+        <div class="micro muted" style="margin-top:8px;">
+          Log today to generate your first personalized recommendation.
+        </div>
+      `;
+
+      breakdownCard.innerHTML = `
+        <strong>Score Breakdown</strong>
+        <div class="micro muted" style="margin-top:8px;">
+          Log today to see what helped and what limited your score.
+        </div>
+      `;
+
+      forecastCard.innerHTML = `
+        <strong>Tomorrow Forecast</strong>
+        <div class="micro muted" style="margin-top:8px;">
+          Log today to generate your readiness forecast.
+        </div>
+      `;
+      trainingCard.innerHTML = `
+  <strong>Training Readiness</strong>
+  <div class="micro muted" style="margin-top:8px;">
+    Log today to generate your training guidance.
+  </div>
+`;
+    }
+
+    todayCard.innerHTML = todayLog
+      ? `<strong>Today logged ✅</strong>
+         <div class="micro muted" style="margin-top:6px;">
+           Energy ${todayLog.energy ?? "-"} • Sleep ${todayLog.sleep_hours ?? "-"} • Water ${todayLog.water_oz ?? "-"}
+         </div>`
+      : `<strong>Today not logged yet</strong>
+         <div class="micro muted" style="margin-top:6px;">Click “Log Today” to record your day.</div>`;
+    streakCard.innerHTML = `
+  <div style="display:flex; gap:14px; align-items:center; flex-wrap:wrap;">
+    <div style="
+      width:44px;
+      height:44px;
+      border-radius:14px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background: rgba(255,179,71,0.14);
+      border: 1px solid rgba(255,179,71,0.28);
+      font-size:22px;
+    ">🔥</div>
+
+    <div>
+      <strong style="display:block; margin-bottom:4px;">Consistency</strong>
+      <div style="font-size:22px; font-weight:800; line-height:1.1;">
+        ${streak} day${streak === 1 ? "" : "s"}
+      </div>
+      <div class="micro muted" style="margin-top:6px;">
+        ${streak > 0 ? "Current logging streak" : "Log today to start your streak"}
+      </div>
+    </div>
+  </div>
+`;
+
+    const energy = rows.map((r) => r.energy == null ? null : Number(r.energy));
+    const sleep = rows.map((r) => r.sleep_hours == null ? null : Number(r.sleep_hours));
+    const inflam = rows.map((r) => r.inflammation == null ? null : Number(r.inflammation));
+    const scores = rows.map((r) => computeScore(r).total);
+
+    stats.innerHTML = `
+      <div class="card">
+        <strong>Readiness (avg)</strong>
+        <div class="lead">${avg(scores) ?? "-"}</div>
+        <div class="micro muted">${trend(scores)}</div>
+      </div>
+
+      <div class="card">
+        <strong>Sleep (avg hrs)</strong>
+        <div class="lead">${avg(sleep) ?? "-"}</div>
+        <div class="micro muted">${trend(sleep)}</div>
+      </div>
+
+      <div class="card">
+        <strong>Inflammation (avg)</strong>
+        <div class="lead">${avg(inflam) ?? "-"}</div>
+        <div class="micro muted">${trend(inflam)}</div>
+      </div>
+    `;
+
+    if (rows.length > 0) {
+      const avgScore = avg(scores);
+
+      let best = rows[0];
+      rows.forEach(r => {
+        if (computeScore(r).total > computeScore(best).total) best = r;
+      });
+
+      const bestScoreForWeek = computeScore(best).total;
+
+      const limiters = rows.map(r => getLimiter(computeScore(r).parts));
+      const limiterCounts = {};
+      limiters.forEach(l => {
+        limiterCounts[l] = (limiterCounts[l] || 0) + 1;
+      });
+
+      let mostCommonLimiter = null;
+      let maxCount = 0;
+
+      for (const key in limiterCounts) {
+        if (limiterCounts[key] > maxCount) {
+          mostCommonLimiter = key;
+          maxCount = limiterCounts[key];
+        }
+      }
+
+      weeklyCard.innerHTML = `
+        <strong>Weekly Report</strong>
+        <div class="cards cards--3" style="margin-top:14px;">
+          <div>
+            <div class="micro muted">Average Score</div>
+            <div style="font-size:28px;font-weight:700;">${avgScore}</div>
+          </div>
+
+          <div>
+            <div class="micro muted">Best Day</div>
+            <div style="font-size:18px;font-weight:600;">
+              ${best.log_date} (${bestScoreForWeek})
+            </div>
+          </div>
+
+          <div>
+            <div class="micro muted">Most Common Limiter</div>
+            <div style="font-size:18px;font-weight:600;">
+              ${mostCommonLimiter || "-"}
+            </div>
+          </div>
+        </div>
+      `;
+    } else {
+      weeklyCard.innerHTML = `
+        <strong>Weekly Report</strong>
+        <div class="micro muted" style="margin-top:8px;">
+          Log consistently this week to generate your weekly report.
+        </div>
+      `;
+    }
+
+    let bestScore = null;
+    rows.forEach((r) => {
+      const score = computeScore(r).total;
+      if (!bestScore || score > bestScore.score) bestScore = { row: r, score };
+    });
+
+    let insightHTML = `<strong>Insights</strong><div class="micro muted" style="margin-top:6px; line-height:1.5;">`;
+    if (bestScore) insightHTML += `Best readiness day: ${bestScore.row.log_date} (${bestScore.score}/100)<br>`;
+
+    const sleepInsight = corrSleepEnergy(rows);
+    if (sleepInsight) insightHTML += `${sleepInsight}<br>`;
+
+    if (todayLog) {
+      const limiter = getLimiter(computeScore(todayLog).parts);
+      insightHTML += `Biggest opportunity today: improve ${limiter}.<br>`;
+    }
+
+    insightHTML += `</div>`;
+    insights.innerHTML = insightHTML;
+
+    const asc = [...rows].sort((a, b) => (a.log_date > b.log_date ? 1 : -1));
+    const labels = asc.map((r) => r.log_date.slice(5));
+
+    buildLineChart("chartEnergy", "Energy", labels, asc.map((r) => (r.energy == null ? null : Number(r.energy))), 1, 10);
+    buildLineChart("chartSleep", "Sleep Hours", labels, asc.map((r) => (r.sleep_hours == null ? null : Number(r.sleep_hours))), 0, 10);
+    buildLineChart("chartInflam", "Inflammation", labels, asc.map((r) => (r.inflammation == null ? null : Number(r.inflammation))), 1, 10);
+    buildLineChart("chartReadiness", "Readiness", labels, asc.map((r) => computeScore(r).total), 0, 100);
+
+    logsEl.innerHTML = rows
+      .map((r) => {
+        const score = computeScore(r).total;
+        return `
+          <div class="card" style="margin-bottom:10px;">
+            <div style="display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;">
+              <strong>${r.log_date}</strong>
+              <span class="micro muted">
+                Score: ${score}/100 • Energy: ${r.energy ?? "-"} • Sleep: ${r.sleep_hours ?? "-"} • Water: ${r.water_oz ?? "-"}
+              </span>
+            </div>
+            ${r.notes ? `<div class="micro muted" style="margin-top:6px;">${escapeHtml(r.notes).slice(0,180)}</div>` : ""}
+          </div>
+        `;
+      })
+      .join("") || `<div class="card">No logs yet. Click “Log Today”.</div>`;
+  } catch (e) {
+    scoreCard.innerHTML = `
+      <strong>Dashboard error</strong>
+      <div class="micro muted" style="margin-top:8px;">
+        ${(e && e.message) ? e.message : e}
+      </div>
+    `;
+  }
+}
+function getTrainingGuidance(score, limiter) {
+  if (score >= 80) {
+    return {
+      level: "High",
+      body: "Your system looks strong today. Harder training is reasonable if you feel good.",
+      bullets: [
+        "✓ Strength training",
+        "✓ Moderate cardio",
+        "✓ Higher intensity is okay",
+        "• Prioritize recovery afterward"
+      ],
+      color: "rgba(53,208,127,0.14)",
+      border: "rgba(53,208,127,0.28)"
+    };
+  }
+
+  if (score >= 60) {
+    return {
+      level: "Moderate",
+      body: `You are in a workable range today. Train, but keep an eye on ${limiter}.`,
+      bullets: [
+        "✓ Strength training",
+        "✓ Light to moderate cardio",
+        "△ Moderate intensity",
+        "✗ Avoid unnecessary max effort"
+      ],
+      color: "rgba(94,162,255,0.14)",
+      border: "rgba(94,162,255,0.28)"
+    };
+  }
+
+  if (score >= 40) {
+    return {
+      level: "Caution",
+      body: `Recovery should be the priority today. ${limiter} is limiting readiness.`,
+      bullets: [
+        "✓ Walking or mobility",
+        "✓ Easy cardio",
+        "△ Light technique work only",
+        "✗ Avoid hard training"
+      ],
+      color: "rgba(255,179,71,0.14)",
+      border: "rgba(255,179,71,0.28)"
+    };
+  }
+
+  return {
+    level: "Low",
+    body: `Your system looks strained today. Focus on recovery and stabilizing ${limiter}.`,
+    bullets: [
+      "✓ Recovery work",
+      "✓ Gentle movement",
+      "✗ Avoid heavy lifting",
+      "✗ Avoid max intensity"
+    ],
+    color: "rgba(255,107,107,0.14)",
+    border: "rgba(255,107,107,0.28)"
+  };
+}
+function getDatePartsLocal(date = new Date()) {
+  return {
+    y: date.getFullYear(),
+    m: date.getMonth(),
+    d: date.getDate()
+  };
+}
+
+function localDateStringFromParts(y, m, d) {
+  return `${y}-${String(m + 1).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
+}
+
+function shiftLocalDate(dateStr, deltaDays) {
+  const [y, m, d] = dateStr.split("-").map(Number);
+  const dt = new Date(y, m - 1, d);
+  dt.setDate(dt.getDate() + deltaDays);
+  return localDateStringFromParts(dt.getFullYear(), dt.getMonth(), dt.getDate());
+}
+
+function calculateStreak(rows, todayStr) {
+  const loggedDates = new Set(rows.map(r => r.log_date));
+  let streak = 0;
+  let cursor = todayStr;
+
+  while (loggedDates.has(cursor)) {
+    streak += 1;
+    cursor = shiftLocalDate(cursor, -1);
+  }
+
+  return streak;
+}
+function getRecoveryPriorities(parts) {
+
+  const list = [
+    { name: "Sleep", value: parts.sleep, max: 25 },
+    { name: "Energy", value: parts.energy, max: 25 },
+    { name: "Inflammation", value: parts.inflammation, max: 20 },
+    { name: "Digestion", value: parts.digestion, max: 15 },
+    { name: "Mood", value: parts.mood, max: 10 },
+    { name: "Hydration", value: parts.water, max: 5 }
+  ];
+
+  list.forEach(x => x.score = x.value / x.max);
+
+  list.sort((a,b)=> a.score - b.score);
+
+  return list.slice(0,3);
+}
+load();
+</script>
+
+  </main>
+
+  <footer class="site-footer">
+  <div class="container site-footer__inner">
+    <div class="site-footer__brand">
+      <div class="site-footer__title">Carnivore Command Center</div>
+      <div class="site-footer__tag">Stop Guessing. Start Understanding.</div>
+      <div class="site-footer__meta">© <span id="year"></span> All rights reserved.</div>
+      <div class="site-footer__meta">Built under WDC LLC</div>
+    </div>
+
+    <div class="site-footer__links">
+      <a href="/product/">Product</a>
+      <a href="/dashboard/">Dashboard</a>
+      <a href="/beta/">Beta</a>
+      <a href="/about/">About</a>
+      <a href="/investor/">Investor</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="/terms/">Terms</a>
+    </div>
+  </div>
+</footer>
+
+
+  <script>
+    const y = document.getElementById("year");
+    if (y) y.textContent = new Date().getFullYear();
+  </script>
+  <script src="/js/site.js" defer></script>
+</body>
+</html>

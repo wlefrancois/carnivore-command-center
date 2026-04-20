@@ -1,0 +1,455 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>Carnivore Command Center</title>
+
+  <meta name="description" content="Elite performance + metabolic intelligence. Track what matters, see patterns, and execute with confidence." />
+  <meta name="theme-color" content="#0b1020" />
+
+  <meta property="og:title" content="Carnivore Command Center" />
+  <meta property="og:description" content="Elite performance + metabolic intelligence. Track what matters, see patterns, and execute with confidence." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+
+<body data-page="app/log/index.html">
+  <header class="site-header">
+  <div class="container site-header__inner">
+    <a class="site-brand" href="/">
+      <img
+        class="site-brand__logo"
+        src="/assets/img/ccc_logo_primary_transparent.png"
+        alt="Carnivore Command Center logo" />
+      <div class="site-brand__text">
+        <div class="site-brand__name">Carnivore Command Center</div>
+        <div class="site-brand__tag">Stop Guessing. Start Understanding.</div>
+      </div>
+    </a>
+
+    <button
+      class="site-header__toggle"
+      type="button"
+      aria-label="Open navigation"
+      aria-expanded="false"
+      aria-controls="site-nav">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <nav class="site-nav" id="site-nav" data-nav>
+      <a href="/product/">Product</a>
+      <a href="/dashboard/">Dashboard</a>
+      <a href="/beta/">Beta</a>
+      <a href="/about/">About</a>
+
+      <div class="site-nav__actions">
+        <a href="/app/" class="btn btn--ghost btn--sm nav__loggedOut">Login</a>
+        <a href="/beta/" class="btn btn--primary btn--sm nav__loggedOut">Join Beta</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+
+  <main>
+    <main>
+
+<section class="page-hero">
+  <div class="container narrow">
+    <h1>Log Today</h1>
+    <p class="lead">
+      Record today’s signals so CCC can calculate readiness patterns and insights.
+    </p>
+
+    <div class="hero__cta">
+      <a class="btn btn--ghost" href="/app/dashboard/">Back to Dashboard</a>
+      <button class="btn btn--ghost" id="logoutBtn" type="button">Logout</button>
+    </div>
+
+    <p id="userLine" class="micro muted" style="margin-top:10px;"></p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container narrow">
+
+    <div class="card" style="margin-bottom:18px;">
+      <strong>When to log</strong>
+      <div class="micro muted" style="margin-top:8px;">
+        Log once per day, ideally in the evening, after you know how your day felt overall.
+        This makes it easier to rate energy, digestion, inflammation, hydration, and mood accurately.
+      </div>
+    </div>
+
+    <div id="statusCard" class="card" style="margin-bottom:18px; display:none;"></div>
+
+    <div class="card">
+      <form id="logForm">
+
+        <div class="cards cards--2" style="margin-bottom:18px;">
+
+          <div>
+            <label for="logDate"><strong>Date</strong></label>
+            <div class="micro muted" style="margin:6px 0 10px;">
+              Usually this should be today.
+            </div>
+            <input
+              id="logDate"
+              type="date"
+              style="width:100%; padding:12px; border-radius:14px; border:1px solid rgba(255,255,255,.14); background:rgba(255,255,255,.04); color:var(--text);"
+            />
+          </div>
+
+          <div>
+            <label for="sleepHours"><strong>Sleep last night (hours)</strong></label>
+            <div class="micro muted" style="margin:6px 0 10px;">
+              Enter total sleep from the previous night.
+            </div>
+            <input
+              id="sleepHours"
+              type="number"
+              min="0"
+              max="16"
+              step="0.5"
+              placeholder="Example: 7.5"
+              style="width:100%; padding:12px; border-radius:14px; border:1px solid rgba(255,255,255,.14); background:rgba(255,255,255,.04); color:var(--text);"
+            />
+          </div>
+
+        </div>
+
+        <div class="cards cards--2" style="margin-bottom:18px;">
+
+          <div>
+            <label for="energy"><strong>Energy (1–10)</strong></label>
+            <div class="micro muted" style="margin:6px 0 10px;">
+              1 = exhausted, 10 = excellent energy
+            </div>
+            <input
+              id="energy"
+              type="range"
+              min="1"
+              max="10"
+              step="1"
+              value="5"
+              style="width:100%;"
+            />
+            <div class="micro muted">Selected: <span id="energyVal">5</span></div>
+          </div>
+
+          <div>
+            <label for="mood"><strong>Mood / mental clarity (1–10)</strong></label>
+            <div class="micro muted" style="margin:6px 0 10px;">
+              1 = poor, 10 = excellent
+            </div>
+            <input
+              id="mood"
+              type="range"
+              min="1"
+              max="10"
+              step="1"
+              value="5"
+              style="width:100%;"
+            />
+            <div class="micro muted">Selected: <span id="moodVal">5</span></div>
+          </div>
+
+        </div>
+
+        <div class="cards cards--2" style="margin-bottom:18px;">
+
+          <div>
+            <label for="digestion"><strong>Digestion (1–10)</strong></label>
+            <div class="micro muted" style="margin:6px 0 10px;">
+              1 = poor digestion, 10 = excellent digestion
+            </div>
+            <input
+              id="digestion"
+              type="range"
+              min="1"
+              max="10"
+              step="1"
+              value="5"
+              style="width:100%;"
+            />
+            <div class="micro muted">Selected: <span id="digestionVal">5</span></div>
+          </div>
+
+          <div>
+            <label for="inflammation"><strong>Inflammation / soreness (1–10)</strong></label>
+            <div class="micro muted" style="margin:6px 0 10px;">
+              1 = very low inflammation, 10 = very high inflammation
+            </div>
+            <input
+              id="inflammation"
+              type="range"
+              min="1"
+              max="10"
+              step="1"
+              value="5"
+              style="width:100%;"
+            />
+            <div class="micro muted">Selected: <span id="inflammationVal">5</span></div>
+          </div>
+
+        </div>
+
+        <div class="card" style="margin-bottom:18px; padding:18px;">
+          <strong>Hydration today</strong>
+          <div class="micro muted" style="margin-top:8px; line-height:1.6;">
+            Choose the range that best fits your total fluid intake today.
+            Water counts fully. Coffee counts partially — 1 cup of coffee (~8 oz) ≈ 6 oz hydration.
+          </div>
+
+          <div class="micro muted" style="margin-top:8px;">
+            Examples: water, coffee, broth, electrolytes.
+          </div>
+
+          <div style="margin-top:16px; display:grid; gap:10px;">
+            <label class="pill" style="cursor:pointer;">
+              <input type="radio" name="hydrationRange" value="30" style="margin-right:8px;" />
+              Very Low (&lt; 40 oz)
+            </label>
+
+            <label class="pill" style="cursor:pointer;">
+              <input type="radio" name="hydrationRange" value="55" style="margin-right:8px;" />
+              Low (40–70 oz)
+            </label>
+
+            <label class="pill" style="cursor:pointer;">
+              <input type="radio" name="hydrationRange" value="85" style="margin-right:8px;" checked />
+              Moderate (70–100 oz)
+            </label>
+
+            <label class="pill" style="cursor:pointer;">
+              <input type="radio" name="hydrationRange" value="110" style="margin-right:8px;" />
+              Good (100–130 oz)
+            </label>
+
+            <label class="pill" style="cursor:pointer;">
+              <input type="radio" name="hydrationRange" value="135" style="margin-right:8px;" />
+              High (130+ oz)
+            </label>
+          </div>
+        </div>
+
+        <div style="margin-bottom:18px;">
+          <label for="notes"><strong>Notes</strong></label>
+          <div class="micro muted" style="margin:6px 0 10px;">
+            Optional: meals, coffee, training, stress, sleep issues, digestion notes, etc.
+          </div>
+          <textarea
+            id="notes"
+            rows="5"
+            placeholder="Example: 2 cups coffee in the morning, ribeye + eggs for lunch, low energy mid-afternoon."
+            style="width:100%; padding:12px; border-radius:14px; border:1px solid rgba(255,255,255,.14); background:rgba(255,255,255,.04); color:var(--text); resize:vertical;"
+          ></textarea>
+        </div>
+
+        <div class="hero__cta" style="margin-bottom:0;">
+          <button class="btn btn--primary" id="saveBtn" type="submit">Save Daily Log</button>
+          <a class="btn btn--ghost" href="/app/dashboard/">Cancel</a>
+        </div>
+
+        <div id="formMsg" class="micro muted" style="margin-top:14px;"></div>
+
+      </form>
+    </div>
+
+  </div>
+</section>
+
+<script type="module">
+import { supabase, getUser, signOut } from "/js/app.js";
+
+const userLine = document.getElementById("userLine");
+const form = document.getElementById("logForm");
+const formMsg = document.getElementById("formMsg");
+const statusCard = document.getElementById("statusCard");
+const logoutBtn = document.getElementById("logoutBtn");
+
+const logDate = document.getElementById("logDate");
+const sleepHours = document.getElementById("sleepHours");
+const energy = document.getElementById("energy");
+const mood = document.getElementById("mood");
+const digestion = document.getElementById("digestion");
+const inflammation = document.getElementById("inflammation");
+const notes = document.getElementById("notes");
+
+const energyVal = document.getElementById("energyVal");
+const moodVal = document.getElementById("moodVal");
+const digestionVal = document.getElementById("digestionVal");
+const inflammationVal = document.getElementById("inflammationVal");
+
+function todayLocalISO() {
+  const d = new Date();
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${y}-${m}-${day}`;
+}
+
+function selectedHydrationOz() {
+  const checked = document.querySelector('input[name="hydrationRange"]:checked');
+  return checked ? Number(checked.value) : 85;
+}
+
+function setSliderValueDisplays() {
+  energyVal.textContent = energy.value;
+  moodVal.textContent = mood.value;
+  digestionVal.textContent = digestion.value;
+  inflammationVal.textContent = inflammation.value;
+}
+
+function showStatus(message, isWarning = false) {
+  statusCard.style.display = "block";
+  statusCard.innerHTML = `
+    <strong>${isWarning ? "Already logged" : "Status"}</strong>
+    <div class="micro muted" style="margin-top:8px;">${message}</div>
+  `;
+}
+
+logoutBtn.addEventListener("click", async () => {
+  await signOut();
+  window.location.href = "/app/";
+});
+
+energy.addEventListener("input", setSliderValueDisplays);
+mood.addEventListener("input", setSliderValueDisplays);
+digestion.addEventListener("input", setSliderValueDisplays);
+inflammation.addEventListener("input", setSliderValueDisplays);
+
+async function loadPage() {
+  setSliderValueDisplays();
+  logDate.value = todayLocalISO();
+
+  const user = await getUser();
+  if (!user) {
+    window.location.href = "/app/";
+    return;
+  }
+
+  userLine.textContent = `Logged in as ${user.email}`;
+
+  const today = todayLocalISO();
+
+  const { data, error } = await supabase
+    .from("daily_logs")
+    .select("*")
+    .eq("log_date", today)
+    .limit(1);
+
+  if (!error && data && data.length > 0) {
+    const row = data[0];
+
+    showStatus(
+      "You already logged today. Updating and saving again will overwrite today's values in the app flow only if your backend supports updates. Otherwise, keep one entry per day.",
+      true
+    );
+
+    logDate.value = row.log_date ?? today;
+    sleepHours.value = row.sleep_hours ?? "";
+    energy.value = row.energy ?? 5;
+    mood.value = row.mood ?? 5;
+    digestion.value = row.digestion ?? 5;
+    inflammation.value = row.inflammation ?? 5;
+    notes.value = row.notes ?? "";
+
+    const water = Number(row.water_oz ?? 85);
+    const radios = [...document.querySelectorAll('input[name="hydrationRange"]')];
+    let chosen = "85";
+    if (water < 40) chosen = "30";
+    else if (water < 70) chosen = "55";
+    else if (water < 100) chosen = "85";
+    else if (water < 130) chosen = "110";
+    else chosen = "135";
+
+    const match = radios.find(r => r.value === chosen);
+    if (match) match.checked = true;
+
+    setSliderValueDisplays();
+  }
+}
+
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  formMsg.textContent = "Saving log...";
+
+  const user = await getUser();
+  if (!user) {
+    window.location.href = "/app/";
+    return;
+  }
+
+  const payload = {
+    log_date: logDate.value || todayLocalISO(),
+    sleep_hours: sleepHours.value === "" ? null : Number(sleepHours.value),
+    energy: Number(energy.value),
+    mood: Number(mood.value),
+    digestion: Number(digestion.value),
+    inflammation: Number(inflammation.value),
+    water_oz: selectedHydrationOz(),
+    notes: notes.value.trim() || null
+  };
+
+  const { error } = await supabase
+    .from("daily_logs")
+    .insert([payload]);
+
+  if (error) {
+    if (String(error.message || "").toLowerCase().includes("duplicate") ||
+        String(error.message || "").toLowerCase().includes("unique")) {
+      formMsg.textContent = "You already logged this date. Right now CCC allows one log per day.";
+    } else {
+      formMsg.textContent = `Error saving log: ${error.message}`;
+    }
+    return;
+  }
+
+  formMsg.textContent = "Daily log saved. Redirecting to dashboard...";
+  setTimeout(() => {
+    window.location.href = "/app/dashboard/";
+  }, 800);
+});
+
+loadPage();
+</script>
+
+</main>
+
+  </main>
+
+  <footer class="site-footer">
+  <div class="container site-footer__inner">
+    <div class="site-footer__brand">
+      <div class="site-footer__title">Carnivore Command Center</div>
+      <div class="site-footer__tag">Stop Guessing. Start Understanding.</div>
+      <div class="site-footer__meta">© <span id="year"></span> All rights reserved.</div>
+      <div class="site-footer__meta">Built under WDC LLC</div>
+    </div>
+
+    <div class="site-footer__links">
+      <a href="/product/">Product</a>
+      <a href="/dashboard/">Dashboard</a>
+      <a href="/beta/">Beta</a>
+      <a href="/about/">About</a>
+      <a href="/investor/">Investor</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="/terms/">Terms</a>
+    </div>
+  </div>
+</footer>
+
+
+  <script>
+    const y = document.getElementById("year");
+    if (y) y.textContent = new Date().getFullYear();
+  </script>
+  <script src="/js/site.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>Carnivore Command Center</title>
+
+  <meta name="description" content="Elite performance + metabolic intelligence. Track what matters, see patterns, and execute with confidence." />
+  <meta name="theme-color" content="#0b1020" />
+
+  <meta property="og:title" content="Carnivore Command Center" />
+  <meta property="og:description" content="Elite performance + metabolic intelligence. Track what matters, see patterns, and execute with confidence." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+
+<body data-page="app/onboarding/index.html">
+  <header class="site-header">
+  <div class="container site-header__inner">
+    <a class="site-brand" href="/">
+      <img
+        class="site-brand__logo"
+        src="/assets/img/ccc_logo_primary_transparent.png"
+        alt="Carnivore Command Center logo" />
+      <div class="site-brand__text">
+        <div class="site-brand__name">Carnivore Command Center</div>
+        <div class="site-brand__tag">Stop Guessing. Start Understanding.</div>
+      </div>
+    </a>
+
+    <button
+      class="site-header__toggle"
+      type="button"
+      aria-label="Open navigation"
+      aria-expanded="false"
+      aria-controls="site-nav">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <nav class="site-nav" id="site-nav" data-nav>
+      <a href="/product/">Product</a>
+      <a href="/dashboard/">Dashboard</a>
+      <a href="/beta/">Beta</a>
+      <a href="/about/">About</a>
+
+      <div class="site-nav__actions">
+        <a href="/app/" class="btn btn--ghost btn--sm nav__loggedOut">Login</a>
+        <a href="/beta/" class="btn btn--primary btn--sm nav__loggedOut">Join Beta</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+
+  <main>
+    <section class="page-hero">
+  <div class="container narrow">
+    <div class="badge">Welcome • First-time setup</div>
+    <h1>Welcome to Carnivore Command Center</h1>
+    <p class="lead">
+      CCC helps you track the signals that influence metabolic readiness, recovery, energy,
+      and daily performance — then turns them into simple guidance you can use.
+    </p>
+
+    <div class="hero__cta">
+      <a class="btn btn--primary" href="/app/log/">Start Your First Log</a>
+      <a class="btn btn--ghost" href="/product/">See Product Overview</a>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container narrow">
+
+    <div class="card" style="margin-bottom:18px;">
+      <h3>How CCC works</h3>
+      <p>
+        The goal of CCC is simple: help you understand what is improving your readiness and what is
+        holding you back. Instead of just collecting information, CCC is designed to help you make
+        better daily decisions.
+      </p>
+    </div>
+
+    <div class="cards cards--3" style="margin-bottom:18px;">
+      <div class="card">
+        <div class="card__kicker">1</div>
+        <h3>Log your day</h3>
+        <p>
+          Track core daily signals such as sleep, energy, inflammation, digestion, hydration,
+          and mood.
+        </p>
+      </div>
+
+      <div class="card">
+        <div class="card__kicker">2</div>
+        <h3>Get your readiness score</h3>
+        <p>
+          CCC converts your daily inputs into a metabolic readiness score so you can quickly
+          see where your system stands.
+        </p>
+      </div>
+
+      <div class="card">
+        <div class="card__kicker">3</div>
+        <h3>Improve what matters most</h3>
+        <p>
+          See limiting factors, recovery priorities, forecasts, and training guidance based on
+          your data.
+        </p>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom:18px;">
+      <h3>What to log</h3>
+
+      <div class="cards cards--2" style="margin-top:14px;">
+        <div class="card">
+          <h3>Sleep</h3>
+          <p class="micro muted" style="margin-top:6px;">
+            How many hours you slept.
+          </p>
+          <div class="divider"></div>
+          <p class="micro muted">
+            Example: 7.5 hours = solid recovery range for many people.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Energy</h3>
+          <p class="micro muted" style="margin-top:6px;">
+            Rate your daily energy from 1 to 10.
+          </p>
+          <div class="divider"></div>
+          <p class="micro muted">
+            1–3 = drained, 4–6 = average, 7–8 = strong, 9–10 = peak.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Inflammation</h3>
+          <p class="micro muted" style="margin-top:6px;">
+            Rate how inflamed or irritated your body feels from 1 to 10.
+          </p>
+          <div class="divider"></div>
+          <p class="micro muted">
+            1 = minimal, 5 = moderate, 10 = severe.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Digestion</h3>
+          <p class="micro muted" style="margin-top:6px;">
+            Rate how stable and comfortable digestion felt from 1 to 10.
+          </p>
+          <div class="divider"></div>
+          <p class="micro muted">
+            Higher is better. A lower score can signal food or stress issues.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Hydration</h3>
+          <p class="micro muted" style="margin-top:6px;">
+            Log approximate water intake for the day.
+          </p>
+          <div class="divider"></div>
+          <p class="micro muted">
+            Example: 80–100 oz often supports better readiness for many users.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Mood</h3>
+          <p class="micro muted" style="margin-top:6px;">
+            Rate how steady, focused, or positive you felt from 1 to 10.
+          </p>
+          <div class="divider"></div>
+          <p class="micro muted">
+            Lower mood can reflect stress, poor recovery, or unstable routines.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom:18px;">
+      <h3>What you’ll see after logging</h3>
+
+      <div class="cards cards--2" style="margin-top:14px;">
+        <div class="card">
+          <h3>Metabolic Readiness</h3>
+          <p>
+            A simple score that helps you understand how ready your system is today.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Today’s Recommendation</h3>
+          <p>
+            Guidance based on what is currently limiting your score the most.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Recovery Priorities</h3>
+          <p>
+            The top areas to improve if you want a better result tomorrow.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Training Guidance</h3>
+          <p>
+            A simple view of whether today looks better for hard training, moderate work,
+            or recovery.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom:18px;">
+      <h3>What makes CCC different</h3>
+      <p>
+        Most health tools collect data. CCC is designed to help you use that data. The goal is not
+        more noise — it is better visibility into what improves readiness, recovery, and consistency.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>Ready to begin?</h3>
+      <p>
+        Your first log is the starting point. Once you enter a day, CCC can begin calculating your
+        readiness, identifying limiting factors, and building your trend history.
+      </p>
+
+      <div class="hero__cta" style="margin-top:18px;">
+        <a class="btn btn--primary" href="/app/log/">Start Your First Log</a>
+        <a class="btn btn--ghost" href="/app/dashboard/">Go to Dashboard</a>
+      </div>
+
+      <div class="divider"></div>
+
+      <p class="micro muted">
+        CCC is an informational and tracking platform. It does not provide medical advice,
+        diagnosis, or treatment.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+  </main>
+
+  <footer class="site-footer">
+  <div class="container site-footer__inner">
+    <div class="site-footer__brand">
+      <div class="site-footer__title">Carnivore Command Center</div>
+      <div class="site-footer__tag">Stop Guessing. Start Understanding.</div>
+      <div class="site-footer__meta">© <span id="year"></span> All rights reserved.</div>
+      <div class="site-footer__meta">Built under WDC LLC</div>
+    </div>
+
+    <div class="site-footer__links">
+      <a href="/product/">Product</a>
+      <a href="/dashboard/">Dashboard</a>
+      <a href="/beta/">Beta</a>
+      <a href="/about/">About</a>
+      <a href="/investor/">Investor</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="/terms/">Terms</a>
+    </div>
+  </div>
+</footer>
+
+
+  <script>
+    const y = document.getElementById("year");
+    if (y) y.textContent = new Date().getFullYear();
+  </script>
+  <script src="/js/site.js" defer></script>
+</body>
+</html>

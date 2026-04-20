@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>Carnivore Command Center</title>
+
+  <meta name="description" content="Elite performance + metabolic intelligence. Track what matters, see patterns, and execute with confidence." />
+  <meta name="theme-color" content="#0b1020" />
+
+  <meta property="og:title" content="Carnivore Command Center" />
+  <meta property="og:description" content="Elite performance + metabolic intelligence. Track what matters, see patterns, and execute with confidence." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+
+<body data-page="nutrition/keto/index.html">
+  <header class="site-header">
+  <div class="container site-header__inner">
+    <a class="site-brand" href="/">
+      <img
+        class="site-brand__logo"
+        src="/assets/img/ccc_logo_primary_transparent.png"
+        alt="Carnivore Command Center logo" />
+      <div class="site-brand__text">
+        <div class="site-brand__name">Carnivore Command Center</div>
+        <div class="site-brand__tag">Stop Guessing. Start Understanding.</div>
+      </div>
+    </a>
+
+    <button
+      class="site-header__toggle"
+      type="button"
+      aria-label="Open navigation"
+      aria-expanded="false"
+      aria-controls="site-nav">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <nav class="site-nav" id="site-nav" data-nav>
+      <a href="/product/">Product</a>
+      <a href="/dashboard/">Dashboard</a>
+      <a href="/beta/">Beta</a>
+      <a href="/about/">About</a>
+
+      <div class="site-nav__actions">
+        <a href="/app/" class="btn btn--ghost btn--sm nav__loggedOut">Login</a>
+        <a href="/beta/" class="btn btn--primary btn--sm nav__loggedOut">Join Beta</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+
+  <main>
+    <section class="section">
+  <div class="container">
+
+    <div class="section__head section__head--center">
+      <div class="badge">Nutrition Resource</div>
+
+      <h1 style="margin-top:16px;">Keto Meals</h1>
+
+      <p class="lead" style="max-width:820px;margin:18px auto 0;">
+        Low-carb meals designed for stable energy, better focus, and less daily guesswork.
+      </p>
+
+      <div style="margin-top:22px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+        <a class="btn btn--primary" href="/beta/">Join Early Access</a>
+        <a class="btn btn--ghost" href="/nutrition/">Back to Nutrition</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="section section--alt">
+  <div class="container">
+
+    <div class="cards cards--3">
+      <div class="card">
+        <div class="card__kicker">1</div>
+        <h3>Stable Energy</h3>
+        <p>Meal ideas that support fewer crashes and more consistent output.</p>
+      </div>
+
+      <div class="card">
+        <div class="card__kicker">2</div>
+        <h3>Simple Structure</h3>
+        <p>Keto meals organized around repeatability, not complexity.</p>
+      </div>
+
+      <div class="card">
+        <div class="card__kicker">3</div>
+        <h3>Performance Aware</h3>
+        <p>Built to help users see how nutrition affects mood, focus, and readiness.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="cta">
+  <div class="container">
+    <div class="cta__inner cta__inner--metabo">
+      <div class="cta__content">
+        <div class="panel__title">Want CCC keto tools and meal plans?</div>
+        <div class="panel__subtitle">
+          Join early access and help shape the first keto section of the nutrition hub.
+        </div>
+        <div class="cta__actions" style="margin-top:18px;">
+          <a class="btn btn--primary" href="/beta/">Join Early Access</a>
+          <a class="btn btn--ghost" href="/nutrition/">Back to Nutrition</a>
+        </div>
+      </div>
+
+      <div class="cta__mascot">
+        <img src="/assets/img/mascot/metabo-recovery.png" alt="Metabo Recovery">
+      </div>
+    </div>
+  </div>
+</section>
+
+  </main>
+
+  <footer class="site-footer">
+  <div class="container site-footer__inner">
+    <div class="site-footer__brand">
+      <div class="site-footer__title">Carnivore Command Center</div>
+      <div class="site-footer__tag">Stop Guessing. Start Understanding.</div>
+      <div class="site-footer__meta">© <span id="year"></span> All rights reserved.</div>
+      <div class="site-footer__meta">Built under WDC LLC</div>
+    </div>
+
+    <div class="site-footer__links">
+      <a href="/product/">Product</a>
+      <a href="/dashboard/">Dashboard</a>
+      <a href="/beta/">Beta</a>
+      <a href="/about/">About</a>
+      <a href="/investor/">Investor</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="/terms/">Terms</a>
+    </div>
+  </div>
+</footer>
+
+
+  <script>
+    const y = document.getElementById("year");
+    if (y) y.textContent = new Date().getFullYear();
+  </script>
+  <script src="/js/site.js" defer></script>
+</body>
+</html>

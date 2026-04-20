@@ -1,0 +1,1376 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>Carnivore Command Center</title>
+
+  <meta name="description" content="Elite performance + metabolic intelligence. Track what matters, see patterns, and execute with confidence." />
+  <meta name="theme-color" content="#0b1020" />
+
+  <meta property="og:title" content="Carnivore Command Center" />
+  <meta property="og:description" content="Elite performance + metabolic intelligence. Track what matters, see patterns, and execute with confidence." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+
+<body data-page="dashboard/index.html">
+  <header class="site-header">
+  <div class="container site-header__inner">
+    <a class="site-brand" href="/">
+      <img
+        class="site-brand__logo"
+        src="/assets/img/ccc_logo_primary_transparent.png"
+        alt="Carnivore Command Center logo" />
+      <div class="site-brand__text">
+        <div class="site-brand__name">Carnivore Command Center</div>
+        <div class="site-brand__tag">Stop Guessing. Start Understanding.</div>
+      </div>
+    </a>
+
+    <button
+      class="site-header__toggle"
+      type="button"
+      aria-label="Open navigation"
+      aria-expanded="false"
+      aria-controls="site-nav">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <nav class="site-nav" id="site-nav" data-nav>
+      <a href="/product/">Product</a>
+      <a href="/dashboard/">Dashboard</a>
+      <a href="/beta/">Beta</a>
+      <a href="/about/">About</a>
+
+      <div class="site-nav__actions">
+        <a href="/app/" class="btn btn--ghost btn--sm nav__loggedOut">Login</a>
+        <a href="/beta/" class="btn btn--primary btn--sm nav__loggedOut">Join Beta</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+
+  <main>
+    <!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CCC Dashboard | Carnivore Command Center</title>
+  <meta name="description" content="CCC dashboard production UI with readiness score, daily plan, check-in, trends, and Savage Metabo coach panel." />
+  <style>
+    :root {
+      --bg: #060b14;
+      --bg-soft: #0a1222;
+      --card: rgba(10, 16, 28, 0.96);
+      --card-2: rgba(7, 12, 22, 0.98);
+      --line: rgba(70, 96, 152, 0.18);
+      --text: #eef4ff;
+      --muted: #93a6c8;
+      --orange: #ff7a00;
+      --orange-2: #ff9b3f;
+      --green: #22d07a;
+      --yellow: #ffb347;
+      --blue: #2388ff;
+      --shadow: 0 18px 60px rgba(0, 0, 0, 0.48);
+      --radius-xl: 26px;
+      --radius-lg: 18px;
+      --radius-md: 14px;
+      --max: 1520px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top right, rgba(255, 122, 0, 0.10), transparent 24%),
+        radial-gradient(circle at top left, rgba(35, 136, 255, 0.08), transparent 22%),
+        linear-gradient(180deg, #04070d 0%, #07101d 36%, #050a13 100%);
+      line-height: 1.5;
+    }
+
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+    button, input, select { font: inherit; }
+
+    .app-shell {
+      min-height: 100vh;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .app-shell::before,
+    .app-shell::after {
+      content: "";
+      position: fixed;
+      pointer-events: none;
+      filter: blur(90px);
+      opacity: 0.42;
+      z-index: 0;
+    }
+
+    .app-shell::before {
+      width: 340px;
+      height: 340px;
+      top: 90px;
+      left: -110px;
+      background: rgba(35, 136, 255, 0.14);
+    }
+
+    .app-shell::after {
+      width: 360px;
+      height: 360px;
+      right: -120px;
+      top: 140px;
+      background: rgba(255, 122, 0, 0.13);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 18px;
+      border-radius: 14px;
+      border: 1px solid transparent;
+      font-weight: 800;
+      transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease, border-color 180ms ease;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .btn:hover { transform: translateY(-1px); }
+
+    .btn--primary {
+      color: #08101d;
+      background: linear-gradient(180deg, #ff9b3f 0%, var(--orange) 100%);
+      box-shadow: 0 16px 34px rgba(255, 122, 0, 0.24);
+    }
+
+    .btn--primary:hover { box-shadow: 0 18px 38px rgba(255, 122, 0, 0.32); }
+
+    .app-topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(16px);
+      background: rgba(6, 11, 20, 0.82);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .app-topbar__inner {
+      width: min(calc(100% - 24px), var(--max));
+      margin: 0 auto;
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .app-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .app-brand__mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      object-fit: contain;
+      background: rgba(255,255,255,0.03);
+      padding: 5px;
+    }
+
+    .app-brand__name {
+      font-weight: 800;
+      font-size: 1rem;
+      line-height: 1.05;
+    }
+
+    .app-brand__tag {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-top: 3px;
+    }
+
+    .app-userbar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .app-icon-btn {
+      border: 1px solid rgba(255,255,255,0.06);
+      background: rgba(255,255,255,0.02);
+      color: var(--text);
+      border-radius: 14px;
+      padding: 10px 14px;
+      cursor: pointer;
+    }
+
+    .app-user {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 10px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.06);
+      background: rgba(255,255,255,0.02);
+    }
+
+    .app-user__avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      object-fit: cover;
+      object-position: center top;
+    }
+
+    .app-user__name {
+      font-size: 0.95rem;
+      font-weight: 800;
+      line-height: 1.05;
+    }
+
+    .app-user__meta {
+      font-size: 0.74rem;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .page {
+      width: min(calc(100% - 24px), var(--max));
+      margin: 0 auto;
+      padding: 18px 0 34px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 160px 320px minmax(0, 1fr);
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .sidebar,
+    .portrait-card,
+    .streak-card,
+    .metric-card,
+    .gameplan-card,
+    .focus-card,
+    .macro-card,
+    .mini-status-card,
+    .panel,
+    .coach-card,
+    .factors-card,
+    .trend-card,
+    .wins-card {
+      background: linear-gradient(180deg, var(--card), var(--card-2));
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+    }
+
+    .sidebar {
+      padding: 14px;
+      position: sticky;
+      top: 94px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: calc(100vh - 124px);
+    }
+
+    .sidebar__title {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #bfd3ff;
+      margin-bottom: 14px;
+      font-weight: 800;
+    }
+
+    .sidebar__nav {
+      display: grid;
+      gap: 10px;
+    }
+
+    .sidebar__nav a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 12px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.04);
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .sidebar__nav a::before {
+      content: "•";
+      color: var(--orange-2);
+      font-size: 1rem;
+      line-height: 1;
+    }
+
+    .sidebar__nav a.is-active {
+      color: var(--text);
+      background: linear-gradient(180deg, rgba(255,122,0,0.14), rgba(76,141,255,0.06));
+      border-color: rgba(255,122,0,0.18);
+    }
+
+    .sidebar__foot {
+      margin-top: 18px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .sidebar__badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,122,0,0.12);
+      color: #ffd2ac;
+      border: 1px solid rgba(255,122,0,0.18);
+      font-size: 0.76rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .visual-rail {
+      display: grid;
+      gap: 16px;
+      align-content: start;
+    }
+
+    .portrait-card {
+      overflow: hidden;
+      position: relative;
+      min-height: 720px;
+      background: #08101a;
+    }
+
+    .portrait-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+    }
+
+    .portrait-overlay {
+      position: absolute;
+      inset: auto 0 0 0;
+      padding: 18px;
+      background: linear-gradient(180deg, rgba(5,8,14,0) 0%, rgba(5,8,14,0.22) 30%, rgba(5,8,14,0.92) 100%);
+    }
+
+    .portrait-overlay__tag {
+      display: inline-block;
+      margin-bottom: 10px;
+      padding: 7px 11px;
+      border-radius: 999px;
+      font-size: 0.74rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 800;
+      color: #ffd2ac;
+      background: rgba(255,122,0,0.12);
+      border: 1px solid rgba(255,122,0,0.16);
+    }
+
+    .portrait-overlay h2 {
+      margin: 0 0 8px;
+      font-size: 2.7rem;
+      line-height: 0.95;
+      letter-spacing: -0.04em;
+    }
+
+    .portrait-overlay h2 span { color: var(--orange-2); }
+
+    .portrait-overlay p,
+    .metric-score__delta,
+    .field__hint,
+    .panel__sub,
+    .gameplan-item span,
+    .factor-item span,
+    .wins-item span,
+    .coach-card__quote,
+    .coach-chip,
+    .macro-item span,
+    .streak-card p,
+    .mini-status-card p { color: var(--muted); }
+
+    .streak-card {
+      padding: 16px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .streak-card__label {
+      color: #ffd2ac;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.76rem;
+      font-weight: 800;
+    }
+
+    .streak-card__value {
+      font-size: 2.2rem;
+      line-height: 1;
+      font-weight: 900;
+      color: var(--orange-2);
+    }
+
+    .main-grid {
+      display: grid;
+      gap: 16px;
+      min-width: 0;
+    }
+
+    .top-strip {
+      display: grid;
+      grid-template-columns: 1.1fr 0.92fr 0.62fr 0.62fr;
+      gap: 16px;
+    }
+
+    .metric-card,
+    .gameplan-card,
+    .focus-card,
+    .macro-card,
+    .mini-status-card,
+    .factors-card,
+    .trend-card,
+    .wins-card,
+    .panel,
+    .coach-card {
+      padding: 18px;
+      min-width: 0;
+    }
+
+    .card-kicker {
+      color: #f4f6fb;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-size: 0.78rem;
+      font-weight: 800;
+      margin-bottom: 14px;
+    }
+
+    .card-kicker .accent { color: var(--orange-2); float: right; }
+
+    .metric-card__shell {
+      display: grid;
+      grid-template-columns: 1fr 1.15fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .metric-score { display: grid; align-content: start; gap: 6px; }
+
+    .metric-score__value {
+      font-size: 5.2rem;
+      line-height: 0.9;
+      font-weight: 900;
+      color: var(--green);
+    }
+
+    .metric-score__zone {
+      color: var(--green);
+      font-size: 1.2rem;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .spark-panel {
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: 16px;
+      padding: 12px;
+      background: rgba(255,255,255,0.02);
+      min-width: 0;
+    }
+
+    .spark-svg { width: 100%; height: 130px; }
+
+    .spark-axis {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 6px;
+      margin-top: 8px;
+      font-size: 0.76rem;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .meter-row {
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      gap: 4px;
+      margin-top: 12px;
+    }
+
+    .meter-row span {
+      display: block;
+      height: 12px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #d92d20 0%, #f79009 44%, #12b76a 74%, #9e174d 100%);
+      opacity: 0.9;
+    }
+
+    .gameplan-list,
+    .macro-list,
+    .wins-list,
+    .factor-list { display: grid; gap: 12px; }
+
+    .gameplan-item,
+    .factor-item,
+    .wins-item {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: start;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .gameplan-item:last-child,
+    .factor-item:last-child,
+    .wins-item:last-child { border-bottom: 0; padding-bottom: 0; }
+
+    .gameplan-item__left,
+    .wins-item__left,
+    .factor-item__left,
+    .macro-item__left {
+      display: flex;
+      gap: 10px;
+      align-items: start;
+      min-width: 0;
+    }
+
+    .check-icon,
+    .trophy-icon,
+    .factor-icon {
+      width: 18px;
+      height: 18px;
+      border-radius: 6px;
+      flex: 0 0 18px;
+      margin-top: 2px;
+      background: linear-gradient(180deg, rgba(34,208,122,0.18), rgba(34,208,122,0.06));
+      border: 1px solid rgba(34,208,122,0.3);
+    }
+
+    .gameplan-item strong,
+    .wins-item strong,
+    .factor-item strong { font-weight: 700; }
+
+    .focus-card {
+      display: grid;
+      gap: 14px;
+      align-content: start;
+      text-align: center;
+    }
+
+    .focus-icon {
+      width: 88px;
+      height: 88px;
+      margin: 0 auto;
+      position: relative;
+      border-radius: 50%;
+      border: 4px solid rgba(255,122,0,0.9);
+    }
+
+    .focus-icon::before,
+    .focus-icon::after {
+      content: "";
+      position: absolute;
+      inset: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      border: 3px solid rgba(255,122,0,0.9);
+    }
+
+    .focus-icon::before { width: 38px; height: 38px; }
+    .focus-icon::after { width: 10px; height: 10px; background: var(--orange-2); border: 0; }
+
+    .focus-time {
+      font-size: 3.1rem;
+      line-height: 0.95;
+      font-weight: 900;
+      color: var(--orange-2);
+    }
+
+    .macro-ring {
+      width: 170px;
+      height: 170px;
+      margin: 0 auto 10px;
+      border-radius: 50%;
+      background: conic-gradient(#ea580c 0 28%, #f59e0b 28% 58%, #16a34a 58% 78%, #ea580c 78% 100%);
+      display: grid;
+      place-items: center;
+    }
+
+    .macro-ring__inner {
+      width: 116px;
+      height: 116px;
+      border-radius: 50%;
+      background: #0a0f18;
+      display: grid;
+      place-items: center;
+      text-align: center;
+    }
+
+    .macro-ring__inner strong { font-size: 2.1rem; line-height: 1; }
+    .macro-ring__inner span {
+      font-size: 0.78rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .macro-item {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .macro-dot { width: 16px; height: 16px; border-radius: 4px; }
+    .macro-dot.orange { background: #ea580c; }
+    .macro-dot.yellow { background: #f59e0b; }
+    .macro-dot.green { background: #16a34a; }
+
+    .mid-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(0, 1.18fr) minmax(300px, 0.92fr);
+      gap: 16px;
+      align-items: start;
+    }
+
+    .checkin-form { display: grid; gap: 14px; }
+    .field { display: grid; gap: 8px; }
+
+    .field label {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #bfd3ff;
+      font-weight: 800;
+    }
+
+    .field input,
+    .field select {
+      width: 100%;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.03);
+      color: var(--text);
+      padding: 12px 14px;
+      outline: none;
+      min-width: 0;
+    }
+
+    .field input[type="range"] { padding: 0; }
+
+    .toggle-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .toggle {
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.03);
+      padding: 12px 14px;
+      font-weight: 700;
+      color: var(--muted);
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .toggle.is-active {
+      color: var(--text);
+      background: linear-gradient(180deg, rgba(255,122,0,0.12), rgba(76,141,255,0.06));
+      border-color: rgba(255,122,0,0.16);
+    }
+
+    .score-box {
+      padding: 18px;
+      border-radius: 16px;
+      background: rgba(8,15,28,0.8);
+      border: 1px solid rgba(255,255,255,0.05);
+      margin-bottom: 14px;
+    }
+
+    .score-box__value {
+      font-size: 3.5rem;
+      line-height: 1;
+      font-weight: 900;
+      color: var(--green);
+      margin-bottom: 8px;
+    }
+
+    .coach-card { display: grid; gap: 12px; }
+
+    .coach-card__top {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .coach-card__image {
+      width: 72px;
+      height: 72px;
+      border-radius: 14px;
+      object-fit: cover;
+      object-position: center top;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .coach-card__name {
+      font-size: 1rem;
+      font-weight: 800;
+    }
+
+    .coach-card__mode {
+      font-size: 0.78rem;
+      color: #ffd2ac;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-weight: 800;
+      margin-top: 4px;
+    }
+
+    .coach-card__quote {
+      padding: 14px;
+      border-radius: 16px;
+      background: linear-gradient(180deg, rgba(255,122,0,0.08), rgba(76,141,255,0.06));
+      border: 1px solid rgba(255,122,0,0.12);
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    .coach-card__actions { display: grid; gap: 10px; }
+
+    .coach-chip {
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.05);
+      font-size: 0.9rem;
+    }
+
+    .upgrade-banner {
+      margin-top: 8px;
+      padding: 16px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,122,0,0.12);
+      background: linear-gradient(135deg, rgba(255,122,0,0.10), rgba(76,141,255,0.08));
+    }
+
+    .upgrade-banner h3 { margin: 0 0 8px; font-size: 1.1rem; }
+    .upgrade-banner p { margin: 0 0 14px; color: var(--muted); }
+
+    .lower-grid {
+      display: grid;
+      grid-template-columns: minmax(330px, 0.9fr) minmax(0, 1.2fr) minmax(300px, 0.82fr);
+      gap: 16px;
+      align-items: start;
+    }
+
+    .trend-card__plot {
+      margin-top: 14px;
+      border-radius: 16px;
+      overflow: hidden;
+      background: rgba(5, 12, 20, 0.65);
+      border: 1px solid rgba(255,255,255,0.04);
+      padding: 12px;
+    }
+
+    .trend-card svg { width: 100%; height: 160px; }
+    .factor-score { font-weight: 800; }
+    .factor-score.good { color: var(--green); }
+    .factor-score.warn { color: var(--yellow); }
+
+    .status-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .mini-status-card__value {
+      font-size: 2rem;
+      font-weight: 900;
+      margin-bottom: 4px;
+    }
+
+    .mini-status-card__bars {
+      height: 54px;
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 8px;
+      align-items: end;
+      margin-top: 14px;
+    }
+
+    .mini-status-card__bars span {
+      display: block;
+      border-radius: 6px 6px 2px 2px;
+      background: linear-gradient(180deg, rgba(35,136,255,0.95), rgba(35,136,255,0.75));
+    }
+
+    .mini-status-card__spark svg {
+      width: 100%;
+      height: 66px;
+      margin-top: 12px;
+    }
+
+    @media (max-width: 1450px) {
+      .hero-grid { grid-template-columns: 150px 280px minmax(0, 1fr); }
+    }
+
+    @media (max-width: 1280px) {
+      .hero-grid,
+      .top-strip,
+      .mid-grid,
+      .lower-grid,
+      .status-grid { grid-template-columns: 1fr; }
+
+      .visual-rail {
+        grid-template-columns: minmax(0, 1fr) 220px;
+        display: grid;
+        align-items: stretch;
+      }
+
+      .portrait-card { min-height: 420px; }
+      .sidebar { position: static; min-height: auto; }
+    }
+
+    @media (max-width: 760px) {
+      .app-topbar__inner {
+        min-height: 70px;
+        align-items: flex-start;
+        padding: 12px 0;
+      }
+      .app-userbar { width: 100%; justify-content: flex-start; }
+      .page { width: min(calc(100% - 18px), var(--max)); }
+      .visual-rail,
+      .metric-card__shell,
+      .toggle-row { grid-template-columns: 1fr; }
+      .portrait-card { min-height: 380px; }
+      .portrait-overlay h2 { font-size: 2.1rem; }
+      .macro-ring { width: 150px; height: 150px; }
+      .macro-ring__inner { width: 102px; height: 102px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="app-topbar">
+      <div class="app-topbar__inner">
+        <a class="app-brand" href="/dashboard/">
+          <img class="app-brand__mark" src="/assets/img/logo/ccc-mark.png" alt="CCC logo" />
+          <div>
+            <div class="app-brand__name">Carnivore Command Center</div>
+            <div class="app-brand__tag">Metabolic Dashboard powered by Savage Metabo</div>
+          </div>
+        </a>
+
+        <div class="app-userbar">
+          <button class="app-icon-btn" type="button">Search</button>
+          <button class="app-icon-btn" type="button">Alerts</button>
+          <div class="app-user">
+            <img class="app-user__avatar" src="/assets/img/mascot/metabo-home-hero.webp" alt="Wayne" />
+            <div>
+              <div class="app-user__name">Wayne</div>
+              <div class="app-user__meta">Founder · Day 47</div>
+            </div>
+          </div>
+          <a class="btn btn--primary" href="#checkin">+ Log Signals</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="page">
+      <section class="hero-grid">
+        <aside class="sidebar">
+          <div>
+            <div class="sidebar__title">Workspace</div>
+            <nav class="sidebar__nav">
+              <a class="is-active" href="#">Dashboard</a>
+              <a href="#readiness">Readiness</a>
+              <a href="#checkin">Daily Plan</a>
+              <a href="#trends">Log &amp; Analyze</a>
+              <a href="#protocols">Protocols</a>
+              <a href="#coach">Coaching</a>
+              <a href="#community">Community</a>
+              <a href="#settings">Settings</a>
+            </nav>
+          </div>
+          <div class="sidebar__foot">
+            <div class="sidebar__badge">Streak</div>
+            <p style="margin:10px 0 0; color: var(--text); font-size:2rem; font-weight:900; line-height:1;">47 Days</p>
+            <p style="margin:8px 0 0; color: var(--muted); font-size:0.92rem;">Keep it moving.</p>
+          </div>
+        </aside>
+
+        <section class="visual-rail">
+          <article class="portrait-card">
+            <img src="/assets/img/mascot/metabo-home-hero.webp" alt="Savage Metabo dashboard portrait" />
+            <div class="portrait-overlay">
+              <div class="portrait-overlay__tag">Founder-built readiness system</div>
+              <h2>Stop guessing. <span>Start understanding.</span></h2>
+              <p>Carnivore Command Center turns your signals into daily direction.</p>
+            </div>
+          </article>
+
+          <article class="streak-card">
+            <div class="streak-card__label">🔥 Streak</div>
+            <div class="streak-card__value">47 Days</div>
+            <div style="color: var(--muted);">Discipline. Freedom. Momentum.</div>
+          </article>
+        </section>
+
+        <section class="main-grid">
+          <div class="top-strip">
+            <article class="metric-card" id="readiness">
+              <div class="card-kicker">Metabo Readiness</div>
+              <div class="metric-card__shell">
+                <div class="metric-score">
+                  <div class="metric-score__value" id="readinessScoreTop">87</div>
+                  <div class="metric-score__zone">Optimal Zone</div>
+                  <div class="metric-score__delta">▲ 4 vs. yesterday</div>
+                </div>
+                <div>
+                  <div class="spark-panel">
+                    <svg class="spark-svg" viewBox="0 0 220 120" fill="none">
+                      <path d="M10 110V10H210" stroke="rgba(255,255,255,0.08)"/>
+                      <path d="M10 86L42 78L74 56L106 44L138 48L170 43L202 18" stroke="#22d07a" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                      <circle cx="202" cy="18" r="6" fill="#22d07a"/>
+                    </svg>
+                    <div class="spark-axis">
+                      <div>M</div><div>T</div><div>W</div><div>T</div><div>F</div><div>S</div><div>S</div>
+                    </div>
+                  </div>
+                  <div class="meter-row">
+                    <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="gameplan-card">
+              <div class="card-kicker">Today’s Game Plan <span class="accent">View Plan</span></div>
+              <div class="gameplan-list">
+                <div class="gameplan-item"><div class="gameplan-item__left"><span class="check-icon"></span><strong>Hydrate Early</strong></div></div>
+                <div class="gameplan-item"><div class="gameplan-item__left"><span class="check-icon"></span><strong>Deep Work 90 Min</strong></div></div>
+                <div class="gameplan-item"><div class="gameplan-item__left"><span class="check-icon"></span><strong id="mission1">Lift: Upper Body</strong></div></div>
+                <div class="gameplan-item"><div class="gameplan-item__left"><span class="check-icon"></span><strong id="mission2">Walk &amp; Sunlight</strong></div></div>
+                <div class="gameplan-item"><div class="gameplan-item__left"><span class="check-icon"></span><strong id="mission3">Protein on Target</strong></div></div>
+                <div class="gameplan-item"><div class="gameplan-item__left"><span class="check-icon"></span><strong id="mission4">8 Hours Sleep</strong></div></div>
+              </div>
+            </article>
+
+            <article class="focus-card">
+              <div class="card-kicker">Focus Mode</div>
+              <div class="focus-icon"></div>
+              <div class="focus-time">1:42:17</div>
+              <button class="btn btn--primary" type="button">Start Focus</button>
+            </article>
+
+            <article class="macro-card">
+              <div class="card-kicker">Macros <span class="accent">Details</span></div>
+              <div class="macro-ring">
+                <div class="macro-ring__inner">
+                  <div>
+                    <strong>2,589</strong>
+                    <span>Cal</span>
+                  </div>
+                </div>
+              </div>
+              <div class="macro-list">
+                <div class="macro-item"><div class="macro-item__left"><span class="macro-dot orange"></span><strong>Protein</strong></div><span>186g</span></div>
+                <div class="macro-item"><div class="macro-item__left"><span class="macro-dot yellow"></span><strong>Fat</strong></div><span>172g</span></div>
+                <div class="macro-item"><div class="macro-item__left"><span class="macro-dot green"></span><strong>Carbs</strong></div><span>23g</span></div>
+              </div>
+              <div style="margin-top:14px; color: var(--muted); font-size:0.88rem;">Target: 2,500 cal</div>
+            </article>
+          </div>
+
+          <div class="status-grid">
+            <article class="mini-status-card">
+              <div class="card-kicker">Sleep</div>
+              <div class="mini-status-card__value">7h 43m</div>
+              <p>Goal: 8h</p>
+              <div class="mini-status-card__bars"><span style="height:38px"></span><span style="height:42px"></span><span style="height:46px"></span><span style="height:48px"></span><span style="height:46px"></span><span style="height:50px"></span><span style="height:52px"></span></div>
+            </article>
+
+            <article class="mini-status-card">
+              <div class="card-kicker">Hydration</div>
+              <div class="mini-status-card__value">88%</div>
+              <p>3.2L / 3.6L goal</p>
+              <div class="mini-status-card__bars"><span style="height:36px"></span><span style="height:40px"></span><span style="height:44px"></span><span style="height:46px"></span><span style="height:45px"></span><span style="height:48px"></span><span style="height:50px"></span></div>
+            </article>
+
+            <article class="mini-status-card">
+              <div class="card-kicker">Stress</div>
+              <div class="mini-status-card__value">Low</div>
+              <p>HRV: 72</p>
+              <div class="mini-status-card__spark">
+                <svg viewBox="0 0 220 70" fill="none">
+                  <path d="M8 54L40 50L72 38L104 55L136 24L168 49L210 41" stroke="#22d07a" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                  <circle cx="136" cy="24" r="5" fill="#22d07a"/>
+                </svg>
+              </div>
+            </article>
+
+            <article class="mini-status-card">
+              <div class="card-kicker">Next Up</div>
+              <div class="mini-status-card__value" style="font-size:2.4rem; color: var(--orange-2);">Log Your Midday Check-In</div>
+              <p>Stay sharp. Stay honest. 2:00 PM</p>
+            </article>
+          </div>
+          <div class="mid-grid">
+            <article class="panel" id="checkin">
+              <div class="panel__title">Daily Check-In</div>
+              <div class="panel__sub">Fast inputs. Better score. Better decisions.</div>
+              <form class="checkin-form">
+                <div class="field">
+                  <label for="sleep">Sleep Hours</label>
+                  <input id="sleep" type="range" min="0" max="10" value="7" />
+                  <div class="field__hint"><span id="sleepValue">7.0</span> hours</div>
+                </div>
+                <div class="field">
+                  <label for="mood">Mood</label>
+                  <input id="mood" type="range" min="1" max="10" value="8" />
+                  <div class="field__hint"><span id="moodValue">8</span>/10</div>
+                </div>
+                <div class="field">
+                  <label for="stress">Stress</label>
+                  <input id="stress" type="range" min="1" max="10" value="3" />
+                  <div class="field__hint"><span id="stressValue">3</span>/10</div>
+                </div>
+                <div class="field">
+                  <label for="digestion">Digestion</label>
+                  <select id="digestion">
+                    <option>Bad</option>
+                    <option>Okay</option>
+                    <option selected>Good</option>
+                    <option>Great</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="soreness">Soreness</label>
+                  <select id="soreness">
+                    <option>None</option>
+                    <option selected>Mild</option>
+                    <option>Medium</option>
+                    <option>High</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label>Workout Yesterday</label>
+                  <div class="toggle-row">
+                    <button class="toggle is-active" type="button" data-workout="yes">Yes</button>
+                    <button class="toggle" type="button" data-workout="no">No</button>
+                  </div>
+                </div>
+                <button class="btn btn--primary" id="submitCheckin" type="button">Submit Check-In</button>
+              </form>
+            </article>
+
+            <article class="panel">
+              <div class="panel__title">Today’s Recommendation</div>
+              <div class="panel__sub">The metabolic dashboard engine is translating your inputs into action.</div>
+              <div class="score-box">
+                <div class="score-box__value" id="readinessScoreMain">87</div>
+                <strong id="modeMain">Execute Mode</strong>
+                <p id="recommendationText" style="margin-top:8px; color: var(--muted);">Strong readiness. Push today, but do it with structure. Lift upper body, protect protein, and get one clean deep work block done before noon.</p>
+              </div>
+              <div class="gameplan-list">
+                <div class="gameplan-item"><div class="gameplan-item__left"><span class="check-icon"></span><strong>Mission 1</strong></div><span id="win1">Lift upper body</span></div>
+                <div class="gameplan-item"><div class="gameplan-item__left"><span class="check-icon"></span><strong>Mission 2</strong></div><span id="win2">90 min deep work</span></div>
+                <div class="gameplan-item"><div class="gameplan-item__left"><span class="check-icon"></span><strong>Mission 3</strong></div><span id="win3">Hydrate before coffee 2</span></div>
+                <div class="gameplan-item"><div class="gameplan-item__left"><span class="check-icon"></span><strong>Mission 4</strong></div><span id="focusTop">Hit protein target</span></div>
+              </div>
+            </article>
+
+            <article class="coach-card" id="coach">
+              <div class="coach-card__top">
+                <img class="coach-card__image" src="/assets/img/mascot/metabo-home-hero.webp" alt="Savage Metabo coach" />
+                <div>
+                  <div class="coach-card__name">Savage Metabo</div>
+                  <div class="coach-card__mode">Coach Mode · Premium Layer</div>
+                </div>
+              </div>
+              <div class="coach-card__quote" id="coachQuote">You are hot right now. Stop negotiating. Lift. Focus. Protein. Momentum is hot. Do not waste it.</div>
+              <div class="coach-card__actions">
+                <div class="coach-chip">Normal Mode: clear, supportive guidance</div>
+                <div class="coach-chip">Savage Mode: identity + discipline coaching</div>
+                <div class="coach-chip">Retention play: users come back for the voice, not just the data</div>
+              </div>
+              <div class="upgrade-banner">
+                <h3>Upgrade to CCC Pro</h3>
+                <p>Unlock Savage Metabo coach mode, advanced insights, streak analytics, and guided programs.</p>
+                <a class="btn btn--primary" href="/beta/">Upgrade Now</a>
+              </div>
+            </article>
+          </div>
+
+          <div class="lower-grid">
+            <article class="factors-card" id="protocols">
+              <div class="card-kicker">Readiness Factors <span class="accent">Weighted Impact</span></div>
+              <div class="factor-list">
+                <div class="factor-item"><div class="factor-item__left"><span class="factor-icon"></span><strong>Sleep Quality</strong></div><span class="factor-score good">82</span></div>
+                <div class="factor-item"><div class="factor-item__left"><span class="factor-icon"></span><strong>HRV Balance</strong></div><span class="factor-score good">79</span></div>
+                <div class="factor-item"><div class="factor-item__left"><span class="factor-icon"></span><strong>Recovery</strong></div><span class="factor-score good">85</span></div>
+                <div class="factor-item"><div class="factor-item__left"><span class="factor-icon"></span><strong>Hydration</strong></div><span class="factor-score good">88</span></div>
+                <div class="factor-item"><div class="factor-item__left"><span class="factor-icon"></span><strong>Stress Balance</strong></div><span class="factor-score warn">22</span></div>
+              </div>
+            </article>
+
+            <article class="trend-card" id="trends">
+              <div class="card-kicker">7 Day Trend</div>
+              <div class="trend-card__plot">
+                <svg viewBox="0 0 560 180" fill="none">
+                  <path d="M30 150H530" stroke="rgba(255,255,255,0.10)"/>
+                  <path d="M30 120L95 108L160 78L225 92L290 112L355 118L420 86L500 52" stroke="#22d07a" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                  <circle cx="500" cy="52" r="6" fill="#22d07a"/>
+                </svg>
+              </div>
+              <div class="spark-axis" style="margin-top:12px;"><div>MON</div><div>TUE</div><div>WED</div><div>THU</div><div>FRI</div><div>SAT</div><div>SUN</div></div>
+            </article>
+
+            <article class="wins-card" id="community">
+              <div class="card-kicker">Recent Wins <span class="accent">View All</span></div>
+              <div class="wins-list">
+                <div class="wins-item"><div class="wins-item__left"><span class="trophy-icon"></span><strong>Hit Protein Target 6 Days</strong></div></div>
+                <div class="wins-item"><div class="wins-item__left"><span class="trophy-icon"></span><strong>47 Day Streak</strong></div></div>
+                <div class="wins-item"><div class="wins-item__left"><span class="trophy-icon"></span><strong>Improved HRV +6</strong></div></div>
+                <div class="wins-item"><div class="wins-item__left"><span class="trophy-icon"></span><strong>Woke Up 5:02 AM</strong></div></div>
+                <div class="wins-item"><div class="wins-item__left"><span class="trophy-icon"></span><strong>Completed Deep Work Block</strong></div></div>
+              </div>
+            </article>
+          </div>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    (() => {
+      const byId = (id) => document.getElementById(id);
+      const setText = (id, value) => {
+        const el = byId(id);
+        if (el) el.textContent = value;
+      };
+
+      const els = {
+        sleep: byId('sleep'),
+        mood: byId('mood'),
+        stress: byId('stress'),
+        digestion: byId('digestion'),
+        soreness: byId('soreness'),
+        sleepValue: byId('sleepValue'),
+        moodValue: byId('moodValue'),
+        stressValue: byId('stressValue'),
+        workoutButtons: Array.from(document.querySelectorAll('[data-workout]')),
+        submit: byId('submitCheckin')
+      };
+
+      let workoutYesterday = 'yes';
+      let entries = [];
+      try {
+        entries = JSON.parse(localStorage.getItem('cccEntries') || '[]');
+      } catch {
+        entries = [];
+      }
+
+      const clamp = (n, min, max) => Math.max(min, Math.min(max, n));
+
+      function computeScore() {
+        if (!els.sleep || !els.mood || !els.stress || !els.digestion || !els.soreness) return 72;
+        const sleep = parseFloat(els.sleep.value);
+        const mood = parseFloat(els.mood.value);
+        const stress = parseFloat(els.stress.value);
+        const digestionMap = { Bad: -14, Okay: -6, Good: 4, Great: 8 };
+        const sorenessMap = { None: 6, Mild: 2, Medium: -5, High: -12 };
+
+        let score = 50;
+        score += (sleep - 7) * 8;
+        score += (mood - 5) * 4;
+        score -= (stress - 3) * 5;
+        score += digestionMap[els.digestion.value] || 0;
+        score += sorenessMap[els.soreness.value] || 0;
+        score += workoutYesterday === 'yes' ? 4 : -2;
+
+        return Math.round(clamp(score, 35, 98));
+      }
+
+      function buildState(score) {
+        if (score >= 80) {
+          return {
+            mode: 'Execute',
+            recommendation: 'Strong readiness. Push today, but do it with structure. Lift upper body, protect protein, and get one clean deep work block done before noon.',
+            missions: ['Lift: Upper Body', 'Walk & Sunlight', 'Protein on Target', '8 Hours Sleep'],
+            wins: ['Lift upper body', '90 min deep work', 'Hydrate before coffee 2'],
+            quote: 'You are hot right now. Stop negotiating. Lift. Focus. Protein. Momentum is hot. Do not waste it.'
+          };
+        }
+        if (score >= 65) {
+          return {
+            mode: 'Build',
+            recommendation: 'Good day to execute, but stay measured. Moderate training, lock in protein, and protect the evening so momentum keeps building.',
+            missions: ['Moderate Lift', 'Deep Work 60 Min', 'Hydrate Early', 'Sleep on Time'],
+            wins: ['Moderate training', 'One clean focus block', 'Protect recovery tonight'],
+            quote: 'Solid enough to move. Do not waste energy on chaos. Build a clean day and keep momentum alive.'
+          };
+        }
+        if (score >= 50) {
+          return {
+            mode: 'Recover',
+            recommendation: 'Recovery should lead today. Walk, hydrate, reduce intensity, and make tonight’s sleep the real win.',
+            missions: ['20 Min Walk', 'Hydrate + Electrolytes', 'Light Mobility', 'Sleep Priority'],
+            wins: ['Walk complete', 'Hydration improved', 'Protect sleep tonight'],
+            quote: 'Not every win is a hard push. Recover on purpose so tomorrow does not have to pay for today.'
+          };
+        }
+        return {
+          mode: 'Reset',
+          recommendation: 'Bad inputs detected. Reset today. No ego training, no chaos. Hydrate, walk, simplify food, and protect sleep tonight.',
+          missions: ['Hydrate Aggressively', 'Walk Only', 'Simple Food', 'Early Bedtime'],
+          wins: ['Electrolytes in', 'Walk complete', 'Early bedtime locked'],
+          quote: 'You are not behind. You are unstable. Reset the system, stop forcing it, and win the basics.'
+        };
+      }
+
+      function render(save = false) {
+        if (els.sleepValue && els.sleep) els.sleepValue.textContent = Number(els.sleep.value).toFixed(1);
+        if (els.moodValue && els.mood) els.moodValue.textContent = els.mood.value;
+        if (els.stressValue && els.stress) els.stressValue.textContent = els.stress.value;
+
+        const score = computeScore();
+        const state = buildState(score);
+
+        setText('readinessScoreTop', score);
+        setText('readinessScoreMain', score);
+        setText('modeMain', `${state.mode} Mode`);
+        setText('recommendationText', state.recommendation);
+        setText('mission1', state.missions[0]);
+        setText('mission2', state.missions[1]);
+        setText('mission3', state.missions[2]);
+        setText('mission4', state.missions[3]);
+        setText('win1', state.wins[0]);
+        setText('win2', state.wins[1]);
+        setText('win3', state.wins[2]);
+        setText('coachQuote', state.quote);
+
+        if (save && els.submit) {
+          const entry = {
+            ts: new Date().toISOString(),
+            sleep: Number(els.sleep?.value || 7),
+            mood: Number(els.mood?.value || 8),
+            stress: Number(els.stress?.value || 3),
+            digestion: els.digestion?.value || 'Good',
+            soreness: els.soreness?.value || 'Mild',
+            workoutYesterday,
+            score,
+            mode: state.mode
+          };
+          entries.push(entry);
+          entries = entries.slice(-30);
+          try { localStorage.setItem('cccEntries', JSON.stringify(entries)); } catch {}
+          els.submit.textContent = 'Check-In Saved';
+          setTimeout(() => {
+            if (els.submit) els.submit.textContent = 'Submit Check-In';
+          }, 1400);
+        }
+      }
+
+      els.workoutButtons.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          workoutYesterday = btn.dataset.workout;
+          els.workoutButtons.forEach((b) => b.classList.remove('is-active'));
+          btn.classList.add('is-active');
+          render(false);
+        });
+      });
+
+      [els.sleep, els.mood, els.stress, els.digestion, els.soreness].forEach((el) => {
+        if (!el) return;
+        el.addEventListener('input', () => render(false));
+        el.addEventListener('change', () => render(false));
+      });
+
+      if (els.submit) {
+        els.submit.addEventListener('click', () => render(true));
+      }
+
+      if (entries.length) {
+        const last = entries[entries.length - 1];
+        if (els.sleep) els.sleep.value = last.sleep;
+        if (els.mood) els.mood.value = last.mood;
+        if (els.stress) els.stress.value = last.stress;
+        if (els.digestion) els.digestion.value = last.digestion;
+        if (els.soreness) els.soreness.value = last.soreness;
+        workoutYesterday = last.workoutYesterday || 'yes';
+        els.workoutButtons.forEach((b) => b.classList.toggle('is-active', b.dataset.workout === workoutYesterday));
+      }
+
+      render(false);
+    })();
+  </script>
+</body>
+</html>
+          
+
+  </main>
+
+  <footer class="site-footer">
+  <div class="container site-footer__inner">
+    <div class="site-footer__brand">
+      <div class="site-footer__title">Carnivore Command Center</div>
+      <div class="site-footer__tag">Stop Guessing. Start Understanding.</div>
+      <div class="site-footer__meta">© <span id="year"></span> All rights reserved.</div>
+      <div class="site-footer__meta">Built under WDC LLC</div>
+    </div>
+
+    <div class="site-footer__links">
+      <a href="/product/">Product</a>
+      <a href="/dashboard/">Dashboard</a>
+      <a href="/beta/">Beta</a>
+      <a href="/about/">About</a>
+      <a href="/investor/">Investor</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="/terms/">Terms</a>
+    </div>
+  </div>
+</footer>
+
+
+  <script>
+    const y = document.getElementById("year");
+    if (y) y.textContent = new Date().getFullYear();
+  </script>
+  <script src="/js/site.js" defer></script>
+</body>
+</html>
