@@ -8,13 +8,13 @@
 # To Do
 
 ## Safe file cleanup
-- [ ] Review `assets/README.md`
-- [ ] Delete `assets/img/test.txt`
+- [x] Review `assets/README.md`
+- [x] Delete `assets/img/test.txt`
 
 ## Duplicate mascot cleanup
-- [ ] Remove `.webp.webp` duplicates
-- [ ] Remove `.webp.png` duplicates
-- [ ] Keep only core mascot files in active use
+- [x] Remove `.webp.webp` duplicates
+- [x] Remove `.webp.png` duplicates
+- [x] Keep only core mascot files in active use
 
 ## Route cleanup
 - [ ] Choose `investor/` or `investors/`

@@ -14,7 +14,7 @@
       <nav class="nav" aria-label="Primary">
         <a href="/about/">About</a>
         <a href="/beta/">Beta</a>
-        <a href="/investors/">Investors</a>
+        <a href="/investor/">Investors</a>
         <a href="/contact/">Contact</a>
         <a href="/privacy/">Privacy</a>
         <a href="/terms/">Terms</a>

@@ -33,38 +33,38 @@
 # 🟡 Phase 2 — Safe File Cleanup
 
 ## General cleanup
-- [ ] Review `assets/README.md`
-- [ ] Delete `assets/README.md` if unused
-- [ ] Delete `assets/img/test.txt`
+- [x] Review `assets/README.md`
+- [x] Delete `assets/README.md` if unused
+- [x] Delete `assets/img/test.txt`
 
 ## Duplicate mascot junk files
-- [ ] Delete `assets/img/mascot/metabo-damage-control.webp.png`
-- [ ] Delete `assets/img/mascot/metabo-damage-control.webp.webp`
-- [ ] Delete `assets/img/mascot/metabo-focus.webp.png`
-- [ ] Delete `assets/img/mascot/metabo-recovery.webp.png`
-- [ ] Delete `assets/img/mascot/metabo-recovery.webp.webp`
-- [ ] Delete `assets/img/mascot/metabo-scientist.webp.png`
-- [ ] Delete `assets/img/mascot/metabo-scientist.webp.webp`
-- [ ] Delete `assets/img/mascot/metabo-scientist1.webp.png`
-- [ ] Delete `assets/img/mascot/metabo-travel.webp.png`
-- [ ] Delete `assets/img/mascot/metabo-travel.webp.webp`
-- [ ] Delete `assets/img/mascot/metabo-welcome.webp.png`
-- [ ] Delete `assets/img/mascot/metabo-welcome.webp.webp`
-- [ ] Delete `assets/img/mascot/metabo-workout.webp.png`
-- [ ] Delete `assets/img/mascot/metabo-workout.webp.webp`
+- [x] Delete `assets/img/mascot/metabo-damage-control.webp.png`
+- [x] Delete `assets/img/mascot/metabo-damage-control.webp.webp`
+- [x] Delete `assets/img/mascot/metabo-focus.webp.png`
+- [x] Delete `assets/img/mascot/metabo-recovery.webp.png`
+- [x] Delete `assets/img/mascot/metabo-recovery.webp.webp`
+- [x] Delete `assets/img/mascot/metabo-scientist.webp.png`
+- [x] Delete `assets/img/mascot/metabo-scientist.webp.webp`
+- [x] Delete `assets/img/mascot/metabo-scientist1.webp.png`
+- [x] Delete `assets/img/mascot/metabo-travel.webp.png`
+- [x] Delete `assets/img/mascot/metabo-travel.webp.webp`
+- [x] Delete `assets/img/mascot/metabo-welcome.webp.png`
+- [x] Delete `assets/img/mascot/metabo-welcome.webp.webp`
+- [x] Delete `assets/img/mascot/metabo-workout.webp.png`
+- [x] Delete `assets/img/mascot/metabo-workout.webp.webp`
 
 ## Keep these core mascot files
-- [ ] Keep `metabo-home-hero.webp`
-- [ ] Keep `metabo-dashboard.webp`
-- [ ] Keep `metabo-focus.webp` or `metabo-focus.png` whichever is actually used
-- [ ] Keep `metabo-welcome.webp` or `metabo-welcome.png` whichever is actually used
-- [ ] Keep `metabo-avatar.png`
+- [x] Keep `metabo-home-hero.webp`
+- [x] Keep `metabo-dashboard.webp`
+- [x] Keep `metabo-focus.webp` or `metabo-focus.png` whichever is actually used
+- [x] Keep `metabo-welcome.webp` or `metabo-welcome.png` whichever is actually used
+- [x] Keep `metabo-avatar.png`
 
 ## Commit checkpoint
-- [ ] Run `git status`
-- [ ] Run `git add .`
-- [ ] Run `git commit -m "Cleanup pass 2 remove duplicate mascot files"`
-- [ ] Run `git push`
+- [x] Run `git status`
+- [x] Run `git add .`
+- [x] Run `git commit -m "Cleanup pass 2 remove duplicate mascot files"`
+- [x] Run `git push`
 
 ---
 
