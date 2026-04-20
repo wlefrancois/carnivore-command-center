@@ -1,74 +1,61 @@
-# CCC Cleanup Project Board
+# 🧹 CCC Cleanup Project Board
 
-Project: Carnivore Command Center  
-Branch: `cleanup-start`
+**Project:** Carnivore Command Center  
+**Branch:** `cleanup-start`
 
 ---
 
 # To Do
 
-## File cleanup
-- [ ] Review and remove `assets/README.md` if unused
+## Safe file cleanup
+- [ ] Review `assets/README.md`
 - [ ] Delete `assets/img/test.txt`
 
-## Mascot cleanup
-- [ ] Delete `metabo-damage-control.webp.png`
-- [ ] Delete `metabo-damage-control.webp.webp`
-- [ ] Delete `metabo-focus.webp.png`
-- [ ] Delete `metabo-recovery.webp.png`
-- [ ] Delete `metabo-recovery.webp.webp`
-- [ ] Delete `metabo-scientist.webp.png`
-- [ ] Delete `metabo-scientist.webp.webp`
-- [ ] Delete `metabo-scientist1.webp.png`
-- [ ] Delete `metabo-travel.webp.png`
-- [ ] Delete `metabo-travel.webp.webp`
-- [ ] Delete `metabo-welcome.webp.png`
-- [ ] Delete `metabo-welcome.webp.webp`
-- [ ] Delete `metabo-workout.webp.png`
-- [ ] Delete `metabo-workout.webp.webp`
+## Duplicate mascot cleanup
+- [ ] Remove `.webp.webp` duplicates
+- [ ] Remove `.webp.png` duplicates
+- [ ] Keep only core mascot files in active use
 
 ## Route cleanup
-- [ ] Choose between `investor/` and `investors/`
-- [ ] Delete the duplicate route
-- [ ] Update broken links if needed
+- [ ] Choose `investor/` or `investors/`
+- [ ] Delete duplicate route
+- [ ] Lock `dashboard/` as demo
+- [ ] Lock `app/dashboard/` as real app
 
-## Asset / script cleanup
-- [ ] Check `assets/css/site.css`
-- [ ] Check `assets/js/site.js`
-- [ ] Remove duplicates if unused
+## Asset cleanup
+- [ ] Review `assets/css/site.css`
+- [ ] Review `assets/js/site.js`
+- [ ] Remove unused duplicates
 
-## App structure
-- [ ] Lock `dashboard/` as public demo
-- [ ] Lock `app/dashboard/` as real product
-- [ ] Verify app pages do not use marketing shell
+## App cleanup
+- [ ] Confirm `app/index.html` = auth
+- [ ] Confirm `app/dashboard/` = product
+- [ ] Confirm `app/log/` = log/history
 
 ---
 
 # Doing
 
-## Current active pass
+## Current focus
 - [ ] Phase 2 safe file cleanup
 - [ ] Duplicate mascot cleanup
 - [ ] Prepare next commit checkpoint
-
-## Current branch
-- [ ] `cleanup-start`
 
 ---
 
 # Done
 
-## Completed cleanup
+## Cleanup already completed
 - [x] Delete `BRAND_SYSTEM.md`
 - [x] Delete `DEPLOYMENT_GUIDE.md`
 - [x] Delete `ROADMAP.md`
 - [x] Delete `src/index.bkup`
 
-## Git setup completed
+## Git workflow setup completed
 - [x] Local repo initialized
 - [x] GitHub remote connected
 - [x] Local `main` synced to `origin/main`
-- [x] Created `local-backup-import` safety branch
-- [x] Created `cleanup-start` branch
-- [x] Committed cleanup pass 1
-- [x] Pushed `cleanup-start` to GitHub
+- [x] Backup branch created
+- [x] `cleanup-start` branch created
+- [x] Cleanup branch pushed to GitHub
+- [x] Cleanup tracker created
