@@ -57,7 +57,122 @@
 
 
   <main>
-    
+    <section class="login-page">
+  <div class="container">
+    <div class="login-shell">
+      <article class="card login-panel">
+        <span class="badge">Password Reset</span>
+        <h1 class="login-title">Reset your Carnivore Command Center password.</h1>
+        <p class="lead login-lead">
+          Enter the email associated with your account and we’ll help you begin the reset
+          process.
+        </p>
+
+        <form class="login-form" id="resetForm">
+          <div>
+            <label class="login-label" for="email">Email</label>
+            <input
+              class="login-input"
+              id="email"
+              name="email"
+              type="email"
+              placeholder="you@example.com"
+              autocomplete="email"
+              required
+            />
+          </div>
+
+          <button class="btn btn--primary btn--block" type="submit">
+            Send Reset Link
+          </button>
+
+          <div class="login-footer-links">
+            <a class="btn btn--ghost" href="/auth/login/">Back to Login</a>
+            <a class="btn btn--ghost" href="/auth/signup/">Create Account</a>
+          </div>
+        </form>
+
+        <div class="divider"></div>
+
+        <p class="micro">
+          If an account exists for the email entered, reset instructions may be sent to
+          that address.
+        </p>
+      </article>
+
+      <aside class="card login-visual">
+        <div class="badge">Account Recovery</div>
+
+        <div class="login-visual__top">
+          <h2>Get back into the command center.</h2>
+          <p>
+            Lost access happens. We’re building CCC to make recovery clean, simple, and
+            secure.
+          </p>
+        </div>
+
+        <div class="login-visual__image-wrap">
+          <img
+            class="login-visual__image"
+            src="/assets/img/mascot/metabo-avatar.png"
+            alt="Savage Metabo"
+          />
+        </div>
+
+        <div class="login-quote">
+          <strong>Next Step</strong>
+          <span>
+            Once access is restored, continue using your dashboard, check-ins, logs, and
+            future CCC premium tools.
+          </span>
+        </div>
+
+        <div class="pillrow" style="margin-top:18px;">
+          <span class="pill">Secure</span>
+          <span class="pill">Fast</span>
+          <span class="pill">Recovery</span>
+          <span class="pill">CCC Access</span>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<script type="module">
+  import { resetPassword } from "/js/app.js";
+
+  const form = document.getElementById("resetForm");
+  const email = document.getElementById("email");
+
+  form?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const submitButton = form.querySelector('button[type="submit"]');
+    const originalText = submitButton.textContent;
+
+    submitButton.disabled = true;
+    submitButton.textContent = "Sending...";
+
+    try {
+      const { error } = await resetPassword(email.value.trim());
+
+      if (error) {
+        alert(error.message);
+        submitButton.disabled = false;
+        submitButton.textContent = originalText;
+        return;
+      }
+
+      alert("If your account exists, reset instructions have been sent.");
+      submitButton.disabled = false;
+      submitButton.textContent = originalText;
+    } catch (err) {
+      alert("Reset error: " + (err?.message || err));
+      submitButton.disabled = false;
+      submitButton.textContent = originalText;
+    }
+  });
+</script>
   </main>
 
   <footer class="site-footer">

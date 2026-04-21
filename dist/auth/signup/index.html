@@ -57,7 +57,158 @@
 
 
   <main>
-    
+    <section class="login-page">
+  <div class="container">
+    <div class="login-shell">
+      <article class="card login-panel">
+        <span class="badge">Create Account</span>
+        <h1 class="login-title">Create your Carnivore Command Center account.</h1>
+        <p class="lead login-lead">
+          Join the CCC platform to begin onboarding, access your dashboard, and build a
+          more structured system for energy, recovery, and performance.
+        </p>
+
+        <form class="login-form" id="signupForm">
+          <div>
+            <label class="login-label" for="email">Email</label>
+            <input
+              class="login-input"
+              id="email"
+              name="email"
+              type="email"
+              placeholder="you@example.com"
+              autocomplete="email"
+              required
+            />
+          </div>
+
+          <div>
+            <label class="login-label" for="password">Password</label>
+            <input
+              class="login-input"
+              id="password"
+              name="password"
+              type="password"
+              placeholder="Create a password"
+              autocomplete="new-password"
+              required
+            />
+          </div>
+
+          <div>
+            <label class="login-label" for="confirmPassword">Confirm Password</label>
+            <input
+              class="login-input"
+              id="confirmPassword"
+              name="confirmPassword"
+              type="password"
+              placeholder="Re-enter your password"
+              autocomplete="new-password"
+              required
+            />
+          </div>
+
+          <label class="login-checkbox">
+            <input type="checkbox" id="termsCheck" required />
+            <span>
+              I understand CCC is an educational and lifestyle-focused platform and agree
+              to continue responsibly.
+            </span>
+          </label>
+
+          <button class="btn btn--primary btn--block" type="submit">Create Account</button>
+
+          <div class="login-footer-links">
+            <a class="btn btn--ghost" href="/auth/login/">Already have an account?</a>
+            <a class="login-link" href="/terms/">View Terms</a>
+          </div>
+        </form>
+
+        <div class="divider"></div>
+
+        <p class="micro">
+          Account creation may require email confirmation before full access is available.
+        </p>
+      </article>
+
+      <aside class="card login-visual">
+        <div class="badge">CCC Founder Access</div>
+        <div class="login-visual__top">
+          <h2>Start building inside the command center.</h2>
+          <p>
+            The long-term CCC vision is a platform that helps users track inputs, spot
+            patterns faster, and move with better daily clarity.
+          </p>
+        </div>
+
+        <div class="login-visual__image-wrap">
+          <img
+            class="login-visual__image"
+            src="/assets/img/mascot/metabo-avatar.png"
+            alt="Savage Metabo"
+          />
+        </div>
+
+        <div class="login-quote">
+          <strong>What happens next</strong>
+          <span>
+            After account creation, users move into onboarding and then into the real app
+            dashboard experience as the CCC platform continues to evolve.
+          </span>
+        </div>
+
+        <div class="pillrow" style="margin-top:18px;">
+          <span class="pill">Onboarding</span>
+          <span class="pill">Dashboard</span>
+          <span class="pill">Daily Check-In</span>
+          <span class="pill">Insights</span>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<script type="module">
+  import { signUp } from "/js/app.js";
+
+  const form = document.getElementById("signupForm");
+  const email = document.getElementById("email");
+  const password = document.getElementById("password");
+  const confirmPassword = document.getElementById("confirmPassword");
+
+  form?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    if (password.value !== confirmPassword.value) {
+      alert("Passwords do not match.");
+      return;
+    }
+
+    const submitButton = form.querySelector('button[type="submit"]');
+    const originalText = submitButton.textContent;
+
+    submitButton.disabled = true;
+    submitButton.textContent = "Creating Account...";
+
+    try {
+      const { error } = await signUp(email.value.trim(), password.value);
+
+      if (error) {
+        alert(error.message);
+        submitButton.disabled = false;
+        submitButton.textContent = originalText;
+        return;
+      }
+
+      alert("Account created. Check your email to confirm your account, then log in.");
+      window.location.href = "/auth/login/";
+    } catch (err) {
+      alert("Signup error: " + (err?.message || err));
+      submitButton.disabled = false;
+      submitButton.textContent = originalText;
+    }
+  });
+</script>
   </main>
 
   <footer class="site-footer">

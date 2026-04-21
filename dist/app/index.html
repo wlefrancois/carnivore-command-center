@@ -57,71 +57,214 @@
 
 
   <main>
-    <section class="page-hero">
-  <div class="container">
-    <h1>Carnivore Command Center</h1>
-    <p class="lead">Login or create your CCC account.</p>
-  </div>
-</section>
+    <div class="app">
+  <header class="app-topbar">
+    <div class="app-topbar__inner">
+      <a class="app-brand" href="/app/dashboard/">
+        <img
+          class="app-brand__logo"
+          src="/assets/img/ccc_logo_primary_transparent.png"
+          alt="Carnivore Command Center logo"
+        />
+        <div class="app-brand__text">
+          <div class="app-brand__name">Carnivore Command Center</div>
+          <div class="app-brand__tag">Metabolic intelligence • app mode</div>
+        </div>
+      </a>
 
-<section class="section">
-  <div class="container">
-    <div class="card" style="max-width:480px; margin:auto;">
-      <h3>Account Access</h3>
-      <div class="divider" style="margin:14px 0;"></div>
-
-      <label class="micro muted">Email</label>
-      <input
-        id="email"
-        type="email"
-        placeholder="you@email.com"
-        style="width:100%; padding:12px; margin-top:6px; margin-bottom:12px;"
-      />
-
-      <label class="micro muted">Password</label>
-      <input
-        id="password"
-        type="password"
-        placeholder="Enter password"
-        style="width:100%; padding:12px; margin-top:6px; margin-bottom:16px;"
-      />
-
-      <div style="display:flex; gap:10px; flex-wrap:wrap;">
-        <button class="btn btn--primary" id="loginBtn" type="button">Login</button>
-        <button class="btn btn--ghost" id="signupBtn" type="button">Create Account</button>
-        <a class="btn btn--ghost" href="/">Back to site</a>
+      <div class="app-topbar__actions">
+        <a class="app-chip" href="/app/dashboard/">Dashboard</a>
+        <a class="app-chip" href="/app/log/">Log</a>
+        <a class="app-chip" href="/product/">Product</a>
+        <a class="app-btn" href="/auth/login/">Account</a>
+        <a class="app-btn app-btn--primary" href="/app/log/">+ Log Today</a>
       </div>
+    </div>
+  </header>
 
-      <p id="authMsg" class="micro muted" style="margin-top:14px;"></p>
-      <p id="debugMsg" class="micro muted" style="margin-top:8px; opacity:.9;"></p>
+  <div class="app-layout">
+    <aside class="app-sidebar">
+      <div class="app-sidebar__label">Workspace</div>
+
+      <nav class="app-nav">
+        <a href="/app/dashboard/">
+          <span class="app-nav__dot"></span>
+          <span>Dashboard</span>
+        </a>
+
+        <a href="/app/log/">
+          <span class="app-nav__dot"></span>
+          <span>Log Today</span>
+        </a>
+
+        <a href="/app/onboarding/">
+          <span class="app-nav__dot"></span>
+          <span>Onboarding</span>
+        </a>
+
+        <a href="/dashboard/">
+          <span class="app-nav__dot"></span>
+          <span>Public Demo</span>
+        </a>
+      </nav>
+
+      <div class="app-sidebar__foot">
+        <div class="app-sidebar__label">Status</div>
+        <div class="app-chip">Build mode active</div>
+      </div>
+    </aside>
+
+    <main class="app-main">
+<div style="min-height:calc(100vh - 170px); display:grid; place-items:center;">
+  <div style="width:min(1120px, 100%); margin:0 auto;">
+    <div class="app-grid app-grid--2" style="align-items:stretch; gap:22px;">
+
+      <section class="app-panel" style="display:flex; flex-direction:column; justify-content:center; min-height:620px;">
+        <div class="badge">Secure Access</div>
+
+        <div style="margin-top:16px; font-size:clamp(38px, 5vw, 64px); font-weight:900; line-height:1.02; letter-spacing:-.04em;">
+          Welcome back to the command center.
+        </div>
+
+        <p style="margin:18px 0 0; color:var(--app-muted); line-height:1.75; font-size:17px; max-width:620px;">
+          Log in to access your dashboard, review your readiness, log today’s signals, and
+          continue building momentum inside CCC.
+        </p>
+
+        <div class="app-grid app-grid--2" style="margin-top:28px; gap:14px;">
+          <div class="app-panel" style="padding:16px;">
+            <div style="font-weight:800; font-size:16px;">Readiness</div>
+            <div class="micro muted" style="margin-top:8px; line-height:1.6;">
+              Track metabolic readiness from sleep, energy, digestion, hydration, mood, and inflammation.
+            </div>
+          </div>
+
+          <div class="app-panel" style="padding:16px;">
+            <div style="font-weight:800; font-size:16px;">Daily Actions</div>
+            <div class="micro muted" style="margin-top:8px; line-height:1.6;">
+              See limiting factors, recovery priorities, forecasts, and what to do next.
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:28px; display:flex; flex-wrap:wrap; gap:10px;">
+          <span class="app-chip">Dashboard</span>
+          <span class="app-chip">Check-In</span>
+          <span class="app-chip">Logs</span>
+          <span class="app-chip">Insights</span>
+        </div>
+
+        <div style="margin-top:26px; padding:16px 18px; border-radius:18px; background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.08);">
+          <div style="font-weight:800; margin-bottom:8px;">CCC Direction</div>
+          <div class="micro muted" style="line-height:1.7;">
+            The goal is not just more data. CCC is being built to help users understand what
+            is helping, what is hurting, and what to do next.
+          </div>
+        </div>
+      </section>
+
+      <section class="app-panel" style="display:flex; flex-direction:column; justify-content:center; min-height:620px; max-width:520px; width:100%; margin-inline:auto;">
+        <div class="badge">Account Access</div>
+
+        <h1 style="margin:16px 0 8px; font-size:36px; line-height:1.05; letter-spacing:-.03em;">
+          Log in
+        </h1>
+
+        <p class="micro muted" style="line-height:1.7; margin:0 0 22px;">
+          Use your email and password to continue into the app.
+        </p>
+
+        <form id="loginForm" style="display:grid; gap:16px;">
+          <div>
+            <label for="email" class="micro muted" style="display:block; margin-bottom:8px;">Email</label>
+            <input
+              id="email"
+              type="email"
+              placeholder="you@email.com"
+              autocomplete="email"
+              required
+              style="width:100%; padding:15px 16px; border-radius:16px; border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.06); color:var(--app-text); outline:none;"
+            />
+          </div>
+
+          <div>
+            <label for="password" class="micro muted" style="display:block; margin-bottom:8px;">Password</label>
+            <input
+              id="password"
+              type="password"
+              placeholder="Enter password"
+              autocomplete="current-password"
+              required
+              style="width:100%; padding:15px 16px; border-radius:16px; border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.06); color:var(--app-text); outline:none;"
+            />
+          </div>
+
+          <div style="display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; align-items:center;">
+            <label style="display:flex; align-items:center; gap:8px; color:var(--app-muted); font-size:13px;">
+              <input type="checkbox" />
+              <span>Remember me</span>
+            </label>
+
+            <a href="/auth/reset/" class="micro muted" style="text-decoration:none;">Forgot password?</a>
+          </div>
+
+          <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:6px;">
+            <button class="app-btn app-btn--primary" id="loginBtn" type="submit">Login</button>
+            <a class="app-btn" href="/auth/signup/">Create Account</a>
+          </div>
+
+          <div id="authMsg" class="micro muted" style="margin-top:6px;"></div>
+          <div id="debugMsg" class="micro muted" style="opacity:.85;"></div>
+        </form>
+
+        <div style="margin-top:22px; padding-top:18px; border-top:1px solid rgba(255,255,255,.08); display:flex; flex-wrap:wrap; gap:12px 18px;">
+          <a href="/" class="micro muted" style="text-decoration:none;">Back to site</a>
+          <a href="/product/" class="micro muted" style="text-decoration:none;">Product</a>
+          <a href="/beta/" class="micro muted" style="text-decoration:none;">Beta</a>
+          <a href="/disclaimer/" class="micro muted" style="text-decoration:none;">Disclaimer</a>
+        </div>
+      </section>
+
     </div>
   </div>
-</section>
+</div>
 
 <script type="module">
   const msg = document.getElementById("authMsg");
   const dbg = document.getElementById("debugMsg");
-  msg.textContent = "JS loaded ✅ (attaching handlers...)";
+  msg.textContent = "Loading account access...";
 
   try {
     const mod = await import("/js/app.js");
-    const { signIn, signUp, supabase } = mod;
+    const { signIn, getUser, supabase } = mod;
 
-    dbg.textContent = "Imported /js/app.js ✅";
+    dbg.textContent = "Auth module ready.";
+
+    const existingUser = await getUser();
+    if (existingUser) {
+      window.location.href = "/app/dashboard/";
+    }
 
     const email = document.getElementById("email");
     const password = document.getElementById("password");
-
+    const form = document.getElementById("loginForm");
     const loginBtn = document.getElementById("loginBtn");
-    const signupBtn = document.getElementById("signupBtn");
 
-    loginBtn.addEventListener("click", async () => {
-      msg.textContent = "Logging in...";
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const originalText = loginBtn.textContent;
+      loginBtn.disabled = true;
+      loginBtn.textContent = "Logging in...";
+      msg.textContent = "Checking credentials...";
+
       try {
         const { error } = await signIn(email.value.trim(), password.value);
 
         if (error) {
           msg.textContent = error.message;
+          loginBtn.disabled = false;
+          loginBtn.textContent = originalText;
           return;
         }
 
@@ -132,6 +275,8 @@
 
         if (logError) {
           msg.textContent = "Login succeeded, but log check failed: " + logError.message;
+          loginBtn.disabled = false;
+          loginBtn.textContent = originalText;
           return;
         }
 
@@ -142,30 +287,23 @@
         }
       } catch (e) {
         msg.textContent = "Login error: " + (e?.message || e);
+        loginBtn.disabled = false;
+        loginBtn.textContent = originalText;
       }
     });
 
-    signupBtn.addEventListener("click", async () => {
-      msg.textContent = "Creating account...";
-      try {
-        const { error } = await signUp(email.value.trim(), password.value);
-        if (error) {
-          msg.textContent = error.message;
-        } else {
-          msg.textContent = "Account created. Check your email to confirm, then login.";
-        }
-      } catch (e) {
-        msg.textContent = "Signup error: " + (e?.message || e);
-      }
-    });
-
-    msg.textContent = "Ready ✅ Enter email + password, then click Login or Create Account.";
+    msg.textContent = "Ready. Enter your email and password to continue.";
   } catch (e) {
-    msg.textContent = "Module load failed ❌";
+    msg.textContent = "Module load failed.";
     dbg.textContent = "Error: " + (e?.message || e);
   }
 </script>
-
+      <div class="app-minimal-footer">
+        CCC App • Built under WDC LLC
+      </div>
+    </main>
+  </div>
+</div>
   </main>
 
   <footer class="site-footer">
