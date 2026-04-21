@@ -5,7 +5,8 @@ import path from "path";
 const ROOT = process.cwd();
 const SRC_DIR = path.join(ROOT, "src");
 const DIST_DIR = path.join(ROOT, "dist");
-const TEMPLATE_PATH = path.join(ROOT, "templates", "base.html");
+const BASE_TEMPLATE_PATH = path.join(ROOT, "templates", "base.html");
+const APP_TEMPLATE_PATH = path.join(ROOT, "templates", "app.html");
 
 function ensureDir(dir) {
   fs.mkdirSync(dir, { recursive: true });
@@ -69,7 +70,9 @@ function buildPage(pagePath) {
   const rel = path.relative(SRC_DIR, pagePath);
   const outPath = path.join(DIST_DIR, rel);
 
-  const base = read(TEMPLATE_PATH);
+  const rel = path.relative(SRC_DIR, pagePath).replace(/\\/g, "/");
+const templatePath = rel.startsWith("app/") ? APP_TEMPLATE_PATH : BASE_TEMPLATE_PATH;
+const base = read(templatePath);
   const content = read(pagePath);
 
   const meta = pageMeta(rel);

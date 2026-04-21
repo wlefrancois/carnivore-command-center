@@ -14,6 +14,7 @@
   <meta property="og:type" content="website" />
   <link rel="icon" href="/favicon.ico">
   <link rel="stylesheet" href="/css/styles.css" />
+  <link rel="stylesheet" href="/css/app.css" />
 </head>
 
 <body data-page="app/dashboard/index.html">
@@ -57,7 +58,10 @@
 
 
   <main>
-    <div class="app">
+    <script>
+document.body.classList.add("app-mode");
+</script>
+<div class="app">
   <header class="app-topbar">
     <div class="app-topbar__inner">
       <a class="app-brand" href="/app/dashboard/">
@@ -117,21 +121,23 @@
     <main class="app-main">
 <div class="app-pagehead">
   <h1>Dashboard</h1>
-  <p>Your metabolic signals, readiness, and next actions.</p>
+  <p>Your readiness, limiting factors, trends, and next actions — all in one command center.</p>
 </div>
 
 <div class="app-stack">
 
   <div class="app-panel">
-    <div style="display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; align-items:flex-start;">
+    <div style="display:flex; justify-content:space-between; gap:18px; flex-wrap:wrap; align-items:flex-start;">
       <div>
-        <div class="micro muted" style="text-transform:uppercase; letter-spacing:.08em;">CCC App</div>
-        <div style="font-size:28px; font-weight:800; line-height:1.1; margin-top:6px;">Metabolic Command Center</div>
-        <p id="userLine" class="micro muted" style="margin-top:10px;"></p>
+        <div class="micro muted" style="text-transform:uppercase; letter-spacing:.08em;">CCC App • Daily Command Layer</div>
+        <div style="font-size:30px; font-weight:900; line-height:1.05; margin-top:8px; letter-spacing:-.03em;">
+          Metabolic Command Center
+        </div>
+        <p id="userLine" class="micro muted" style="margin-top:12px;"></p>
       </div>
 
       <div style="display:flex; gap:12px; flex-wrap:wrap;">
-        <a class="app-btn app-btn--primary" href="/app/log/">Log Today</a>
+        <a class="app-btn app-btn--primary" href="/app/log/">+ Log Today</a>
         <button class="app-btn" id="logoutBtn" type="button">Logout</button>
       </div>
     </div>
@@ -143,63 +149,80 @@
   </div>
 
   <div class="app-grid app-grid--2">
-    <div id="breakdownCard" class="app-panel"></div>
     <div id="todayCard" class="app-panel"></div>
+    <div id="streakCard" class="app-panel"></div>
   </div>
 
   <div id="stats" class="app-grid app-grid--3"></div>
+
+  <div class="app-grid app-grid--2">
+    <div id="breakdownCard" class="app-panel"></div>
+    <div id="recoveryCard" class="app-panel"></div>
+  </div>
+
+  <div class="app-grid app-grid--3">
+    <div id="forecastCard" class="app-panel"></div>
+    <div id="trainingCard" class="app-panel"></div>
+    <div id="experimentCard" class="app-panel"></div>
+  </div>
 
   <div class="app-grid app-grid--2">
     <div id="weeklyCard" class="app-panel"></div>
     <div id="insights" class="app-panel"></div>
   </div>
 
-  <div class="app-grid app-grid--3">
-    <div id="experimentCard" class="app-panel"></div>
-    <div id="forecastCard" class="app-panel"></div>
-    <div id="trainingCard" class="app-panel"></div>
-  </div>
-
-  <div class="app-grid app-grid--2">
-    <div id="recoveryCard" class="app-panel"></div>
-    <div id="streakCard" class="app-panel"></div>
-  </div>
-
   <div class="app-panel">
-    <div style="font-weight:700; font-size:18px;">Readiness Trend</div>
-    <div class="micro muted" style="margin-top:4px;">Last 7 days</div>
-    <div style="margin-top:12px;">
+    <div style="display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; align-items:center;">
+      <div>
+        <div style="font-weight:800; font-size:20px;">Readiness Trend</div>
+        <div class="micro muted" style="margin-top:4px;">Last 7 days</div>
+      </div>
+      <div class="app-chip">Trend view</div>
+    </div>
+
+    <div style="margin-top:16px;">
       <canvas id="chartReadiness" height="140"></canvas>
     </div>
   </div>
 
   <div class="app-grid app-grid--3">
     <div class="app-panel">
-      <div style="font-weight:700; font-size:18px;">Energy</div>
+      <div style="font-weight:800; font-size:18px;">Energy</div>
       <div class="micro muted" style="margin-top:4px;">Last 7 days</div>
-      <div style="margin-top:10px;">
+      <div style="margin-top:12px;">
         <canvas id="chartEnergy" height="180"></canvas>
       </div>
     </div>
 
     <div class="app-panel">
-      <div style="font-weight:700; font-size:18px;">Sleep</div>
+      <div style="font-weight:800; font-size:18px;">Sleep</div>
       <div class="micro muted" style="margin-top:4px;">Hours (last 7 days)</div>
-      <div style="margin-top:10px;">
+      <div style="margin-top:12px;">
         <canvas id="chartSleep" height="180"></canvas>
       </div>
     </div>
 
     <div class="app-panel">
-      <div style="font-weight:700; font-size:18px;">Inflammation</div>
+      <div style="font-weight:800; font-size:18px;">Inflammation</div>
       <div class="micro muted" style="margin-top:4px;">Last 7 days</div>
-      <div style="margin-top:10px;">
+      <div style="margin-top:12px;">
         <canvas id="chartInflam" height="180"></canvas>
       </div>
     </div>
   </div>
 
-  <div id="logs" class="app-stack"></div>
+  <div class="app-panel">
+    <div style="display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; align-items:center; margin-bottom:14px;">
+      <div>
+        <div style="font-weight:800; font-size:20px;">Recent Logs</div>
+        <div class="micro muted" style="margin-top:4px;">Your latest entries and notes</div>
+      </div>
+      <a class="app-btn" href="/app/log/">Add New Log</a>
+    </div>
+
+    <div id="logs" class="app-stack"></div>
+  </div>
+
 </div>
 
 <script type="module">
