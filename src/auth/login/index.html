@@ -1,0 +1,150 @@
+<section class="login-page">
+  <div class="container">
+    <div class="login-shell">
+      <article class="card login-panel">
+        <span class="badge">App Access</span>
+        <h1 class="login-title">Welcome back to Carnivore Command Center.</h1>
+        <p class="lead login-lead">
+          Log in to access your dashboard, daily check-ins, logs, and the next phase of the
+          CCC app experience.
+        </p>
+
+        <form class="login-form" id="loginForm">
+          <div>
+            <label class="login-label" for="email">Email</label>
+            <input
+              class="login-input"
+              id="email"
+              name="email"
+              type="email"
+              placeholder="you@example.com"
+              autocomplete="email"
+              required
+            />
+          </div>
+
+          <div>
+            <label class="login-label" for="password">Password</label>
+            <input
+              class="login-input"
+              id="password"
+              name="password"
+              type="password"
+              placeholder="Enter your password"
+              autocomplete="current-password"
+              required
+            />
+          </div>
+
+          <div class="login-row">
+            <label class="login-checkbox">
+              <input type="checkbox" name="remember" />
+              <span>Remember me</span>
+            </label>
+
+            <a class="login-link" href="/auth/reset/">Forgot password?</a>
+          </div>
+
+          <button class="btn btn--primary btn--block" type="submit">Log In</button>
+
+          <div class="login-footer-links">
+            <a class="btn btn--ghost" href="/auth/signup/">Create Account</a>
+            <a class="login-link" href="/beta/">Need access? Join Beta</a>
+          </div>
+        </form>
+
+        <div class="divider"></div>
+
+        <p class="micro">
+          By continuing, you acknowledge that CCC is an educational and lifestyle-focused
+          platform and not a medical service.
+        </p>
+      </article>
+
+      <aside class="card login-visual">
+        <div class="badge">Savage Metabo Access Layer</div>
+        <div class="login-visual__top">
+          <h2>Get back into the command center.</h2>
+          <p>
+            Your dashboard is where signals, scoring, and daily execution start to connect.
+            Log in to continue building momentum.
+          </p>
+        </div>
+
+        <div class="login-visual__image-wrap">
+          <img
+            class="login-visual__image"
+            src="/assets/img/mascot/metabo-avatar.png"
+            alt="Savage Metabo"
+          />
+        </div>
+
+        <div class="login-quote">
+          <strong>CCC Direction</strong>
+          <span>
+            The platform is being built to help users stop guessing, see patterns faster,
+            and make better daily decisions around energy, recovery, and performance.
+          </span>
+        </div>
+
+        <div class="pillrow" style="margin-top:18px;">
+          <span class="pill">Dashboard</span>
+          <span class="pill">Check-In</span>
+          <span class="pill">Logs</span>
+          <span class="pill">Insights</span>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<script type="module">
+  import { signIn, supabase } from "/js/app.js";
+
+  const form = document.getElementById("loginForm");
+  const email = document.getElementById("email");
+  const password = document.getElementById("password");
+
+  form?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const submitButton = form.querySelector('button[type="submit"]');
+    const originalText = submitButton.textContent;
+
+    submitButton.disabled = true;
+    submitButton.textContent = "Logging In...";
+
+    try {
+      const { error } = await signIn(email.value.trim(), password.value);
+
+      if (error) {
+        alert(error.message);
+        submitButton.disabled = false;
+        submitButton.textContent = originalText;
+        return;
+      }
+
+      const { data, error: logError } = await supabase
+        .from("daily_logs")
+        .select("id")
+        .limit(1);
+
+      if (logError) {
+        alert("Login succeeded, but log check failed: " + logError.message);
+        submitButton.disabled = false;
+        submitButton.textContent = originalText;
+        return;
+      }
+
+      if (!data || data.length === 0) {
+        window.location.href = "/app/onboarding/";
+      } else {
+        window.location.href = "/app/dashboard/";
+      }
+    } catch (err) {
+      alert("Login error: " + (err?.message || err));
+      submitButton.disabled = false;
+      submitButton.textContent = originalText;
+    }
+  });
+</script>
