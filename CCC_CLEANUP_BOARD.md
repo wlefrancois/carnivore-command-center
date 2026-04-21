@@ -1,61 +1,149 @@
-# 🧹 CCC Cleanup Project Board
+# 🚀 CCC CLEANUP BOARD
 
 **Project:** Carnivore Command Center  
-**Branch:** `cleanup-start`
+**Branch:** `cleanup-start`  
+**Status:** Strong progress — entering final cleanup + architecture lock phase
 
 ---
 
-# To Do
+# 📊 OVERALL STATUS
 
-## Safe file cleanup
-- [x] Review `assets/README.md`
-- [x] Delete `assets/img/test.txt`
-
-## Duplicate mascot cleanup
-- [x] Remove `.webp.webp` duplicates
-- [x] Remove `.webp.png` duplicates
-- [x] Keep only core mascot files in active use
-
-## Route cleanup
-- [x] Choose `investor/` or `investors/`
-- [x] Delete duplicate route
-- [ ] Lock `dashboard/` as demo
-- [ ] Lock `app/dashboard/` as real app
-
-## Asset cleanup
-- [ ] Review `assets/css/site.css`
-- [ ] Review `assets/js/site.js`
-- [ ] Remove unused duplicates
-
-## App cleanup
-- [ ] Confirm `app/index.html` = auth
-- [ ] Confirm `app/dashboard/` = product
-- [ ] Confirm `app/log/` = log/history
+| Phase | Status | Notes |
+|------|--------|------|
+| Phase 1 | ✅ Done | Safe junk cleanup complete |
+| Phase 2 | ✅ Done | Mascot duplicates + asset cleanup complete |
+| Phase 3 | ✅ Done | Route cleanup complete |
+| Phase 4 | ⏳ In Progress | Legacy shell retirement phase |
+| Phase 5 | ⬜ Pending | App/public experience lock |
 
 ---
 
-# Doing
+# ✅ DONE
 
-## Current focus
-- [ ] Phase 2 safe file cleanup
-- [ ] Duplicate mascot cleanup
-- [ ] Prepare next commit checkpoint
+## Cleanup Completed
+- Removed obsolete docs
+- Removed backup files
+- Removed duplicate mascot junk files
+- Deleted `investors/`
+- Standardized to `investor/`
+
+## Build System Confirmed
+- `src/` = source of truth
+- `dist/` = build output
+- `node scripts/build.js` working
+
+## Modern Pages Migrated
+- ✅ Investor
+- ✅ Contact
+- ✅ Disclaimer
+- ✅ Login
+- ✅ Signup
+- ✅ Reset Password
+
+## Git Workflow Healthy
+- Working branch = `cleanup-start`
+- Commits pushed successfully
+- Build process operational
 
 ---
 
-# Done
+# 🟡 DOING NOW (PHASE 4)
 
-## Cleanup already completed
-- [x] Delete `BRAND_SYSTEM.md`
-- [x] Delete `DEPLOYMENT_GUIDE.md`
-- [x] Delete `ROADMAP.md`
-- [x] Delete `src/index.bkup`
+## Legacy Root Retirement
 
-## Git workflow setup completed
-- [x] Local repo initialized
-- [x] GitHub remote connected
-- [x] Local `main` synced to `origin/main`
-- [x] Backup branch created
-- [x] `cleanup-start` branch created
-- [x] Cleanup branch pushed to GitHub
-- [x] Cleanup tracker created
+Old root pages still exist and likely keep legacy shell alive.
+
+### Retirement Targets
+
+- [ ] `auth/login/index.html`
+- [ ] `auth/reset/index.html`
+- [ ] `auth/signup/index.html`
+- [ ] `contact/index.html`
+- [ ] `disclaimer/index.html`
+- [ ] `investor/index.html`
+
+### After Retirement
+
+- [ ] Run build
+- [ ] Search for old shell references
+- [ ] Remove legacy assets if unused:
+  - [ ] `assets/css/site.css`
+  - [ ] `assets/js/site.js`
+
+---
+
+# 🔵 NEXT UP (PHASE 5)
+
+## App Structure Lock
+
+### Public Site
+- Marketing nav
+- Footer
+- Public routes only
+
+### App Experience
+- `/app/` auth gateway
+- `/app/dashboard/`
+- `/app/log/`
+- `/app/onboarding/`
+
+### Must Confirm
+
+- [ ] App pages no marketing header
+- [ ] App pages no marketing footer
+- [ ] App feels like real product
+- [ ] Public site feels separate from app
+
+---
+
+# 🧪 FINAL QA
+
+## Public Routes
+- [ ] `/`
+- [ ] `/product/`
+- [ ] `/dashboard/`
+- [ ] `/beta/`
+- [ ] `/investor/`
+- [ ] `/contact/`
+- [ ] `/disclaimer/`
+
+## Auth Routes
+- [ ] `/auth/login/`
+- [ ] `/auth/signup/`
+- [ ] `/auth/reset/`
+
+## App Routes
+- [ ] `/app/`
+- [ ] `/app/dashboard/`
+- [ ] `/app/log/`
+
+---
+
+# 🏁 MERGE READINESS
+
+- [ ] `git diff main...cleanup-start`
+- [ ] Build passes clean
+- [ ] No broken routes
+- [ ] No duplicate assets
+- [ ] Ready to merge into `main`
+
+---
+
+# 🎯 RIGHT NOW / SIMPLEST NEXT MOVE
+
+## Option A (Recommended)
+Retire old root legacy pages
+
+## Option B
+Lock app shell behavior
+
+## Option C
+Do final full QA pass
+
+---
+
+# 🧠 NORTH STAR
+
+**Public site sells the vision.**  
+**App delivers the product.**  
+**Repo stays clean and scalable.**

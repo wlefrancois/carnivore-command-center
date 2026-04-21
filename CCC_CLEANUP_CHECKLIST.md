@@ -2,17 +2,17 @@
 
 **Project:** Carnivore Command Center  
 **Working Branch:** `cleanup-start`  
-**Source of Truth:** GitHub `main`  
-**Goal:** Separate public site from real app, remove junk, simplify assets, and make future builds easier.
+**Source of Truth:** `src/` → `dist/` build flow  
+**Goal:** Separate public site from real app, remove junk, retire legacy shell, and simplify future development.
 
 ---
 
 # 📊 Progress
 
 - **Phase 1:** ✅ Complete
-- **Phase 2:** ⏳ In Progress
-- **Phase 3:** ⬜ Not Started
-- **Phase 4:** ⬜ Not Started
+- **Phase 2:** ✅ Complete
+- **Phase 3:** ✅ Complete
+- **Phase 4:** ⏳ In Progress
 - **Phase 5:** ⬜ Not Started
 
 ---
@@ -71,45 +71,68 @@
 # 🟠 Phase 3 — Route Cleanup
 
 ## Route decisions
-- [x] Decide whether to keep `investor/` or `investors/`
-- [x] Delete the duplicate route folder
+- [x] Keep `investor/`
+- [x] Delete duplicate `investors/`
 - [x] Update links to the surviving route
 
 ## Lock route purposes
-- [x] Lock route purposes in CCC_ROUTE_MAP.md
-- [ ] Confirm `dashboard/` = public demo only
-- [ ] Confirm `app/dashboard/` = real app only
-- [ ] Confirm `app/index.html` = auth entry
+- [x] Lock route purposes in `CCC_ROUTE_MAP.md`
+- [x] Confirm `dashboard/` = public demo only
+- [x] Confirm `app/dashboard/` = real app only
+- [x] Confirm `app/index.html` = auth entry
 
 ## Commit checkpoint
-- [ ] Run `git status`
-- [ ] Run `git add .`
-- [ ] Run `git commit -m "Cleanup pass 3 route cleanup"`
-- [ ] Run `git push`
+- [x] Run `git status`
+- [x] Run `git add .`
+- [x] Run `git commit -m "Cleanup pass 3 route cleanup"`
+- [x] Run `git push`
 
 ---
 
-# 🔵 Phase 4 — CSS / JS Cleanup
+# 🔵 Phase 4 — Legacy Shell Audit + Migration
 
-## CSS review
-- [ ] Confirm `css/styles.css` is the public site stylesheet
-- [ ] Confirm whether `assets/css/site.css` is used
-- [ ] Delete `assets/css/site.css` if unused
+## Modern system confirmed
+- [x] Confirm `src/` is source of truth
+- [x] Confirm `dist/` is build output
+- [x] Confirm `node scripts/build.js` works
+- [x] Add `"type": "module"` workflow support awareness
 
-## JS review
-- [ ] Confirm `js/site.js` is the active site script
-- [ ] Confirm whether `assets/js/site.js` is used
-- [ ] Delete `assets/js/site.js` if unused
+## Modern assets confirmed
+- [x] Confirm `css/styles.css` is the main modern site stylesheet
+- [x] Confirm `js/site.js` is the main modern site script
 
-## Public vs app separation
-- [ ] Public pages use marketing header/footer
-- [ ] App pages do not use marketing header/footer
-- [ ] App pages do not rely on public-site nav behavior
+## Legacy shell audit complete
+- [x] Confirm `assets/css/site.css` is still used
+- [x] Confirm `assets/js/site.js` is still used
+- [x] Confirm legacy shell is tied to old root pages
+- [x] Decide not to delete legacy shell assets yet
+
+## Legacy page migrations completed
+- [x] Build modern investor page v2
+- [x] Build modern contact page v2
+- [x] Build modern disclaimer page v2
+- [x] Build modern login page v2
+- [x] Build modern signup page v2
+- [x] Build modern reset page v2
+
+## Phase 4 next actions
+- [ ] Archive or retire old root legacy pages:
+  - [ ] `auth/login/index.html`
+  - [ ] `auth/reset/index.html`
+  - [ ] `auth/signup/index.html`
+  - [ ] `contact/index.html`
+  - [ ] `disclaimer/index.html`
+  - [ ] `investor/index.html`
+- [ ] Rebuild `dist/`
+- [ ] Search again for `/assets/css/site.css`
+- [ ] Search again for `/assets/js/site.js`
+- [ ] Remove `assets/css/site.css` after old root pages are retired
+- [ ] Remove `assets/js/site.js` after old root pages are retired
 
 ## Commit checkpoint
 - [ ] Run `git status`
 - [ ] Run `git add .`
-- [ ] Run `git commit -m "Cleanup pass 4 css and js cleanup"`
+- [ ] Run `git commit -m "Cleanup pass 4 retire legacy root pages and shell assets"`
 - [ ] Run `git push`
 
 ---
@@ -169,6 +192,8 @@
 
 # 📝 Notes
 
-- Use `[x]` for completed items
+- `src/` = source
+- `dist/` = built output
+- Old root pages are now legacy and should be retired carefully
 - Commit after each cleanup pass
 - Keep changes small and safe
