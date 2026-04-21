@@ -57,7 +57,6 @@ function walkHtml(dir, files = []) {
 }
 
 function pageMeta(relPath) {
-  // minimal for now; we’ll add per-page meta later
   return {
     TITLE: "Carnivore Command Center",
     DESCRIPTION:
@@ -67,14 +66,15 @@ function pageMeta(relPath) {
 }
 
 function buildPage(pagePath) {
-  const rel = path.relative(SRC_DIR, pagePath);
+  const rel = path.relative(SRC_DIR, pagePath).replace(/\\/g, "/");
   const outPath = path.join(DIST_DIR, rel);
 
-  const rel = path.relative(SRC_DIR, pagePath).replace(/\\/g, "/");
-const templatePath = rel.startsWith("app/") ? APP_TEMPLATE_PATH : BASE_TEMPLATE_PATH;
-const base = read(templatePath);
-  const content = read(pagePath);
+  const templatePath = rel.startsWith("app/")
+    ? APP_TEMPLATE_PATH
+    : BASE_TEMPLATE_PATH;
 
+  const base = read(templatePath);
+  const content = read(pagePath);
   const meta = pageMeta(rel);
 
   let merged = base
@@ -90,36 +90,37 @@ const base = read(templatePath);
 (function main() {
   emptyDir(DIST_DIR);
 
- // Copy shared static folders from repo root into dist
-for (const folder of ["css", "assets", "js"]) {
-  const p = path.join(ROOT, folder);
-  if (fs.existsSync(p)) copyDir(p, path.join(DIST_DIR, folder));
-}
-
-// Copy selected root static files into dist (if present)
-for (const file of ["favicon.ico", "site.webmanifest", "robots.txt", "sitemap.xml"]) {
-  const srcFile = path.join(ROOT, file);
-  if (fs.existsSync(srcFile)) {
-    fs.copyFileSync(srcFile, path.join(DIST_DIR, file));
+  // Copy shared static folders from repo root into dist
+  for (const folder of ["css", "assets", "js"]) {
+    const p = path.join(ROOT, folder);
+    if (fs.existsSync(p)) copyDir(p, path.join(DIST_DIR, folder));
   }
-}
- if (!fs.existsSync(SRC_DIR)) {
-  console.error(
-    `Build failed: missing /src directory at ${SRC_DIR}. ` +
-    `Create /src and add at least /src/index.html (content-only).`
-  );
-  process.exit(1);
-}
 
-const pages = walkHtml(SRC_DIR);
+  // Copy selected root static files into dist (if present)
+  for (const file of ["favicon.ico", "site.webmanifest", "robots.txt", "sitemap.xml"]) {
+    const srcFile = path.join(ROOT, file);
+    if (fs.existsSync(srcFile)) {
+      fs.copyFileSync(srcFile, path.join(DIST_DIR, file));
+    }
+  }
 
-if (pages.length === 0) {
-  console.error(
-    "Build failed: /src contains no .html files. Add at least /src/index.html."
-  );
-  process.exit(1);
-}
+  if (!fs.existsSync(SRC_DIR)) {
+    console.error(
+      `Build failed: missing /src directory at ${SRC_DIR}. ` +
+      `Create /src and add at least /src/index.html (content-only).`
+    );
+    process.exit(1);
+  }
 
-pages.forEach(buildPage);
-console.log(`Built ${pages.length} pages to /dist`);
+  const pages = walkHtml(SRC_DIR);
+
+  if (pages.length === 0) {
+    console.error(
+      "Build failed: /src contains no .html files. Add at least /src/index.html."
+    );
+    process.exit(1);
+  }
+
+  pages.forEach(buildPage);
+  console.log(`Built ${pages.length} pages to /dist`);
 })();
