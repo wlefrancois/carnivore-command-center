@@ -71,11 +71,12 @@
 # 🟠 Phase 3 — Route Cleanup
 
 ## Route decisions
-- [ ] Decide whether to keep `investor/` or `investors/`
-- [ ] Delete the duplicate route folder
-- [ ] Update links to the surviving route
+- [x] Decide whether to keep `investor/` or `investors/`
+- [x] Delete the duplicate route folder
+- [x] Update links to the surviving route
 
 ## Lock route purposes
+- [x] Lock route purposes in CCC_ROUTE_MAP.md
 - [ ] Confirm `dashboard/` = public demo only
 - [ ] Confirm `app/dashboard/` = real app only
 - [ ] Confirm `app/index.html` = auth entry

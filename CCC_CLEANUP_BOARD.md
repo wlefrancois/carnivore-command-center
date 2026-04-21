@@ -17,8 +17,8 @@
 - [x] Keep only core mascot files in active use
 
 ## Route cleanup
-- [ ] Choose `investor/` or `investors/`
-- [ ] Delete duplicate route
+- [x] Choose `investor/` or `investors/`
+- [x] Delete duplicate route
 - [ ] Lock `dashboard/` as demo
 - [ ] Lock `app/dashboard/` as real app
 
