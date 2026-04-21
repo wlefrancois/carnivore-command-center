@@ -1,835 +1,825 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CCC Dashboard | Carnivore Command Center</title>
-  <meta name="description" content="CCC dashboard production UI with readiness score, daily plan, check-in, trends, and Savage Metabo coach panel." />
-  <style>
-    :root {
-      --bg: #060b14;
-      --bg-soft: #0a1222;
-      --card: rgba(10, 16, 28, 0.96);
-      --card-2: rgba(7, 12, 22, 0.98);
-      --line: rgba(70, 96, 152, 0.18);
-      --text: #eef4ff;
-      --muted: #93a6c8;
-      --orange: #ff7a00;
-      --orange-2: #ff9b3f;
-      --green: #22d07a;
-      --yellow: #ffb347;
-      --blue: #2388ff;
-      --shadow: 0 18px 60px rgba(0, 0, 0, 0.48);
-      --radius-xl: 26px;
-      --radius-lg: 18px;
-      --radius-md: 14px;
-      --max: 1520px;
-    }
+<style>
+  .ccc-elite-dashboard {
+    --bg: #060b14;
+    --bg-soft: #0a1222;
+    --card: rgba(10, 16, 28, 0.96);
+    --card-2: rgba(7, 12, 22, 0.98);
+    --line: rgba(70, 96, 152, 0.18);
+    --text: #eef4ff;
+    --muted: #93a6c8;
+    --orange: #ff7a00;
+    --orange-2: #ff9b3f;
+    --green: #22d07a;
+    --yellow: #ffb347;
+    --blue: #2388ff;
+    --shadow: 0 18px 60px rgba(0, 0, 0, 0.48);
+    --radius-xl: 26px;
+    --radius-lg: 18px;
+    --radius-md: 14px;
+    --max: 1520px;
+    color: var(--text);
+  }
 
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      color: var(--text);
-      background:
-        radial-gradient(circle at top right, rgba(255, 122, 0, 0.10), transparent 24%),
-        radial-gradient(circle at top left, rgba(35, 136, 255, 0.08), transparent 22%),
-        linear-gradient(180deg, #04070d 0%, #07101d 36%, #050a13 100%);
-      line-height: 1.5;
-    }
+  .ccc-elite-dashboard * { box-sizing: border-box; }
+  .ccc-elite-dashboard a { color: inherit; text-decoration: none; }
+  .ccc-elite-dashboard button,
+  .ccc-elite-dashboard input,
+  .ccc-elite-dashboard select { font: inherit; }
 
-    img { max-width: 100%; display: block; }
-    a { color: inherit; text-decoration: none; }
-    button, input, select { font: inherit; }
+  .ccc-elite-dashboard .app-shell {
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+    background:
+      radial-gradient(circle at top right, rgba(255, 122, 0, 0.10), transparent 24%),
+      radial-gradient(circle at top left, rgba(35, 136, 255, 0.08), transparent 22%),
+      linear-gradient(180deg, #04070d 0%, #07101d 36%, #050a13 100%);
+    border-radius: 28px;
+  }
 
-    .app-shell {
-      min-height: 100vh;
-      position: relative;
-      overflow: hidden;
-    }
+  .ccc-elite-dashboard .app-shell::before,
+  .ccc-elite-dashboard .app-shell::after {
+    content: "";
+    position: fixed;
+    pointer-events: none;
+    filter: blur(90px);
+    opacity: 0.42;
+    z-index: 0;
+  }
 
-    .app-shell::before,
-    .app-shell::after {
-      content: "";
-      position: fixed;
-      pointer-events: none;
-      filter: blur(90px);
-      opacity: 0.42;
-      z-index: 0;
-    }
+  .ccc-elite-dashboard .app-shell::before {
+    width: 340px;
+    height: 340px;
+    top: 90px;
+    left: -110px;
+    background: rgba(35, 136, 255, 0.14);
+  }
 
-    .app-shell::before {
-      width: 340px;
-      height: 340px;
-      top: 90px;
-      left: -110px;
-      background: rgba(35, 136, 255, 0.14);
-    }
+  .ccc-elite-dashboard .app-shell::after {
+    width: 360px;
+    height: 360px;
+    right: -120px;
+    top: 140px;
+    background: rgba(255, 122, 0, 0.13);
+  }
 
-    .app-shell::after {
-      width: 360px;
-      height: 360px;
-      right: -120px;
-      top: 140px;
-      background: rgba(255, 122, 0, 0.13);
-    }
+  .ccc-elite-dashboard .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px 18px;
+    border-radius: 14px;
+    border: 1px solid transparent;
+    font-weight: 800;
+    transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease, border-color 180ms ease;
+    cursor: pointer;
+    white-space: nowrap;
+  }
 
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      padding: 14px 18px;
-      border-radius: 14px;
-      border: 1px solid transparent;
-      font-weight: 800;
-      transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease, border-color 180ms ease;
-      cursor: pointer;
-      white-space: nowrap;
-    }
+  .ccc-elite-dashboard .btn:hover { transform: translateY(-1px); }
 
-    .btn:hover { transform: translateY(-1px); }
+  .ccc-elite-dashboard .btn--primary {
+    color: #08101d;
+    background: linear-gradient(180deg, #ff9b3f 0%, var(--orange) 100%);
+    box-shadow: 0 16px 34px rgba(255, 122, 0, 0.24);
+  }
 
-    .btn--primary {
-      color: #08101d;
-      background: linear-gradient(180deg, #ff9b3f 0%, var(--orange) 100%);
-      box-shadow: 0 16px 34px rgba(255, 122, 0, 0.24);
-    }
+  .ccc-elite-dashboard .btn--primary:hover {
+    box-shadow: 0 18px 38px rgba(255, 122, 0, 0.32);
+  }
 
-    .btn--primary:hover { box-shadow: 0 18px 38px rgba(255, 122, 0, 0.32); }
+  .ccc-elite-dashboard .app-topbar {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    backdrop-filter: blur(16px);
+    background: rgba(6, 11, 20, 0.82);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
 
-    .app-topbar {
-      position: sticky;
-      top: 0;
-      z-index: 20;
-      backdrop-filter: blur(16px);
-      background: rgba(6, 11, 20, 0.82);
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-    }
+  .ccc-elite-dashboard .app-topbar__inner {
+    width: min(calc(100% - 24px), var(--max));
+    margin: 0 auto;
+    min-height: 76px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+  }
 
-    .app-topbar__inner {
-      width: min(calc(100% - 24px), var(--max));
-      margin: 0 auto;
-      min-height: 76px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 18px;
-    }
+  .ccc-elite-dashboard .app-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+  }
 
-    .app-brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      min-width: 0;
-    }
+  .ccc-elite-dashboard .app-brand__mark {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    object-fit: contain;
+    background: rgba(255,255,255,0.03);
+    padding: 5px;
+  }
 
-    .app-brand__mark {
-      width: 42px;
-      height: 42px;
-      border-radius: 12px;
-      object-fit: contain;
-      background: rgba(255,255,255,0.03);
-      padding: 5px;
-    }
+  .ccc-elite-dashboard .app-brand__name {
+    font-weight: 800;
+    font-size: 1rem;
+    line-height: 1.05;
+  }
 
-    .app-brand__name {
-      font-weight: 800;
-      font-size: 1rem;
-      line-height: 1.05;
-    }
+  .ccc-elite-dashboard .app-brand__tag {
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-top: 3px;
+  }
 
-    .app-brand__tag {
-      font-size: 0.78rem;
-      color: var(--muted);
-      margin-top: 3px;
-    }
+  .ccc-elite-dashboard .app-userbar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
 
-    .app-userbar {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-    }
+  .ccc-elite-dashboard .app-icon-btn {
+    border: 1px solid rgba(255,255,255,0.06);
+    background: rgba(255,255,255,0.02);
+    color: var(--text);
+    border-radius: 14px;
+    padding: 10px 14px;
+    cursor: pointer;
+  }
 
-    .app-icon-btn {
-      border: 1px solid rgba(255,255,255,0.06);
-      background: rgba(255,255,255,0.02);
-      color: var(--text);
-      border-radius: 14px;
-      padding: 10px 14px;
-      cursor: pointer;
-    }
+  .ccc-elite-dashboard .app-user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 10px;
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,0.06);
+    background: rgba(255,255,255,0.02);
+  }
 
-    .app-user {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 8px 10px;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,0.06);
-      background: rgba(255,255,255,0.02);
-    }
+  .ccc-elite-dashboard .app-user__avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+    object-fit: cover;
+    object-position: center top;
+  }
 
-    .app-user__avatar {
-      width: 38px;
-      height: 38px;
-      border-radius: 12px;
-      object-fit: cover;
-      object-position: center top;
-    }
+  .ccc-elite-dashboard .app-user__name {
+    font-size: 0.95rem;
+    font-weight: 800;
+    line-height: 1.05;
+  }
 
-    .app-user__name {
-      font-size: 0.95rem;
-      font-weight: 800;
-      line-height: 1.05;
-    }
+  .ccc-elite-dashboard .app-user__meta {
+    font-size: 0.74rem;
+    color: var(--muted);
+    margin-top: 2px;
+  }
 
-    .app-user__meta {
-      font-size: 0.74rem;
-      color: var(--muted);
-      margin-top: 2px;
-    }
+  .ccc-elite-dashboard .page {
+    width: min(calc(100% - 24px), var(--max));
+    margin: 0 auto;
+    padding: 18px 0 34px;
+    position: relative;
+    z-index: 1;
+  }
 
-    .page {
-      width: min(calc(100% - 24px), var(--max));
-      margin: 0 auto;
-      padding: 18px 0 34px;
-      position: relative;
-      z-index: 1;
-    }
+  .ccc-elite-dashboard .hero-grid {
+    display: grid;
+    grid-template-columns: 160px 320px minmax(0, 1fr);
+    gap: 18px;
+    align-items: stretch;
+  }
 
-    .hero-grid {
+  .ccc-elite-dashboard .sidebar,
+  .ccc-elite-dashboard .portrait-card,
+  .ccc-elite-dashboard .streak-card,
+  .ccc-elite-dashboard .metric-card,
+  .ccc-elite-dashboard .gameplan-card,
+  .ccc-elite-dashboard .focus-card,
+  .ccc-elite-dashboard .macro-card,
+  .ccc-elite-dashboard .mini-status-card,
+  .ccc-elite-dashboard .panel,
+  .ccc-elite-dashboard .coach-card,
+  .ccc-elite-dashboard .factors-card,
+  .ccc-elite-dashboard .trend-card,
+  .ccc-elite-dashboard .wins-card {
+    background: linear-gradient(180deg, var(--card), var(--card-2));
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+  }
+
+  .ccc-elite-dashboard .sidebar {
+    padding: 14px;
+    position: sticky;
+    top: 94px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: calc(100vh - 124px);
+  }
+
+  .ccc-elite-dashboard .sidebar__title {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #bfd3ff;
+    margin-bottom: 14px;
+    font-weight: 800;
+  }
+
+  .ccc-elite-dashboard .sidebar__nav {
+    display: grid;
+    gap: 10px;
+  }
+
+  .ccc-elite-dashboard .sidebar__nav a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 12px;
+    border-radius: 14px;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.04);
+    color: var(--muted);
+    font-weight: 700;
+  }
+
+  .ccc-elite-dashboard .sidebar__nav a::before {
+    content: "•";
+    color: var(--orange-2);
+    font-size: 1rem;
+    line-height: 1;
+  }
+
+  .ccc-elite-dashboard .sidebar__nav a.is-active {
+    color: var(--text);
+    background: linear-gradient(180deg, rgba(255,122,0,0.14), rgba(76,141,255,0.06));
+    border-color: rgba(255,122,0,0.18);
+  }
+
+  .ccc-elite-dashboard .sidebar__foot {
+    margin-top: 18px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .ccc-elite-dashboard .sidebar__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 999px;
+    background: rgba(255,122,0,0.12);
+    color: #ffd2ac;
+    border: 1px solid rgba(255,122,0,0.18);
+    font-size: 0.76rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .ccc-elite-dashboard .visual-rail {
+    display: grid;
+    gap: 16px;
+    align-content: start;
+  }
+
+  .ccc-elite-dashboard .portrait-card {
+    overflow: hidden;
+    position: relative;
+    min-height: 720px;
+    background: #08101a;
+  }
+
+  .ccc-elite-dashboard .portrait-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+  }
+
+  .ccc-elite-dashboard .portrait-overlay {
+    position: absolute;
+    inset: auto 0 0 0;
+    padding: 18px;
+    background: linear-gradient(180deg, rgba(5,8,14,0) 0%, rgba(5,8,14,0.22) 30%, rgba(5,8,14,0.92) 100%);
+  }
+
+  .ccc-elite-dashboard .portrait-overlay__tag {
+    display: inline-block;
+    margin-bottom: 10px;
+    padding: 7px 11px;
+    border-radius: 999px;
+    font-size: 0.74rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 800;
+    color: #ffd2ac;
+    background: rgba(255,122,0,0.12);
+    border: 1px solid rgba(255,122,0,0.16);
+  }
+
+  .ccc-elite-dashboard .portrait-overlay h2 {
+    margin: 0 0 8px;
+    font-size: 2.7rem;
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+  }
+
+  .ccc-elite-dashboard .portrait-overlay h2 span { color: var(--orange-2); }
+
+  .ccc-elite-dashboard .portrait-overlay p,
+  .ccc-elite-dashboard .metric-score__delta,
+  .ccc-elite-dashboard .field__hint,
+  .ccc-elite-dashboard .panel__sub,
+  .ccc-elite-dashboard .gameplan-item span,
+  .ccc-elite-dashboard .factor-item span,
+  .ccc-elite-dashboard .wins-item span,
+  .ccc-elite-dashboard .coach-card__quote,
+  .ccc-elite-dashboard .coach-chip,
+  .ccc-elite-dashboard .macro-item span,
+  .ccc-elite-dashboard .streak-card p,
+  .ccc-elite-dashboard .mini-status-card p { color: var(--muted); }
+
+  .ccc-elite-dashboard .streak-card {
+    padding: 16px;
+    display: grid;
+    gap: 8px;
+  }
+
+  .ccc-elite-dashboard .streak-card__label {
+    color: #ffd2ac;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.76rem;
+    font-weight: 800;
+  }
+
+  .ccc-elite-dashboard .streak-card__value {
+    font-size: 2.2rem;
+    line-height: 1;
+    font-weight: 900;
+    color: var(--orange-2);
+  }
+
+  .ccc-elite-dashboard .main-grid {
+    display: grid;
+    gap: 16px;
+    min-width: 0;
+  }
+
+  .ccc-elite-dashboard .top-strip {
+    display: grid;
+    grid-template-columns: 1.1fr 0.92fr 0.62fr 0.62fr;
+    gap: 16px;
+  }
+
+  .ccc-elite-dashboard .metric-card,
+  .ccc-elite-dashboard .gameplan-card,
+  .ccc-elite-dashboard .focus-card,
+  .ccc-elite-dashboard .macro-card,
+  .ccc-elite-dashboard .mini-status-card,
+  .ccc-elite-dashboard .factors-card,
+  .ccc-elite-dashboard .trend-card,
+  .ccc-elite-dashboard .wins-card,
+  .ccc-elite-dashboard .panel,
+  .ccc-elite-dashboard .coach-card {
+    padding: 18px;
+    min-width: 0;
+  }
+
+  .ccc-elite-dashboard .card-kicker {
+    color: #f4f6fb;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 0.78rem;
+    font-weight: 800;
+    margin-bottom: 14px;
+  }
+
+  .ccc-elite-dashboard .card-kicker .accent { color: var(--orange-2); float: right; }
+
+  .ccc-elite-dashboard .metric-card__shell {
+    display: grid;
+    grid-template-columns: 1fr 1.15fr;
+    gap: 18px;
+    align-items: stretch;
+  }
+
+  .ccc-elite-dashboard .metric-score { display: grid; align-content: start; gap: 6px; }
+
+  .ccc-elite-dashboard .metric-score__value {
+    font-size: 5.2rem;
+    line-height: 0.9;
+    font-weight: 900;
+    color: var(--green);
+  }
+
+  .ccc-elite-dashboard .metric-score__zone {
+    color: var(--green);
+    font-size: 1.2rem;
+    font-weight: 800;
+    text-transform: uppercase;
+  }
+
+  .ccc-elite-dashboard .spark-panel {
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 16px;
+    padding: 12px;
+    background: rgba(255,255,255,0.02);
+    min-width: 0;
+  }
+
+  .ccc-elite-dashboard .spark-svg { width: 100%; height: 130px; }
+
+  .ccc-elite-dashboard .spark-axis {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 6px;
+    margin-top: 8px;
+    font-size: 0.76rem;
+    color: var(--muted);
+    text-align: center;
+  }
+
+  .ccc-elite-dashboard .meter-row {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 4px;
+    margin-top: 12px;
+  }
+
+  .ccc-elite-dashboard .meter-row span {
+    display: block;
+    height: 12px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #d92d20 0%, #f79009 44%, #12b76a 74%, #9e174d 100%);
+    opacity: 0.9;
+  }
+
+  .ccc-elite-dashboard .gameplan-list,
+  .ccc-elite-dashboard .macro-list,
+  .ccc-elite-dashboard .wins-list,
+  .ccc-elite-dashboard .factor-list { display: grid; gap: 12px; }
+
+  .ccc-elite-dashboard .gameplan-item,
+  .ccc-elite-dashboard .factor-item,
+  .ccc-elite-dashboard .wins-item {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: start;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .ccc-elite-dashboard .gameplan-item:last-child,
+  .ccc-elite-dashboard .factor-item:last-child,
+  .ccc-elite-dashboard .wins-item:last-child { border-bottom: 0; padding-bottom: 0; }
+
+  .ccc-elite-dashboard .gameplan-item__left,
+  .ccc-elite-dashboard .wins-item__left,
+  .ccc-elite-dashboard .factor-item__left,
+  .ccc-elite-dashboard .macro-item__left {
+    display: flex;
+    gap: 10px;
+    align-items: start;
+    min-width: 0;
+  }
+
+  .ccc-elite-dashboard .check-icon,
+  .ccc-elite-dashboard .trophy-icon,
+  .ccc-elite-dashboard .factor-icon {
+    width: 18px;
+    height: 18px;
+    border-radius: 6px;
+    flex: 0 0 18px;
+    margin-top: 2px;
+    background: linear-gradient(180deg, rgba(34,208,122,0.18), rgba(34,208,122,0.06));
+    border: 1px solid rgba(34,208,122,0.3);
+  }
+
+  .ccc-elite-dashboard .gameplan-item strong,
+  .ccc-elite-dashboard .wins-item strong,
+  .ccc-elite-dashboard .factor-item strong { font-weight: 700; }
+
+  .ccc-elite-dashboard .focus-card {
+    display: grid;
+    gap: 14px;
+    align-content: start;
+    text-align: center;
+  }
+
+  .ccc-elite-dashboard .focus-icon {
+    width: 88px;
+    height: 88px;
+    margin: 0 auto;
+    position: relative;
+    border-radius: 50%;
+    border: 4px solid rgba(255,122,0,0.9);
+  }
+
+  .ccc-elite-dashboard .focus-icon::before,
+  .ccc-elite-dashboard .focus-icon::after {
+    content: "";
+    position: absolute;
+    inset: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    border: 3px solid rgba(255,122,0,0.9);
+  }
+
+  .ccc-elite-dashboard .focus-icon::before { width: 38px; height: 38px; }
+  .ccc-elite-dashboard .focus-icon::after { width: 10px; height: 10px; background: var(--orange-2); border: 0; }
+
+  .ccc-elite-dashboard .focus-time {
+    font-size: 3.1rem;
+    line-height: 0.95;
+    font-weight: 900;
+    color: var(--orange-2);
+  }
+
+  .ccc-elite-dashboard .macro-ring {
+    width: 170px;
+    height: 170px;
+    margin: 0 auto 10px;
+    border-radius: 50%;
+    background: conic-gradient(#ea580c 0 28%, #f59e0b 28% 58%, #16a34a 58% 78%, #ea580c 78% 100%);
+    display: grid;
+    place-items: center;
+  }
+
+  .ccc-elite-dashboard .macro-ring__inner {
+    width: 116px;
+    height: 116px;
+    border-radius: 50%;
+    background: #0a0f18;
+    display: grid;
+    place-items: center;
+    text-align: center;
+  }
+
+  .ccc-elite-dashboard .macro-ring__inner strong { font-size: 2.1rem; line-height: 1; }
+  .ccc-elite-dashboard .macro-ring__inner span {
+    font-size: 0.78rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .ccc-elite-dashboard .macro-item {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .ccc-elite-dashboard .macro-dot { width: 16px; height: 16px; border-radius: 4px; }
+  .ccc-elite-dashboard .macro-dot.orange { background: #ea580c; }
+  .ccc-elite-dashboard .macro-dot.yellow { background: #f59e0b; }
+  .ccc-elite-dashboard .macro-dot.green { background: #16a34a; }
+
+  .ccc-elite-dashboard .mid-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.08fr) minmax(0, 1.18fr) minmax(300px, 0.92fr);
+    gap: 16px;
+    align-items: start;
+  }
+
+  .ccc-elite-dashboard .checkin-form { display: grid; gap: 14px; }
+  .ccc-elite-dashboard .field { display: grid; gap: 8px; }
+
+  .ccc-elite-dashboard .field label {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #bfd3ff;
+    font-weight: 800;
+  }
+
+  .ccc-elite-dashboard .field input,
+  .ccc-elite-dashboard .field select {
+    width: 100%;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.03);
+    color: var(--text);
+    padding: 12px 14px;
+    outline: none;
+    min-width: 0;
+  }
+
+  .ccc-elite-dashboard .field input[type="range"] { padding: 0; }
+
+  .ccc-elite-dashboard .toggle-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .ccc-elite-dashboard .toggle {
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.03);
+    padding: 12px 14px;
+    font-weight: 700;
+    color: var(--muted);
+    text-align: center;
+    cursor: pointer;
+  }
+
+  .ccc-elite-dashboard .toggle.is-active {
+    color: var(--text);
+    background: linear-gradient(180deg, rgba(255,122,0,0.12), rgba(76,141,255,0.06));
+    border-color: rgba(255,122,0,0.16);
+  }
+
+  .ccc-elite-dashboard .score-box {
+    padding: 18px;
+    border-radius: 16px;
+    background: rgba(8,15,28,0.8);
+    border: 1px solid rgba(255,255,255,0.05);
+    margin-bottom: 14px;
+  }
+
+  .ccc-elite-dashboard .score-box__value {
+    font-size: 3.5rem;
+    line-height: 1;
+    font-weight: 900;
+    color: var(--green);
+    margin-bottom: 8px;
+  }
+
+  .ccc-elite-dashboard .coach-card { display: grid; gap: 12px; }
+
+  .ccc-elite-dashboard .coach-card__top {
+    display: grid;
+    grid-template-columns: 72px 1fr;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .ccc-elite-dashboard .coach-card__image {
+    width: 72px;
+    height: 72px;
+    border-radius: 14px;
+    object-fit: cover;
+    object-position: center top;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .ccc-elite-dashboard .coach-card__name {
+    font-size: 1rem;
+    font-weight: 800;
+  }
+
+  .ccc-elite-dashboard .coach-card__mode {
+    font-size: 0.78rem;
+    color: #ffd2ac;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 800;
+    margin-top: 4px;
+  }
+
+  .ccc-elite-dashboard .coach-card__quote {
+    padding: 14px;
+    border-radius: 16px;
+    background: linear-gradient(180deg, rgba(255,122,0,0.08), rgba(76,141,255,0.06));
+    border: 1px solid rgba(255,122,0,0.12);
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  .ccc-elite-dashboard .coach-card__actions { display: grid; gap: 10px; }
+
+  .ccc-elite-dashboard .coach-chip {
+    padding: 10px 12px;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.05);
+    font-size: 0.9rem;
+  }
+
+  .ccc-elite-dashboard .upgrade-banner {
+    margin-top: 8px;
+    padding: 16px;
+    border-radius: 18px;
+    border: 1px solid rgba(255,122,0,0.12);
+    background: linear-gradient(135deg, rgba(255,122,0,0.10), rgba(76,141,255,0.08));
+  }
+
+  .ccc-elite-dashboard .upgrade-banner h3 { margin: 0 0 8px; font-size: 1.1rem; }
+  .ccc-elite-dashboard .upgrade-banner p { margin: 0 0 14px; color: var(--muted); }
+
+  .ccc-elite-dashboard .lower-grid {
+    display: grid;
+    grid-template-columns: minmax(330px, 0.9fr) minmax(0, 1.2fr) minmax(300px, 0.82fr);
+    gap: 16px;
+    align-items: start;
+  }
+
+  .ccc-elite-dashboard .trend-card__plot {
+    margin-top: 14px;
+    border-radius: 16px;
+    overflow: hidden;
+    background: rgba(5, 12, 20, 0.65);
+    border: 1px solid rgba(255,255,255,0.04);
+    padding: 12px;
+  }
+
+  .ccc-elite-dashboard .trend-card svg { width: 100%; height: 160px; }
+  .ccc-elite-dashboard .factor-score { font-weight: 800; }
+  .ccc-elite-dashboard .factor-score.good { color: var(--green); }
+  .ccc-elite-dashboard .factor-score.warn { color: var(--yellow); }
+
+  .ccc-elite-dashboard .status-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .ccc-elite-dashboard .mini-status-card__value {
+    font-size: 2rem;
+    font-weight: 900;
+    margin-bottom: 4px;
+  }
+
+  .ccc-elite-dashboard .mini-status-card__bars {
+    height: 54px;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+    align-items: end;
+    margin-top: 14px;
+  }
+
+  .ccc-elite-dashboard .mini-status-card__bars span {
+    display: block;
+    border-radius: 6px 6px 2px 2px;
+    background: linear-gradient(180deg, rgba(35,136,255,0.95), rgba(35,136,255,0.75));
+  }
+
+  .ccc-elite-dashboard .mini-status-card__spark svg {
+    width: 100%;
+    height: 66px;
+    margin-top: 12px;
+  }
+
+  @media (max-width: 1450px) {
+    .ccc-elite-dashboard .hero-grid { grid-template-columns: 150px 280px minmax(0, 1fr); }
+  }
+
+  @media (max-width: 1280px) {
+    .ccc-elite-dashboard .hero-grid,
+    .ccc-elite-dashboard .top-strip,
+    .ccc-elite-dashboard .mid-grid,
+    .ccc-elite-dashboard .lower-grid,
+    .ccc-elite-dashboard .status-grid { grid-template-columns: 1fr; }
+
+    .ccc-elite-dashboard .visual-rail {
+      grid-template-columns: minmax(0, 1fr) 220px;
       display: grid;
-      grid-template-columns: 160px 320px minmax(0, 1fr);
-      gap: 18px;
       align-items: stretch;
     }
 
-    .sidebar,
-    .portrait-card,
-    .streak-card,
-    .metric-card,
-    .gameplan-card,
-    .focus-card,
-    .macro-card,
-    .mini-status-card,
-    .panel,
-    .coach-card,
-    .factors-card,
-    .trend-card,
-    .wins-card {
-      background: linear-gradient(180deg, var(--card), var(--card-2));
-      border: 1px solid var(--line);
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow);
-    }
-
-    .sidebar {
-      padding: 14px;
-      position: sticky;
-      top: 94px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      min-height: calc(100vh - 124px);
-    }
-
-    .sidebar__title {
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: #bfd3ff;
-      margin-bottom: 14px;
-      font-weight: 800;
-    }
-
-    .sidebar__nav {
-      display: grid;
-      gap: 10px;
-    }
-
-    .sidebar__nav a {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 12px 12px;
-      border-radius: 14px;
-      background: rgba(255,255,255,0.02);
-      border: 1px solid rgba(255,255,255,0.04);
-      color: var(--muted);
-      font-weight: 700;
-    }
-
-    .sidebar__nav a::before {
-      content: "•";
-      color: var(--orange-2);
-      font-size: 1rem;
-      line-height: 1;
-    }
-
-    .sidebar__nav a.is-active {
-      color: var(--text);
-      background: linear-gradient(180deg, rgba(255,122,0,0.14), rgba(76,141,255,0.06));
-      border-color: rgba(255,122,0,0.18);
-    }
-
-    .sidebar__foot {
-      margin-top: 18px;
-      padding-top: 18px;
-      border-top: 1px solid rgba(255,255,255,0.06);
-    }
-
-    .sidebar__badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 12px;
-      border-radius: 999px;
-      background: rgba(255,122,0,0.12);
-      color: #ffd2ac;
-      border: 1px solid rgba(255,122,0,0.18);
-      font-size: 0.76rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-    }
-
-    .visual-rail {
-      display: grid;
-      gap: 16px;
-      align-content: start;
-    }
-
-    .portrait-card {
-      overflow: hidden;
-      position: relative;
-      min-height: 720px;
-      background: #08101a;
-    }
-
-    .portrait-card img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center top;
-    }
-
-    .portrait-overlay {
-      position: absolute;
-      inset: auto 0 0 0;
-      padding: 18px;
-      background: linear-gradient(180deg, rgba(5,8,14,0) 0%, rgba(5,8,14,0.22) 30%, rgba(5,8,14,0.92) 100%);
-    }
-
-    .portrait-overlay__tag {
-      display: inline-block;
-      margin-bottom: 10px;
-      padding: 7px 11px;
-      border-radius: 999px;
-      font-size: 0.74rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      font-weight: 800;
-      color: #ffd2ac;
-      background: rgba(255,122,0,0.12);
-      border: 1px solid rgba(255,122,0,0.16);
-    }
-
-    .portrait-overlay h2 {
-      margin: 0 0 8px;
-      font-size: 2.7rem;
-      line-height: 0.95;
-      letter-spacing: -0.04em;
-    }
-
-    .portrait-overlay h2 span { color: var(--orange-2); }
-
-    .portrait-overlay p,
-    .metric-score__delta,
-    .field__hint,
-    .panel__sub,
-    .gameplan-item span,
-    .factor-item span,
-    .wins-item span,
-    .coach-card__quote,
-    .coach-chip,
-    .macro-item span,
-    .streak-card p,
-    .mini-status-card p { color: var(--muted); }
-
-    .streak-card {
-      padding: 16px;
-      display: grid;
-      gap: 8px;
-    }
-
-    .streak-card__label {
-      color: #ffd2ac;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      font-size: 0.76rem;
-      font-weight: 800;
-    }
-
-    .streak-card__value {
-      font-size: 2.2rem;
-      line-height: 1;
-      font-weight: 900;
-      color: var(--orange-2);
-    }
-
-    .main-grid {
-      display: grid;
-      gap: 16px;
-      min-width: 0;
-    }
-
-    .top-strip {
-      display: grid;
-      grid-template-columns: 1.1fr 0.92fr 0.62fr 0.62fr;
-      gap: 16px;
-    }
-
-    .metric-card,
-    .gameplan-card,
-    .focus-card,
-    .macro-card,
-    .mini-status-card,
-    .factors-card,
-    .trend-card,
-    .wins-card,
-    .panel,
-    .coach-card {
-      padding: 18px;
-      min-width: 0;
-    }
-
-    .card-kicker {
-      color: #f4f6fb;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      font-size: 0.78rem;
-      font-weight: 800;
-      margin-bottom: 14px;
-    }
-
-    .card-kicker .accent { color: var(--orange-2); float: right; }
-
-    .metric-card__shell {
-      display: grid;
-      grid-template-columns: 1fr 1.15fr;
-      gap: 18px;
-      align-items: stretch;
-    }
-
-    .metric-score { display: grid; align-content: start; gap: 6px; }
-
-    .metric-score__value {
-      font-size: 5.2rem;
-      line-height: 0.9;
-      font-weight: 900;
-      color: var(--green);
-    }
-
-    .metric-score__zone {
-      color: var(--green);
-      font-size: 1.2rem;
-      font-weight: 800;
-      text-transform: uppercase;
-    }
-
-    .spark-panel {
-      border: 1px solid rgba(255,255,255,0.05);
-      border-radius: 16px;
-      padding: 12px;
-      background: rgba(255,255,255,0.02);
-      min-width: 0;
-    }
-
-    .spark-svg { width: 100%; height: 130px; }
-
-    .spark-axis {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 6px;
-      margin-top: 8px;
-      font-size: 0.76rem;
-      color: var(--muted);
-      text-align: center;
-    }
-
-    .meter-row {
-      display: grid;
-      grid-template-columns: repeat(8, 1fr);
-      gap: 4px;
-      margin-top: 12px;
-    }
-
-    .meter-row span {
-      display: block;
-      height: 12px;
-      border-radius: 999px;
-      background: linear-gradient(90deg, #d92d20 0%, #f79009 44%, #12b76a 74%, #9e174d 100%);
-      opacity: 0.9;
-    }
-
-    .gameplan-list,
-    .macro-list,
-    .wins-list,
-    .factor-list { display: grid; gap: 12px; }
-
-    .gameplan-item,
-    .factor-item,
-    .wins-item {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      align-items: start;
-      padding: 10px 0;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
-    }
-
-    .gameplan-item:last-child,
-    .factor-item:last-child,
-    .wins-item:last-child { border-bottom: 0; padding-bottom: 0; }
-
-    .gameplan-item__left,
-    .wins-item__left,
-    .factor-item__left,
-    .macro-item__left {
-      display: flex;
-      gap: 10px;
-      align-items: start;
-      min-width: 0;
-    }
-
-    .check-icon,
-    .trophy-icon,
-    .factor-icon {
-      width: 18px;
-      height: 18px;
-      border-radius: 6px;
-      flex: 0 0 18px;
-      margin-top: 2px;
-      background: linear-gradient(180deg, rgba(34,208,122,0.18), rgba(34,208,122,0.06));
-      border: 1px solid rgba(34,208,122,0.3);
-    }
-
-    .gameplan-item strong,
-    .wins-item strong,
-    .factor-item strong { font-weight: 700; }
-
-    .focus-card {
-      display: grid;
-      gap: 14px;
-      align-content: start;
-      text-align: center;
-    }
-
-    .focus-icon {
-      width: 88px;
-      height: 88px;
-      margin: 0 auto;
-      position: relative;
-      border-radius: 50%;
-      border: 4px solid rgba(255,122,0,0.9);
-    }
-
-    .focus-icon::before,
-    .focus-icon::after {
-      content: "";
-      position: absolute;
-      inset: 50%;
-      transform: translate(-50%, -50%);
-      border-radius: 50%;
-      border: 3px solid rgba(255,122,0,0.9);
-    }
-
-    .focus-icon::before { width: 38px; height: 38px; }
-    .focus-icon::after { width: 10px; height: 10px; background: var(--orange-2); border: 0; }
-
-    .focus-time {
-      font-size: 3.1rem;
-      line-height: 0.95;
-      font-weight: 900;
-      color: var(--orange-2);
-    }
-
-    .macro-ring {
-      width: 170px;
-      height: 170px;
-      margin: 0 auto 10px;
-      border-radius: 50%;
-      background: conic-gradient(#ea580c 0 28%, #f59e0b 28% 58%, #16a34a 58% 78%, #ea580c 78% 100%);
-      display: grid;
-      place-items: center;
-    }
-
-    .macro-ring__inner {
-      width: 116px;
-      height: 116px;
-      border-radius: 50%;
-      background: #0a0f18;
-      display: grid;
-      place-items: center;
-      text-align: center;
-    }
-
-    .macro-ring__inner strong { font-size: 2.1rem; line-height: 1; }
-    .macro-ring__inner span {
-      font-size: 0.78rem;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-
-    .macro-item {
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      align-items: center;
-    }
-
-    .macro-dot { width: 16px; height: 16px; border-radius: 4px; }
-    .macro-dot.orange { background: #ea580c; }
-    .macro-dot.yellow { background: #f59e0b; }
-    .macro-dot.green { background: #16a34a; }
-
-    .mid-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 1.08fr) minmax(0, 1.18fr) minmax(300px, 0.92fr);
-      gap: 16px;
-      align-items: start;
-    }
-
-    .checkin-form { display: grid; gap: 14px; }
-    .field { display: grid; gap: 8px; }
-
-    .field label {
-      font-size: 0.78rem;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: #bfd3ff;
-      font-weight: 800;
-    }
-
-    .field input,
-    .field select {
-      width: 100%;
-      border-radius: 12px;
-      border: 1px solid rgba(255,255,255,0.08);
-      background: rgba(255,255,255,0.03);
-      color: var(--text);
-      padding: 12px 14px;
-      outline: none;
-      min-width: 0;
-    }
-
-    .field input[type="range"] { padding: 0; }
-
-    .toggle-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-
-    .toggle {
-      border-radius: 12px;
-      border: 1px solid rgba(255,255,255,0.08);
-      background: rgba(255,255,255,0.03);
-      padding: 12px 14px;
-      font-weight: 700;
-      color: var(--muted);
-      text-align: center;
-      cursor: pointer;
-    }
-
-    .toggle.is-active {
-      color: var(--text);
-      background: linear-gradient(180deg, rgba(255,122,0,0.12), rgba(76,141,255,0.06));
-      border-color: rgba(255,122,0,0.16);
-    }
-
-    .score-box {
-      padding: 18px;
-      border-radius: 16px;
-      background: rgba(8,15,28,0.8);
-      border: 1px solid rgba(255,255,255,0.05);
-      margin-bottom: 14px;
-    }
-
-    .score-box__value {
-      font-size: 3.5rem;
-      line-height: 1;
-      font-weight: 900;
-      color: var(--green);
-      margin-bottom: 8px;
-    }
-
-    .coach-card { display: grid; gap: 12px; }
-
-    .coach-card__top {
-      display: grid;
-      grid-template-columns: 72px 1fr;
-      gap: 12px;
-      align-items: center;
-    }
-
-    .coach-card__image {
-      width: 72px;
-      height: 72px;
-      border-radius: 14px;
-      object-fit: cover;
-      object-position: center top;
-      border: 1px solid rgba(255,255,255,0.08);
-    }
-
-    .coach-card__name {
-      font-size: 1rem;
-      font-weight: 800;
-    }
-
-    .coach-card__mode {
-      font-size: 0.78rem;
-      color: #ffd2ac;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      font-weight: 800;
-      margin-top: 4px;
-    }
-
-    .coach-card__quote {
-      padding: 14px;
-      border-radius: 16px;
-      background: linear-gradient(180deg, rgba(255,122,0,0.08), rgba(76,141,255,0.06));
-      border: 1px solid rgba(255,122,0,0.12);
-      font-size: 1rem;
-      line-height: 1.6;
-    }
-
-    .coach-card__actions { display: grid; gap: 10px; }
-
-    .coach-chip {
-      padding: 10px 12px;
-      border-radius: 12px;
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.05);
-      font-size: 0.9rem;
-    }
-
-    .upgrade-banner {
-      margin-top: 8px;
-      padding: 16px;
-      border-radius: 18px;
-      border: 1px solid rgba(255,122,0,0.12);
-      background: linear-gradient(135deg, rgba(255,122,0,0.10), rgba(76,141,255,0.08));
-    }
-
-    .upgrade-banner h3 { margin: 0 0 8px; font-size: 1.1rem; }
-    .upgrade-banner p { margin: 0 0 14px; color: var(--muted); }
-
-    .lower-grid {
-      display: grid;
-      grid-template-columns: minmax(330px, 0.9fr) minmax(0, 1.2fr) minmax(300px, 0.82fr);
-      gap: 16px;
-      align-items: start;
-    }
-
-    .trend-card__plot {
-      margin-top: 14px;
-      border-radius: 16px;
-      overflow: hidden;
-      background: rgba(5, 12, 20, 0.65);
-      border: 1px solid rgba(255,255,255,0.04);
-      padding: 12px;
-    }
-
-    .trend-card svg { width: 100%; height: 160px; }
-    .factor-score { font-weight: 800; }
-    .factor-score.good { color: var(--green); }
-    .factor-score.warn { color: var(--yellow); }
-
-    .status-grid {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 16px;
-    }
-
-    .mini-status-card__value {
-      font-size: 2rem;
-      font-weight: 900;
-      margin-bottom: 4px;
-    }
-
-    .mini-status-card__bars {
-      height: 54px;
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 8px;
-      align-items: end;
-      margin-top: 14px;
-    }
-
-    .mini-status-card__bars span {
-      display: block;
-      border-radius: 6px 6px 2px 2px;
-      background: linear-gradient(180deg, rgba(35,136,255,0.95), rgba(35,136,255,0.75));
-    }
-
-    .mini-status-card__spark svg {
-      width: 100%;
-      height: 66px;
-      margin-top: 12px;
-    }
-
-    @media (max-width: 1450px) {
-      .hero-grid { grid-template-columns: 150px 280px minmax(0, 1fr); }
-    }
-
-    @media (max-width: 1280px) {
-      .hero-grid,
-      .top-strip,
-      .mid-grid,
-      .lower-grid,
-      .status-grid { grid-template-columns: 1fr; }
-
-      .visual-rail {
-        grid-template-columns: minmax(0, 1fr) 220px;
-        display: grid;
-        align-items: stretch;
-      }
-
-      .portrait-card { min-height: 420px; }
-      .sidebar { position: static; min-height: auto; }
-    }
-
-    @media (max-width: 760px) {
-      .app-topbar__inner {
-        min-height: 70px;
-        align-items: flex-start;
-        padding: 12px 0;
-      }
-      .app-userbar { width: 100%; justify-content: flex-start; }
-      .page { width: min(calc(100% - 18px), var(--max)); }
-      .visual-rail,
-      .metric-card__shell,
-      .toggle-row { grid-template-columns: 1fr; }
-      .portrait-card { min-height: 380px; }
-      .portrait-overlay h2 { font-size: 2.1rem; }
-      .macro-ring { width: 150px; height: 150px; }
-      .macro-ring__inner { width: 102px; height: 102px; }
-    }
-  </style>
-</head>
-<body>
+    .ccc-elite-dashboard .portrait-card { min-height: 420px; }
+    .ccc-elite-dashboard .sidebar { position: static; min-height: auto; }
+  }
+
+  @media (max-width: 760px) {
+    .ccc-elite-dashboard .app-topbar__inner {
+      min-height: 70px;
+      align-items: flex-start;
+      padding: 12px 0;
+    }
+    .ccc-elite-dashboard .app-userbar { width: 100%; justify-content: flex-start; }
+    .ccc-elite-dashboard .page { width: min(calc(100% - 18px), var(--max)); }
+    .ccc-elite-dashboard .visual-rail,
+    .ccc-elite-dashboard .metric-card__shell,
+    .ccc-elite-dashboard .toggle-row { grid-template-columns: 1fr; }
+    .ccc-elite-dashboard .portrait-card { min-height: 380px; }
+    .ccc-elite-dashboard .portrait-overlay h2 { font-size: 2.1rem; }
+    .ccc-elite-dashboard .macro-ring { width: 150px; height: 150px; }
+    .ccc-elite-dashboard .macro-ring__inner { width: 102px; height: 102px; }
+  }
+</style>
+
+<div class="ccc-elite-dashboard">
   <div class="app-shell">
     <header class="app-topbar">
       <div class="app-topbar__inner">
-        <a class="app-brand" href="/dashboard/">
-          <img class="app-brand__mark" src="/assets/img/logo/ccc-mark.png" alt="CCC logo" />
+        <a class="app-brand" href="/app/dashboard/">
+          <img class="app-brand__mark" src="/assets/img/ccc_logo_primary_transparent.png" alt="CCC logo" />
           <div>
             <div class="app-brand__name">Carnivore Command Center</div>
             <div class="app-brand__tag">Metabolic Dashboard powered by Savage Metabo</div>
@@ -990,6 +980,7 @@
               <p>Stay sharp. Stay honest. 2:00 PM</p>
             </article>
           </div>
+
           <div class="mid-grid">
             <article class="panel" id="checkin">
               <div class="panel__title">Daily Check-In</div>
@@ -1116,170 +1107,168 @@
       </section>
     </main>
   </div>
+</div>
 
-  <script>
-    (() => {
-      const byId = (id) => document.getElementById(id);
-      const setText = (id, value) => {
-        const el = byId(id);
-        if (el) el.textContent = value;
-      };
+<script>
+  (() => {
+    const byId = (id) => document.getElementById(id);
+    const setText = (id, value) => {
+      const el = byId(id);
+      if (el) el.textContent = value;
+    };
 
-      const els = {
-        sleep: byId('sleep'),
-        mood: byId('mood'),
-        stress: byId('stress'),
-        digestion: byId('digestion'),
-        soreness: byId('soreness'),
-        sleepValue: byId('sleepValue'),
-        moodValue: byId('moodValue'),
-        stressValue: byId('stressValue'),
-        workoutButtons: Array.from(document.querySelectorAll('[data-workout]')),
-        submit: byId('submitCheckin')
-      };
+    const els = {
+      sleep: byId('sleep'),
+      mood: byId('mood'),
+      stress: byId('stress'),
+      digestion: byId('digestion'),
+      soreness: byId('soreness'),
+      sleepValue: byId('sleepValue'),
+      moodValue: byId('moodValue'),
+      stressValue: byId('stressValue'),
+      workoutButtons: Array.from(document.querySelectorAll('[data-workout]')),
+      submit: byId('submitCheckin')
+    };
 
-      let workoutYesterday = 'yes';
-      let entries = [];
-      try {
-        entries = JSON.parse(localStorage.getItem('cccEntries') || '[]');
-      } catch {
-        entries = [];
-      }
+    let workoutYesterday = 'yes';
+    let entries = [];
+    try {
+      entries = JSON.parse(localStorage.getItem('cccEntries') || '[]');
+    } catch {
+      entries = [];
+    }
 
-      const clamp = (n, min, max) => Math.max(min, Math.min(max, n));
+    const clamp = (n, min, max) => Math.max(min, Math.min(max, n));
 
-      function computeScore() {
-        if (!els.sleep || !els.mood || !els.stress || !els.digestion || !els.soreness) return 72;
-        const sleep = parseFloat(els.sleep.value);
-        const mood = parseFloat(els.mood.value);
-        const stress = parseFloat(els.stress.value);
-        const digestionMap = { Bad: -14, Okay: -6, Good: 4, Great: 8 };
-        const sorenessMap = { None: 6, Mild: 2, Medium: -5, High: -12 };
+    function computeScore() {
+      if (!els.sleep || !els.mood || !els.stress || !els.digestion || !els.soreness) return 72;
+      const sleep = parseFloat(els.sleep.value);
+      const mood = parseFloat(els.mood.value);
+      const stress = parseFloat(els.stress.value);
+      const digestionMap = { Bad: -14, Okay: -6, Good: 4, Great: 8 };
+      const sorenessMap = { None: 6, Mild: 2, Medium: -5, High: -12 };
 
-        let score = 50;
-        score += (sleep - 7) * 8;
-        score += (mood - 5) * 4;
-        score -= (stress - 3) * 5;
-        score += digestionMap[els.digestion.value] || 0;
-        score += sorenessMap[els.soreness.value] || 0;
-        score += workoutYesterday === 'yes' ? 4 : -2;
+      let score = 50;
+      score += (sleep - 7) * 8;
+      score += (mood - 5) * 4;
+      score -= (stress - 3) * 5;
+      score += digestionMap[els.digestion.value] || 0;
+      score += sorenessMap[els.soreness.value] || 0;
+      score += workoutYesterday === 'yes' ? 4 : -2;
 
-        return Math.round(clamp(score, 35, 98));
-      }
+      return Math.round(clamp(score, 35, 98));
+    }
 
-      function buildState(score) {
-        if (score >= 80) {
-          return {
-            mode: 'Execute',
-            recommendation: 'Strong readiness. Push today, but do it with structure. Lift upper body, protect protein, and get one clean deep work block done before noon.',
-            missions: ['Lift: Upper Body', 'Walk & Sunlight', 'Protein on Target', '8 Hours Sleep'],
-            wins: ['Lift upper body', '90 min deep work', 'Hydrate before coffee 2'],
-            quote: 'You are hot right now. Stop negotiating. Lift. Focus. Protein. Momentum is hot. Do not waste it.'
-          };
-        }
-        if (score >= 65) {
-          return {
-            mode: 'Build',
-            recommendation: 'Good day to execute, but stay measured. Moderate training, lock in protein, and protect the evening so momentum keeps building.',
-            missions: ['Moderate Lift', 'Deep Work 60 Min', 'Hydrate Early', 'Sleep on Time'],
-            wins: ['Moderate training', 'One clean focus block', 'Protect recovery tonight'],
-            quote: 'Solid enough to move. Do not waste energy on chaos. Build a clean day and keep momentum alive.'
-          };
-        }
-        if (score >= 50) {
-          return {
-            mode: 'Recover',
-            recommendation: 'Recovery should lead today. Walk, hydrate, reduce intensity, and make tonight’s sleep the real win.',
-            missions: ['20 Min Walk', 'Hydrate + Electrolytes', 'Light Mobility', 'Sleep Priority'],
-            wins: ['Walk complete', 'Hydration improved', 'Protect sleep tonight'],
-            quote: 'Not every win is a hard push. Recover on purpose so tomorrow does not have to pay for today.'
-          };
-        }
+    function buildState(score) {
+      if (score >= 80) {
         return {
-          mode: 'Reset',
-          recommendation: 'Bad inputs detected. Reset today. No ego training, no chaos. Hydrate, walk, simplify food, and protect sleep tonight.',
-          missions: ['Hydrate Aggressively', 'Walk Only', 'Simple Food', 'Early Bedtime'],
-          wins: ['Electrolytes in', 'Walk complete', 'Early bedtime locked'],
-          quote: 'You are not behind. You are unstable. Reset the system, stop forcing it, and win the basics.'
+          mode: 'Execute',
+          recommendation: 'Strong readiness. Push today, but do it with structure. Lift upper body, protect protein, and get one clean deep work block done before noon.',
+          missions: ['Lift: Upper Body', 'Walk & Sunlight', 'Protein on Target', '8 Hours Sleep'],
+          wins: ['Lift upper body', '90 min deep work', 'Hydrate before coffee 2'],
+          quote: 'You are hot right now. Stop negotiating. Lift. Focus. Protein. Momentum is hot. Do not waste it.'
         };
       }
-
-      function render(save = false) {
-        if (els.sleepValue && els.sleep) els.sleepValue.textContent = Number(els.sleep.value).toFixed(1);
-        if (els.moodValue && els.mood) els.moodValue.textContent = els.mood.value;
-        if (els.stressValue && els.stress) els.stressValue.textContent = els.stress.value;
-
-        const score = computeScore();
-        const state = buildState(score);
-
-        setText('readinessScoreTop', score);
-        setText('readinessScoreMain', score);
-        setText('modeMain', `${state.mode} Mode`);
-        setText('recommendationText', state.recommendation);
-        setText('mission1', state.missions[0]);
-        setText('mission2', state.missions[1]);
-        setText('mission3', state.missions[2]);
-        setText('mission4', state.missions[3]);
-        setText('win1', state.wins[0]);
-        setText('win2', state.wins[1]);
-        setText('win3', state.wins[2]);
-        setText('coachQuote', state.quote);
-
-        if (save && els.submit) {
-          const entry = {
-            ts: new Date().toISOString(),
-            sleep: Number(els.sleep?.value || 7),
-            mood: Number(els.mood?.value || 8),
-            stress: Number(els.stress?.value || 3),
-            digestion: els.digestion?.value || 'Good',
-            soreness: els.soreness?.value || 'Mild',
-            workoutYesterday,
-            score,
-            mode: state.mode
-          };
-          entries.push(entry);
-          entries = entries.slice(-30);
-          try { localStorage.setItem('cccEntries', JSON.stringify(entries)); } catch {}
-          els.submit.textContent = 'Check-In Saved';
-          setTimeout(() => {
-            if (els.submit) els.submit.textContent = 'Submit Check-In';
-          }, 1400);
-        }
+      if (score >= 65) {
+        return {
+          mode: 'Build',
+          recommendation: 'Good day to execute, but stay measured. Moderate training, lock in protein, and protect the evening so momentum keeps building.',
+          missions: ['Moderate Lift', 'Deep Work 60 Min', 'Hydrate Early', 'Sleep on Time'],
+          wins: ['Moderate training', 'One clean focus block', 'Protect recovery tonight'],
+          quote: 'Solid enough to move. Do not waste energy on chaos. Build a clean day and keep momentum alive.'
+        };
       }
+      if (score >= 50) {
+        return {
+          mode: 'Recover',
+          recommendation: 'Recovery should lead today. Walk, hydrate, reduce intensity, and make tonight’s sleep the real win.',
+          missions: ['20 Min Walk', 'Hydrate + Electrolytes', 'Light Mobility', 'Sleep Priority'],
+          wins: ['Walk complete', 'Hydration improved', 'Protect sleep tonight'],
+          quote: 'Not every win is a hard push. Recover on purpose so tomorrow does not have to pay for today.'
+        };
+      }
+      return {
+        mode: 'Reset',
+        recommendation: 'Bad inputs detected. Reset today. No ego training, no chaos. Hydrate, walk, simplify food, and protect sleep tonight.',
+        missions: ['Hydrate Aggressively', 'Walk Only', 'Simple Food', 'Early Bedtime'],
+        wins: ['Electrolytes in', 'Walk complete', 'Early bedtime locked'],
+        quote: 'You are not behind. You are unstable. Reset the system, stop forcing it, and win the basics.'
+      };
+    }
 
-      els.workoutButtons.forEach((btn) => {
-        btn.addEventListener('click', () => {
-          workoutYesterday = btn.dataset.workout;
-          els.workoutButtons.forEach((b) => b.classList.remove('is-active'));
-          btn.classList.add('is-active');
-          render(false);
-        });
+    function render(save = false) {
+      if (els.sleepValue && els.sleep) els.sleepValue.textContent = Number(els.sleep.value).toFixed(1);
+      if (els.moodValue && els.mood) els.moodValue.textContent = els.mood.value;
+      if (els.stressValue && els.stress) els.stressValue.textContent = els.stress.value;
+
+      const score = computeScore();
+      const state = buildState(score);
+
+      setText('readinessScoreTop', score);
+      setText('readinessScoreMain', score);
+      setText('modeMain', `${state.mode} Mode`);
+      setText('recommendationText', state.recommendation);
+      setText('mission1', state.missions[0]);
+      setText('mission2', state.missions[1]);
+      setText('mission3', state.missions[2]);
+      setText('mission4', state.missions[3]);
+      setText('win1', state.wins[0]);
+      setText('win2', state.wins[1]);
+      setText('win3', state.wins[2]);
+      setText('coachQuote', state.quote);
+
+      if (save && els.submit) {
+        const entry = {
+          ts: new Date().toISOString(),
+          sleep: Number(els.sleep?.value || 7),
+          mood: Number(els.mood?.value || 8),
+          stress: Number(els.stress?.value || 3),
+          digestion: els.digestion?.value || 'Good',
+          soreness: els.soreness?.value || 'Mild',
+          workoutYesterday,
+          score,
+          mode: state.mode
+        };
+        entries.push(entry);
+        entries = entries.slice(-30);
+        try { localStorage.setItem('cccEntries', JSON.stringify(entries)); } catch {}
+        els.submit.textContent = 'Check-In Saved';
+        setTimeout(() => {
+          if (els.submit) els.submit.textContent = 'Submit Check-In';
+        }, 1400);
+      }
+    }
+
+    els.workoutButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        workoutYesterday = btn.dataset.workout;
+        els.workoutButtons.forEach((b) => b.classList.remove('is-active'));
+        btn.classList.add('is-active');
+        render(false);
       });
+    });
 
-      [els.sleep, els.mood, els.stress, els.digestion, els.soreness].forEach((el) => {
-        if (!el) return;
-        el.addEventListener('input', () => render(false));
-        el.addEventListener('change', () => render(false));
-      });
+    [els.sleep, els.mood, els.stress, els.digestion, els.soreness].forEach((el) => {
+      if (!el) return;
+      el.addEventListener('input', () => render(false));
+      el.addEventListener('change', () => render(false));
+    });
 
-      if (els.submit) {
-        els.submit.addEventListener('click', () => render(true));
-      }
+    if (els.submit) {
+      els.submit.addEventListener('click', () => render(true));
+    }
 
-      if (entries.length) {
-        const last = entries[entries.length - 1];
-        if (els.sleep) els.sleep.value = last.sleep;
-        if (els.mood) els.mood.value = last.mood;
-        if (els.stress) els.stress.value = last.stress;
-        if (els.digestion) els.digestion.value = last.digestion;
-        if (els.soreness) els.soreness.value = last.soreness;
-        workoutYesterday = last.workoutYesterday || 'yes';
-        els.workoutButtons.forEach((b) => b.classList.toggle('is-active', b.dataset.workout === workoutYesterday));
-      }
+    if (entries.length) {
+      const last = entries[entries.length - 1];
+      if (els.sleep) els.sleep.value = last.sleep;
+      if (els.mood) els.mood.value = last.mood;
+      if (els.stress) els.stress.value = last.stress;
+      if (els.digestion) els.digestion.value = last.digestion;
+      if (els.soreness) els.soreness.value = last.soreness;
+      workoutYesterday = last.workoutYesterday || 'yes';
+      els.workoutButtons.forEach((b) => b.classList.toggle('is-active', b.dataset.workout === workoutYesterday));
+    }
 
-      render(false);
-    })();
-  </script>
-</body>
-</html>
-          
+    render(false);
+  })();
+</script>
