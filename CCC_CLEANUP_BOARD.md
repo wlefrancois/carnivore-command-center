@@ -13,7 +13,7 @@
 | Phase 1 | ✅ Done | Safe junk cleanup complete |
 | Phase 2 | ✅ Done | Mascot duplicates + asset cleanup complete |
 | Phase 3 | ✅ Done | Route cleanup complete |
-| Phase 4 | ⏳ In Progress | Legacy shell retirement phase |
+| Phase 4 | ✅ Done | Legacy shell retirement phase |
 | Phase 5 | ⬜ Pending | App/public experience lock |
 
 ---
@@ -55,20 +55,20 @@ Old root pages still exist and likely keep legacy shell alive.
 
 ### Retirement Targets
 
-- [ ] `auth/login/index.html`
-- [ ] `auth/reset/index.html`
-- [ ] `auth/signup/index.html`
-- [ ] `contact/index.html`
-- [ ] `disclaimer/index.html`
-- [ ] `investor/index.html`
+- [x] `auth/login/index.html`
+- [x] `auth/reset/index.html`
+- [x] `auth/signup/index.html`
+- [x] `contact/index.html`
+- [x] `disclaimer/index.html`
+- [x] `investor/index.html`
 
 ### After Retirement
 
-- [ ] Run build
-- [ ] Search for old shell references
-- [ ] Remove legacy assets if unused:
-  - [ ] `assets/css/site.css`
-  - [ ] `assets/js/site.js`
+- [x] Run build
+- [x] Search for old shell references
+- [x] Remove legacy assets if unused:
+  - [x] `assets/css/site.css`
+  - [x] `assets/js/site.js`
 
 ---
 

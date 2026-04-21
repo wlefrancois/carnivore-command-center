@@ -116,24 +116,24 @@
 - [x] Build modern reset page v2
 
 ## Phase 4 next actions
-- [ ] Archive or retire old root legacy pages:
-  - [ ] `auth/login/index.html`
-  - [ ] `auth/reset/index.html`
-  - [ ] `auth/signup/index.html`
-  - [ ] `contact/index.html`
-  - [ ] `disclaimer/index.html`
-  - [ ] `investor/index.html`
-- [ ] Rebuild `dist/`
-- [ ] Search again for `/assets/css/site.css`
-- [ ] Search again for `/assets/js/site.js`
-- [ ] Remove `assets/css/site.css` after old root pages are retired
-- [ ] Remove `assets/js/site.js` after old root pages are retired
+- [x] Archive or retire old root legacy pages:
+  - [x] `auth/login/index.html`
+  - [x] `auth/reset/index.html`
+  - [x] `auth/signup/index.html`
+  - [x] `contact/index.html`
+  - [x] `disclaimer/index.html`
+  - [x] `investor/index.html`
+- [x] Rebuild `dist/`
+- [x] Search again for `/assets/css/site.css`
+- [x] Search again for `/assets/js/site.js`
+- [x] Remove `assets/css/site.css` after old root pages are retired
+- [x] Remove `assets/js/site.js` after old root pages are retired
 
 ## Commit checkpoint
-- [ ] Run `git status`
-- [ ] Run `git add .`
-- [ ] Run `git commit -m "Cleanup pass 4 retire legacy root pages and shell assets"`
-- [ ] Run `git push`
+- [x] Run `git status`
+- [x] Run `git add .`
+- [x] Run `git commit -m "Cleanup pass 4 retire legacy root pages and shell assets"`
+- [x] Run `git push`
 
 ---
 
