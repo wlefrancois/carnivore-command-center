@@ -544,3 +544,45 @@ input:focus, select:focus, textarea:focus{
   font-size:12px;
   margin-top:12px;
 }
+/* ========================================
+   CCC APP UX CLEANUP V1
+======================================== */
+
+.app-sidebar__foot + .app-sidebar__foot {
+  margin-top: 18px;
+}
+
+.app-nav button,
+.app-topbar__actions button {
+  font: inherit;
+}
+
+.field select,
+.field input,
+#digestion,
+#soreness {
+  min-height: 46px;
+  appearance: auto;
+}
+
+.field__hint {
+  font-size: 12px;
+  color: var(--app-muted);
+}
+
+.app-btn[disabled],
+button[disabled] {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+@media (max-width: 760px) {
+  .app-topbar__actions {
+    gap: 8px;
+  }
+
+  .app-topbar__actions .app-chip,
+  .app-topbar__actions .app-btn {
+    width: auto;
+  }
+}

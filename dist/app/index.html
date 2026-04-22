@@ -27,11 +27,20 @@
       </a>
 
       <div class="app-topbar__actions">
+        <a class="app-chip" href="/">Home</a>
         <a class="app-chip" href="/app/dashboard/">Dashboard</a>
         <a class="app-chip" href="/app/log/">Log</a>
-        <a class="app-chip" href="/product/">Product</a>
-        <a class="app-btn" href="/auth/login/">Account</a>
-        <a class="app-btn app-btn--primary" href="/app/log/">+ Log Today</a>
+
+        <button class="app-btn" type="button" onclick="alert('Search is coming soon.')">
+          Search
+        </button>
+
+        <button class="app-btn" type="button" onclick="alert('No alerts yet.')">
+          Alerts
+        </button>
+
+        <a class="app-btn" href="/app/">Account</a>
+        <a class="app-btn app-btn--primary" href="/app/log/">+ Log Signals</a>
       </div>
     </div>
   </header>
@@ -48,7 +57,7 @@
 
         <a href="/app/log/">
           <span class="app-nav__dot"></span>
-          <span>Log Today</span>
+          <span>Log Signals</span>
         </a>
 
         <a href="/app/onboarding/">
@@ -63,8 +72,35 @@
       </nav>
 
       <div class="app-sidebar__foot">
-        <div class="app-sidebar__label">Status</div>
-        <div class="app-chip">Build mode active</div>
+        <div class="app-sidebar__label">Site</div>
+
+        <nav class="app-nav">
+          <a href="/">
+            <span class="app-nav__dot"></span>
+            <span>Home</span>
+          </a>
+
+          <a href="/product/">
+            <span class="app-nav__dot"></span>
+            <span>Product</span>
+          </a>
+
+          <a href="/beta/">
+            <span class="app-nav__dot"></span>
+            <span>Beta</span>
+          </a>
+        </nav>
+      </div>
+
+      <div class="app-sidebar__foot">
+        <div class="app-sidebar__label">Account</div>
+
+        <nav class="app-nav">
+          <a href="/app/" onclick="localStorage.clear(); sessionStorage.clear();">
+            <span class="app-nav__dot"></span>
+            <span>Logout</span>
+          </a>
+        </nav>
       </div>
     </aside>
 
@@ -288,7 +324,7 @@
           flex-wrap:wrap;
           gap:12px 18px;
         ">
-          <a href="/" class="micro muted" style="text-decoration:none;">Back to site</a>
+          <a href="/" class="micro muted" style="text-decoration:none;">Back to Home</a>
           <a href="/product/" class="micro muted" style="text-decoration:none;">Product</a>
           <a href="/beta/" class="micro muted" style="text-decoration:none;">Beta</a>
           <a href="/disclaimer/" class="micro muted" style="text-decoration:none;">Disclaimer</a>
