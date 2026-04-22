@@ -151,6 +151,9 @@
     border-radius: 14px;
     padding: 10px 14px;
     cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .ccc-elite-dashboard .app-user {
@@ -827,8 +830,9 @@
         </a>
 
         <div class="app-userbar">
-          <button class="app-icon-btn" type="button">Search</button>
-          <button class="app-icon-btn" type="button">Alerts</button>
+          <a class="app-icon-btn" href="/">Home</a>
+          <button class="app-icon-btn" type="button" onclick="alert('Search is coming soon.')">Search</button>
+          <button class="app-icon-btn" type="button" onclick="alert('No alerts yet.')">Alerts</button>
           <div class="app-user">
             <img class="app-user__avatar" src="/assets/img/mascot/metabo-home-hero.webp" alt="Wayne" />
             <div>
@@ -847,7 +851,8 @@
           <div>
             <div class="sidebar__title">Workspace</div>
             <nav class="sidebar__nav">
-              <a class="is-active" href="#">Dashboard</a>
+              <a class="is-active" href="/app/dashboard/">Dashboard</a>
+              <a href="/">Home</a>
               <a href="#readiness">Readiness</a>
               <a href="#checkin">Daily Plan</a>
               <a href="#trends">Log &amp; Analyze</a>
@@ -1232,10 +1237,7 @@
         entries.push(entry);
         entries = entries.slice(-30);
         try { localStorage.setItem('cccEntries', JSON.stringify(entries)); } catch {}
-        els.submit.textContent = 'Check-In Saved';
-        setTimeout(() => {
-          if (els.submit) els.submit.textContent = 'Submit Check-In';
-        }, 1400);
+        els.submit.textContent = 'Submit Check-In';
       }
     }
 
