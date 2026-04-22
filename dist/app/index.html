@@ -3,65 +3,15 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-
   <title>Carnivore Command Center</title>
-
   <meta name="description" content="Elite performance + metabolic intelligence. Track what matters, see patterns, and execute with confidence." />
   <meta name="theme-color" content="#0b1020" />
-
-  <meta property="og:title" content="Carnivore Command Center" />
-  <meta property="og:description" content="Elite performance + metabolic intelligence. Track what matters, see patterns, and execute with confidence." />
-  <meta property="og:type" content="website" />
-  <link rel="icon" href="/favicon.ico">
   <link rel="stylesheet" href="/css/styles.css" />
   <link rel="stylesheet" href="/css/app.css" />
 </head>
 
-<body data-page="app/index.html">
-  <header class="site-header">
-  <div class="container site-header__inner">
-    <a class="site-brand" href="/">
-      <img
-        class="site-brand__logo"
-        src="/assets/img/ccc_logo_primary_transparent.png"
-        alt="Carnivore Command Center logo" />
-      <div class="site-brand__text">
-        <div class="site-brand__name">Carnivore Command Center</div>
-        <div class="site-brand__tag">Stop Guessing. Start Understanding.</div>
-      </div>
-    </a>
-
-    <button
-      class="site-header__toggle"
-      type="button"
-      aria-label="Open navigation"
-      aria-expanded="false"
-      aria-controls="site-nav">
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
-
-    <nav class="site-nav" id="site-nav" data-nav>
-      <a href="/product/">Product</a>
-      <a href="/dashboard/">Dashboard</a>
-      <a href="/beta/">Beta</a>
-      <a href="/about/">About</a>
-
-      <div class="site-nav__actions">
-        <a href="/app/" class="btn btn--ghost btn--sm nav__loggedOut">Login</a>
-        <a href="/beta/" class="btn btn--primary btn--sm nav__loggedOut">Join Beta</a>
-      </div>
-    </nav>
-  </div>
-</header>
-
-
-  <main>
-    <script>
-document.body.classList.add("app-mode");
-</script>
-<div class="app">
+<body class="app-mode">
+  <div class="app">
   <header class="app-topbar">
     <div class="app-topbar__inner">
       <a class="app-brand" href="/app/dashboard/">
@@ -119,114 +69,235 @@ document.body.classList.add("app-mode");
     </aside>
 
     <main class="app-main">
-<div style="min-height:calc(100vh - 170px); display:grid; place-items:center;">
-  <div style="width:min(1120px, 100%); margin:0 auto;">
-    <div class="app-grid app-grid--2" style="align-items:stretch; gap:22px;">
 
-      <section class="app-panel" style="display:flex; flex-direction:column; justify-content:center; min-height:620px;">
-        <div class="badge">Secure Access</div>
+<div style="min-height:calc(100vh - 170px); display:grid; place-items:center; padding:28px;">
+  <div style="width:min(1180px, 100%); margin:0 auto;">
 
-        <div style="margin-top:16px; font-size:clamp(38px, 5vw, 64px); font-weight:900; line-height:1.02; letter-spacing:-.04em;">
-          Welcome back to the command center.
+    <div class="app-grid app-grid--2" style="align-items:stretch; gap:24px;">
+
+      <section class="app-panel" style="display:flex; flex-direction:column; justify-content:center; min-height:680px; position:relative; overflow:hidden;">
+
+        <div style="position:absolute; inset:0; pointer-events:none;
+          background:
+          radial-gradient(circle at 82% 12%, rgba(255,138,0,.16), transparent 26%),
+          radial-gradient(circle at 18% 82%, rgba(90,150,255,.12), transparent 24%);
+          ">
         </div>
 
-        <p style="margin:18px 0 0; color:var(--app-muted); line-height:1.75; font-size:17px; max-width:620px;">
-          Log in to access your dashboard, review your readiness, log today’s signals, and
-          continue building momentum inside CCC.
-        </p>
+        <div style="position:relative; z-index:2;">
 
-        <div class="app-grid app-grid--2" style="margin-top:28px; gap:14px;">
-          <div class="app-panel" style="padding:16px;">
-            <div style="font-weight:800; font-size:16px;">Readiness</div>
-            <div class="micro muted" style="margin-top:8px; line-height:1.6;">
-              Track metabolic readiness from sleep, energy, digestion, hydration, mood, and inflammation.
+          <div class="badge">Secure Access</div>
+
+          <img
+            src="/assets/img/mascot/metabo-dashboard.webp"
+            alt="CCC Mascot"
+            style="width:180px; max-width:100%; margin:18px 0 10px; filter:drop-shadow(0 22px 30px rgba(0,0,0,.35));"
+          />
+
+          <div style="
+            font-size:clamp(42px,5vw,72px);
+            font-weight:950;
+            line-height:.94;
+            letter-spacing:-.05em;
+            margin-top:8px;
+          ">
+            Welcome back to the<br />
+            command center.
+          </div>
+
+          <p style="
+            margin:18px 0 0;
+            color:var(--app-muted);
+            line-height:1.75;
+            font-size:17px;
+            max-width:620px;
+          ">
+            Log in to review readiness, track trends, log today’s signals,
+            and continue building momentum inside Carnivore Command Center.
+          </p>
+
+          <div class="app-grid app-grid--2" style="margin-top:28px; gap:14px;">
+
+            <div class="app-panel" style="padding:16px;">
+              <div style="font-weight:800; font-size:16px;">Readiness Engine</div>
+              <div class="micro muted" style="margin-top:8px; line-height:1.65;">
+                Sleep, energy, digestion, hydration, mood, inflammation,
+                training recovery, and daily momentum.
+              </div>
+            </div>
+
+            <div class="app-panel" style="padding:16px;">
+              <div style="font-weight:800; font-size:16px;">Daily Actions</div>
+              <div class="micro muted" style="margin-top:8px; line-height:1.65;">
+                Get next-step recommendations, blockers, and performance guidance.
+              </div>
+            </div>
+
+          </div>
+
+          <div style="margin-top:24px; display:flex; flex-wrap:wrap; gap:10px;">
+            <span class="app-chip">Dashboard</span>
+            <span class="app-chip">Check-In</span>
+            <span class="app-chip">Logs</span>
+            <span class="app-chip">Insights</span>
+            <span class="app-chip">Programs</span>
+          </div>
+
+          <div style="
+            margin-top:26px;
+            padding:16px 18px;
+            border-radius:18px;
+            background:rgba(255,255,255,.03);
+            border:1px solid rgba(255,255,255,.08);
+          ">
+            <div style="font-weight:800; margin-bottom:8px;">CCC Mission</div>
+            <div class="micro muted" style="line-height:1.75;">
+              Stop guessing. Start understanding. CCC is built to show what is
+              helping, what is hurting, and what to do next.
             </div>
           </div>
 
-          <div class="app-panel" style="padding:16px;">
-            <div style="font-weight:800; font-size:16px;">Daily Actions</div>
-            <div class="micro muted" style="margin-top:8px; line-height:1.6;">
-              See limiting factors, recovery priorities, forecasts, and what to do next.
-            </div>
-          </div>
-        </div>
-
-        <div style="margin-top:28px; display:flex; flex-wrap:wrap; gap:10px;">
-          <span class="app-chip">Dashboard</span>
-          <span class="app-chip">Check-In</span>
-          <span class="app-chip">Logs</span>
-          <span class="app-chip">Insights</span>
-        </div>
-
-        <div style="margin-top:26px; padding:16px 18px; border-radius:18px; background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.08);">
-          <div style="font-weight:800; margin-bottom:8px;">CCC Direction</div>
-          <div class="micro muted" style="line-height:1.7;">
-            The goal is not just more data. CCC is being built to help users understand what
-            is helping, what is hurting, and what to do next.
-          </div>
         </div>
       </section>
 
-      <section class="app-panel" style="display:flex; flex-direction:column; justify-content:center; min-height:620px; max-width:520px; width:100%; margin-inline:auto;">
+      <section
+        class="app-panel"
+        style="
+          display:flex;
+          flex-direction:column;
+          justify-content:center;
+          min-height:680px;
+          max-width:540px;
+          width:100%;
+          margin-inline:auto;
+        "
+      >
+
         <div class="badge">Account Access</div>
 
-        <h1 style="margin:16px 0 8px; font-size:36px; line-height:1.05; letter-spacing:-.03em;">
+        <h1 style="
+          margin:18px 0 8px;
+          font-size:38px;
+          line-height:1.02;
+          letter-spacing:-.04em;
+        ">
           Log in
         </h1>
 
-        <p class="micro muted" style="line-height:1.7; margin:0 0 22px;">
+        <p class="micro muted" style="line-height:1.7; margin:0 0 24px;">
           Use your email and password to continue into the app.
         </p>
 
         <form id="loginForm" style="display:grid; gap:16px;">
+
           <div>
-            <label for="email" class="micro muted" style="display:block; margin-bottom:8px;">Email</label>
+            <label for="email" class="micro muted" style="display:block; margin-bottom:8px;">
+              Email
+            </label>
+
             <input
               id="email"
               type="email"
               placeholder="you@email.com"
               autocomplete="email"
               required
-              style="width:100%; padding:15px 16px; border-radius:16px; border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.06); color:var(--app-text); outline:none;"
+              style="
+                width:100%;
+                padding:15px 16px;
+                border-radius:16px;
+                border:1px solid rgba(255,255,255,.12);
+                background:rgba(255,255,255,.06);
+                color:var(--app-text);
+                outline:none;
+              "
             />
           </div>
 
           <div>
-            <label for="password" class="micro muted" style="display:block; margin-bottom:8px;">Password</label>
+            <label for="password" class="micro muted" style="display:block; margin-bottom:8px;">
+              Password
+            </label>
+
             <input
               id="password"
               type="password"
               placeholder="Enter password"
               autocomplete="current-password"
               required
-              style="width:100%; padding:15px 16px; border-radius:16px; border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.06); color:var(--app-text); outline:none;"
+              style="
+                width:100%;
+                padding:15px 16px;
+                border-radius:16px;
+                border:1px solid rgba(255,255,255,.12);
+                background:rgba(255,255,255,.06);
+                color:var(--app-text);
+                outline:none;
+              "
             />
           </div>
 
-          <div style="display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; align-items:center;">
-            <label style="display:flex; align-items:center; gap:8px; color:var(--app-muted); font-size:13px;">
+          <div style="
+            display:flex;
+            justify-content:space-between;
+            gap:12px;
+            flex-wrap:wrap;
+            align-items:center;
+          ">
+            <label style="
+              display:flex;
+              align-items:center;
+              gap:8px;
+              color:var(--app-muted);
+              font-size:13px;
+            ">
               <input type="checkbox" />
               <span>Remember me</span>
             </label>
 
-            <a href="/auth/reset/" class="micro muted" style="text-decoration:none;">Forgot password?</a>
+            <a href="/auth/reset/" class="micro muted" style="text-decoration:none;">
+              Forgot password?
+            </a>
           </div>
 
-          <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:6px;">
-            <button class="app-btn app-btn--primary" id="loginBtn" type="submit">Login</button>
-            <a class="app-btn" href="/auth/signup/">Create Account</a>
+          <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:8px;">
+
+            <button
+              class="app-btn app-btn--primary"
+              id="loginBtn"
+              type="submit"
+            >
+              Login
+            </button>
+
+            <a class="app-btn" href="/auth/signup/">
+              Create Account
+            </a>
+
           </div>
 
           <div id="authMsg" class="micro muted" style="margin-top:6px;"></div>
           <div id="debugMsg" class="micro muted" style="opacity:.85;"></div>
+
         </form>
 
-        <div style="margin-top:22px; padding-top:18px; border-top:1px solid rgba(255,255,255,.08); display:flex; flex-wrap:wrap; gap:12px 18px;">
+        <div style="
+          margin-top:24px;
+          padding-top:18px;
+          border-top:1px solid rgba(255,255,255,.08);
+          display:flex;
+          flex-wrap:wrap;
+          gap:12px 18px;
+        ">
           <a href="/" class="micro muted" style="text-decoration:none;">Back to site</a>
           <a href="/product/" class="micro muted" style="text-decoration:none;">Product</a>
           <a href="/beta/" class="micro muted" style="text-decoration:none;">Beta</a>
           <a href="/disclaimer/" class="micro muted" style="text-decoration:none;">Disclaimer</a>
         </div>
+
+        <div class="app-legal">
+          Carnivore Command Center is an informational wellness tool and not medical advice.
+        </div>
+
       </section>
 
     </div>
@@ -236,6 +307,9 @@ document.body.classList.add("app-mode");
 <script type="module">
   const msg = document.getElementById("authMsg");
   const dbg = document.getElementById("debugMsg");
+  const form = document.getElementById("loginForm");
+  const loginBtn = document.getElementById("loginBtn");
+
   msg.textContent = "Loading account access...";
 
   try {
@@ -249,21 +323,20 @@ document.body.classList.add("app-mode");
       window.location.href = "/app/dashboard/";
     }
 
-    const email = document.getElementById("email");
-    const password = document.getElementById("password");
-    const form = document.getElementById("loginForm");
-    const loginBtn = document.getElementById("loginBtn");
-
     form.addEventListener("submit", async (event) => {
       event.preventDefault();
 
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+
       const originalText = loginBtn.textContent;
+
       loginBtn.disabled = true;
       loginBtn.textContent = "Logging in...";
       msg.textContent = "Checking credentials...";
 
       try {
-        const { error } = await signIn(email.value.trim(), password.value);
+        const { error } = await signIn(email, password);
 
         if (error) {
           msg.textContent = error.message;
@@ -289,6 +362,7 @@ document.body.classList.add("app-mode");
         } else {
           window.location.href = "/app/dashboard/";
         }
+
       } catch (e) {
         msg.textContent = "Login error: " + (e?.message || e);
         loginBtn.disabled = false;
@@ -297,45 +371,18 @@ document.body.classList.add("app-mode");
     });
 
     msg.textContent = "Ready. Enter your email and password to continue.";
+
   } catch (e) {
     msg.textContent = "Module load failed.";
     dbg.textContent = "Error: " + (e?.message || e);
   }
 </script>
+
       <div class="app-minimal-footer">
         CCC App • Built under WDC LLC
       </div>
     </main>
   </div>
 </div>
-  </main>
-
-  <footer class="site-footer">
-  <div class="container site-footer__inner">
-    <div class="site-footer__brand">
-      <div class="site-footer__title">Carnivore Command Center</div>
-      <div class="site-footer__tag">Stop Guessing. Start Understanding.</div>
-      <div class="site-footer__meta">© <span id="year"></span> All rights reserved.</div>
-      <div class="site-footer__meta">Built under WDC LLC</div>
-    </div>
-
-    <div class="site-footer__links">
-      <a href="/product/">Product</a>
-      <a href="/dashboard/">Dashboard</a>
-      <a href="/beta/">Beta</a>
-      <a href="/about/">About</a>
-      <a href="/investor/">Investor</a>
-      <a href="/privacy/">Privacy</a>
-      <a href="/terms/">Terms</a>
-    </div>
-  </div>
-</footer>
-
-
-  <script>
-    const y = document.getElementById("year");
-    if (y) y.textContent = new Date().getFullYear();
-  </script>
-  <script src="/js/site.js" defer></script>
 </body>
 </html>

@@ -1,6 +1,6 @@
 import { createClient } from "/js/vendor/supabase.js";
 
-const SUPABASE_URL = "https://ridxjmwuepoaefidacda.supabase.co";
+const SUPABASE_URL = "https://ridxjmuwepoaefidacda.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_OB9EHyTG5q86PNJpgXB89w_g_VzCV2Y";
 
 export const supabase = createClient(
@@ -33,10 +33,11 @@ export async function signIn(email, password) {
 export async function signOut() {
   return supabase.auth.signOut();
 }
-async function applyAuthNav(){
+
+async function applyAuthNav() {
   const { data } = await supabase.auth.getSession();
 
-  if(data?.session){
+  if (data?.session) {
     document.body.classList.add("is-logged-in");
   }
 }
