@@ -805,7 +805,6 @@
       align-items: flex-start;
       padding: 12px 0;
     }
-
     .ccc-elite-dashboard .app-userbar { width: 100%; justify-content: flex-start; }
     .ccc-elite-dashboard .page { width: min(calc(100% - 18px), var(--max)); }
     .ccc-elite-dashboard .visual-rail,
@@ -846,7 +845,7 @@
               <div class="app-user__meta" id="navUserStatus">Loading...</div>
               <div
                 id="navUserStats"
-                style="font-size:0.72rem; color:var(--muted); margin-top:3px;"
+                style="font-size:0.72rem; color:var(--muted); margin-top:5px; line-height:1.35;"
               >
                 Loading stats...
               </div>
@@ -867,7 +866,7 @@
               <a class="is-active" href="/app/dashboard/">Dashboard</a>
               <a href="/">Home</a>
               <a href="#readiness">Readiness</a>
-              <a href="#checkin">Daily Plan</a>
+              <a href="#checkin">Quick Preview</a>
               <a href="#trends">Trends</a>
               <a href="/app/log/">Check-In</a>
               <a href="#protocols">Protocols</a>
@@ -1013,8 +1012,8 @@
 
           <div class="mid-grid">
             <article class="panel" id="checkin">
-              <div class="panel__title">Daily Check-In</div>
-              <div class="panel__sub">Fast inputs. Better score. Better decisions.</div>
+              <div class="panel__title">Quick Check-In Preview</div>
+              <div class="panel__sub">Adjust inputs here for a fast preview, or use full Check-In to save today’s entry.</div>
 
               <form class="checkin-form">
                 <div class="field">
@@ -1063,7 +1062,10 @@
                   </div>
                 </div>
 
-                <button class="btn btn--primary" id="submitCheckin" type="button">Go to Check-In</button>
+                <button class="btn btn--primary" id="submitCheckin" type="button">Open Full Check-In</button>
+                <div class="field__hint" style="margin-top:8px;">
+                  Full history, notes, and saved entries live in the Check-In page.
+                </div>
               </form>
             </article>
 
@@ -1259,13 +1261,13 @@ import {
       if (streak.current > 0) {
         navUserStatus.textContent = `${state.mode} Mode · Day ${streak.current}`;
       } else {
-        navUserStatus.textContent = `${state.mode} Mode · Ready to Begin`;
+        navUserStatus.textContent = "Ready to Begin";
       }
     }
 
     if (navUserStats) {
       if (avg > 0) {
-        navUserStats.textContent = `7-Day Avg ${avg} · Best Streak ${streak.longest}`;
+        navUserStats.textContent = `7-Day Avg ${avg} | Best ${streak.longest}`;
       } else {
         navUserStats.textContent = "No history yet";
       }
@@ -1335,7 +1337,6 @@ import {
   });
 
   const scoreTop = byId("readinessScoreTop");
-
   if (scoreTop && avg > 0) {
     scoreTop.title = `7-Day Avg: ${avg}`;
   }
