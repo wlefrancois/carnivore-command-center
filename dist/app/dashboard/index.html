@@ -850,7 +850,7 @@
             <img class="app-user__avatar" src="/assets/img/mascot/metabo-home-hero.webp" alt="Wayne" />
             <div>
               <div class="app-user__name">Wayne</div>
-              <div class="app-user__meta">Founder · Day 47</div>
+              <div class="app-user__meta" id="navUserStatus">Loading...</div>
             </div>
           </div>
           <a class="btn btn--primary" href="#checkin">+ Check-In</a>
@@ -1129,7 +1129,7 @@
 </div>
 
 <script type="module">
-  import {
+import {
   getEntries,
   getLatestEntry,
   computeScore,
@@ -1138,120 +1138,163 @@
   getAverageScore
 } from "/js/ccc-log-engine.js";
 
-  (() => {
-    const byId = (id) => document.getElementById(id);
-    const setText = (id, value) => {
-      const el = byId(id);
-      if (el) el.textContent = value;
+(() => {
+  const byId = (id) => document.getElementById(id);
+
+  const setText = (id, value) => {
+    const el = byId(id);
+    if (el) el.textContent = value;
+  };
+
+  const els = {
+    sleep: byId("sleep"),
+    mood: byId("mood"),
+    stress: byId("stress"),
+    digestion: byId("digestion"),
+    soreness: byId("soreness"),
+    sleepValue: byId("sleepValue"),
+    moodValue: byId("moodValue"),
+    stressValue: byId("stressValue"),
+    workoutButtons: Array.from(
+      document.querySelectorAll("[data-workout]")
+    ),
+    submit: byId("submitCheckin")
+  };
+
+  let workoutYesterday = "yes";
+
+  function renderFromPayload(payload) {
+    if (els.sleep) els.sleep.value = payload.sleep;
+    if (els.mood) els.mood.value = payload.mood;
+    if (els.stress) els.stress.value = payload.stress;
+    if (els.digestion) els.digestion.value = payload.digestion;
+    if (els.soreness) els.soreness.value = payload.soreness;
+
+    workoutYesterday = payload.workoutYesterday || "yes";
+
+    els.workoutButtons.forEach((b) =>
+      b.classList.toggle(
+        "is-active",
+        b.dataset.workout === workoutYesterday
+      )
+    );
+
+    if (els.sleepValue && els.sleep) {
+      els.sleepValue.textContent =
+        Number(els.sleep.value).toFixed(1);
+    }
+
+    if (els.moodValue && els.mood) {
+      els.moodValue.textContent = els.mood.value;
+    }
+
+    if (els.stressValue && els.stress) {
+      els.stressValue.textContent = els.stress.value;
+    }
+
+    const score = computeScore(payload);
+    const state = buildState(score);
+
+    setText("readinessScoreTop", score);
+    setText("readinessScoreMain", score);
+    setText("modeMain", `${state.mode} Mode`);
+    setText("recommendationText", state.recommendation);
+
+    setText("mission1", state.missions[0]);
+    setText("mission2", state.missions[1]);
+    setText("mission3", state.missions[2]);
+    setText("mission4", state.missions[3]);
+
+    setText("win1", state.wins[0]);
+    setText("win2", state.wins[1]);
+    setText("win3", state.wins[2]);
+
+    setText("coachQuote", state.quote);
+  }
+
+  function getCurrentPayload() {
+    return {
+      sleep: Number(els.sleep?.value || 7),
+      mood: Number(els.mood?.value || 8),
+      stress: Number(els.stress?.value || 3),
+      digestion: els.digestion?.value || "Good",
+      soreness: els.soreness?.value || "Mild",
+      workoutYesterday
     };
+  }
 
-    const els = {
-      sleep: byId("sleep"),
-      mood: byId("mood"),
-      stress: byId("stress"),
-      digestion: byId("digestion"),
-      soreness: byId("soreness"),
-      sleepValue: byId("sleepValue"),
-      moodValue: byId("moodValue"),
-      stressValue: byId("stressValue"),
-      workoutButtons: Array.from(document.querySelectorAll("[data-workout]")),
-      submit: byId("submitCheckin")
-    };
-
-    let workoutYesterday = "yes";
-
-    function renderFromPayload(payload) {
-      if (els.sleep) els.sleep.value = payload.sleep;
-      if (els.mood) els.mood.value = payload.mood;
-      if (els.stress) els.stress.value = payload.stress;
-      if (els.digestion) els.digestion.value = payload.digestion;
-      if (els.soreness) els.soreness.value = payload.soreness;
-
-      workoutYesterday = payload.workoutYesterday || "yes";
-
-      els.workoutButtons.forEach((b) =>
-        b.classList.toggle("is-active", b.dataset.workout === workoutYesterday)
-      );
-
-      if (els.sleepValue && els.sleep) els.sleepValue.textContent = Number(els.sleep.value).toFixed(1);
-      if (els.moodValue && els.mood) els.moodValue.textContent = els.mood.value;
-      if (els.stressValue && els.stress) els.stressValue.textContent = els.stress.value;
-
-      const score = computeScore(payload);
-      const state = buildState(score);
-
-      setText("readinessScoreTop", score);
-      setText("readinessScoreMain", score);
-      setText("modeMain", `${state.mode} Mode`);
-      setText("recommendationText", state.recommendation);
-      setText("mission1", state.missions[0]);
-      setText("mission2", state.missions[1]);
-      setText("mission3", state.missions[2]);
-      setText("mission4", state.missions[3]);
-      setText("win1", state.wins[0]);
-      setText("win2", state.wins[1]);
-      setText("win3", state.wins[2]);
-      setText("coachQuote", state.quote);
-    }
-
-    function getCurrentPayload() {
-      return {
-        sleep: Number(els.sleep?.value || 7),
-        mood: Number(els.mood?.value || 8),
-        stress: Number(els.stress?.value || 3),
-        digestion: els.digestion?.value || "Good",
-        soreness: els.soreness?.value || "Mild",
-        workoutYesterday
-      };
-    }
-
-    els.workoutButtons.forEach((btn) => {
-      btn.addEventListener("click", () => {
-        workoutYesterday = btn.dataset.workout;
-        renderFromPayload(getCurrentPayload());
-      });
+  els.workoutButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      workoutYesterday = btn.dataset.workout;
+      renderFromPayload(getCurrentPayload());
     });
+  });
 
-    [els.sleep, els.mood, els.stress, els.digestion, els.soreness].forEach((el) => {
-      if (!el) return;
-      el.addEventListener("input", () => renderFromPayload(getCurrentPayload()));
-      el.addEventListener("change", () => renderFromPayload(getCurrentPayload()));
+  [
+    els.sleep,
+    els.mood,
+    els.stress,
+    els.digestion,
+    els.soreness
+  ].forEach((el) => {
+    if (!el) return;
+
+    el.addEventListener("input", () =>
+      renderFromPayload(getCurrentPayload())
+    );
+
+    el.addEventListener("change", () =>
+      renderFromPayload(getCurrentPayload())
+    );
+  });
+
+  if (els.submit) {
+    els.submit.addEventListener("click", () => {
+      window.location.href = "/app/log/";
     });
+  }
 
-    if (els.submit) {
-      els.submit.addEventListener("click", () => {
-        window.location.href = "/app/log/";
-      });
-    }
+  const latest = getLatestEntry();
 
-    const latest = getLatestEntry();
+  if (latest) {
+    renderFromPayload(latest);
+  } else {
+    renderFromPayload({
+      sleep: 7,
+      mood: 8,
+      stress: 3,
+      digestion: "Good",
+      soreness: "Mild",
+      workoutYesterday: "yes"
+    });
+  }
 
-    if (latest) {
-      renderFromPayload(latest);
+  const entries = getEntries();
+  const streak = getStreakData(entries);
+  const avg = getAverageScore(entries.slice(-7));
+
+  document.querySelectorAll("#dashStreak").forEach((el) => {
+    el.textContent = streak.current;
+  });
+
+  const scoreTop = byId("readinessScoreTop");
+
+  if (scoreTop && avg > 0) {
+    scoreTop.title = `7-Day Avg: ${avg}`;
+  }
+
+  const navUserStatus = byId("navUserStatus");
+
+  if (navUserStatus) {
+    if (streak.current > 0) {
+      navUserStatus.textContent =
+        `Current Streak · Day ${streak.current}`;
     } else {
-      renderFromPayload({
-        sleep: 7,
-        mood: 8,
-        stress: 3,
-        digestion: "Good",
-        soreness: "Mild",
-        workoutYesterday: "yes"
-      });
+      navUserStatus.textContent =
+        "Ready to Begin";
     }
-    const entries = getEntries();
-const streak = getStreakData(entries);
-const avg = getAverageScore(entries.slice(-7));
-
-document.querySelectorAll("#dashStreak").forEach((el) => {
-  el.textContent = streak.current;
-});
-
-const scoreTop = document.getElementById("readinessScoreTop");
-
-if (scoreTop && avg > 0) {
-  scoreTop.title = `7-Day Avg: ${avg}`;
-}
-  })();
+  }
+})();
 </script>
 </body>
 </html>
