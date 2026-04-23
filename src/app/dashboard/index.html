@@ -805,6 +805,7 @@
       align-items: flex-start;
       padding: 12px 0;
     }
+
     .ccc-elite-dashboard .app-userbar { width: 100%; justify-content: flex-start; }
     .ccc-elite-dashboard .page { width: min(calc(100% - 18px), var(--max)); }
     .ccc-elite-dashboard .visual-rail,
@@ -833,14 +834,26 @@
           <a class="app-icon-btn" href="/">Home</a>
           <button class="app-icon-btn" type="button" onclick="alert('Search is coming soon.')">Search</button>
           <button class="app-icon-btn" type="button" onclick="alert('No alerts yet.')">Alerts</button>
+
           <div class="app-user">
-            <img class="app-user__avatar" src="/assets/img/mascot/metabo-home-hero.webp" alt="Wayne" />
+            <img
+              class="app-user__avatar"
+              src="/assets/img/mascot/metabo-home-hero.webp"
+              alt="Wayne"
+            />
             <div>
-              <div class="app-user__name">Wayne</div>
+              <div class="app-user__name" id="navUserName">Wayne</div>
               <div class="app-user__meta" id="navUserStatus">Loading...</div>
+              <div
+                id="navUserStats"
+                style="font-size:0.72rem; color:var(--muted); margin-top:3px;"
+              >
+                Loading stats...
+              </div>
             </div>
           </div>
-          <a class="btn btn--primary" href="#checkin">+ Check-In</a>
+
+          <a class="btn btn--primary" href="/app/log/">+ Check-In</a>
         </div>
       </div>
     </header>
@@ -863,9 +876,12 @@
               <a href="#settings">Settings</a>
             </nav>
           </div>
+
           <div class="sidebar__foot">
             <div class="sidebar__badge">Streak</div>
-            <p style="margin:10px 0 0; color: var(--text); font-size:2rem; font-weight:900; line-height:1;"><span id="dashStreak">0</span> Days</p>
+            <p style="margin:10px 0 0; color: var(--text); font-size:2rem; font-weight:900; line-height:1;">
+              <span id="dashStreak">0</span> Days
+            </p>
             <p style="margin:8px 0 0; color: var(--muted); font-size:0.92rem;">Keep it moving.</p>
           </div>
         </aside>
@@ -897,6 +913,7 @@
                   <div class="metric-score__zone">Optimal Zone</div>
                   <div class="metric-score__delta">▲ 4 vs. yesterday</div>
                 </div>
+
                 <div>
                   <div class="spark-panel">
                     <svg class="spark-svg" viewBox="0 0 220 120" fill="none">
@@ -908,6 +925,7 @@
                       <div>M</div><div>T</div><div>W</div><div>T</div><div>F</div><div>S</div><div>S</div>
                     </div>
                   </div>
+
                   <div class="meter-row">
                     <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
                   </div>
@@ -944,11 +962,13 @@
                   </div>
                 </div>
               </div>
+
               <div class="macro-list">
                 <div class="macro-item"><div class="macro-item__left"><span class="macro-dot orange"></span><strong>Protein</strong></div><span>186g</span></div>
                 <div class="macro-item"><div class="macro-item__left"><span class="macro-dot yellow"></span><strong>Fat</strong></div><span>172g</span></div>
                 <div class="macro-item"><div class="macro-item__left"><span class="macro-dot green"></span><strong>Carbs</strong></div><span>23g</span></div>
               </div>
+
               <div style="margin-top:14px; color: var(--muted); font-size:0.88rem;">Target: 2,500 cal</div>
             </article>
           </div>
@@ -958,14 +978,18 @@
               <div class="card-kicker">Sleep</div>
               <div class="mini-status-card__value">7h 43m</div>
               <p>Goal: 8h</p>
-              <div class="mini-status-card__bars"><span style="height:38px"></span><span style="height:42px"></span><span style="height:46px"></span><span style="height:48px"></span><span style="height:46px"></span><span style="height:50px"></span><span style="height:52px"></span></div>
+              <div class="mini-status-card__bars">
+                <span style="height:38px"></span><span style="height:42px"></span><span style="height:46px"></span><span style="height:48px"></span><span style="height:46px"></span><span style="height:50px"></span><span style="height:52px"></span>
+              </div>
             </article>
 
             <article class="mini-status-card">
               <div class="card-kicker">Hydration</div>
               <div class="mini-status-card__value">88%</div>
               <p>3.2L / 3.6L goal</p>
-              <div class="mini-status-card__bars"><span style="height:36px"></span><span style="height:40px"></span><span style="height:44px"></span><span style="height:46px"></span><span style="height:45px"></span><span style="height:48px"></span><span style="height:50px"></span></div>
+              <div class="mini-status-card__bars">
+                <span style="height:36px"></span><span style="height:40px"></span><span style="height:44px"></span><span style="height:46px"></span><span style="height:45px"></span><span style="height:48px"></span><span style="height:50px"></span>
+              </div>
             </article>
 
             <article class="mini-status-card">
@@ -991,22 +1015,26 @@
             <article class="panel" id="checkin">
               <div class="panel__title">Daily Check-In</div>
               <div class="panel__sub">Fast inputs. Better score. Better decisions.</div>
+
               <form class="checkin-form">
                 <div class="field">
                   <label for="sleep">Sleep Hours</label>
                   <input id="sleep" type="range" min="0" max="10" value="7" />
                   <div class="field__hint"><span id="sleepValue">7.0</span> hours</div>
                 </div>
+
                 <div class="field">
                   <label for="mood">Mood</label>
                   <input id="mood" type="range" min="1" max="10" value="8" />
                   <div class="field__hint"><span id="moodValue">8</span>/10</div>
                 </div>
+
                 <div class="field">
                   <label for="stress">Stress</label>
                   <input id="stress" type="range" min="1" max="10" value="3" />
                   <div class="field__hint"><span id="stressValue">3</span>/10</div>
                 </div>
+
                 <div class="field">
                   <label for="digestion">Digestion</label>
                   <select id="digestion">
@@ -1016,6 +1044,7 @@
                     <option>Great</option>
                   </select>
                 </div>
+
                 <div class="field">
                   <label for="soreness">Soreness</label>
                   <select id="soreness">
@@ -1025,6 +1054,7 @@
                     <option>High</option>
                   </select>
                 </div>
+
                 <div class="field">
                   <label>Workout Yesterday</label>
                   <div class="toggle-row">
@@ -1032,7 +1062,8 @@
                     <button class="toggle" type="button" data-workout="no">No</button>
                   </div>
                 </div>
-                <button class="btn btn--primary" id="submitCheckin" type="button">Submit Check-In</button>
+
+                <button class="btn btn--primary" id="submitCheckin" type="button">Go to Check-In</button>
               </form>
             </article>
 
@@ -1044,6 +1075,7 @@
                 <strong id="modeMain">Execute Mode</strong>
                 <p id="recommendationText" style="margin-top:8px; color: var(--muted);">Strong readiness. Push today, but do it with structure. Lift upper body, protect protein, and get one clean deep work block done before noon.</p>
               </div>
+
               <div class="gameplan-list">
                 <div class="gameplan-item"><div class="gameplan-item__left"><span class="check-icon"></span><strong>Mission 1</strong></div><span id="win1">Lift upper body</span></div>
                 <div class="gameplan-item"><div class="gameplan-item__left"><span class="check-icon"></span><strong>Mission 2</strong></div><span id="win2">90 min deep work</span></div>
@@ -1060,12 +1092,15 @@
                   <div class="coach-card__mode">Coach Mode · Premium Layer</div>
                 </div>
               </div>
+
               <div class="coach-card__quote" id="coachQuote">You are hot right now. Stop negotiating. Lift. Focus. Protein. Momentum is hot. Do not waste it.</div>
+
               <div class="coach-card__actions">
                 <div class="coach-chip">Normal Mode: clear, supportive guidance</div>
                 <div class="coach-chip">Savage Mode: identity + discipline coaching</div>
                 <div class="coach-chip">Retention play: users come back for the voice, not just the data</div>
               </div>
+
               <div class="upgrade-banner">
                 <h3>Upgrade to CCC Pro</h3>
                 <p>Unlock Savage Metabo coach mode, advanced insights, streak analytics, and guided programs.</p>
@@ -1167,8 +1202,7 @@ import {
     );
 
     if (els.sleepValue && els.sleep) {
-      els.sleepValue.textContent =
-        Number(els.sleep.value).toFixed(1);
+      els.sleepValue.textContent = Number(els.sleep.value).toFixed(1);
     }
 
     if (els.moodValue && els.mood) {
@@ -1197,6 +1231,8 @@ import {
     setText("win3", state.wins[2]);
 
     setText("coachQuote", state.quote);
+
+    return { score, state };
   }
 
   function getCurrentPayload() {
@@ -1210,29 +1246,61 @@ import {
     };
   }
 
+  function hydrateHeader(state, streak, avg) {
+    const navUserName = byId("navUserName");
+    const navUserStatus = byId("navUserStatus");
+    const navUserStats = byId("navUserStats");
+
+    if (navUserName) {
+      navUserName.textContent = "Wayne";
+    }
+
+    if (navUserStatus) {
+      if (streak.current > 0) {
+        navUserStatus.textContent = `${state.mode} Mode · Day ${streak.current}`;
+      } else {
+        navUserStatus.textContent = `${state.mode} Mode · Ready to Begin`;
+      }
+    }
+
+    if (navUserStats) {
+      if (avg > 0) {
+        navUserStats.textContent = `7-Day Avg ${avg} · Best Streak ${streak.longest}`;
+      } else {
+        navUserStats.textContent = "No history yet";
+      }
+    }
+  }
+
   els.workoutButtons.forEach((btn) => {
     btn.addEventListener("click", () => {
       workoutYesterday = btn.dataset.workout;
-      renderFromPayload(getCurrentPayload());
+      const result = renderFromPayload(getCurrentPayload());
+      const entries = getEntries();
+      const streak = getStreakData(entries);
+      const avg = getAverageScore(entries.slice(-7));
+      hydrateHeader(result.state, streak, avg);
     });
   });
 
-  [
-    els.sleep,
-    els.mood,
-    els.stress,
-    els.digestion,
-    els.soreness
-  ].forEach((el) => {
+  [els.sleep, els.mood, els.stress, els.digestion, els.soreness].forEach((el) => {
     if (!el) return;
 
-    el.addEventListener("input", () =>
-      renderFromPayload(getCurrentPayload())
-    );
+    el.addEventListener("input", () => {
+      const result = renderFromPayload(getCurrentPayload());
+      const entries = getEntries();
+      const streak = getStreakData(entries);
+      const avg = getAverageScore(entries.slice(-7));
+      hydrateHeader(result.state, streak, avg);
+    });
 
-    el.addEventListener("change", () =>
-      renderFromPayload(getCurrentPayload())
-    );
+    el.addEventListener("change", () => {
+      const result = renderFromPayload(getCurrentPayload());
+      const entries = getEntries();
+      const streak = getStreakData(entries);
+      const avg = getAverageScore(entries.slice(-7));
+      hydrateHeader(result.state, streak, avg);
+    });
   });
 
   if (els.submit) {
@@ -1243,10 +1311,12 @@ import {
 
   const latest = getLatestEntry();
 
+  let result;
+
   if (latest) {
-    renderFromPayload(latest);
+    result = renderFromPayload(latest);
   } else {
-    renderFromPayload({
+    result = renderFromPayload({
       sleep: 7,
       mood: 8,
       stress: 3,
@@ -1270,16 +1340,6 @@ import {
     scoreTop.title = `7-Day Avg: ${avg}`;
   }
 
-  const navUserStatus = byId("navUserStatus");
-
-  if (navUserStatus) {
-    if (streak.current > 0) {
-      navUserStatus.textContent =
-        `Current Streak · Day ${streak.current}`;
-    } else {
-      navUserStatus.textContent =
-        "Ready to Begin";
-    }
-  }
+  hydrateHeader(result.state, streak, avg);
 })();
 </script>
