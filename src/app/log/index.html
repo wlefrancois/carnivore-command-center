@@ -1,364 +1,374 @@
-<main>
+<!--#include file="src/app/_shell-top.html" -->
 
-<section class="page-hero">
-  <div class="container narrow">
-    <h1>Log Today</h1>
-    <p class="lead">
-      Record today’s signals so CCC can calculate readiness patterns and insights.
-    </p>
+<style>
+  .log-engine-page {
+    display: grid;
+    gap: 18px;
+  }
 
-    <div class="hero__cta">
-      <a class="btn btn--ghost" href="/app/dashboard/">Back to Dashboard</a>
-      <button class="btn btn--ghost" id="logoutBtn" type="button">Logout</button>
-    </div>
+  .log-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 380px;
+    gap: 18px;
+    align-items: start;
+  }
 
-    <p id="userLine" class="micro muted" style="margin-top:10px;"></p>
+  .log-panel {
+    background: linear-gradient(180deg, rgba(10,16,28,.96), rgba(7,12,22,.98));
+    border: 1px solid rgba(70,96,152,.18);
+    border-radius: 20px;
+    box-shadow: 0 18px 60px rgba(0,0,0,.38);
+    padding: 22px;
+  }
+
+  .log-title {
+    font-size: 40px;
+    line-height: .98;
+    letter-spacing: -.04em;
+    font-weight: 950;
+    margin: 0;
+  }
+
+  .log-sub {
+    color: var(--app-muted);
+    margin-top: 8px;
+    line-height: 1.7;
+  }
+
+  .log-form {
+    display: grid;
+    gap: 14px;
+    margin-top: 18px;
+  }
+
+  .log-field {
+    display: grid;
+    gap: 8px;
+  }
+
+  .log-field label {
+    font-size: 12px;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    font-weight: 800;
+    color: #bfd3ff;
+  }
+
+  .log-field input,
+  .log-field select,
+  .log-field textarea {
+    width: 100%;
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,.08);
+    background: rgba(255,255,255,.03);
+    color: #eef4ff;
+    padding: 12px 14px;
+    outline: none;
+  }
+
+  .log-field input[type="range"] {
+    padding: 0;
+  }
+
+  .log-hint {
+    color: var(--app-muted);
+    font-size: 12px;
+  }
+
+  .log-toggle-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .log-toggle {
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,.08);
+    background: rgba(255,255,255,.03);
+    padding: 12px 14px;
+    font-weight: 700;
+    color: var(--app-muted);
+    text-align: center;
+    cursor: pointer;
+  }
+
+  .log-toggle.is-active {
+    color: #eef4ff;
+    background: linear-gradient(180deg, rgba(255,122,0,.12), rgba(76,141,255,.06));
+    border-color: rgba(255,122,0,.16);
+  }
+
+  .log-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+  }
+
+  .preview-score {
+    font-size: 56px;
+    line-height: .9;
+    font-weight: 950;
+    color: #22d07a;
+  }
+
+  .preview-mode {
+    font-size: 22px;
+    font-weight: 800;
+    margin-top: 6px;
+  }
+
+  .entry-list {
+    display: grid;
+    gap: 12px;
+    margin-top: 16px;
+  }
+
+  .entry-item {
+    border: 1px solid rgba(255,255,255,.06);
+    background: rgba(255,255,255,.03);
+    border-radius: 16px;
+    padding: 14px;
+  }
+
+  .entry-item__top {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: start;
+  }
+
+  .entry-item__score {
+    font-size: 28px;
+    font-weight: 900;
+    color: #22d07a;
+  }
+
+  .entry-item__meta {
+    color: var(--app-muted);
+    font-size: 12px;
+    margin-top: 4px;
+  }
+
+  .entry-item__notes {
+    margin-top: 10px;
+    color: #cdd8ee;
+    line-height: 1.6;
+  }
+
+  @media (max-width: 980px) {
+    .log-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<div class="log-engine-page">
+  <div class="app-pagehead">
+    <h1>Log Signals</h1>
+    <p>Capture your real inputs. CCC turns them into readiness, recovery, and direction.</p>
   </div>
-</section>
 
-<section class="section">
-  <div class="container narrow">
+  <div class="log-grid">
+    <section class="log-panel">
+      <div class="badge">Daily Check-In</div>
+      <h2 class="log-title">Build today’s signal set.</h2>
+      <p class="log-sub">
+        This is the real engine entry point. Save sleep, mood, stress, digestion,
+        soreness, and workout status so the dashboard can respond.
+      </p>
 
-    <div class="card" style="margin-bottom:18px;">
-      <strong>When to log</strong>
-      <div class="micro muted" style="margin-top:8px;">
-        Log once per day, ideally in the evening, after you know how your day felt overall.
-        This makes it easier to rate energy, digestion, inflammation, hydration, and mood accurately.
-      </div>
-    </div>
-
-    <div id="statusCard" class="card" style="margin-bottom:18px; display:none;"></div>
-
-    <div class="card">
-      <form id="logForm">
-
-        <div class="cards cards--2" style="margin-bottom:18px;">
-
-          <div>
-            <label for="logDate"><strong>Date</strong></label>
-            <div class="micro muted" style="margin:6px 0 10px;">
-              Usually this should be today.
-            </div>
-            <input
-              id="logDate"
-              type="date"
-              style="width:100%; padding:12px; border-radius:14px; border:1px solid rgba(255,255,255,.14); background:rgba(255,255,255,.04); color:var(--text);"
-            />
-          </div>
-
-          <div>
-            <label for="sleepHours"><strong>Sleep last night (hours)</strong></label>
-            <div class="micro muted" style="margin:6px 0 10px;">
-              Enter total sleep from the previous night.
-            </div>
-            <input
-              id="sleepHours"
-              type="number"
-              min="0"
-              max="16"
-              step="0.5"
-              placeholder="Example: 7.5"
-              style="width:100%; padding:12px; border-radius:14px; border:1px solid rgba(255,255,255,.14); background:rgba(255,255,255,.04); color:var(--text);"
-            />
-          </div>
-
+      <form id="logForm" class="log-form">
+        <div class="log-field">
+          <label for="sleep">Sleep Hours</label>
+          <input id="sleep" type="range" min="0" max="10" step="0.5" value="7" />
+          <div class="log-hint"><span id="sleepValue">7.0</span> hours</div>
         </div>
 
-        <div class="cards cards--2" style="margin-bottom:18px;">
-
-          <div>
-            <label for="energy"><strong>Energy (1–10)</strong></label>
-            <div class="micro muted" style="margin:6px 0 10px;">
-              1 = exhausted, 10 = excellent energy
-            </div>
-            <input
-              id="energy"
-              type="range"
-              min="1"
-              max="10"
-              step="1"
-              value="5"
-              style="width:100%;"
-            />
-            <div class="micro muted">Selected: <span id="energyVal">5</span></div>
-          </div>
-
-          <div>
-            <label for="mood"><strong>Mood / mental clarity (1–10)</strong></label>
-            <div class="micro muted" style="margin:6px 0 10px;">
-              1 = poor, 10 = excellent
-            </div>
-            <input
-              id="mood"
-              type="range"
-              min="1"
-              max="10"
-              step="1"
-              value="5"
-              style="width:100%;"
-            />
-            <div class="micro muted">Selected: <span id="moodVal">5</span></div>
-          </div>
-
+        <div class="log-field">
+          <label for="mood">Mood</label>
+          <input id="mood" type="range" min="1" max="10" value="8" />
+          <div class="log-hint"><span id="moodValue">8</span>/10</div>
         </div>
 
-        <div class="cards cards--2" style="margin-bottom:18px;">
-
-          <div>
-            <label for="digestion"><strong>Digestion (1–10)</strong></label>
-            <div class="micro muted" style="margin:6px 0 10px;">
-              1 = poor digestion, 10 = excellent digestion
-            </div>
-            <input
-              id="digestion"
-              type="range"
-              min="1"
-              max="10"
-              step="1"
-              value="5"
-              style="width:100%;"
-            />
-            <div class="micro muted">Selected: <span id="digestionVal">5</span></div>
-          </div>
-
-          <div>
-            <label for="inflammation"><strong>Inflammation / soreness (1–10)</strong></label>
-            <div class="micro muted" style="margin:6px 0 10px;">
-              1 = very low inflammation, 10 = very high inflammation
-            </div>
-            <input
-              id="inflammation"
-              type="range"
-              min="1"
-              max="10"
-              step="1"
-              value="5"
-              style="width:100%;"
-            />
-            <div class="micro muted">Selected: <span id="inflammationVal">5</span></div>
-          </div>
-
+        <div class="log-field">
+          <label for="stress">Stress</label>
+          <input id="stress" type="range" min="1" max="10" value="3" />
+          <div class="log-hint"><span id="stressValue">3</span>/10</div>
         </div>
 
-        <div class="card" style="margin-bottom:18px; padding:18px;">
-          <strong>Hydration today</strong>
-          <div class="micro muted" style="margin-top:8px; line-height:1.6;">
-            Choose the range that best fits your total fluid intake today.
-            Water counts fully. Coffee counts partially — 1 cup of coffee (~8 oz) ≈ 6 oz hydration.
-          </div>
+        <div class="log-field">
+          <label for="digestion">Digestion</label>
+          <select id="digestion">
+            <option>Bad</option>
+            <option>Okay</option>
+            <option selected>Good</option>
+            <option>Great</option>
+          </select>
+        </div>
 
-          <div class="micro muted" style="margin-top:8px;">
-            Examples: water, coffee, broth, electrolytes.
-          </div>
+        <div class="log-field">
+          <label for="soreness">Soreness</label>
+          <select id="soreness">
+            <option>None</option>
+            <option selected>Mild</option>
+            <option>Medium</option>
+            <option>High</option>
+          </select>
+        </div>
 
-          <div style="margin-top:16px; display:grid; gap:10px;">
-            <label class="pill" style="cursor:pointer;">
-              <input type="radio" name="hydrationRange" value="30" style="margin-right:8px;" />
-              Very Low (&lt; 40 oz)
-            </label>
-
-            <label class="pill" style="cursor:pointer;">
-              <input type="radio" name="hydrationRange" value="55" style="margin-right:8px;" />
-              Low (40–70 oz)
-            </label>
-
-            <label class="pill" style="cursor:pointer;">
-              <input type="radio" name="hydrationRange" value="85" style="margin-right:8px;" checked />
-              Moderate (70–100 oz)
-            </label>
-
-            <label class="pill" style="cursor:pointer;">
-              <input type="radio" name="hydrationRange" value="110" style="margin-right:8px;" />
-              Good (100–130 oz)
-            </label>
-
-            <label class="pill" style="cursor:pointer;">
-              <input type="radio" name="hydrationRange" value="135" style="margin-right:8px;" />
-              High (130+ oz)
-            </label>
+        <div class="log-field">
+          <label>Workout Yesterday</label>
+          <div class="log-toggle-row">
+            <button class="log-toggle is-active" type="button" data-workout="yes">Yes</button>
+            <button class="log-toggle" type="button" data-workout="no">No</button>
           </div>
         </div>
 
-        <div style="margin-bottom:18px;">
-          <label for="notes"><strong>Notes</strong></label>
-          <div class="micro muted" style="margin:6px 0 10px;">
-            Optional: meals, coffee, training, stress, sleep issues, digestion notes, etc.
-          </div>
-          <textarea
-            id="notes"
-            rows="5"
-            placeholder="Example: 2 cups coffee in the morning, ribeye + eggs for lunch, low energy mid-afternoon."
-            style="width:100%; padding:12px; border-radius:14px; border:1px solid rgba(255,255,255,.14); background:rgba(255,255,255,.04); color:var(--text); resize:vertical;"
-          ></textarea>
+        <div class="log-field">
+          <label for="notes">Notes</label>
+          <textarea id="notes" rows="4" placeholder="Anything important today? Recovery, cravings, travel, sickness, wins, etc."></textarea>
         </div>
 
-        <div class="hero__cta" style="margin-bottom:0;">
-          <button class="btn btn--primary" id="saveBtn" type="submit">Save Daily Log</button>
-          <a class="btn btn--ghost" href="/app/dashboard/">Cancel</a>
+        <div class="log-actions">
+          <button class="app-btn app-btn--primary" id="saveEntryBtn" type="submit">Save Entry</button>
+          <a class="app-btn" href="/app/dashboard/">Back to Dashboard</a>
         </div>
-
-        <div id="formMsg" class="micro muted" style="margin-top:14px;"></div>
-
       </form>
-    </div>
+    </section>
 
+    <aside class="log-panel">
+      <div class="badge">Live Preview</div>
+      <div class="preview-score" id="previewScore">72</div>
+      <div class="preview-mode" id="previewMode">Build Mode</div>
+      <p class="log-sub" id="previewRecommendation">
+        Good day to execute, but stay measured. Moderate training, lock in protein,
+        and protect the evening so momentum keeps building.
+      </p>
+
+      <div style="margin-top:18px; border-top:1px solid rgba(255,255,255,.08); padding-top:18px;">
+        <div style="font-weight:800; margin-bottom:8px;">What happens next</div>
+        <div class="log-sub">
+          Saved entries will be used by the dashboard to update readiness, missions,
+          recommendation text, and coaching tone.
+        </div>
+      </div>
+
+      <div style="margin-top:18px; border-top:1px solid rgba(255,255,255,.08); padding-top:18px;">
+        <div style="font-weight:800; margin-bottom:8px;">Recent Entries</div>
+        <div id="entryList" class="entry-list"></div>
+      </div>
+    </aside>
   </div>
-</section>
+</div>
 
 <script type="module">
-import { supabase, getUser, signOut } from "/js/app.js";
+  import {
+    getEntries,
+    addEntry,
+    buildEntry,
+    computeScore,
+    buildState,
+    formatDateTime
+  } from "/js/ccc-log-engine.js";
 
-const userLine = document.getElementById("userLine");
-const form = document.getElementById("logForm");
-const formMsg = document.getElementById("formMsg");
-const statusCard = document.getElementById("statusCard");
-const logoutBtn = document.getElementById("logoutBtn");
+  const byId = (id) => document.getElementById(id);
 
-const logDate = document.getElementById("logDate");
-const sleepHours = document.getElementById("sleepHours");
-const energy = document.getElementById("energy");
-const mood = document.getElementById("mood");
-const digestion = document.getElementById("digestion");
-const inflammation = document.getElementById("inflammation");
-const notes = document.getElementById("notes");
-
-const energyVal = document.getElementById("energyVal");
-const moodVal = document.getElementById("moodVal");
-const digestionVal = document.getElementById("digestionVal");
-const inflammationVal = document.getElementById("inflammationVal");
-
-function todayLocalISO() {
-  const d = new Date();
-  const y = d.getFullYear();
-  const m = String(d.getMonth() + 1).padStart(2, "0");
-  const day = String(d.getDate()).padStart(2, "0");
-  return `${y}-${m}-${day}`;
-}
-
-function selectedHydrationOz() {
-  const checked = document.querySelector('input[name="hydrationRange"]:checked');
-  return checked ? Number(checked.value) : 85;
-}
-
-function setSliderValueDisplays() {
-  energyVal.textContent = energy.value;
-  moodVal.textContent = mood.value;
-  digestionVal.textContent = digestion.value;
-  inflammationVal.textContent = inflammation.value;
-}
-
-function showStatus(message, isWarning = false) {
-  statusCard.style.display = "block";
-  statusCard.innerHTML = `
-    <strong>${isWarning ? "Already logged" : "Status"}</strong>
-    <div class="micro muted" style="margin-top:8px;">${message}</div>
-  `;
-}
-
-logoutBtn.addEventListener("click", async () => {
-  await signOut();
-  window.location.href = "/app/";
-});
-
-energy.addEventListener("input", setSliderValueDisplays);
-mood.addEventListener("input", setSliderValueDisplays);
-digestion.addEventListener("input", setSliderValueDisplays);
-inflammation.addEventListener("input", setSliderValueDisplays);
-
-async function loadPage() {
-  setSliderValueDisplays();
-  logDate.value = todayLocalISO();
-
-  const user = await getUser();
-  if (!user) {
-    window.location.href = "/app/";
-    return;
-  }
-
-  userLine.textContent = `Logged in as ${user.email}`;
-
-  const today = todayLocalISO();
-
-  const { data, error } = await supabase
-    .from("daily_logs")
-    .select("*")
-    .eq("log_date", today)
-    .limit(1);
-
-  if (!error && data && data.length > 0) {
-    const row = data[0];
-
-    showStatus(
-      "You already logged today. Updating and saving again will overwrite today's values in the app flow only if your backend supports updates. Otherwise, keep one entry per day.",
-      true
-    );
-
-    logDate.value = row.log_date ?? today;
-    sleepHours.value = row.sleep_hours ?? "";
-    energy.value = row.energy ?? 5;
-    mood.value = row.mood ?? 5;
-    digestion.value = row.digestion ?? 5;
-    inflammation.value = row.inflammation ?? 5;
-    notes.value = row.notes ?? "";
-
-    const water = Number(row.water_oz ?? 85);
-    const radios = [...document.querySelectorAll('input[name="hydrationRange"]')];
-    let chosen = "85";
-    if (water < 40) chosen = "30";
-    else if (water < 70) chosen = "55";
-    else if (water < 100) chosen = "85";
-    else if (water < 130) chosen = "110";
-    else chosen = "135";
-
-    const match = radios.find(r => r.value === chosen);
-    if (match) match.checked = true;
-
-    setSliderValueDisplays();
-  }
-}
-
-form.addEventListener("submit", async (e) => {
-  e.preventDefault();
-  formMsg.textContent = "Saving log...";
-
-  const user = await getUser();
-  if (!user) {
-    window.location.href = "/app/";
-    return;
-  }
-
-  const payload = {
-    log_date: logDate.value || todayLocalISO(),
-    sleep_hours: sleepHours.value === "" ? null : Number(sleepHours.value),
-    energy: Number(energy.value),
-    mood: Number(mood.value),
-    digestion: Number(digestion.value),
-    inflammation: Number(inflammation.value),
-    water_oz: selectedHydrationOz(),
-    notes: notes.value.trim() || null
+  const els = {
+    form: byId("logForm"),
+    sleep: byId("sleep"),
+    mood: byId("mood"),
+    stress: byId("stress"),
+    digestion: byId("digestion"),
+    soreness: byId("soreness"),
+    notes: byId("notes"),
+    sleepValue: byId("sleepValue"),
+    moodValue: byId("moodValue"),
+    stressValue: byId("stressValue"),
+    previewScore: byId("previewScore"),
+    previewMode: byId("previewMode"),
+    previewRecommendation: byId("previewRecommendation"),
+    entryList: byId("entryList"),
+    workoutButtons: Array.from(document.querySelectorAll("[data-workout]"))
   };
 
-  const { error } = await supabase
-    .from("daily_logs")
-    .insert([payload]);
+  let workoutYesterday = "yes";
 
-  if (error) {
-    if (String(error.message || "").toLowerCase().includes("duplicate") ||
-        String(error.message || "").toLowerCase().includes("unique")) {
-      formMsg.textContent = "You already logged this date. Right now CCC allows one log per day.";
-    } else {
-      formMsg.textContent = `Error saving log: ${error.message}`;
-    }
-    return;
+  function getPayload() {
+    return {
+      sleep: Number(els.sleep.value),
+      mood: Number(els.mood.value),
+      stress: Number(els.stress.value),
+      digestion: els.digestion.value,
+      soreness: els.soreness.value,
+      workoutYesterday,
+      notes: els.notes.value.trim()
+    };
   }
 
-  formMsg.textContent = "Daily log saved. Redirecting to dashboard...";
-  setTimeout(() => {
-    window.location.href = "/app/dashboard/";
-  }, 800);
-});
+  function renderPreview() {
+    els.sleepValue.textContent = Number(els.sleep.value).toFixed(1);
+    els.moodValue.textContent = els.mood.value;
+    els.stressValue.textContent = els.stress.value;
 
-loadPage();
+    const payload = getPayload();
+    const score = computeScore(payload);
+    const state = buildState(score);
+
+    els.previewScore.textContent = score;
+    els.previewMode.textContent = `${state.mode} Mode`;
+    els.previewRecommendation.textContent = state.recommendation;
+  }
+
+  function renderEntries() {
+    const entries = getEntries().slice().reverse();
+
+    if (!entries.length) {
+      els.entryList.innerHTML = `<div class="log-hint">No entries saved yet.</div>`;
+      return;
+    }
+
+    els.entryList.innerHTML = entries.slice(0, 6).map((entry) => `
+      <div class="entry-item">
+        <div class="entry-item__top">
+          <div>
+            <div style="font-weight:800;">${entry.mode} Mode</div>
+            <div class="entry-item__meta">${formatDateTime(entry.ts)}</div>
+          </div>
+          <div class="entry-item__score">${entry.score}</div>
+        </div>
+        <div class="entry-item__meta">
+          Sleep ${entry.sleep}h • Mood ${entry.mood}/10 • Stress ${entry.stress}/10 • ${entry.digestion} digestion
+        </div>
+        ${entry.notes ? `<div class="entry-item__notes">${entry.notes}</div>` : ""}
+      </div>
+    `).join("");
+  }
+
+  els.workoutButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      workoutYesterday = btn.dataset.workout;
+      els.workoutButtons.forEach((b) => b.classList.remove("is-active"));
+      btn.classList.add("is-active");
+      renderPreview();
+    });
+  });
+
+  [els.sleep, els.mood, els.stress, els.digestion, els.soreness, els.notes].forEach((el) => {
+    el.addEventListener("input", renderPreview);
+    el.addEventListener("change", renderPreview);
+  });
+
+  els.form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const entry = buildEntry(getPayload());
+    addEntry(entry);
+    renderEntries();
+    alert("Log entry saved.");
+  });
+
+  renderPreview();
+  renderEntries();
 </script>
 
-</main>
+<!--#include file="src/app/_shell-bottom.html" -->

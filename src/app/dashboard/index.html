@@ -1114,7 +1114,14 @@
   </div>
 </div>
 
-<script>
+<script type="module">
+  import {
+    getEntries,
+    getLatestEntry,
+    computeScore,
+    buildState
+  } from "/js/ccc-log-engine.js";
+
   (() => {
     const byId = (id) => document.getElementById(id);
     const setText = (id, value) => {
@@ -1123,154 +1130,97 @@
     };
 
     const els = {
-      sleep: byId('sleep'),
-      mood: byId('mood'),
-      stress: byId('stress'),
-      digestion: byId('digestion'),
-      soreness: byId('soreness'),
-      sleepValue: byId('sleepValue'),
-      moodValue: byId('moodValue'),
-      stressValue: byId('stressValue'),
-      workoutButtons: Array.from(document.querySelectorAll('[data-workout]')),
-      submit: byId('submitCheckin')
+      sleep: byId("sleep"),
+      mood: byId("mood"),
+      stress: byId("stress"),
+      digestion: byId("digestion"),
+      soreness: byId("soreness"),
+      sleepValue: byId("sleepValue"),
+      moodValue: byId("moodValue"),
+      stressValue: byId("stressValue"),
+      workoutButtons: Array.from(document.querySelectorAll("[data-workout]")),
+      submit: byId("submitCheckin")
     };
 
-    let workoutYesterday = 'yes';
-    let entries = [];
-    try {
-      entries = JSON.parse(localStorage.getItem('cccEntries') || '[]');
-    } catch {
-      entries = [];
-    }
+    let workoutYesterday = "yes";
 
-    const clamp = (n, min, max) => Math.max(min, Math.min(max, n));
+    function renderFromPayload(payload) {
+      if (els.sleep) els.sleep.value = payload.sleep;
+      if (els.mood) els.mood.value = payload.mood;
+      if (els.stress) els.stress.value = payload.stress;
+      if (els.digestion) els.digestion.value = payload.digestion;
+      if (els.soreness) els.soreness.value = payload.soreness;
 
-    function computeScore() {
-      if (!els.sleep || !els.mood || !els.stress || !els.digestion || !els.soreness) return 72;
-      const sleep = parseFloat(els.sleep.value);
-      const mood = parseFloat(els.mood.value);
-      const stress = parseFloat(els.stress.value);
-      const digestionMap = { Bad: -14, Okay: -6, Good: 4, Great: 8 };
-      const sorenessMap = { None: 6, Mild: 2, Medium: -5, High: -12 };
+      workoutYesterday = payload.workoutYesterday || "yes";
 
-      let score = 50;
-      score += (sleep - 7) * 8;
-      score += (mood - 5) * 4;
-      score -= (stress - 3) * 5;
-      score += digestionMap[els.digestion.value] || 0;
-      score += sorenessMap[els.soreness.value] || 0;
-      score += workoutYesterday === 'yes' ? 4 : -2;
+      els.workoutButtons.forEach((b) =>
+        b.classList.toggle("is-active", b.dataset.workout === workoutYesterday)
+      );
 
-      return Math.round(clamp(score, 35, 98));
-    }
-
-    function buildState(score) {
-      if (score >= 80) {
-        return {
-          mode: 'Execute',
-          recommendation: 'Strong readiness. Push today, but do it with structure. Lift upper body, protect protein, and get one clean deep work block done before noon.',
-          missions: ['Lift: Upper Body', 'Walk & Sunlight', 'Protein on Target', '8 Hours Sleep'],
-          wins: ['Lift upper body', '90 min deep work', 'Hydrate before coffee 2'],
-          quote: 'You are hot right now. Stop negotiating. Lift. Focus. Protein. Momentum is hot. Do not waste it.'
-        };
-      }
-      if (score >= 65) {
-        return {
-          mode: 'Build',
-          recommendation: 'Good day to execute, but stay measured. Moderate training, lock in protein, and protect the evening so momentum keeps building.',
-          missions: ['Moderate Lift', 'Deep Work 60 Min', 'Hydrate Early', 'Sleep on Time'],
-          wins: ['Moderate training', 'One clean focus block', 'Protect recovery tonight'],
-          quote: 'Solid enough to move. Do not waste energy on chaos. Build a clean day and keep momentum alive.'
-        };
-      }
-      if (score >= 50) {
-        return {
-          mode: 'Recover',
-          recommendation: 'Recovery should lead today. Walk, hydrate, reduce intensity, and make tonight’s sleep the real win.',
-          missions: ['20 Min Walk', 'Hydrate + Electrolytes', 'Light Mobility', 'Sleep Priority'],
-          wins: ['Walk complete', 'Hydration improved', 'Protect sleep tonight'],
-          quote: 'Not every win is a hard push. Recover on purpose so tomorrow does not have to pay for today.'
-        };
-      }
-      return {
-        mode: 'Reset',
-        recommendation: 'Bad inputs detected. Reset today. No ego training, no chaos. Hydrate, walk, simplify food, and protect sleep tonight.',
-        missions: ['Hydrate Aggressively', 'Walk Only', 'Simple Food', 'Early Bedtime'],
-        wins: ['Electrolytes in', 'Walk complete', 'Early bedtime locked'],
-        quote: 'You are not behind. You are unstable. Reset the system, stop forcing it, and win the basics.'
-      };
-    }
-
-    function render(save = false) {
       if (els.sleepValue && els.sleep) els.sleepValue.textContent = Number(els.sleep.value).toFixed(1);
       if (els.moodValue && els.mood) els.moodValue.textContent = els.mood.value;
       if (els.stressValue && els.stress) els.stressValue.textContent = els.stress.value;
 
-      const score = computeScore();
+      const score = computeScore(payload);
       const state = buildState(score);
 
-      setText('readinessScoreTop', score);
-      setText('readinessScoreMain', score);
-      setText('modeMain', `${state.mode} Mode`);
-      setText('recommendationText', state.recommendation);
-      setText('mission1', state.missions[0]);
-      setText('mission2', state.missions[1]);
-      setText('mission3', state.missions[2]);
-      setText('mission4', state.missions[3]);
-      setText('win1', state.wins[0]);
-      setText('win2', state.wins[1]);
-      setText('win3', state.wins[2]);
-      setText('coachQuote', state.quote);
+      setText("readinessScoreTop", score);
+      setText("readinessScoreMain", score);
+      setText("modeMain", `${state.mode} Mode`);
+      setText("recommendationText", state.recommendation);
+      setText("mission1", state.missions[0]);
+      setText("mission2", state.missions[1]);
+      setText("mission3", state.missions[2]);
+      setText("mission4", state.missions[3]);
+      setText("win1", state.wins[0]);
+      setText("win2", state.wins[1]);
+      setText("win3", state.wins[2]);
+      setText("coachQuote", state.quote);
+    }
 
-      if (save && els.submit) {
-        const entry = {
-          ts: new Date().toISOString(),
-          sleep: Number(els.sleep?.value || 7),
-          mood: Number(els.mood?.value || 8),
-          stress: Number(els.stress?.value || 3),
-          digestion: els.digestion?.value || 'Good',
-          soreness: els.soreness?.value || 'Mild',
-          workoutYesterday,
-          score,
-          mode: state.mode
-        };
-        entries.push(entry);
-        entries = entries.slice(-30);
-        try { localStorage.setItem('cccEntries', JSON.stringify(entries)); } catch {}
-        els.submit.textContent = 'Submit Check-In';
-      }
+    function getCurrentPayload() {
+      return {
+        sleep: Number(els.sleep?.value || 7),
+        mood: Number(els.mood?.value || 8),
+        stress: Number(els.stress?.value || 3),
+        digestion: els.digestion?.value || "Good",
+        soreness: els.soreness?.value || "Mild",
+        workoutYesterday
+      };
     }
 
     els.workoutButtons.forEach((btn) => {
-      btn.addEventListener('click', () => {
+      btn.addEventListener("click", () => {
         workoutYesterday = btn.dataset.workout;
-        els.workoutButtons.forEach((b) => b.classList.remove('is-active'));
-        btn.classList.add('is-active');
-        render(false);
+        renderFromPayload(getCurrentPayload());
       });
     });
 
     [els.sleep, els.mood, els.stress, els.digestion, els.soreness].forEach((el) => {
       if (!el) return;
-      el.addEventListener('input', () => render(false));
-      el.addEventListener('change', () => render(false));
+      el.addEventListener("input", () => renderFromPayload(getCurrentPayload()));
+      el.addEventListener("change", () => renderFromPayload(getCurrentPayload()));
     });
 
     if (els.submit) {
-      els.submit.addEventListener('click', () => render(true));
+      els.submit.addEventListener("click", () => {
+        window.location.href = "/app/log/";
+      });
     }
 
-    if (entries.length) {
-      const last = entries[entries.length - 1];
-      if (els.sleep) els.sleep.value = last.sleep;
-      if (els.mood) els.mood.value = last.mood;
-      if (els.stress) els.stress.value = last.stress;
-      if (els.digestion) els.digestion.value = last.digestion;
-      if (els.soreness) els.soreness.value = last.soreness;
-      workoutYesterday = last.workoutYesterday || 'yes';
-      els.workoutButtons.forEach((b) => b.classList.toggle('is-active', b.dataset.workout === workoutYesterday));
-    }
+    const latest = getLatestEntry();
 
-    render(false);
+    if (latest) {
+      renderFromPayload(latest);
+    } else {
+      renderFromPayload({
+        sleep: 7,
+        mood: 8,
+        stress: 3,
+        digestion: "Good",
+        soreness: "Mild",
+        workoutYesterday: "yes"
+      });
+    }
   })();
 </script>
