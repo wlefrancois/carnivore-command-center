@@ -167,3 +167,72 @@ export function formatDateTime(iso) {
     return iso;
   }
 }
+export function sameDay(a, b) {
+  const da = new Date(a);
+  const db = new Date(b);
+
+  return (
+    da.getFullYear() === db.getFullYear() &&
+    da.getMonth() === db.getMonth() &&
+    da.getDate() === db.getDate()
+  );
+}
+
+export function daysBetween(a, b) {
+  const d1 = new Date(a);
+  const d2 = new Date(b);
+
+  d1.setHours(0,0,0,0);
+  d2.setHours(0,0,0,0);
+
+  const diff = Math.abs(d2 - d1);
+  return Math.round(diff / 86400000);
+}
+
+export function getStreakData(entries = []) {
+  if (!entries.length) {
+    return {
+      current: 0,
+      longest: 0
+    };
+  }
+
+  const sorted = [...entries].sort(
+    (a, b) => new Date(a.ts) - new Date(b.ts)
+  );
+
+  let longest = 1;
+  let run = 1;
+
+  for (let i = 1; i < sorted.length; i++) {
+    const diff = daysBetween(sorted[i - 1].ts, sorted[i].ts);
+
+    if (diff === 1) {
+      run++;
+      longest = Math.max(longest, run);
+    } else if (diff > 1) {
+      run = 1;
+    }
+  }
+
+  let current = 1;
+
+  for (let i = sorted.length - 1; i > 0; i--) {
+    const diff = daysBetween(sorted[i - 1].ts, sorted[i].ts);
+
+    if (diff === 1) current++;
+    else break;
+  }
+
+  return {
+    current,
+    longest
+  };
+}
+
+export function getAverageScore(entries = []) {
+  if (!entries.length) return 0;
+
+  const total = entries.reduce((sum, e) => sum + Number(e.score || 0), 0);
+  return Math.round(total / entries.length);
+}

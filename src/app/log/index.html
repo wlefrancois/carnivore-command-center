@@ -255,7 +255,14 @@
       </div>
 
       <div style="margin-top:18px; border-top:1px solid rgba(255,255,255,.08); padding-top:18px;">
-        <div style="font-weight:800; margin-bottom:8px;">Recent Entries</div>
+        <div style="font-weight:800; margin-bottom:8px;">History & Streaks</div>
+
+<div id="historyStats" style="
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:10px;
+margin-bottom:16px;
+"></div>
         <div id="entryList" class="entry-list"></div>
       </div>
     </aside>
@@ -264,13 +271,15 @@
 
 <script type="module">
   import {
-    getEntries,
-    addEntry,
-    buildEntry,
-    computeScore,
-    buildState,
-    formatDateTime
-  } from "/js/ccc-log-engine.js";
+  getEntries,
+  addEntry,
+  buildEntry,
+  computeScore,
+  buildState,
+  formatDateTime,
+  getStreakData,
+  getAverageScore
+} from "/js/ccc-log-engine.js";
 
   const byId = (id) => document.getElementById(id);
 
@@ -322,7 +331,27 @@
 
   function renderEntries() {
     const entries = getEntries().slice().reverse();
+const stats = document.getElementById("historyStats");
 
+const streak = getStreakData(entries);
+const avg = getAverageScore(entries.slice(-7));
+
+stats.innerHTML = `
+<div class="entry-item">
+  <div class="entry-item__score">${streak.current}</div>
+  <div class="entry-item__meta">Current Streak</div>
+</div>
+
+<div class="entry-item">
+  <div class="entry-item__score">${streak.longest}</div>
+  <div class="entry-item__meta">Best Streak</div>
+</div>
+
+<div class="entry-item">
+  <div class="entry-item__score">${avg}</div>
+  <div class="entry-item__meta">7-Day Avg</div>
+</div>
+`;
     if (!entries.length) {
       els.entryList.innerHTML = `<div class="log-hint">No entries saved yet.</div>`;
       return;

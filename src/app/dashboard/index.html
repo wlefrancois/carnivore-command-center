@@ -840,7 +840,7 @@
               <div class="app-user__meta">Founder · Day 47</div>
             </div>
           </div>
-          <a class="btn btn--primary" href="#checkin">+ Log Signals</a>
+          <a class="btn btn--primary" href="#checkin">+ Check-In</a>
         </div>
       </div>
     </header>
@@ -855,7 +855,8 @@
               <a href="/">Home</a>
               <a href="#readiness">Readiness</a>
               <a href="#checkin">Daily Plan</a>
-              <a href="#trends">Log &amp; Analyze</a>
+              <a href="#trends">Trends</a>
+              <a href="/app/log/">Check-In</a>
               <a href="#protocols">Protocols</a>
               <a href="#coach">Coaching</a>
               <a href="#community">Community</a>
@@ -864,7 +865,7 @@
           </div>
           <div class="sidebar__foot">
             <div class="sidebar__badge">Streak</div>
-            <p style="margin:10px 0 0; color: var(--text); font-size:2rem; font-weight:900; line-height:1;">47 Days</p>
+            <p style="margin:10px 0 0; color: var(--text); font-size:2rem; font-weight:900; line-height:1;"><span id="dashStreak">0</span> Days</p>
             <p style="margin:8px 0 0; color: var(--muted); font-size:0.92rem;">Keep it moving.</p>
           </div>
         </aside>
@@ -881,7 +882,7 @@
 
           <article class="streak-card">
             <div class="streak-card__label">🔥 Streak</div>
-            <div class="streak-card__value">47 Days</div>
+            <div class="streak-card__value" id="dashStreak">0</div>
             <div style="color: var(--muted);">Discipline. Freedom. Momentum.</div>
           </article>
         </section>
@@ -1101,7 +1102,7 @@
               <div class="card-kicker">Recent Wins <span class="accent">View All</span></div>
               <div class="wins-list">
                 <div class="wins-item"><div class="wins-item__left"><span class="trophy-icon"></span><strong>Hit Protein Target 6 Days</strong></div></div>
-                <div class="wins-item"><div class="wins-item__left"><span class="trophy-icon"></span><strong>47 Day Streak</strong></div></div>
+                <div class="wins-item"><div class="wins-item__left"><span class="trophy-icon"></span><strong><span id="dashStreak">0</span> Day Streak</strong></div></div>
                 <div class="wins-item"><div class="wins-item__left"><span class="trophy-icon"></span><strong>Improved HRV +6</strong></div></div>
                 <div class="wins-item"><div class="wins-item__left"><span class="trophy-icon"></span><strong>Woke Up 5:02 AM</strong></div></div>
                 <div class="wins-item"><div class="wins-item__left"><span class="trophy-icon"></span><strong>Completed Deep Work Block</strong></div></div>
@@ -1116,11 +1117,13 @@
 
 <script type="module">
   import {
-    getEntries,
-    getLatestEntry,
-    computeScore,
-    buildState
-  } from "/js/ccc-log-engine.js";
+  getEntries,
+  getLatestEntry,
+  computeScore,
+  buildState,
+  getStreakData,
+  getAverageScore
+} from "/js/ccc-log-engine.js";
 
   (() => {
     const byId = (id) => document.getElementById(id);
@@ -1222,5 +1225,18 @@
         workoutYesterday: "yes"
       });
     }
+    const entries = getEntries();
+const streak = getStreakData(entries);
+const avg = getAverageScore(entries.slice(-7));
+
+document.querySelectorAll("#dashStreak").forEach((el) => {
+  el.textContent = streak.current;
+});
+
+const scoreTop = document.getElementById("readinessScoreTop");
+
+if (scoreTop && avg > 0) {
+  scoreTop.title = `7-Day Avg: ${avg}`;
+}
   })();
 </script>
