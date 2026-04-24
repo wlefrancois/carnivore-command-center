@@ -217,7 +217,18 @@ const byId=(x)=>document.getElementById(x);
 function profile(){try{return JSON.parse(localStorage.getItem("cccProfile")||"{}")}catch{return{}}}
 function game(){try{return JSON.parse(localStorage.getItem("cccGame")||"{}")}catch{return{}}}
 function levelFromXp(xp){return Math.floor((xp||0)/200)+1}
-function rank(level){if(level>=10)return"Commander";if(level>=7)return"Elite Operator";if(level>=4)return"Operator";if(level>=2)return"Apprentice";return"Recruit"}
+function rank(level){
+  if(level>=10) return "Apex";
+  if(level>=9) return "Warlord";
+  if(level>=8) return "Legend";
+  if(level>=7) return "Titan";
+  if(level>=6) return "Elite";
+  if(level>=5) return "Commander";
+  if(level>=4) return "Savage";
+  if(level>=3) return "Operator";
+  if(level>=2) return "Builder";
+  return "Recruit";
+}
 function mode(score){if(score>=85)return"Execute Zone";if(score>=70)return"Strong Zone";if(score>=55)return"Build Zone";return"Recover Zone"}
 
 const p=profile();
@@ -276,8 +287,28 @@ score>=70?"Controlled Training":"Moderate Training",
 
 byId("programName").textContent=score>=70?"Strong Protocol":"Build Protocol";
 byId("programText").textContent=`${goal} · ${diet} · ${training}`;
-byId("coachTitle").textContent=score>=70?"Locked In":"Build Protocol";
-byId("coachText").textContent=score>=70?`${name}, strong enough to win.`:"Stack the basics today.";
+let coachTitle = "";
+let coachText = "";
+
+if(score >= 85){
+  coachTitle = "Attack Window";
+  coachText = `${name}, elite signal today. Push training hard and dominate the day.`;
+}
+else if(score >= 70){
+  coachTitle = "Strong Position";
+  coachText = `${name}, momentum is high. Lift, execute, stay disciplined.`;
+}
+else if(score >= 55){
+  coachTitle = "Protect Momentum";
+  coachText = `${name}, moderate day. Win nutrition, move hard enough, keep streak alive.`;
+}
+else{
+  coachTitle = "Recovery Protocol";
+  coachText = `${name}, recovery signal low. Hydrate, walk, early sleep, no self-sabotage.`;
+}
+
+byId("coachTitle").textContent = coachTitle;
+byId("coachText").textContent = coachText;
 
 function normalizeEntryScore(entry) {
   return Math.max(10, Math.min(100, Number(entry?.score || 0)));
