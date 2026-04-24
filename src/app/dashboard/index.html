@@ -17,6 +17,43 @@
 
   .cinematic-dashboard * { box-sizing: border-box; }
 
+  .live-strip {
+    display:grid;
+    grid-template-columns:1fr auto;
+    gap:14px;
+    align-items:center;
+    padding:14px 18px;
+    border-radius:18px;
+    background:linear-gradient(180deg,rgba(5,10,18,.92),rgba(8,14,24,.96));
+    border:1px solid rgba(255,255,255,.08);
+    box-shadow:0 18px 60px rgba(0,0,0,.35);
+  }
+
+  .live-greeting {
+    font-size:18px;
+    font-weight:900;
+    color:var(--text);
+  }
+
+  .live-line {
+    color:var(--muted);
+    margin-top:3px;
+  }
+
+  .live-clock {
+    text-align:right;
+    font-weight:950;
+    color:var(--orange2);
+    font-size:28px;
+    text-shadow:0 0 18px rgba(255,122,0,.22);
+  }
+
+  .live-date {
+    color:var(--muted);
+    font-size:12px;
+    margin-top:3px;
+  }
+
   .dash-hero {
     display: grid;
     grid-template-columns: 1.05fr 1fr 220px;
@@ -41,13 +78,16 @@
     border-radius: 18px;
     padding: 18px;
     box-shadow: 0 18px 60px rgba(0,0,0,.42);
+    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
   }
 
-  .hero-card {
-    min-height: 280px;
-    position: relative;
-    overflow: hidden;
+  .card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(255,122,0,.22);
+    box-shadow: 0 22px 70px rgba(0,0,0,.52), 0 0 28px rgba(255,122,0,.06);
   }
+
+  .hero-card { min-height: 280px; position: relative; overflow: hidden; }
 
   .hero-title {
     font-size: 54px;
@@ -141,6 +181,7 @@
     line-height: .85;
     font-weight: 950;
     color: var(--green);
+    text-shadow: 0 0 22px rgba(33,214,107,.28);
   }
 
   .spark {
@@ -190,11 +231,7 @@
     background: linear-gradient(180deg,#3da0ff,#1267c9);
   }
 
-  .mission-list,
-  .win-list {
-    display: grid;
-    gap: 10px;
-  }
+  .mission-list, .win-list { display: grid; gap: 10px; }
 
   .mission {
     display: flex;
@@ -214,6 +251,7 @@
     background: rgba(33,214,107,.14);
     flex: 0 0 18px;
     margin-top: 2px;
+    animation: cccPulse 2.8s ease-in-out infinite;
   }
 
   .focus-time {
@@ -221,6 +259,7 @@
     font-weight: 950;
     color: var(--orange2);
     margin-top: 18px;
+    text-shadow: 0 0 18px rgba(255,122,0,.22);
   }
 
   .btn-orange {
@@ -234,6 +273,12 @@
     font-weight: 950;
     text-decoration: none;
     margin-top: 14px;
+    transition: transform .18s ease, box-shadow .18s ease;
+  }
+
+  .btn-orange:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 18px 36px rgba(255,122,0,.28);
   }
 
   .ring {
@@ -269,45 +314,63 @@
     min-height: 8px;
     border-radius: 8px 8px 2px 2px;
     background: linear-gradient(180deg,var(--green),#0d7f42);
+    animation: cccBarRise .55s ease both;
+    transform-origin: bottom;
+  }
+
+  .score, .kpi-value, .metric-value { animation: cccPop .45s ease both; }
+
+  @keyframes cccPop {
+    from { opacity: 0; transform: translateY(8px) scale(.96); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  @keyframes cccPulse {
+    0%, 100% { box-shadow: 0 0 0 rgba(33,214,107,0); }
+    50% { box-shadow: 0 0 14px rgba(33,214,107,.25); }
+  }
+
+  @keyframes cccBarRise {
+    from { transform: scaleY(.15); opacity: .35; }
+    to { transform: scaleY(1); opacity: 1; }
   }
 
   @media(max-width:1200px) {
+    .live-strip,
     .dash-hero,
     .dash-grid,
     .dash-bottom,
-    .metric-grid {
-      grid-template-columns: 1fr;
-    }
+    .metric-grid { grid-template-columns: 1fr; }
     .hero-title { font-size: 42px; }
     .portrait { min-height: 420px; }
+    .live-clock { text-align:left; }
   }
 </style>
 
 <div class="cinematic-dashboard">
 
+  <section class="live-strip">
+    <div>
+      <div class="live-greeting" id="liveGreeting">Good Morning, Wayne.</div>
+      <div class="live-line" id="rotatingLine">Win the next decision.</div>
+    </div>
+    <div>
+      <div class="live-clock" id="liveClock">--:--</div>
+      <div class="live-date" id="liveDate">Loading...</div>
+    </div>
+  </section>
+
   <section class="dash-hero">
     <article class="card hero-card">
-      <div class="eyebrow">Good Morning</div>
+      <div class="eyebrow" id="timeEyebrow">Good Morning</div>
       <h1 class="hero-title"><span id="heroName">Wayne</span>, win your next 24 hours.</h1>
       <p class="muted" id="heroMeta">Carnivore · Fat Loss · Intermediate · Full Gym</p>
 
       <div class="kpis">
-        <div class="kpi">
-          <div class="kpi-label">Current Streak</div>
-          <div class="kpi-value orange" id="streakVal">0</div>
-        </div>
-        <div class="kpi">
-          <div class="kpi-label">7 Day Avg</div>
-          <div class="kpi-value blue" id="avgVal">0</div>
-        </div>
-        <div class="kpi">
-          <div class="kpi-label">Last Score</div>
-          <div class="kpi-value green" id="lastScoreVal">0</div>
-        </div>
-        <div class="kpi">
-          <div class="kpi-label">Goal Weight</div>
-          <div class="kpi-value" id="goalWeightVal">205</div>
-        </div>
+        <div class="kpi"><div class="kpi-label">Current Streak</div><div class="kpi-value orange" id="streakVal">0</div></div>
+        <div class="kpi"><div class="kpi-label">7 Day Avg</div><div class="kpi-value blue" id="avgVal">0</div></div>
+        <div class="kpi"><div class="kpi-label">Last Score</div><div class="kpi-value green" id="lastScoreVal">0</div></div>
+        <div class="kpi"><div class="kpi-label">Goal Weight</div><div class="kpi-value" id="goalWeightVal">205</div></div>
       </div>
 
       <a class="btn-orange" href="/app/log/">Complete Today’s Check-In</a>
@@ -338,10 +401,7 @@
       <div class="eyebrow">Macros</div>
       <div class="ring">
         <div class="ring-inner">
-          <div>
-            <strong id="calVal" style="font-size:28px;">2500</strong><br>
-            <span class="muted">CAL</span>
-          </div>
+          <div><strong id="calVal" style="font-size:28px;">2500</strong><br><span class="muted">CAL</span></div>
         </div>
       </div>
       <div class="mission-list">
@@ -362,7 +422,7 @@
       </div>
     </article>
 
-    <div class="stack" style="display:grid;gap:16px;">
+    <div style="display:grid;gap:16px;">
       <div class="metric-grid">
         <article class="card">
           <div class="eyebrow">Sleep</div>
@@ -406,16 +466,14 @@
           <h2 class="green" id="programName">Build Protocol</h2>
           <p class="muted" id="programText">Progress today. Protect tomorrow.</p>
           <div class="ring" style="width:120px;height:120px;">
-            <div class="ring-inner" style="width:82px;height:82px;">
-              <strong id="protocolPct">68%</strong>
-            </div>
+            <div class="ring-inner" style="width:82px;height:82px;"><strong id="protocolPct">68%</strong></div>
           </div>
         </article>
 
         <article class="card">
           <div class="eyebrow">Next Up</div>
-          <h2 class="orange">Log Your Midday Check-In</h2>
-          <p class="muted">Stay sharp. Stay honest. 2:00 PM</p>
+          <h2 class="orange" id="nextUpTitle">Log Your Midday Check-In</h2>
+          <p class="muted" id="nextUpText">Stay sharp. Stay honest.</p>
           <a class="btn-orange" href="/app/log/">Log Check-In</a>
         </article>
       </div>
@@ -478,11 +536,21 @@ import { getEntries, getStreakData, getAverageScore, formatDateTime } from "/js/
 const byId = (id) => document.getElementById(id);
 
 function getProfile() {
-  try {
-    return JSON.parse(localStorage.getItem("cccProfile") || "{}");
-  } catch {
-    return {};
-  }
+  try { return JSON.parse(localStorage.getItem("cccProfile") || "{}"); }
+  catch { return {}; }
+}
+
+function dayGreeting() {
+  const h = new Date().getHours();
+  if (h < 12) return "Good Morning";
+  if (h < 17) return "Good Afternoon";
+  return "Good Evening";
+}
+
+function updateClock() {
+  const now = new Date();
+  byId("liveClock").textContent = now.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
+  byId("liveDate").textContent = now.toLocaleDateString([], { weekday: "long", month: "short", day: "numeric" });
 }
 
 function mode(score) {
@@ -499,18 +567,43 @@ function nutrition(goal, weight) {
   return { cal: Math.round(weight * 13), protein: Math.round(weight * .95) + "g", water: "3.7L" };
 }
 
-function missionPack(score, goal) {
-  if (score >= 85) return ["Lift: Upper Body", "Deep Work 90 Min", "Protein on Target", "8 Hours Sleep"];
-  if (score >= 70) return ["Controlled Training", "Walk & Sunlight", "Protein Target", "Clean Evening"];
-  if (score >= 55) return ["Moderate Training", "Hydrate Early", "Simple Food", "Sleep on Time"];
-  return ["Recovery Walk", "Hydrate Fast", "Protein First", "Early Sleep"];
+function missionPack(score, weekday) {
+  const base = {
+    0: ["Recovery Walk", "Meal Prep", "Early Sleep", "Plan Week"],
+    1: ["Hydrate Early", "Lift: Upper Body", "Deep Work", "Protein Target"],
+    2: ["Walk & Sunlight", "Mobility", "Clean Meals", "Focus Block"],
+    3: ["Lift: Lower Body", "Protein Early", "Deep Work 90 Min", "Sleep on Time"],
+    4: ["Controlled Training", "Hydrate Fast", "No Chaos Calories", "Evening Reset"],
+    5: ["Finish Strong", "Walk + Sun", "Protein Target", "Protect Sleep"],
+    6: ["Long Walk", "Recovery Work", "Family Time", "Prep Tomorrow"]
+  }[weekday];
+
+  if (score < 55) return ["Recovery Walk", "Hydrate Fast", "Protein First", "Early Sleep"];
+  return base;
 }
 
-function coachPack(score) {
-  if (score >= 85) return ["Predator Mode", "Hot today. Stop negotiating. Execute with force."];
-  if (score >= 70) return ["Locked In", "Strong enough to win. Keep standards high."];
+function coachPack(score, name) {
+  if (score >= 85) return ["Predator Mode", `${name}, you are hot today. Stop negotiating. Execute with force.`];
+  if (score >= 70) return ["Locked In", `${name}, strong enough to win. Keep standards high.`];
   if (score >= 55) return ["Build Protocol", "Stack the basics. Momentum beats chaos."];
   return ["Recovery Protocol", "Protect tomorrow. Recover hard today."];
+}
+
+function animateNumber(id, finalValue, suffix = "") {
+  const el = byId(id);
+  if (!el) return;
+  const end = Number(String(finalValue).replace(/[^0-9.-]/g, ""));
+  if (Number.isNaN(end)) return;
+  const duration = 650;
+  const started = performance.now();
+
+  function tick(now) {
+    const progress = Math.min((now - started) / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    el.textContent = Math.round(end * eased) + suffix;
+    if (progress < 1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
 }
 
 const profile = getProfile();
@@ -533,16 +626,14 @@ const streak = getStreakData(entries);
 const avg = getAverageScore(entries.slice(-7));
 const m = mode(score);
 const nut = nutrition(goal, weight);
-const missions = missionPack(score, goal);
-const coach = coachPack(score);
+const missions = missionPack(score, new Date().getDay());
+const coach = coachPack(score, name);
+const greeting = dayGreeting();
 
+byId("liveGreeting").textContent = `${greeting}, ${name}.`;
+byId("timeEyebrow").textContent = greeting;
 byId("heroName").textContent = name;
 byId("heroMeta").textContent = `${goal} • ${diet} • ${training} • ${gym}`;
-byId("streakVal").textContent = streak.current || 0;
-byId("avgVal").textContent = avg || 0;
-byId("lastScoreVal").textContent = score;
-byId("goalWeightVal").textContent = goalWeight;
-byId("scoreMain").textContent = score;
 byId("modeMain").textContent = `${m} Zone`;
 byId("deltaText").textContent = `${delta >= 0 ? "▲ +" : "▼ "}${delta} vs. yesterday`;
 byId("lastCheckin").textContent = latest ? `Last Check-In: ${formatDateTime(latest.ts)}` : "Last Check-In: none yet";
@@ -557,7 +648,7 @@ byId("mission2").textContent = missions[1];
 byId("mission3").textContent = missions[2];
 byId("mission4").textContent = missions[3];
 
-byId("programName").textContent = coach[0];
+byId("programName").textContent = m + " Protocol";
 byId("programText").textContent = goal + " • " + diet + " • " + training;
 byId("protocolPct").textContent = Math.max(35, Math.min(99, score)) + "%";
 
@@ -568,6 +659,16 @@ byId("snapName").textContent = name;
 byId("snapGoal").textContent = goal;
 byId("snapTraining").textContent = training;
 byId("winStreak").textContent = streak.current || 0;
+
+const lines = [
+  "Win the next decision.",
+  "Stack one clean action before noon.",
+  "Protein, movement, sleep. Keep it simple.",
+  "Momentum is built one check-in at a time.",
+  "No chaos. No guessing. Execute the plan."
+];
+
+byId("rotatingLine").textContent = lines[new Date().getDay() % lines.length];
 
 const trend = entries.slice(-7);
 const bars = trend.length ? trend : [{score:45},{score:52},{score:60},{score:55},{score:62},{score:70},{score:score}];
@@ -587,12 +688,20 @@ const pts = sparkScores.map((s, i) => {
 });
 
 if (pts.length > 1) {
-  const d = "M" + pts.join("L");
-  byId("sparkPath").setAttribute("d", d);
+  byId("sparkPath").setAttribute("d", "M" + pts.join("L"));
   const last = pts[pts.length - 1].split(",");
   byId("sparkDot").setAttribute("cx", last[0]);
   byId("sparkDot").setAttribute("cy", last[1]);
 }
+
+animateNumber("scoreMain", score);
+animateNumber("lastScoreVal", score);
+animateNumber("avgVal", avg || 0);
+animateNumber("streakVal", streak.current || 0);
+animateNumber("goalWeightVal", goalWeight);
+
+updateClock();
+setInterval(updateClock, 1000);
 </script>
 
 <!--#include file="src/app/_shell-bottom.html" -->
