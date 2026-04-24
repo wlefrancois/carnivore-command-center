@@ -279,10 +279,68 @@ byId("programText").textContent=`${goal} · ${diet} · ${training}`;
 byId("coachTitle").textContent=score>=70?"Locked In":"Build Protocol";
 byId("coachText").textContent=score>=70?`${name}, strong enough to win.`:"Stack the basics today.";
 
-const barData=entries.slice(-7).length?entries.slice(-7):[{score:45},{score:52},{score:61},{score:58},{score:66},{score:71},{score:score}];
-const bars=barData.map(e=>`<span style="height:${Math.max(10,Math.min(100,e.score||50))}%"></span>`).join("");
-byId("trendBars").innerHTML=bars;
-byId("heroTrend").innerHTML=bars;
+function normalizeEntryScore(entry) {
+  return Math.max(10, Math.min(100, Number(entry?.score || 0)));
+}
+
+function getLastSevenScores() {
+  const real = entries
+    .filter((entry) => entry && entry.score)
+    .slice(-7);
+
+  if (real.length) return real;
+
+  return [
+    { score: 45 },
+    { score: 52 },
+    { score: 61 },
+    { score: 58 },
+    { score: 66 },
+    { score: 71 },
+    { score }
+  ];
+}
+
+function renderScoreBars(targetId, data) {
+  const el = byId(targetId);
+  if (!el) return;
+
+  el.innerHTML = data.map((entry) => {
+    const h = normalizeEntryScore(entry);
+    const label = entry?.ts
+      ? new Date(entry.ts).toLocaleDateString([], { weekday: "short" })
+      : "";
+
+    return `
+      <span
+        title="${label ? label + " · " : ""}${entry.score || 0}"
+        style="height:${h}%"
+      ></span>
+    `;
+  }).join("");
+}
+
+const barData = getLastSevenScores();
+
+renderScoreBars("trendBars", barData);
+renderScoreBars("heroTrend", barData);
+
+const scores = barData.map((entry) => Number(entry.score || 0));
+const firstScore = scores[0] || 0;
+const lastScore = scores[scores.length - 1] || 0;
+const trendDirection = lastScore - firstScore;
+
+const trendText = document.querySelector("#trendBars")?.parentElement?.querySelector(".sub");
+
+if (trendText) {
+  if (trendDirection > 0) {
+    trendText.textContent = `Your 7-day trend is up ${trendDirection} points. Keep stacking days.`;
+  } else if (trendDirection < 0) {
+    trendText.textContent = `Your 7-day trend is down ${Math.abs(trendDirection)} points. Stabilize today.`;
+  } else {
+    trendText.textContent = "Your 7-day trend is steady. Keep the streak alive.";
+  }
+}
 
 const today=new Date().toISOString().slice(0,10);
 if(localStorage.getItem("cccLastVisitDay")!==today){
