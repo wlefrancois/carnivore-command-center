@@ -1,19 +1,12 @@
 <!--#include file="src/app/_shell-top.html" -->
 
 <style>
-/* RESTORED CINEMATIC V8 + TIMER PATCH */
 .ccc-dash{display:grid;gap:18px;color:#eef4ff}
 .banner{padding:14px 16px;border-radius:16px;background:rgba(255,122,0,.10);border:1px solid rgba(255,122,0,.24);font-weight:900;color:#ffd7b5}
 .hero{display:grid;grid-template-columns:1.2fr .9fr 320px;gap:18px}
 .grid-main{display:grid;grid-template-columns:320px 1fr 320px;gap:18px}
 .bottom{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px}
-.card{
-background:linear-gradient(180deg,rgba(8,14,24,.96),rgba(6,10,18,.98));
-border:1px solid rgba(255,255,255,.08);
-border-radius:22px;
-padding:20px;
-box-shadow:0 18px 60px rgba(0,0,0,.42)
-}
+.card{background:linear-gradient(180deg,rgba(8,14,24,.96),rgba(6,10,18,.98));border:1px solid rgba(255,255,255,.08);border-radius:22px;padding:20px;box-shadow:0 18px 60px rgba(0,0,0,.42)}
 .eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:#ff9b3f;font-weight:900}
 .title{font-size:56px;line-height:.92;letter-spacing:-.04em;font-weight:950;margin:10px 0}
 .sub{color:#9fb0cc;line-height:1.7}
@@ -41,12 +34,17 @@ box-shadow:0 18px 60px rgba(0,0,0,.42)
 .trend span{background:linear-gradient(180deg,#22d07a,#0d7f42);border-radius:8px 8px 2px 2px}
 .ring{width:170px;height:170px;border-radius:50%;background:conic-gradient(#e95d18 0 30%,#f4b323 30% 62%,#22c55e 62% 100%);display:grid;place-items:center;margin:auto}
 .ring-in{width:112px;height:112px;border-radius:50%;background:#050b14;display:grid;place-items:center}
+.xpbar{height:14px;border-radius:999px;background:rgba(255,255,255,.08);overflow:hidden;margin-top:12px}
+.xpbar span{display:block;height:100%;width:0%;background:linear-gradient(90deg,#ff7a00,#22d07a);border-radius:999px}
+.celebrate{display:none;padding:14px;border-radius:16px;background:rgba(34,208,122,.12);border:1px solid rgba(34,208,122,.28);color:#c8ffdd;font-weight:900}
+.celebrate.show{display:block}
 @media(max-width:1200px){.hero,.grid-main,.bottom,.metric-grid{grid-template-columns:1fr}.title{font-size:42px}}
 </style>
 
 <div class="ccc-dash">
 
 <div class="banner" id="dailyBanner">Loading status...</div>
+<div class="celebrate" id="celebrateBox">XP updated.</div>
 
 <section class="hero">
 
@@ -59,7 +57,7 @@ box-shadow:0 18px 60px rgba(0,0,0,.42)
 <div class="kpi"><small>Streak</small><strong class="orange" id="streakVal">0</strong></div>
 <div class="kpi"><small>7 Day Avg</small><strong class="blue" id="avgVal">0</strong></div>
 <div class="kpi"><small>Score</small><strong class="green" id="scoreVal">65</strong></div>
-<div class="kpi"><small>Goal Weight</small><strong id="goalWeightVal">180</strong></div>
+<div class="kpi"><small>Level</small><strong id="levelVal">1</strong></div>
 </div>
 
 <div class="row">
@@ -72,24 +70,21 @@ box-shadow:0 18px 60px rgba(0,0,0,.42)
 <div class="eyebrow">Metabo Readiness</div>
 <div style="font-size:88px;font-weight:950;color:#22d07a;line-height:.85" id="readinessBig">65</div>
 <div class="green" id="modeVal">Build Zone</div>
-<p class="sub">▲ +22 vs. yesterday</p>
+<p class="sub" id="deltaText">▲ +0 vs. yesterday</p>
 
-<div class="trend">
-<span style="height:30%"></span><span style="height:34%"></span><span style="height:36%"></span><span style="height:40%"></span><span style="height:44%"></span><span style="height:52%"></span><span style="height:60%"></span>
-</div>
+<div class="trend" id="heroTrend"></div>
 </div>
 
 <div class="card">
-<div class="eyebrow">Macros</div>
+<div class="eyebrow">XP Progress</div>
 <div class="ring">
-<div class="ring-in"><div><strong id="calVal" style="font-size:34px">2850</strong><br><span class="sub">CAL</span></div></div>
+<div class="ring-in"><div><strong id="xpLevel" style="font-size:34px">L1</strong><br><span class="sub">OPERATOR</span></div></div>
 </div>
-
-<div class="list">
-<div class="line">Protein <span style="float:right" id="proteinVal">190g</span></div>
-<div class="line">Water <span style="float:right" id="waterVal">3.6L</span></div>
-<div class="line">Diet Style <span style="float:right" id="dietVal">Mixed</span></div>
+<div class="line">
+<strong id="xpText">0 / 200 XP</strong>
+<div class="xpbar"><span id="xpFill"></span></div>
 </div>
+<div class="line" id="rankText">Rank: Recruit</div>
 </div>
 
 </section>
@@ -186,13 +181,12 @@ box-shadow:0 18px 60px rgba(0,0,0,.42)
 <section class="bottom">
 
 <div class="card">
-<div class="eyebrow">Readiness Factors</div>
+<div class="eyebrow">Gamification</div>
 <div class="list">
-<div class="line">Sleep Quality <span style="float:right" class="green">82</span></div>
-<div class="line">HRV Balance <span style="float:right" class="green">79</span></div>
-<div class="line">Recovery <span style="float:right" class="green">85</span></div>
-<div class="line">Hydration <span style="float:right" class="green">88</span></div>
-<div class="line">Stress Balance <span style="float:right" class="orange">22</span></div>
+<div class="line">Current Level <span style="float:right" id="gameLevel">1</span></div>
+<div class="line">Total XP <span style="float:right" id="gameXp">0</span></div>
+<div class="line">Next Level <span style="float:right" id="gameNext">200 XP</span></div>
+<div class="line">Badge <span style="float:right" id="gameBadge">Recruit</span></div>
 </div>
 </div>
 
@@ -220,64 +214,96 @@ box-shadow:0 18px 60px rgba(0,0,0,.42)
 import {getEntries,getStreakData,getAverageScore} from "/js/ccc-log-engine.js";
 const byId=(x)=>document.getElementById(x);
 
-function profile(){
-try{return JSON.parse(localStorage.getItem("cccProfile")||"{}")}catch{return{}}
-}
+function profile(){try{return JSON.parse(localStorage.getItem("cccProfile")||"{}")}catch{return{}}}
+function game(){try{return JSON.parse(localStorage.getItem("cccGame")||"{}")}catch{return{}}}
+function levelFromXp(xp){return Math.floor((xp||0)/200)+1}
+function rank(level){if(level>=10)return"Commander";if(level>=7)return"Elite Operator";if(level>=4)return"Operator";if(level>=2)return"Apprentice";return"Recruit"}
+function mode(score){if(score>=85)return"Execute Zone";if(score>=70)return"Strong Zone";if(score>=55)return"Build Zone";return"Recover Zone"}
 
 const p=profile();
+const g=game();
 const entries=getEntries();
 const latest=entries[entries.length-1];
+const prev=entries[entries.length-2];
+
 const score=latest?.score || 65;
+const prevScore=prev?.score || score;
+const delta=score-prevScore;
 const streak=getStreakData(entries);
 const avg=getAverageScore(entries.slice(-7));
+const xp=g.xp||0;
+const level=levelFromXp(xp);
+const levelBase=(level-1)*200;
+const nextLevel=level*200;
+const progress=Math.min(100,Math.round(((xp-levelBase)/200)*100));
 
-byId("heroName").textContent=p.name || "Wayne";
-byId("snapName").textContent=p.name || "Wayne";
-byId("heroMeta").textContent=`${p.goal||"Muscle Gain"} · ${p.diet||"Mixed"} · ${p.training||"Intermediate"} · ${p.gym||"Home Gym"}`;
-byId("snapGoal").textContent=p.goal || "Muscle Gain";
-byId("snapTraining").textContent=p.training || "Intermediate";
+const name=p.name || "Wayne";
+const goal=p.goal || "Muscle Gain";
+const diet=p.diet || "Mixed";
+const training=p.training || "Intermediate";
+const gym=p.gym || "Home Gym";
 
-byId("streakVal").textContent=streak.current || 0;
-byId("avgVal").textContent=avg || 0;
+byId("heroName").textContent=name;
+byId("snapName").textContent=name;
+byId("heroMeta").textContent=`${goal} · ${diet} · ${training} · ${gym}`;
+byId("snapGoal").textContent=goal;
+byId("snapTraining").textContent=training;
+
+byId("streakVal").textContent=streak.current||0;
+byId("avgVal").textContent=avg||0;
 byId("scoreVal").textContent=score;
 byId("readinessBig").textContent=score;
-byId("winStreak").textContent=streak.current || 0;
+byId("modeVal").textContent=mode(score);
+byId("deltaText").textContent=`${delta>=0?"▲ +":"▼ "}${delta} vs. yesterday`;
+byId("winStreak").textContent=streak.current||0;
 
-byId("goalWeightVal").textContent=p.goalWeight || 180;
-byId("calVal").textContent=p.goal==="Fat Loss" ? 2400 : 2850;
-byId("proteinVal").textContent="190g";
-byId("waterVal").textContent="3.6L";
-byId("dietVal").textContent=p.diet || "Mixed";
+byId("levelVal").textContent=level;
+byId("xpLevel").textContent=`L${level}`;
+byId("xpText").textContent=`${xp} / ${nextLevel} XP`;
+byId("xpFill").style.width=progress+"%";
+byId("rankText").textContent="Rank: "+rank(level);
+byId("gameLevel").textContent=level;
+byId("gameXp").textContent=xp;
+byId("gameNext").textContent=(nextLevel-xp)+" XP";
+byId("gameBadge").textContent=rank(level);
 
 byId("missionList").innerHTML=[
-"Moderate Training",
+score>=70?"Controlled Training":"Moderate Training",
 "Hydrate Early",
-"Simple Food",
+"Protein Target",
 "Sleep on Time"
 ].map(x=>`<div class="line">${x}</div>`).join("");
 
-byId("trendBars").innerHTML=(entries.slice(-7).length?entries.slice(-7):[{score:45},{score:52},{score:61},{score:58},{score:66},{score:71},{score:score}]).map(e=>{
-const h=Math.max(10,Math.min(100,e.score||50));
-return `<span style="height:${h}%"></span>`;
-}).join("");
+byId("programName").textContent=score>=70?"Strong Protocol":"Build Protocol";
+byId("programText").textContent=`${goal} · ${diet} · ${training}`;
+byId("coachTitle").textContent=score>=70?"Locked In":"Build Protocol";
+byId("coachText").textContent=score>=70?`${name}, strong enough to win.`:"Stack the basics today.";
 
-/* banner */
+const barData=entries.slice(-7).length?entries.slice(-7):[{score:45},{score:52},{score:61},{score:58},{score:66},{score:71},{score:score}];
+const bars=barData.map(e=>`<span style="height:${Math.max(10,Math.min(100,e.score||50))}%"></span>`).join("");
+byId("trendBars").innerHTML=bars;
+byId("heroTrend").innerHTML=bars;
+
 const today=new Date().toISOString().slice(0,10);
-const lastDay=localStorage.getItem("cccLastVisitDay");
-if(lastDay!==today){
+if(localStorage.getItem("cccLastVisitDay")!==today){
 localStorage.setItem("cccLastVisitDay",today);
 localStorage.setItem("cccCheckinDue","yes");
 }
+
 byId("dailyBanner").textContent=(localStorage.getItem("cccCheckinDue")==="no")
-? `${p.name||"Wayne"} LeFrancois — check-in complete. Stay sharp today.`
-: `${p.name||"Wayne"} LeFrancois — today’s check-in is due.`;
+? `${name} — check-in complete. XP banked.`
+: `${name} — today's check-in is due. Earn +50 XP.`;
+
+if(localStorage.getItem("cccCheckinDue")==="no" && g.lastCheckin){
+byId("celebrateBox").textContent=`Check-in complete. Level ${level} ${rank(level)} · ${xp} XP`;
+byId("celebrateBox").classList.add("show");
+}
 
 /* TIMER */
 let t=JSON.parse(localStorage.getItem("cccFocusTimer")||"{}");
 if(!t.remaining)t.remaining=1500;
 if(!t.running)t.running=false;
 let int=null;
-
 function draw(){
 const m=Math.floor(t.remaining/60);
 const s=t.remaining%60;
@@ -285,16 +311,10 @@ byId("focusTimer").textContent=String(m).padStart(2,"0")+":"+String(s).padStart(
 byId("focusStatus").textContent=t.running?"Focus block active.":"Ready for a deep work block.";
 }
 function save(){localStorage.setItem("cccFocusTimer",JSON.stringify(t))}
-function tick(){
-if(t.remaining>0){t.remaining--;draw();save();}
-else{clearInterval(int);t.running=false;draw();save();}
-}
-function start(){
-if(t.running)return;
-t.running=true;draw();save();int=setInterval(tick,1000);
-}
-function pause(){t.running=false;clearInterval(int);draw();save();}
-function reset(){pause();t.remaining=1500;draw();save();}
+function tick(){if(t.remaining>0){t.remaining--;draw();save()}else{clearInterval(int);t.running=false;draw();save()}}
+function start(){if(t.running)return;t.running=true;draw();save();int=setInterval(tick,1000)}
+function pause(){t.running=false;clearInterval(int);draw();save()}
+function reset(){pause();t.remaining=1500;draw();save()}
 byId("startBtn").onclick=start;
 byId("pauseBtn").onclick=pause;
 byId("resetBtn").onclick=reset;
