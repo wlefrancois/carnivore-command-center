@@ -8,7 +8,7 @@
 
   .log-grid {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 380px;
+    grid-template-columns: minmax(0, 1fr) 420px;
     gap: 18px;
     align-items: start;
   }
@@ -118,6 +118,35 @@
     margin-top: 6px;
   }
 
+  .checkin-calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+    margin-top: 14px;
+  }
+
+  .checkin-day {
+    min-height: 42px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,.06);
+    background: rgba(255,255,255,.03);
+    color: var(--app-muted);
+    display: grid;
+    place-items: center;
+    font-size: 12px;
+    font-weight: 800;
+  }
+
+  .checkin-day.is-checked {
+    color: #07101d;
+    background: linear-gradient(180deg, #ff9b3f, #ff7a00);
+    box-shadow: 0 10px 24px rgba(255,122,0,.18);
+  }
+
+  .checkin-day.is-today {
+    border-color: rgba(255,122,0,.7);
+  }
+
   .entry-list {
     display: grid;
     gap: 12px;
@@ -165,7 +194,7 @@
 
 <div class="log-engine-page">
   <div class="app-pagehead">
-    <h1>Log Signals</h1>
+    <h1>Daily Check-In</h1>
     <p>Capture your real inputs. CCC turns them into readiness, recovery, and direction.</p>
   </div>
 
@@ -174,8 +203,8 @@
       <div class="badge">Daily Check-In</div>
       <h2 class="log-title">Build today’s signal set.</h2>
       <p class="log-sub">
-        This is the real engine entry point. Save sleep, mood, stress, digestion,
-        soreness, and workout status so the dashboard can respond.
+        Save sleep, mood, stress, digestion, soreness, workout status, and notes.
+        The dashboard uses this to update readiness, missions, streaks, and coaching tone.
       </p>
 
       <form id="logForm" class="log-form">
@@ -231,7 +260,7 @@
         </div>
 
         <div class="log-actions">
-          <button class="app-btn app-btn--primary" id="saveEntryBtn" type="submit">Save Entry</button>
+          <button class="app-btn app-btn--primary" id="saveEntryBtn" type="submit">Complete Check-In</button>
           <a class="app-btn" href="/app/dashboard/">Back to Dashboard</a>
         </div>
       </form>
@@ -247,22 +276,21 @@
       </p>
 
       <div style="margin-top:18px; border-top:1px solid rgba(255,255,255,.08); padding-top:18px;">
-        <div style="font-weight:800; margin-bottom:8px;">What happens next</div>
-        <div class="log-sub">
-          Saved entries will be used by the dashboard to update readiness, missions,
-          recommendation text, and coaching tone.
-        </div>
+        <div style="font-weight:800; margin-bottom:8px;">History & Streaks</div>
+
+        <div id="historyStats" style="
+          display:grid;
+          grid-template-columns:repeat(3,1fr);
+          gap:10px;
+          margin-bottom:16px;
+        "></div>
+
+        <div style="font-weight:800; margin:18px 0 8px;">30-Day Check-In Calendar</div>
+        <div id="checkinCalendar" class="checkin-calendar"></div>
       </div>
 
       <div style="margin-top:18px; border-top:1px solid rgba(255,255,255,.08); padding-top:18px;">
-        <div style="font-weight:800; margin-bottom:8px;">History & Streaks</div>
-
-<div id="historyStats" style="
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:10px;
-margin-bottom:16px;
-"></div>
+        <div style="font-weight:800; margin-bottom:8px;">Recent Entries</div>
         <div id="entryList" class="entry-list"></div>
       </div>
     </aside>
@@ -271,15 +299,15 @@ margin-bottom:16px;
 
 <script type="module">
   import {
-  getEntries,
-  addEntry,
-  buildEntry,
-  computeScore,
-  buildState,
-  formatDateTime,
-  getStreakData,
-  getAverageScore
-} from "/js/ccc-log-engine.js";
+    getEntries,
+    addEntry,
+    buildEntry,
+    computeScore,
+    buildState,
+    formatDateTime,
+    getStreakData,
+    getAverageScore
+  } from "/js/ccc-log-engine.js";
 
   const byId = (id) => document.getElementById(id);
 
@@ -298,6 +326,8 @@ margin-bottom:16px;
     previewMode: byId("previewMode"),
     previewRecommendation: byId("previewRecommendation"),
     entryList: byId("entryList"),
+    historyStats: byId("historyStats"),
+    checkinCalendar: byId("checkinCalendar"),
     workoutButtons: Array.from(document.querySelectorAll("[data-workout]"))
   };
 
@@ -329,29 +359,74 @@ margin-bottom:16px;
     els.previewRecommendation.textContent = state.recommendation;
   }
 
+  function renderCalendar() {
+    if (!els.checkinCalendar) return;
+
+    const entries = getEntries();
+
+    const checkedDates = new Set(
+      entries.map((entry) => {
+        const d = new Date(entry.ts);
+        return d.toISOString().slice(0, 10);
+      })
+    );
+
+    const today = new Date();
+    const days = [];
+
+    for (let i = 29; i >= 0; i--) {
+      const d = new Date(today);
+      d.setDate(today.getDate() - i);
+
+      const iso = d.toISOString().slice(0, 10);
+      const label = d.getDate();
+
+      const classes = [
+        "checkin-day",
+        checkedDates.has(iso) ? "is-checked" : "",
+        i === 0 ? "is-today" : ""
+      ].filter(Boolean).join(" ");
+
+      days.push(`
+        <div class="${classes}" title="${iso}">
+          ${label}
+        </div>
+      `);
+    }
+
+    els.checkinCalendar.innerHTML = days.join("");
+  }
+
+  function renderStats(entries) {
+    if (!els.historyStats) return;
+
+    const streak = getStreakData(entries);
+    const avg = getAverageScore(entries.slice(-7));
+
+    els.historyStats.innerHTML = `
+      <div class="entry-item">
+        <div class="entry-item__score">${streak.current}</div>
+        <div class="entry-item__meta">Current Streak</div>
+      </div>
+
+      <div class="entry-item">
+        <div class="entry-item__score">${streak.longest}</div>
+        <div class="entry-item__meta">Best Streak</div>
+      </div>
+
+      <div class="entry-item">
+        <div class="entry-item__score">${avg}</div>
+        <div class="entry-item__meta">7-Day Avg</div>
+      </div>
+    `;
+  }
+
   function renderEntries() {
     const entries = getEntries().slice().reverse();
-const stats = document.getElementById("historyStats");
 
-const streak = getStreakData(entries);
-const avg = getAverageScore(entries.slice(-7));
+    renderCalendar();
+    renderStats(getEntries());
 
-stats.innerHTML = `
-<div class="entry-item">
-  <div class="entry-item__score">${streak.current}</div>
-  <div class="entry-item__meta">Current Streak</div>
-</div>
-
-<div class="entry-item">
-  <div class="entry-item__score">${streak.longest}</div>
-  <div class="entry-item__meta">Best Streak</div>
-</div>
-
-<div class="entry-item">
-  <div class="entry-item__score">${avg}</div>
-  <div class="entry-item__meta">7-Day Avg</div>
-</div>
-`;
     if (!entries.length) {
       els.entryList.innerHTML = `<div class="log-hint">No entries saved yet.</div>`;
       return;
@@ -390,10 +465,14 @@ stats.innerHTML = `
 
   els.form.addEventListener("submit", (event) => {
     event.preventDefault();
+
     const entry = buildEntry(getPayload());
     addEntry(entry);
+
+    renderPreview();
     renderEntries();
-    alert("Log entry saved.");
+
+    alert("Check-In saved.");
   });
 
   renderPreview();
