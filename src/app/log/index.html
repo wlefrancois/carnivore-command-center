@@ -598,4 +598,93 @@ form.addEventListener("submit", function(){
 
 })();
 </script>
+<style>
+.reward-pop {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.reward-pop.show {
+  display: flex;
+}
+
+.reward-pop__card {
+  min-width: 280px;
+  padding: 22px 26px;
+  border-radius: 22px;
+  background: linear-gradient(180deg, rgba(12,20,34,.98), rgba(6,10,18,.98));
+  border: 1px solid rgba(255,122,0,.32);
+  box-shadow: 0 24px 80px rgba(0,0,0,.55), 0 0 42px rgba(255,122,0,.18);
+  text-align: center;
+  animation: rewardPop .38s ease both;
+}
+
+.reward-pop__xp {
+  font-size: 44px;
+  line-height: 1;
+  font-weight: 950;
+  color: #ff9b3f;
+}
+
+.reward-pop__title {
+  margin-top: 10px;
+  font-weight: 950;
+  color: #eef4ff;
+}
+
+.reward-pop__sub {
+  margin-top: 6px;
+  color: #9fb0cc;
+  font-size: 14px;
+}
+
+@keyframes rewardPop {
+  from { opacity: 0; transform: translateY(18px) scale(.92); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+</style>
+
+<div class="reward-pop" id="rewardPop">
+  <div class="reward-pop__card">
+    <div class="reward-pop__xp" id="rewardXp">+50 XP</div>
+    <div class="reward-pop__title" id="rewardTitle">Check-In Complete</div>
+    <div class="reward-pop__sub" id="rewardSub">Streak updated. Dashboard unlocked.</div>
+  </div>
+</div>
+
+<script>
+(function () {
+  const form = document.getElementById("logForm");
+  const rewardPop = document.getElementById("rewardPop");
+  const rewardSub = document.getElementById("rewardSub");
+
+  if (!form || !rewardPop) return;
+
+  form.addEventListener("submit", function () {
+    setTimeout(function () {
+      let game = {};
+      try {
+        game = JSON.parse(localStorage.getItem("cccGame") || "{}");
+      } catch {
+        game = {};
+      }
+
+      const xp = game.xp || 0;
+      const level = Math.floor(xp / 200) + 1;
+
+      rewardSub.textContent = "Level " + level + " · Total XP " + xp;
+      rewardPop.classList.add("show");
+
+      setTimeout(function () {
+        rewardPop.classList.remove("show");
+      }, 1100);
+    }, 150);
+  });
+})();
+</script>
 <!--#include file="src/app/_shell-bottom.html" -->
