@@ -1,10 +1,7 @@
 <!--#include file="src/app/_shell-top.html" -->
 
 <style>
-  .log-engine-page {
-    display: grid;
-    gap: 18px;
-  }
+  .log-engine-page { display: grid; gap: 18px; }
 
   .log-grid {
     display: grid;
@@ -37,7 +34,7 @@
 
   .log-form {
     display: grid;
-    gap: 14px;
+    gap: 16px;
     margin-top: 18px;
   }
 
@@ -55,59 +52,55 @@
   }
 
   .log-field input,
-.log-field select,
-.log-field textarea {
-  width: 100%;
-  border-radius: 14px;
-  border: 1px solid rgba(255,255,255,.08);
-  background: rgba(255,255,255,.03);
-  color: #eef4ff;
-  padding: 12px 14px;
-  outline: none;
-}
-
-/* dropdown menu styling */
-.log-field select {
-  background-color: #101826;
-  color: #eef4ff;
-}
-
-.log-field select option {
-  background-color: #101826;
-  color: #eef4ff;
-}
+  .log-field textarea {
+    width: 100%;
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,.08);
+    background: rgba(255,255,255,.04);
+    color: #eef4ff;
+    padding: 12px 14px;
+    outline: none;
   }
 
-  .log-field input[type="range"] {
-    padding: 0;
-  }
+  .log-field input[type="range"] { padding: 0; }
 
   .log-hint {
     color: var(--app-muted);
     font-size: 12px;
   }
 
-  .log-toggle-row {
+  .premium-choice-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(4, 1fr);
     gap: 10px;
   }
 
-  .log-toggle {
-    border-radius: 12px;
-    border: 1px solid rgba(255,255,255,.08);
-    background: rgba(255,255,255,.03);
-    padding: 12px 14px;
-    font-weight: 700;
-    color: var(--app-muted);
-    text-align: center;
-    cursor: pointer;
+  .premium-choice-grid.two {
+    grid-template-columns: repeat(2, 1fr);
   }
 
-  .log-toggle.is-active {
-    color: #eef4ff;
-    background: linear-gradient(180deg, rgba(255,122,0,.12), rgba(76,141,255,.06));
-    border-color: rgba(255,122,0,.16);
+  .premium-choice {
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,.08);
+    background: linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.02));
+    color: #cdd8ee;
+    padding: 12px 10px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: transform .16s ease, border-color .16s ease, background .16s ease, color .16s ease;
+  }
+
+  .premium-choice:hover {
+    transform: translateY(-1px);
+    border-color: rgba(255,122,0,.35);
+    color: #fff;
+  }
+
+  .premium-choice.is-active {
+    color: #07101d;
+    background: linear-gradient(180deg, #ffb15f, #ff7a00);
+    border-color: rgba(255,122,0,.75);
+    box-shadow: 0 12px 28px rgba(255,122,0,.18);
   }
 
   .log-actions {
@@ -155,9 +148,7 @@
     box-shadow: 0 10px 24px rgba(255,122,0,.18);
   }
 
-  .checkin-day.is-today {
-    border-color: rgba(255,122,0,.7);
-  }
+  .checkin-day.is-today { border-color: rgba(255,122,0,.7); }
 
   .entry-list {
     display: grid;
@@ -198,9 +189,8 @@
   }
 
   @media (max-width: 980px) {
-    .log-grid {
-      grid-template-columns: 1fr;
-    }
+    .log-grid { grid-template-columns: 1fr; }
+    .premium-choice-grid { grid-template-columns: repeat(2, 1fr); }
   }
 </style>
 
@@ -239,30 +229,30 @@
         </div>
 
         <div class="log-field">
-          <label for="digestion">Digestion</label>
-          <select id="digestion">
-            <option>Bad</option>
-            <option>Okay</option>
-            <option selected>Good</option>
-            <option>Great</option>
-          </select>
+          <label>Digestion</label>
+          <div class="premium-choice-grid" data-choice-group="digestion">
+            <button class="premium-choice" type="button" data-value="Bad">Bad</button>
+            <button class="premium-choice" type="button" data-value="Okay">Okay</button>
+            <button class="premium-choice is-active" type="button" data-value="Good">Good</button>
+            <button class="premium-choice" type="button" data-value="Great">Great</button>
+          </div>
         </div>
 
         <div class="log-field">
-          <label for="soreness">Soreness</label>
-          <select id="soreness">
-            <option>None</option>
-            <option selected>Mild</option>
-            <option>Medium</option>
-            <option>High</option>
-          </select>
+          <label>Soreness</label>
+          <div class="premium-choice-grid" data-choice-group="soreness">
+            <button class="premium-choice" type="button" data-value="None">None</button>
+            <button class="premium-choice is-active" type="button" data-value="Mild">Mild</button>
+            <button class="premium-choice" type="button" data-value="Medium">Medium</button>
+            <button class="premium-choice" type="button" data-value="High">High</button>
+          </div>
         </div>
 
         <div class="log-field">
           <label>Workout Yesterday</label>
-          <div class="log-toggle-row">
-            <button class="log-toggle is-active" type="button" data-workout="yes">Yes</button>
-            <button class="log-toggle" type="button" data-workout="no">No</button>
+          <div class="premium-choice-grid two" data-choice-group="workoutYesterday">
+            <button class="premium-choice is-active" type="button" data-value="yes">Yes</button>
+            <button class="premium-choice" type="button" data-value="no">No</button>
           </div>
         </div>
 
@@ -282,20 +272,11 @@
       <div class="badge">Live Preview</div>
       <div class="preview-score" id="previewScore">72</div>
       <div class="preview-mode" id="previewMode">Build Mode</div>
-      <p class="log-sub" id="previewRecommendation">
-        Good day to execute, but stay measured. Moderate training, lock in protein,
-        and protect the evening so momentum keeps building.
-      </p>
+      <p class="log-sub" id="previewRecommendation"></p>
 
       <div style="margin-top:18px; border-top:1px solid rgba(255,255,255,.08); padding-top:18px;">
         <div style="font-weight:800; margin-bottom:8px;">History & Streaks</div>
-
-        <div id="historyStats" style="
-          display:grid;
-          grid-template-columns:repeat(3,1fr);
-          gap:10px;
-          margin-bottom:16px;
-        "></div>
+        <div id="historyStats" style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:16px;"></div>
 
         <div style="font-weight:800; margin:18px 0 8px;">30-Day Check-In Calendar</div>
         <div id="checkinCalendar" class="checkin-calendar"></div>
@@ -328,8 +309,6 @@
     sleep: byId("sleep"),
     mood: byId("mood"),
     stress: byId("stress"),
-    digestion: byId("digestion"),
-    soreness: byId("soreness"),
     notes: byId("notes"),
     sleepValue: byId("sleepValue"),
     moodValue: byId("moodValue"),
@@ -339,20 +318,34 @@
     previewRecommendation: byId("previewRecommendation"),
     entryList: byId("entryList"),
     historyStats: byId("historyStats"),
-    checkinCalendar: byId("checkinCalendar"),
-    workoutButtons: Array.from(document.querySelectorAll("[data-workout]"))
+    checkinCalendar: byId("checkinCalendar")
   };
 
-  let workoutYesterday = "yes";
+  function getChoice(group) {
+    const active = document.querySelector(`[data-choice-group="${group}"] .is-active`);
+    return active?.dataset.value || "";
+  }
+
+  function bindChoiceGroups() {
+    document.querySelectorAll("[data-choice-group]").forEach((group) => {
+      group.querySelectorAll(".premium-choice").forEach((button) => {
+        button.addEventListener("click", () => {
+          group.querySelectorAll(".premium-choice").forEach((b) => b.classList.remove("is-active"));
+          button.classList.add("is-active");
+          renderPreview();
+        });
+      });
+    });
+  }
 
   function getPayload() {
     return {
       sleep: Number(els.sleep.value),
       mood: Number(els.mood.value),
       stress: Number(els.stress.value),
-      digestion: els.digestion.value,
-      soreness: els.soreness.value,
-      workoutYesterday,
+      digestion: getChoice("digestion") || "Good",
+      soreness: getChoice("soreness") || "Mild",
+      workoutYesterday: getChoice("workoutYesterday") || "yes",
       notes: els.notes.value.trim()
     };
   }
@@ -372,24 +365,14 @@
   }
 
   function renderCalendar() {
-    if (!els.checkinCalendar) return;
-
     const entries = getEntries();
-
-    const checkedDates = new Set(
-      entries.map((entry) => {
-        const d = new Date(entry.ts);
-        return d.toISOString().slice(0, 10);
-      })
-    );
-
+    const checkedDates = new Set(entries.map((entry) => new Date(entry.ts).toISOString().slice(0, 10)));
     const today = new Date();
     const days = [];
 
     for (let i = 29; i >= 0; i--) {
       const d = new Date(today);
       d.setDate(today.getDate() - i);
-
       const iso = d.toISOString().slice(0, 10);
       const label = d.getDate();
 
@@ -399,19 +382,13 @@
         i === 0 ? "is-today" : ""
       ].filter(Boolean).join(" ");
 
-      days.push(`
-        <div class="${classes}" title="${iso}">
-          ${label}
-        </div>
-      `);
+      days.push(`<div class="${classes}" title="${iso}">${label}</div>`);
     }
 
     els.checkinCalendar.innerHTML = days.join("");
   }
 
   function renderStats(entries) {
-    if (!els.historyStats) return;
-
     const streak = getStreakData(entries);
     const avg = getAverageScore(entries.slice(-7));
 
@@ -420,12 +397,10 @@
         <div class="entry-item__score">${streak.current}</div>
         <div class="entry-item__meta">Current Streak</div>
       </div>
-
       <div class="entry-item">
         <div class="entry-item__score">${streak.longest}</div>
         <div class="entry-item__meta">Best Streak</div>
       </div>
-
       <div class="entry-item">
         <div class="entry-item__score">${avg}</div>
         <div class="entry-item__meta">7-Day Avg</div>
@@ -435,7 +410,6 @@
 
   function renderEntries() {
     const entries = getEntries().slice().reverse();
-
     renderCalendar();
     renderStats(getEntries());
 
@@ -454,23 +428,14 @@
           <div class="entry-item__score">${entry.score}</div>
         </div>
         <div class="entry-item__meta">
-          Sleep ${entry.sleep}h • Mood ${entry.mood}/10 • Stress ${entry.stress}/10 • ${entry.digestion} digestion
+          Sleep ${entry.sleep}h • Mood ${entry.mood}/10 • Stress ${entry.stress}/10 • ${entry.digestion} digestion • ${entry.soreness} soreness
         </div>
         ${entry.notes ? `<div class="entry-item__notes">${entry.notes}</div>` : ""}
       </div>
     `).join("");
   }
 
-  els.workoutButtons.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      workoutYesterday = btn.dataset.workout;
-      els.workoutButtons.forEach((b) => b.classList.remove("is-active"));
-      btn.classList.add("is-active");
-      renderPreview();
-    });
-  });
-
-  [els.sleep, els.mood, els.stress, els.digestion, els.soreness, els.notes].forEach((el) => {
+  [els.sleep, els.mood, els.stress, els.notes].forEach((el) => {
     el.addEventListener("input", renderPreview);
     el.addEventListener("change", renderPreview);
   });
@@ -487,6 +452,7 @@
     alert("Check-In saved.");
   });
 
+  bindChoiceGroups();
   renderPreview();
   renderEntries();
 </script>
