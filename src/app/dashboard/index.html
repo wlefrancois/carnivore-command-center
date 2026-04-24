@@ -177,7 +177,49 @@
 </div>
 
 </section>
+<section class="bottom">
 
+<div class="card">
+<div class="eyebrow">CCC Pro Mode</div>
+<h2 class="orange">Unlock the full command system.</h2>
+<p class="sub">
+Advanced coaching, deeper analytics, nutrition planning, program automation, and long-term progress tracking.
+</p>
+
+<div class="list">
+<div class="line">🔒 Savage Metabo Advanced Coach</div>
+<div class="line">🔒 30/60/90 Day Trend Analytics</div>
+<div class="line">🔒 Nutrition Planner + Protein Targets</div>
+<div class="line">🔒 Program Builder</div>
+<div class="line">🔒 Weight + Waist Progress Tracking</div>
+</div>
+
+<a class="btn btn-primary" href="/beta/" style="margin-top:16px;">Upgrade to CCC Pro</a>
+</div>
+
+<div class="card">
+<div class="eyebrow">Free Plan</div>
+<div class="list">
+<div class="line">Daily Check-In</div>
+<div class="line">Readiness Score</div>
+<div class="line">Basic Streaks</div>
+<div class="line">Basic XP</div>
+</div>
+</div>
+
+<div class="card">
+<div class="eyebrow">Pro Preview</div>
+<h2 class="green">$9–$19/mo</h2>
+<p class="sub">
+Position this as the premium operating system for carnivore, discipline, recovery, and daily execution.
+</p>
+<div class="line">
+<strong>Founder Note:</strong><br>
+<span class="sub">Start with beta access before turning on paid billing.</span>
+</div>
+</div>
+
+</section>
 <section class="bottom">
 
 <div class="card">
@@ -307,8 +349,40 @@ else{
   coachText = `${name}, recovery signal low. Hydrate, walk, early sleep, no self-sabotage.`;
 }
 
-byId("coachTitle").textContent = coachTitle;
-byId("coachText").textContent = coachText;
+function coachAI(score, streak, avg, goal, name){
+  const trend = score - (avg || score);
+
+  if(score >= 85){
+    return {
+      title: "Attack Window",
+      text: `${name}, elite signal today. Push training, protect protein, and use this high-readiness window.`
+    };
+  }
+
+  if(score >= 70){
+    return {
+      title: "Strong Position",
+      text: `${name}, you are in a strong lane. Train with control, hit ${goal.toLowerCase()} priorities, and keep the streak alive.`
+    };
+  }
+
+  if(score >= 55){
+    return {
+      title: trend >= 0 ? "Build Momentum" : "Stabilize Today",
+      text: `${name}, this is a basics-win day. Hydrate early, keep food clean, move with intent, and do not break rhythm.`
+    };
+  }
+
+  return {
+    title: "Recovery Protocol",
+    text: `${name}, low signal today. Walk, hydrate, simplify food, and protect sleep. The win is not making tomorrow worse.`
+  };
+}
+
+const coach = coachAI(score, streak.current || 0, avg || score, goal, name);
+
+byId("coachTitle").textContent = coach.title;
+byId("coachText").textContent = coach.text;
 
 function normalizeEntryScore(entry) {
   return Math.max(10, Math.min(100, Number(entry?.score || 0)));
