@@ -107,244 +107,250 @@
     <main class="app-main">
 
 <style>
-.dashboard-v5{display:grid;gap:18px}
-.grid-top{display:grid;grid-template-columns:1.3fr .9fr;gap:18px}
-.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px}
-.panel{
-background:linear-gradient(180deg,rgba(10,16,28,.96),rgba(7,12,22,.98));
-border:1px solid rgba(70,96,152,.18);
-border-radius:22px;
-box-shadow:0 18px 60px rgba(0,0,0,.38);
-padding:22px;
-}
-.hero-title{
-font-size:52px;
-line-height:.94;
-letter-spacing:-.04em;
-font-weight:950;
-margin:0;
-}
-.sub{color:var(--app-muted);line-height:1.7}
-.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:18px}
-.kpi{
-padding:14px;border-radius:16px;
-background:rgba(255,255,255,.03);
-border:1px solid rgba(255,255,255,.06);
-}
-.kpi-label{
-font-size:10px;
-text-transform:uppercase;
-letter-spacing:.08em;
-font-weight:900;
-color:#bfd3ff;
-}
-.kpi-value{
-font-size:28px;
-font-weight:950;
-margin-top:8px;
-}
+.ccc-dash{display:grid;gap:18px;color:#eef4ff}
+.banner{padding:14px 16px;border-radius:16px;background:rgba(255,122,0,.10);border:1px solid rgba(255,122,0,.24);font-weight:900;color:#ffd7b5}
+.hero{display:grid;grid-template-columns:1.2fr .9fr 320px;gap:18px}
+.grid-main{display:grid;grid-template-columns:320px 1fr 320px;gap:18px}
+.bottom{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px}
+.card{background:linear-gradient(180deg,rgba(8,14,24,.96),rgba(6,10,18,.98));border:1px solid rgba(255,255,255,.08);border-radius:22px;padding:20px;box-shadow:0 18px 60px rgba(0,0,0,.42)}
+.eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:#ff9b3f;font-weight:900}
+.title{font-size:56px;line-height:.92;letter-spacing:-.04em;font-weight:950;margin:10px 0}
+.sub{color:#9fb0cc;line-height:1.7}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:18px}
+.kpi{padding:14px;border-radius:16px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06)}
+.kpi small{display:block;font-size:10px;color:#bfd3ff;text-transform:uppercase;font-weight:900}
+.kpi strong{display:block;font-size:30px;margin-top:8px;font-weight:950}
 .green{color:#22d07a}.orange{color:#ff9b3f}.blue{color:#6db5ff}
-.score-wrap{display:grid;grid-template-columns:240px 1fr;gap:18px;align-items:center}
-.score-ring{
-width:220px;height:220px;border-radius:50%;
-background:conic-gradient(#22d07a 0 72%,rgba(255,255,255,.06) 72% 100%);
-display:grid;place-items:center;margin:auto;
-}
-.score-inner{
-width:165px;height:165px;border-radius:50%;
-background:#08111c;
-border:1px solid rgba(255,255,255,.08);
-display:grid;place-items:center;text-align:center;
-}
-.score-big{font-size:66px;font-weight:950;line-height:.9;color:#22d07a}
-.score-mode{
-font-size:12px;
-text-transform:uppercase;
-letter-spacing:.08em;
-font-weight:900;
-color:#bfd3ff;
-}
-.stack{display:grid;gap:12px}
-.line{
-padding:14px;border-radius:16px;
-background:rgba(255,255,255,.03);
-border:1px solid rgba(255,255,255,.06);
-}
-.line strong{font-weight:900}
-.cta{
-display:inline-flex;
-padding:12px 18px;
-border-radius:14px;
-background:linear-gradient(180deg,#ffb15f,#ff7a00);
-color:#07101d;
-font-weight:900;
-text-decoration:none;
-}
-@media(max-width:1100px){
-.grid-top,.grid-3,.score-wrap{grid-template-columns:1fr}
-.kpi-row{grid-template-columns:repeat(2,1fr)}
-.hero-title{font-size:42px}
-}
+.btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 16px;border-radius:14px;font-weight:900;text-decoration:none;border:none;cursor:pointer}
+.btn-primary{background:linear-gradient(180deg,#ffb15f,#ff7a00);color:#07101d}
+.btn-dark{background:rgba(255,255,255,.04);color:#eef4ff;border:1px solid rgba(255,255,255,.08)}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.portrait{padding:0;overflow:hidden;position:relative;min-height:560px}
+.portrait img{width:100%;height:100%;object-fit:cover;display:block}
+.overlay{position:absolute;inset:auto 0 0 0;padding:18px;background:linear-gradient(180deg,transparent,rgba(0,0,0,.9))}
+.overlay h2{font-size:42px;line-height:.9;margin:0;font-weight:950}
+.metric-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.metric{font-size:34px;font-weight:950;margin-top:8px}
+.bars7{height:60px;display:grid;grid-template-columns:repeat(7,1fr);gap:6px;align-items:end;margin-top:14px}
+.bars7 span{background:linear-gradient(180deg,#3da0ff,#1267c9);border-radius:6px 6px 2px 2px}
+.list{display:grid;gap:10px;margin-top:14px}
+.line{padding:14px;border-radius:15px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06)}
+.timer{font-size:54px;font-weight:950;color:#ff9b3f;margin-top:10px}
+.trend{height:150px;display:grid;grid-template-columns:repeat(7,1fr);gap:10px;align-items:end;margin-top:16px}
+.trend span{background:linear-gradient(180deg,#22d07a,#0d7f42);border-radius:8px 8px 2px 2px}
+.ring{width:170px;height:170px;border-radius:50%;background:conic-gradient(#e95d18 0 30%,#f4b323 30% 62%,#22c55e 62% 100%);display:grid;place-items:center;margin:auto}
+.ring-in{width:112px;height:112px;border-radius:50%;background:#050b14;display:grid;place-items:center}
+.xpbar{height:14px;border-radius:999px;background:rgba(255,255,255,.08);overflow:hidden;margin-top:12px}
+.xpbar span{display:block;height:100%;width:0%;background:linear-gradient(90deg,#ff7a00,#22d07a);border-radius:999px}
+.celebrate{display:none;padding:14px;border-radius:16px;background:rgba(34,208,122,.12);border:1px solid rgba(34,208,122,.28);color:#c8ffdd;font-weight:900}
+.celebrate.show{display:block}
+@media(max-width:1200px){.hero,.grid-main,.bottom,.metric-grid{grid-template-columns:1fr}.title{font-size:42px}}
 </style>
 
-<div class="dashboard-v5">
+<div class="ccc-dash">
 
-<div class="app-pagehead">
-<h1>Personalized Dashboard</h1>
-<p>Your profile now powers nutrition, program direction, and coaching.</p>
+<div class="banner" id="dailyBanner">Loading status...</div>
+<div class="celebrate" id="celebrateBox">XP updated.</div>
+
+<section class="hero">
+
+<div class="card">
+<div class="eyebrow">Good Morning</div>
+<h1 class="title"><span id="heroName">Wayne</span>, win your next 24 hours.</h1>
+<p class="sub" id="heroMeta">Muscle Gain · Mixed · Intermediate · Home Gym</p>
+
+<div class="kpis">
+<div class="kpi"><small>Streak</small><strong class="orange" id="streakVal">0</strong></div>
+<div class="kpi"><small>7 Day Avg</small><strong class="blue" id="avgVal">0</strong></div>
+<div class="kpi"><small>Score</small><strong class="green" id="scoreVal">65</strong></div>
+<div class="kpi"><small>Level</small><strong id="levelVal">1</strong></div>
 </div>
 
-<section class="grid-top">
-
-<div class="panel">
-
-<div style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:#8af0bc;font-weight:900;">
-Founder Mode Active
-</div>
-
-<h2 class="hero-title" style="margin-top:14px;">
-<span id="heroName">Founder</span>, win your next 24 hours.
-</h2>
-
-<p class="sub" id="heroMeta">
-Fat Loss · Carnivore · Beginner
-</p>
-
-<div class="kpi-row">
-
-<div class="kpi">
-<div class="kpi-label">Current Streak</div>
-<div class="kpi-value orange" id="kpiStreak">0</div>
-</div>
-
-<div class="kpi">
-<div class="kpi-label">7 Day Avg</div>
-<div class="kpi-value blue" id="kpiAvg">0</div>
-</div>
-
-<div class="kpi">
-<div class="kpi-label">Last Score</div>
-<div class="kpi-value green" id="kpiScore">72</div>
-</div>
-
-<div class="kpi">
-<div class="kpi-label">Goal Weight</div>
-<div class="kpi-value" id="kpiGoalWeight">205</div>
-</div>
-
-</div>
-
-<div style="margin-top:18px">
-<a class="cta" href="/app/log/">Complete Today’s Check-In</a>
-</div>
-
-</div>
-
-<div class="panel">
-
-<div class="score-wrap">
-
-<div class="score-ring" id="scoreRing">
-<div class="score-inner">
-<div>
-<div class="score-big" id="scoreMain">72</div>
-<div class="score-mode" id="scoreMode">Build Mode</div>
-</div>
+<div class="row">
+<a class="btn btn-primary" href="/app/log/">Complete Today’s Check-In</a>
+<a class="btn btn-dark" href="/app/onboarding/">Edit Profile</a>
 </div>
 </div>
 
-<div class="stack">
+<div class="card">
+<div class="eyebrow">Metabo Readiness</div>
+<div style="font-size:88px;font-weight:950;color:#22d07a;line-height:.85" id="readinessBig">65</div>
+<div class="green" id="modeVal">Build Zone</div>
+<p class="sub" id="deltaText">▲ +0 vs. yesterday</p>
 
+<div class="trend" id="heroTrend"></div>
+</div>
+
+<div class="card">
+<div class="eyebrow">XP Progress</div>
+<div class="ring">
+<div class="ring-in"><div><strong id="xpLevel" style="font-size:34px">L1</strong><br><span class="sub">OPERATOR</span></div></div>
+</div>
 <div class="line">
-<strong>Primary Mission</strong><br>
-<span class="sub" id="mission1">Build momentum and execute basics.</span>
+<strong id="xpText">0 / 200 XP</strong>
+<div class="xpbar"><span id="xpFill"></span></div>
 </div>
-
-<div class="line">
-<strong>Coach Guidance</strong><br>
-<span class="sub" id="coachLine">Strong enough to win. Stay disciplined.</span>
-</div>
-
-<div class="line">
-<strong>Daily Focus</strong><br>
-<span class="sub" id="focusLine">Protein early. Walk daily. Protect sleep.</span>
-</div>
-
-</div>
-
-</div>
-
+<div class="line" id="rankText">Rank: Recruit</div>
 </div>
 
 </section>
 
-<section class="grid-3">
+<section class="grid-main">
 
-<div class="panel">
-<div class="kpi-label">Nutrition Targets</div>
+<div class="card portrait">
+<img src="/assets/img/mascot/metabo-home-hero.webp">
+<div class="overlay">
+<div class="eyebrow">Founder Built Readiness System</div>
+<h2>Discipline is freedom.</h2>
+<p class="sub">Your command center turns signals into direction.</p>
+</div>
+</div>
 
-<div class="stack" style="margin-top:14px">
+<div style="display:grid;gap:16px">
 
+<div class="metric-grid">
+
+<div class="card">
+<div class="eyebrow">Sleep</div>
+<div class="metric">7h 43m</div>
+<p class="sub">Goal: 8h</p>
+<div class="bars7"><span style="height:35%"></span><span style="height:45%"></span><span style="height:55%"></span><span style="height:65%"></span><span style="height:70%"></span><span style="height:78%"></span><span style="height:82%"></span></div>
+</div>
+
+<div class="card">
+<div class="eyebrow">Hydration</div>
+<div class="metric">88%</div>
+<p class="sub">Daily target</p>
+<div class="bars7"><span style="height:40%"></span><span style="height:50%"></span><span style="height:58%"></span><span style="height:65%"></span><span style="height:72%"></span><span style="height:78%"></span><span style="height:84%"></span></div>
+</div>
+
+<div class="card">
+<div class="eyebrow">Stress</div>
+<div class="metric">Low</div>
+<p class="sub">Recovery signal</p>
+<div class="bars7"><span style="height:18%"></span><span style="height:20%"></span><span style="height:26%"></span><span style="height:16%"></span><span style="height:36%"></span><span style="height:22%"></span><span style="height:25%"></span></div>
+</div>
+
+</div>
+
+<div class="metric-grid">
+
+<div class="card">
+<div class="eyebrow">Today’s Game Plan</div>
+<div class="list" id="missionList"></div>
+</div>
+
+<div class="card">
+<div class="eyebrow">Active Protocol</div>
+<h2 class="green" id="programName">Build Protocol</h2>
+<p class="sub" id="programText">Muscle Gain · Mixed · Intermediate</p>
+</div>
+
+<div class="card">
+<div class="eyebrow">Next Up</div>
+<h2 class="orange">Log Your Midday Check-In</h2>
+<p class="sub">Stay sharp. Stay honest.</p>
+<a class="btn btn-primary" href="/app/log/">Log Check-In</a>
+</div>
+
+</div>
+
+</div>
+
+<div class="card">
+<div class="eyebrow">Focus Mode</div>
+<div class="timer" id="focusTimer">25:00</div>
+<p class="sub" id="focusStatus">Ready for a deep work block.</p>
+
+<div class="row">
+<button class="btn btn-primary" id="startBtn">Start</button>
+<button class="btn btn-dark" id="pauseBtn">Pause</button>
+<button class="btn btn-dark" id="resetBtn">Reset</button>
+</div>
+
+<div class="eyebrow" style="margin-top:22px">Savage Metabo</div>
+<div class="line" style="margin-top:10px">
+<strong id="coachTitle">Build Protocol</strong><br>
+<span class="sub" id="coachText">Stack the basics today.</span>
+</div>
+
+<div class="eyebrow" style="margin-top:22px">Profile</div>
+<div class="list">
+<div class="line">Name: <span id="snapName">Wayne</span></div>
+<div class="line">Goal: <span id="snapGoal">Muscle Gain</span></div>
+<div class="line">Training: <span id="snapTraining">Intermediate</span></div>
+</div>
+</div>
+
+</section>
+<section class="bottom">
+
+<div class="card">
+<div class="eyebrow">CCC Pro Mode</div>
+<h2 class="orange">Unlock the full command system.</h2>
+<p class="sub">
+Advanced coaching, deeper analytics, nutrition planning, program automation, and long-term progress tracking.
+</p>
+
+<div class="list">
+<div class="line">🔒 Savage Metabo Advanced Coach</div>
+<div class="line">🔒 30/60/90 Day Trend Analytics</div>
+<div class="line">🔒 Nutrition Planner + Protein Targets</div>
+<div class="line">🔒 Program Builder</div>
+<div class="line">🔒 Weight + Waist Progress Tracking</div>
+</div>
+
+<a class="btn btn-primary" href="/beta/" style="margin-top:16px;">Upgrade to CCC Pro</a>
+</div>
+
+<div class="card">
+<div class="eyebrow">Free Plan</div>
+<div class="list">
+<div class="line">Daily Check-In</div>
+<div class="line">Readiness Score</div>
+<div class="line">Basic Streaks</div>
+<div class="line">Basic XP</div>
+</div>
+</div>
+
+<div class="card">
+<div class="eyebrow">Pro Preview</div>
+<h2 class="green">$9–$19/mo</h2>
+<p class="sub">
+Position this as the premium operating system for carnivore, discipline, recovery, and daily execution.
+</p>
 <div class="line">
-<strong>Calories</strong><br>
-<span class="sub" id="calories">2400</span>
-</div>
-
-<div class="line">
-<strong>Protein</strong><br>
-<span class="sub" id="protein">185g</span>
-</div>
-
-<div class="line">
-<strong>Water</strong><br>
-<span class="sub" id="water">3.5L</span>
-</div>
-
+<strong>Founder Note:</strong><br>
+<span class="sub">Start with beta access before turning on paid billing.</span>
 </div>
 </div>
 
-<div class="panel">
-<div class="kpi-label">Program Engine</div>
+</section>
+<section class="bottom">
 
-<div class="stack" style="margin-top:14px">
-
-<div class="line">
-<strong id="programName">Build Day</strong><br>
-<span class="sub" id="programText">Moderate training + steady momentum.</span>
-</div>
-
-<div class="line" id="program1">Lift / Strength</div>
-<div class="line" id="program2">Walk + Sunlight</div>
-<div class="line" id="program3">Recover Tonight</div>
-
+<div class="card">
+<div class="eyebrow">Gamification</div>
+<div class="list">
+<div class="line">Current Level <span style="float:right" id="gameLevel">1</span></div>
+<div class="line">Total XP <span style="float:right" id="gameXp">0</span></div>
+<div class="line">Next Level <span style="float:right" id="gameNext">200 XP</span></div>
+<div class="line">Badge <span style="float:right" id="gameBadge">Recruit</span></div>
 </div>
 </div>
 
-<div class="panel">
-<div class="kpi-label">Profile Snapshot</div>
-
-<div class="stack" style="margin-top:14px">
-
-<div class="line">
-<strong>Name</strong><br>
-<span class="sub" id="snapName">Founder</span>
+<div class="card">
+<div class="eyebrow">Real 7-Day Trend</div>
+<div class="trend" id="trendBars"></div>
+<p class="sub">Your trend is improving.</p>
 </div>
 
-<div class="line">
-<strong>Goal</strong><br>
-<span class="sub" id="snapGoal">Fat Loss</span>
-</div>
-
-<div class="line">
-<strong>Training</strong><br>
-<span class="sub" id="snapTraining">Beginner</span>
-</div>
-
-<div class="line">
-<strong>Gym Access</strong><br>
-<span class="sub" id="snapGym">Full Gym</span>
-</div>
-
+<div class="card">
+<div class="eyebrow">Recent Wins</div>
+<div class="list">
+<div class="line">Hit Protein Target</div>
+<div class="line"><span id="winStreak">0</span> Day Streak</div>
+<div class="line">Completed Check-In</div>
+<div class="line">Program Active</div>
 </div>
 </div>
 
@@ -353,124 +359,236 @@ Fat Loss · Carnivore · Beginner
 </div>
 
 <script type="module">
-import {
-getEntries,
-getStreakData,
-getAverageScore
-} from "/js/ccc-log-engine.js";
+import {getEntries,getStreakData,getAverageScore} from "/js/ccc-log-engine.js";
+const byId=(x)=>document.getElementById(x);
 
-const byId=(id)=>document.getElementById(id);
-
-function mode(score){
-if(score>=85)return "Execute";
-if(score>=70)return "Strong";
-if(score>=55)return "Build";
-return "Recover";
+function profile(){try{return JSON.parse(localStorage.getItem("cccProfile")||"{}")}catch{return{}}}
+function game(){try{return JSON.parse(localStorage.getItem("cccGame")||"{}")}catch{return{}}}
+function levelFromXp(xp){return Math.floor((xp||0)/200)+1}
+function rank(level){
+  if(level>=10) return "Apex";
+  if(level>=9) return "Warlord";
+  if(level>=8) return "Legend";
+  if(level>=7) return "Titan";
+  if(level>=6) return "Elite";
+  if(level>=5) return "Commander";
+  if(level>=4) return "Savage";
+  if(level>=3) return "Operator";
+  if(level>=2) return "Builder";
+  return "Recruit";
 }
+function mode(score){if(score>=85)return"Execute Zone";if(score>=70)return"Strong Zone";if(score>=55)return"Build Zone";return"Recover Zone"}
 
-function coach(score,goal){
-if(score>=85)return `Hot today. ${goal} target moves now. Execute.`;
-if(score>=70)return `Strong enough to win. Stay disciplined.`;
-if(score>=55)return `Build momentum through basics today.`;
-return `Recover smart. Protect tomorrow.`;
-}
-
-function nutrition(goal,weight){
-weight=Number(weight||220);
-
-if(goal==="Fat Loss"){
-return {
-cal: Math.round(weight*11),
-protein: Math.round(weight*.9)+"g",
-water:"3.8L"
-};
-}
-
-if(goal==="Muscle Gain"){
-return {
-cal: Math.round(weight*15),
-protein: Math.round(weight*1)+"g",
-water:"3.6L"
-};
-}
-
-return {
-cal: Math.round(weight*13),
-protein: Math.round(weight*.95)+"g",
-water:"3.7L"
-};
-}
-
-function program(goal,training,gym,score){
-if(score<55){
-return ["Recovery Protocol","Protect tomorrow and restore.","Walk 20 min","Hydrate","Early sleep"];
-}
-
-if(goal==="Fat Loss"){
-return ["Fat Loss Builder","Move often and train smart.","Strength circuit","Walk + Sun","Protein target"];
-}
-
-if(goal==="Muscle Gain"){
-return ["Growth Day","Train hard and eat enough.","Heavy compound lifts","Protein meals","Sleep 8h"];
-}
-
-return ["Performance Day","Output with recovery balance.","Explosive training","Mobility","High quality sleep"];
-}
-
-const profile=JSON.parse(localStorage.getItem("cccProfile")||"{}");
-
-const name=profile.name||"Founder";
-const goal=profile.goal||"Fat Loss";
-const diet=profile.diet||"Carnivore";
-const training=profile.training||"Beginner";
-const gym=profile.gym||"Full Gym";
-const weight=profile.weight||220;
-const goalWeight=profile.goalWeight||205;
-
+const p=profile();
+const g=game();
 const entries=getEntries();
 const latest=entries[entries.length-1];
-const score=latest?.score || 72;
+const prev=entries[entries.length-2];
 
+const score=latest?.score || 65;
+const prevScore=prev?.score || score;
+const delta=score-prevScore;
 const streak=getStreakData(entries);
 const avg=getAverageScore(entries.slice(-7));
+const xp=g.xp||0;
+const level=levelFromXp(xp);
+const levelBase=(level-1)*200;
+const nextLevel=level*200;
+const progress=Math.min(100,Math.round(((xp-levelBase)/200)*100));
 
-const m=mode(score);
-const nut=nutrition(goal,weight);
-const prog=program(goal,training,gym,score);
+const name=p.name || "Wayne";
+const goal=p.goal || "Muscle Gain";
+const diet=p.diet || "Mixed";
+const training=p.training || "Intermediate";
+const gym=p.gym || "Home Gym";
 
 byId("heroName").textContent=name;
-byId("heroMeta").textContent=`${goal} · ${diet} · ${training}`;
-
-byId("kpiStreak").textContent=streak.current;
-byId("kpiAvg").textContent=avg;
-byId("kpiScore").textContent=score;
-byId("kpiGoalWeight").textContent=goalWeight;
-
-byId("scoreMain").textContent=score;
-byId("scoreMode").textContent=m+" Mode";
-
-byId("mission1").textContent=`${goal}: win today through consistency.`;
-byId("coachLine").textContent=coach(score,goal);
-byId("focusLine").textContent=`${diet} nutrition + daily movement + recovery.`;
-
-byId("calories").textContent=nut.cal;
-byId("protein").textContent=nut.protein;
-byId("water").textContent=nut.water;
-
-byId("programName").textContent=prog[0];
-byId("programText").textContent=prog[1];
-byId("program1").textContent=prog[2];
-byId("program2").textContent=prog[3];
-byId("program3").textContent=prog[4];
-
 byId("snapName").textContent=name;
+byId("heroMeta").textContent=`${goal} · ${diet} · ${training} · ${gym}`;
 byId("snapGoal").textContent=goal;
 byId("snapTraining").textContent=training;
-byId("snapGym").textContent=gym;
 
-const pct=Math.max(8,Math.min(score,100));
-byId("scoreRing").style.background=
-`conic-gradient(#22d07a 0 ${pct}%, rgba(255,255,255,.06) ${pct}% 100%)`;
+byId("streakVal").textContent=streak.current||0;
+byId("avgVal").textContent=avg||0;
+byId("scoreVal").textContent=score;
+byId("readinessBig").textContent=score;
+byId("modeVal").textContent=mode(score);
+byId("deltaText").textContent=`${delta>=0?"▲ +":"▼ "}${delta} vs. yesterday`;
+byId("winStreak").textContent=streak.current||0;
+
+byId("levelVal").textContent=level;
+byId("xpLevel").textContent=`L${level}`;
+byId("xpText").textContent=`${xp} / ${nextLevel} XP`;
+byId("xpFill").style.width=progress+"%";
+byId("rankText").textContent="Rank: "+rank(level);
+byId("gameLevel").textContent=level;
+byId("gameXp").textContent=xp;
+byId("gameNext").textContent=(nextLevel-xp)+" XP";
+byId("gameBadge").textContent=rank(level);
+
+byId("missionList").innerHTML=[
+score>=70?"Controlled Training":"Moderate Training",
+"Hydrate Early",
+"Protein Target",
+"Sleep on Time"
+].map(x=>`<div class="line">${x}</div>`).join("");
+
+byId("programName").textContent=score>=70?"Strong Protocol":"Build Protocol";
+byId("programText").textContent=`${goal} · ${diet} · ${training}`;
+let coachTitle = "";
+let coachText = "";
+
+if(score >= 85){
+  coachTitle = "Attack Window";
+  coachText = `${name}, elite signal today. Push training hard and dominate the day.`;
+}
+else if(score >= 70){
+  coachTitle = "Strong Position";
+  coachText = `${name}, momentum is high. Lift, execute, stay disciplined.`;
+}
+else if(score >= 55){
+  coachTitle = "Protect Momentum";
+  coachText = `${name}, moderate day. Win nutrition, move hard enough, keep streak alive.`;
+}
+else{
+  coachTitle = "Recovery Protocol";
+  coachText = `${name}, recovery signal low. Hydrate, walk, early sleep, no self-sabotage.`;
+}
+
+function coachAI(score, streak, avg, goal, name){
+  const trend = score - (avg || score);
+
+  if(score >= 85){
+    return {
+      title: "Attack Window",
+      text: `${name}, elite signal today. Push training, protect protein, and use this high-readiness window.`
+    };
+  }
+
+  if(score >= 70){
+    return {
+      title: "Strong Position",
+      text: `${name}, you are in a strong lane. Train with control, hit ${goal.toLowerCase()} priorities, and keep the streak alive.`
+    };
+  }
+
+  if(score >= 55){
+    return {
+      title: trend >= 0 ? "Build Momentum" : "Stabilize Today",
+      text: `${name}, this is a basics-win day. Hydrate early, keep food clean, move with intent, and do not break rhythm.`
+    };
+  }
+
+  return {
+    title: "Recovery Protocol",
+    text: `${name}, low signal today. Walk, hydrate, simplify food, and protect sleep. The win is not making tomorrow worse.`
+  };
+}
+
+const coach = coachAI(score, streak.current || 0, avg || score, goal, name);
+
+byId("coachTitle").textContent = coach.title;
+byId("coachText").textContent = coach.text;
+
+function normalizeEntryScore(entry) {
+  return Math.max(10, Math.min(100, Number(entry?.score || 0)));
+}
+
+function getLastSevenScores() {
+  const real = entries
+    .filter((entry) => entry && entry.score)
+    .slice(-7);
+
+  if (real.length) return real;
+
+  return [
+    { score: 45 },
+    { score: 52 },
+    { score: 61 },
+    { score: 58 },
+    { score: 66 },
+    { score: 71 },
+    { score }
+  ];
+}
+
+function renderScoreBars(targetId, data) {
+  const el = byId(targetId);
+  if (!el) return;
+
+  el.innerHTML = data.map((entry) => {
+    const h = normalizeEntryScore(entry);
+    const label = entry?.ts
+      ? new Date(entry.ts).toLocaleDateString([], { weekday: "short" })
+      : "";
+
+    return `
+      <span
+        title="${label ? label + " · " : ""}${entry.score || 0}"
+        style="height:${h}%"
+      ></span>
+    `;
+  }).join("");
+}
+
+const barData = getLastSevenScores();
+
+renderScoreBars("trendBars", barData);
+renderScoreBars("heroTrend", barData);
+
+const scores = barData.map((entry) => Number(entry.score || 0));
+const firstScore = scores[0] || 0;
+const lastScore = scores[scores.length - 1] || 0;
+const trendDirection = lastScore - firstScore;
+
+const trendText = document.querySelector("#trendBars")?.parentElement?.querySelector(".sub");
+
+if (trendText) {
+  if (trendDirection > 0) {
+    trendText.textContent = `Your 7-day trend is up ${trendDirection} points. Keep stacking days.`;
+  } else if (trendDirection < 0) {
+    trendText.textContent = `Your 7-day trend is down ${Math.abs(trendDirection)} points. Stabilize today.`;
+  } else {
+    trendText.textContent = "Your 7-day trend is steady. Keep the streak alive.";
+  }
+}
+
+const today=new Date().toISOString().slice(0,10);
+if(localStorage.getItem("cccLastVisitDay")!==today){
+localStorage.setItem("cccLastVisitDay",today);
+localStorage.setItem("cccCheckinDue","yes");
+}
+
+byId("dailyBanner").textContent=(localStorage.getItem("cccCheckinDue")==="no")
+? `${name} — check-in complete. XP banked.`
+: `${name} — today's check-in is due. Earn +50 XP.`;
+
+if(localStorage.getItem("cccCheckinDue")==="no" && g.lastCheckin){
+byId("celebrateBox").textContent=`Check-in complete. Level ${level} ${rank(level)} · ${xp} XP`;
+byId("celebrateBox").classList.add("show");
+}
+
+/* TIMER */
+let t=JSON.parse(localStorage.getItem("cccFocusTimer")||"{}");
+if(!t.remaining)t.remaining=1500;
+if(!t.running)t.running=false;
+let int=null;
+function draw(){
+const m=Math.floor(t.remaining/60);
+const s=t.remaining%60;
+byId("focusTimer").textContent=String(m).padStart(2,"0")+":"+String(s).padStart(2,"0");
+byId("focusStatus").textContent=t.running?"Focus block active.":"Ready for a deep work block.";
+}
+function save(){localStorage.setItem("cccFocusTimer",JSON.stringify(t))}
+function tick(){if(t.remaining>0){t.remaining--;draw();save()}else{clearInterval(int);t.running=false;draw();save()}}
+function start(){if(t.running)return;t.running=true;draw();save();int=setInterval(tick,1000)}
+function pause(){t.running=false;clearInterval(int);draw();save()}
+function reset(){pause();t.remaining=1500;draw();save()}
+byId("startBtn").onclick=start;
+byId("pauseBtn").onclick=pause;
+byId("resetBtn").onclick=reset;
+draw();
+if(t.running)start();
 </script>
 
       <div class="app-minimal-footer">
