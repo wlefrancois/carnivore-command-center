@@ -1,460 +1,411 @@
 <!--#include file="src/app/_shell-top.html" -->
 
 <style>
-  .log-engine-page { display: grid; gap: 18px; }
+.log-engine-page{display:grid;gap:18px}
+.log-grid{display:grid;grid-template-columns:minmax(0,1fr) 420px;gap:18px;align-items:start}
+.log-panel{
+background:linear-gradient(180deg,rgba(10,16,28,.96),rgba(7,12,22,.98));
+border:1px solid rgba(70,96,152,.18);
+border-radius:20px;
+box-shadow:0 18px 60px rgba(0,0,0,.38);
+padding:22px;
+}
+.log-title{font-size:40px;line-height:.98;letter-spacing:-.04em;font-weight:950;margin:0}
+.log-sub{color:var(--app-muted);margin-top:8px;line-height:1.7}
+.log-form{display:grid;gap:16px;margin-top:18px}
+.log-field{display:grid;gap:8px}
+.log-field label{
+font-size:12px;
+letter-spacing:.06em;
+text-transform:uppercase;
+font-weight:800;
+color:#bfd3ff;
+}
+.log-field input,.log-field textarea{
+width:100%;
+border-radius:14px;
+border:1px solid rgba(255,255,255,.08);
+background:rgba(255,255,255,.04);
+color:#eef4ff;
+padding:12px 14px;
+outline:none;
+}
+.log-field input[type=range]{padding:0}
+.log-hint{color:var(--app-muted);font-size:12px}
 
-  .log-grid {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) 420px;
-    gap: 18px;
-    align-items: start;
-  }
+.premium-choice-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.premium-choice-grid.two{grid-template-columns:repeat(2,1fr)}
 
-  .log-panel {
-    background: linear-gradient(180deg, rgba(10,16,28,.96), rgba(7,12,22,.98));
-    border: 1px solid rgba(70,96,152,.18);
-    border-radius: 20px;
-    box-shadow: 0 18px 60px rgba(0,0,0,.38);
-    padding: 22px;
-  }
+.premium-choice{
+border-radius:14px;
+border:1px solid rgba(255,255,255,.08);
+background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.02));
+color:#cdd8ee;
+padding:12px 10px;
+font-weight:800;
+cursor:pointer;
+transition:.16s ease;
+}
 
-  .log-title {
-    font-size: 40px;
-    line-height: .98;
-    letter-spacing: -.04em;
-    font-weight: 950;
-    margin: 0;
-  }
+.premium-choice:hover{
+transform:translateY(-1px);
+border-color:rgba(255,122,0,.35);
+color:#fff;
+}
 
-  .log-sub {
-    color: var(--app-muted);
-    margin-top: 8px;
-    line-height: 1.7;
-  }
+.premium-choice.is-active{
+color:#07101d;
+background:linear-gradient(180deg,#ffb15f,#ff7a00);
+border-color:rgba(255,122,0,.75);
+box-shadow:0 12px 28px rgba(255,122,0,.18);
+}
 
-  .log-form {
-    display: grid;
-    gap: 16px;
-    margin-top: 18px;
-  }
+.log-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px}
 
-  .log-field {
-    display: grid;
-    gap: 8px;
-  }
+.save-btn{
+position:relative;
+overflow:hidden;
+transition:.18s ease;
+}
 
-  .log-field label {
-    font-size: 12px;
-    letter-spacing: .06em;
-    text-transform: uppercase;
-    font-weight: 800;
-    color: #bfd3ff;
-  }
+.save-btn.is-saving{
+transform:scale(.98);
+opacity:.9;
+}
 
-  .log-field input,
-  .log-field textarea {
-    width: 100%;
-    border-radius: 14px;
-    border: 1px solid rgba(255,255,255,.08);
-    background: rgba(255,255,255,.04);
-    color: #eef4ff;
-    padding: 12px 14px;
-    outline: none;
-  }
+.save-btn.is-success{
+background:linear-gradient(180deg,#22d07a,#16a34a)!important;
+color:#07101d!important;
+}
 
-  .log-field input[type="range"] { padding: 0; }
+.success-box{
+margin-top:14px;
+padding:14px;
+border-radius:16px;
+background:linear-gradient(180deg,rgba(34,208,122,.12),rgba(34,208,122,.04));
+border:1px solid rgba(34,208,122,.28);
+display:none;
+}
 
-  .log-hint {
-    color: var(--app-muted);
-    font-size: 12px;
-  }
+.success-box.show{display:block}
 
-  .premium-choice-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-  }
+.preview-score{font-size:56px;line-height:.9;font-weight:950;color:#22d07a}
+.preview-mode{font-size:22px;font-weight:800;margin-top:6px}
 
-  .premium-choice-grid.two {
-    grid-template-columns: repeat(2, 1fr);
-  }
+.coach-box{
+margin-top:16px;
+padding:16px;
+border-radius:18px;
+background:linear-gradient(180deg,rgba(255,122,0,.08),rgba(76,141,255,.06));
+border:1px solid rgba(255,122,0,.14);
+}
 
-  .premium-choice {
-    border-radius: 14px;
-    border: 1px solid rgba(255,255,255,.08);
-    background: linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.02));
-    color: #cdd8ee;
-    padding: 12px 10px;
-    font-weight: 800;
-    cursor: pointer;
-    transition: transform .16s ease, border-color .16s ease, background .16s ease, color .16s ease;
-  }
+.checkin-calendar{
+display:grid;
+grid-template-columns:repeat(7,1fr);
+gap:8px;
+margin-top:14px;
+}
 
-  .premium-choice:hover {
-    transform: translateY(-1px);
-    border-color: rgba(255,122,0,.35);
-    color: #fff;
-  }
+.checkin-day{
+min-height:42px;
+border-radius:12px;
+border:1px solid rgba(255,255,255,.06);
+background:rgba(255,255,255,.03);
+color:var(--app-muted);
+display:grid;
+place-items:center;
+font-size:12px;
+font-weight:800;
+}
 
-  .premium-choice.is-active {
-    color: #07101d;
-    background: linear-gradient(180deg, #ffb15f, #ff7a00);
-    border-color: rgba(255,122,0,.75);
-    box-shadow: 0 12px 28px rgba(255,122,0,.18);
-  }
+.checkin-day.is-checked{
+color:#07101d;
+background:linear-gradient(180deg,#ff9b3f,#ff7a00);
+box-shadow:0 10px 24px rgba(255,122,0,.18);
+}
 
-  .log-actions {
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-    margin-top: 8px;
-  }
+.checkin-day.is-today{border-color:rgba(255,122,0,.7)}
 
-  .preview-score {
-    font-size: 56px;
-    line-height: .9;
-    font-weight: 950;
-    color: #22d07a;
-  }
+.entry-list{display:grid;gap:12px;margin-top:16px}
 
-  .preview-mode {
-    font-size: 22px;
-    font-weight: 800;
-    margin-top: 6px;
-  }
+.entry-item{
+border:1px solid rgba(255,255,255,.06);
+background:rgba(255,255,255,.03);
+border-radius:16px;
+padding:14px;
+}
 
-  .checkin-calendar {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 8px;
-    margin-top: 14px;
-  }
+.entry-item__top{
+display:flex;
+justify-content:space-between;
+gap:12px;
+align-items:start;
+}
 
-  .checkin-day {
-    min-height: 42px;
-    border-radius: 12px;
-    border: 1px solid rgba(255,255,255,.06);
-    background: rgba(255,255,255,.03);
-    color: var(--app-muted);
-    display: grid;
-    place-items: center;
-    font-size: 12px;
-    font-weight: 800;
-  }
+.entry-item__score{font-size:28px;font-weight:900;color:#22d07a}
+.entry-item__meta{color:var(--app-muted);font-size:12px;margin-top:4px}
 
-  .checkin-day.is-checked {
-    color: #07101d;
-    background: linear-gradient(180deg, #ff9b3f, #ff7a00);
-    box-shadow: 0 10px 24px rgba(255,122,0,.18);
-  }
-
-  .checkin-day.is-today { border-color: rgba(255,122,0,.7); }
-
-  .entry-list {
-    display: grid;
-    gap: 12px;
-    margin-top: 16px;
-  }
-
-  .entry-item {
-    border: 1px solid rgba(255,255,255,.06);
-    background: rgba(255,255,255,.03);
-    border-radius: 16px;
-    padding: 14px;
-  }
-
-  .entry-item__top {
-    display: flex;
-    justify-content: space-between;
-    gap: 12px;
-    align-items: start;
-  }
-
-  .entry-item__score {
-    font-size: 28px;
-    font-weight: 900;
-    color: #22d07a;
-  }
-
-  .entry-item__meta {
-    color: var(--app-muted);
-    font-size: 12px;
-    margin-top: 4px;
-  }
-
-  .entry-item__notes {
-    margin-top: 10px;
-    color: #cdd8ee;
-    line-height: 1.6;
-  }
-
-  @media (max-width: 980px) {
-    .log-grid { grid-template-columns: 1fr; }
-    .premium-choice-grid { grid-template-columns: repeat(2, 1fr); }
-  }
+@media(max-width:980px){
+.log-grid{grid-template-columns:1fr}
+.premium-choice-grid{grid-template-columns:repeat(2,1fr)}
+}
 </style>
 
 <div class="log-engine-page">
-  <div class="app-pagehead">
-    <h1>Daily Check-In</h1>
-    <p>Capture your real inputs. CCC turns them into readiness, recovery, and direction.</p>
-  </div>
+<div class="app-pagehead">
+<h1>Daily Check-In</h1>
+<p>Build momentum daily. Save your signals and sharpen the dashboard.</p>
+</div>
 
-  <div class="log-grid">
-    <section class="log-panel">
-      <div class="badge">Daily Check-In</div>
-      <h2 class="log-title">Build today’s signal set.</h2>
-      <p class="log-sub">
-        Save sleep, mood, stress, digestion, soreness, workout status, and notes.
-        The dashboard uses this to update readiness, missions, streaks, and coaching tone.
-      </p>
+<div class="log-grid">
 
-      <form id="logForm" class="log-form">
-        <div class="log-field">
-          <label for="sleep">Sleep Hours</label>
-          <input id="sleep" type="range" min="0" max="10" step="0.5" value="7" />
-          <div class="log-hint"><span id="sleepValue">7.0</span> hours</div>
-        </div>
+<section class="log-panel">
+<div class="badge">Check-In Flow V2</div>
+<h2 class="log-title">Win today first.</h2>
+<p class="log-sub">Fast inputs. Fast score. Fast direction.</p>
 
-        <div class="log-field">
-          <label for="mood">Mood</label>
-          <input id="mood" type="range" min="1" max="10" value="8" />
-          <div class="log-hint"><span id="moodValue">8</span>/10</div>
-        </div>
+<form id="logForm" class="log-form">
 
-        <div class="log-field">
-          <label for="stress">Stress</label>
-          <input id="stress" type="range" min="1" max="10" value="3" />
-          <div class="log-hint"><span id="stressValue">3</span>/10</div>
-        </div>
+<div class="log-field">
+<label>Sleep Hours</label>
+<input id="sleep" type="range" min="0" max="10" step="0.5" value="7">
+<div class="log-hint"><span id="sleepValue">7.0</span> hours</div>
+</div>
 
-        <div class="log-field">
-          <label>Digestion</label>
-          <div class="premium-choice-grid" data-choice-group="digestion">
-            <button class="premium-choice" type="button" data-value="Bad">Bad</button>
-            <button class="premium-choice" type="button" data-value="Okay">Okay</button>
-            <button class="premium-choice is-active" type="button" data-value="Good">Good</button>
-            <button class="premium-choice" type="button" data-value="Great">Great</button>
-          </div>
-        </div>
+<div class="log-field">
+<label>Mood</label>
+<input id="mood" type="range" min="1" max="10" value="8">
+<div class="log-hint"><span id="moodValue">8</span>/10</div>
+</div>
 
-        <div class="log-field">
-          <label>Soreness</label>
-          <div class="premium-choice-grid" data-choice-group="soreness">
-            <button class="premium-choice" type="button" data-value="None">None</button>
-            <button class="premium-choice is-active" type="button" data-value="Mild">Mild</button>
-            <button class="premium-choice" type="button" data-value="Medium">Medium</button>
-            <button class="premium-choice" type="button" data-value="High">High</button>
-          </div>
-        </div>
+<div class="log-field">
+<label>Stress</label>
+<input id="stress" type="range" min="1" max="10" value="3">
+<div class="log-hint"><span id="stressValue">3</span>/10</div>
+</div>
 
-        <div class="log-field">
-          <label>Workout Yesterday</label>
-          <div class="premium-choice-grid two" data-choice-group="workoutYesterday">
-            <button class="premium-choice is-active" type="button" data-value="yes">Yes</button>
-            <button class="premium-choice" type="button" data-value="no">No</button>
-          </div>
-        </div>
+<div class="log-field">
+<label>Digestion</label>
+<div class="premium-choice-grid" data-choice-group="digestion">
+<button type="button" class="premium-choice" data-value="Bad">Bad</button>
+<button type="button" class="premium-choice" data-value="Okay">Okay</button>
+<button type="button" class="premium-choice is-active" data-value="Good">Good</button>
+<button type="button" class="premium-choice" data-value="Great">Great</button>
+</div>
+</div>
 
-        <div class="log-field">
-          <label for="notes">Notes</label>
-          <textarea id="notes" rows="4" placeholder="Anything important today? Recovery, cravings, travel, sickness, wins, etc."></textarea>
-        </div>
+<div class="log-field">
+<label>Soreness</label>
+<div class="premium-choice-grid" data-choice-group="soreness">
+<button type="button" class="premium-choice" data-value="None">None</button>
+<button type="button" class="premium-choice is-active" data-value="Mild">Mild</button>
+<button type="button" class="premium-choice" data-value="Medium">Medium</button>
+<button type="button" class="premium-choice" data-value="High">High</button>
+</div>
+</div>
 
-        <div class="log-actions">
-          <button class="app-btn app-btn--primary" id="saveEntryBtn" type="submit">Complete Check-In</button>
-          <a class="app-btn" href="/app/dashboard/">Back to Dashboard</a>
-        </div>
-      </form>
-    </section>
+<div class="log-field">
+<label>Workout Yesterday</label>
+<div class="premium-choice-grid two" data-choice-group="workoutYesterday">
+<button type="button" class="premium-choice is-active" data-value="yes">Yes</button>
+<button type="button" class="premium-choice" data-value="no">No</button>
+</div>
+</div>
 
-    <aside class="log-panel">
-      <div class="badge">Live Preview</div>
-      <div class="preview-score" id="previewScore">72</div>
-      <div class="preview-mode" id="previewMode">Build Mode</div>
-      <p class="log-sub" id="previewRecommendation"></p>
+<div class="log-field">
+<label>Notes</label>
+<textarea id="notes" rows="4" placeholder="wins, cravings, stress, travel, recovery..."></textarea>
+</div>
 
-      <div style="margin-top:18px; border-top:1px solid rgba(255,255,255,.08); padding-top:18px;">
-        <div style="font-weight:800; margin-bottom:8px;">History & Streaks</div>
-        <div id="historyStats" style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:16px;"></div>
+<div class="log-actions">
+<button class="app-btn app-btn--primary save-btn" id="saveBtn" type="submit">Complete Check-In</button>
+<a class="app-btn" href="/app/dashboard/">Dashboard</a>
+</div>
 
-        <div style="font-weight:800; margin:18px 0 8px;">30-Day Check-In Calendar</div>
-        <div id="checkinCalendar" class="checkin-calendar"></div>
-      </div>
+<div class="success-box" id="successBox">
+<strong>Check-In Saved.</strong><br>
+Streak updated. Redirecting to dashboard...
+</div>
 
-      <div style="margin-top:18px; border-top:1px solid rgba(255,255,255,.08); padding-top:18px;">
-        <div style="font-weight:800; margin-bottom:8px;">Recent Entries</div>
-        <div id="entryList" class="entry-list"></div>
-      </div>
-    </aside>
-  </div>
+</form>
+</section>
+
+<aside class="log-panel">
+<div class="badge">Live Preview</div>
+<div class="preview-score" id="previewScore">72</div>
+<div class="preview-mode" id="previewMode">Build Mode</div>
+<p class="log-sub" id="previewText"></p>
+
+<div class="coach-box">
+<div style="font-weight:900;margin-bottom:8px;">Savage Metabo</div>
+<div id="coachReaction">Good start. Stack another win before noon.</div>
+</div>
+
+<div style="margin-top:18px;border-top:1px solid rgba(255,255,255,.08);padding-top:18px;">
+<div style="font-weight:800;margin-bottom:8px;">30-Day Calendar</div>
+<div id="calendar" class="checkin-calendar"></div>
+</div>
+
+<div style="margin-top:18px;border-top:1px solid rgba(255,255,255,.08);padding-top:18px;">
+<div style="font-weight:800;margin-bottom:8px;">Recent Entries</div>
+<div id="entryList" class="entry-list"></div>
+</div>
+
+</aside>
+
+</div>
 </div>
 
 <script type="module">
-  import {
-    getEntries,
-    addEntry,
-    buildEntry,
-    computeScore,
-    buildState,
-    formatDateTime,
-    getStreakData,
-    getAverageScore
-  } from "/js/ccc-log-engine.js";
+import {
+getEntries,
+addEntry,
+buildEntry,
+computeScore,
+buildState,
+formatDateTime
+} from "/js/ccc-log-engine.js";
 
-  const byId = (id) => document.getElementById(id);
+const byId=(id)=>document.getElementById(id);
 
-  const els = {
-    form: byId("logForm"),
-    sleep: byId("sleep"),
-    mood: byId("mood"),
-    stress: byId("stress"),
-    notes: byId("notes"),
-    sleepValue: byId("sleepValue"),
-    moodValue: byId("moodValue"),
-    stressValue: byId("stressValue"),
-    previewScore: byId("previewScore"),
-    previewMode: byId("previewMode"),
-    previewRecommendation: byId("previewRecommendation"),
-    entryList: byId("entryList"),
-    historyStats: byId("historyStats"),
-    checkinCalendar: byId("checkinCalendar")
-  };
+const els={
+form:byId("logForm"),
+sleep:byId("sleep"),
+mood:byId("mood"),
+stress:byId("stress"),
+notes:byId("notes"),
+sleepValue:byId("sleepValue"),
+moodValue:byId("moodValue"),
+stressValue:byId("stressValue"),
+previewScore:byId("previewScore"),
+previewMode:byId("previewMode"),
+previewText:byId("previewText"),
+coachReaction:byId("coachReaction"),
+calendar:byId("calendar"),
+entryList:byId("entryList"),
+saveBtn:byId("saveBtn"),
+successBox:byId("successBox")
+};
 
-  function getChoice(group) {
-    const active = document.querySelector(`[data-choice-group="${group}"] .is-active`);
-    return active?.dataset.value || "";
-  }
+function activeChoice(group){
+return document.querySelector(`[data-choice-group="${group}"] .is-active`)?.dataset.value || "";
+}
 
-  function bindChoiceGroups() {
-    document.querySelectorAll("[data-choice-group]").forEach((group) => {
-      group.querySelectorAll(".premium-choice").forEach((button) => {
-        button.addEventListener("click", () => {
-          group.querySelectorAll(".premium-choice").forEach((b) => b.classList.remove("is-active"));
-          button.classList.add("is-active");
-          renderPreview();
-        });
-      });
-    });
-  }
+document.querySelectorAll("[data-choice-group]").forEach(group=>{
+group.querySelectorAll(".premium-choice").forEach(btn=>{
+btn.onclick=()=>{
+group.querySelectorAll(".premium-choice").forEach(b=>b.classList.remove("is-active"));
+btn.classList.add("is-active");
+renderPreview();
+};
+});
+});
 
-  function getPayload() {
-    return {
-      sleep: Number(els.sleep.value),
-      mood: Number(els.mood.value),
-      stress: Number(els.stress.value),
-      digestion: getChoice("digestion") || "Good",
-      soreness: getChoice("soreness") || "Mild",
-      workoutYesterday: getChoice("workoutYesterday") || "yes",
-      notes: els.notes.value.trim()
-    };
-  }
+function payload(){
+return{
+sleep:Number(els.sleep.value),
+mood:Number(els.mood.value),
+stress:Number(els.stress.value),
+digestion:activeChoice("digestion"),
+soreness:activeChoice("soreness"),
+workoutYesterday:activeChoice("workoutYesterday"),
+notes:els.notes.value.trim()
+};
+}
 
-  function renderPreview() {
-    els.sleepValue.textContent = Number(els.sleep.value).toFixed(1);
-    els.moodValue.textContent = els.mood.value;
-    els.stressValue.textContent = els.stress.value;
+function coachLine(score){
+if(score>=85)return"Hot today. Stop negotiating. Execute hard.";
+if(score>=70)return"Strong enough to win. Keep standards high.";
+if(score>=55)return"Solid rebuild day. Stay disciplined.";
+return"Low fuel today. Recover smart and protect momentum.";
+}
 
-    const payload = getPayload();
-    const score = computeScore(payload);
-    const state = buildState(score);
+function renderPreview(){
+els.sleepValue.textContent=Number(els.sleep.value).toFixed(1);
+els.moodValue.textContent=els.mood.value;
+els.stressValue.textContent=els.stress.value;
 
-    els.previewScore.textContent = score;
-    els.previewMode.textContent = `${state.mode} Mode`;
-    els.previewRecommendation.textContent = state.recommendation;
-  }
+const score=computeScore(payload());
+const state=buildState(score);
 
-  function renderCalendar() {
-    const entries = getEntries();
-    const checkedDates = new Set(entries.map((entry) => new Date(entry.ts).toISOString().slice(0, 10)));
-    const today = new Date();
-    const days = [];
+els.previewScore.textContent=score;
+els.previewMode.textContent=state.mode+" Mode";
+els.previewText.textContent=state.recommendation;
+els.coachReaction.textContent=coachLine(score);
+}
 
-    for (let i = 29; i >= 0; i--) {
-      const d = new Date(today);
-      d.setDate(today.getDate() - i);
-      const iso = d.toISOString().slice(0, 10);
-      const label = d.getDate();
+function renderCalendar(){
+const entries=getEntries();
+const set=new Set(entries.map(e=>new Date(e.ts).toISOString().slice(0,10)));
+const today=new Date();
+let html="";
 
-      const classes = [
-        "checkin-day",
-        checkedDates.has(iso) ? "is-checked" : "",
-        i === 0 ? "is-today" : ""
-      ].filter(Boolean).join(" ");
+for(let i=29;i>=0;i--){
+const d=new Date(today);
+d.setDate(today.getDate()-i);
+const iso=d.toISOString().slice(0,10);
 
-      days.push(`<div class="${classes}" title="${iso}">${label}</div>`);
-    }
+html+=`<div class="checkin-day ${set.has(iso)?"is-checked":""} ${i===0?"is-today":""}">${d.getDate()}</div>`;
+}
 
-    els.checkinCalendar.innerHTML = days.join("");
-  }
+els.calendar.innerHTML=html;
+}
 
-  function renderStats(entries) {
-    const streak = getStreakData(entries);
-    const avg = getAverageScore(entries.slice(-7));
+function renderEntries(){
+const items=getEntries().slice().reverse().slice(0,5);
 
-    els.historyStats.innerHTML = `
-      <div class="entry-item">
-        <div class="entry-item__score">${streak.current}</div>
-        <div class="entry-item__meta">Current Streak</div>
-      </div>
-      <div class="entry-item">
-        <div class="entry-item__score">${streak.longest}</div>
-        <div class="entry-item__meta">Best Streak</div>
-      </div>
-      <div class="entry-item">
-        <div class="entry-item__score">${avg}</div>
-        <div class="entry-item__meta">7-Day Avg</div>
-      </div>
-    `;
-  }
+if(!items.length){
+els.entryList.innerHTML=`<div class="log-hint">No entries yet.</div>`;
+return;
+}
 
-  function renderEntries() {
-    const entries = getEntries().slice().reverse();
-    renderCalendar();
-    renderStats(getEntries());
+els.entryList.innerHTML=items.map(e=>`
+<div class="entry-item">
+<div class="entry-item__top">
+<div>
+<div style="font-weight:800;">${e.mode} Mode</div>
+<div class="entry-item__meta">${formatDateTime(e.ts)}</div>
+</div>
+<div class="entry-item__score">${e.score}</div>
+</div>
+</div>
+`).join("");
+}
 
-    if (!entries.length) {
-      els.entryList.innerHTML = `<div class="log-hint">No entries saved yet.</div>`;
-      return;
-    }
+[els.sleep,els.mood,els.stress,els.notes].forEach(el=>{
+el.oninput=renderPreview;
+el.onchange=renderPreview;
+});
 
-    els.entryList.innerHTML = entries.slice(0, 6).map((entry) => `
-      <div class="entry-item">
-        <div class="entry-item__top">
-          <div>
-            <div style="font-weight:800;">${entry.mode} Mode</div>
-            <div class="entry-item__meta">${formatDateTime(entry.ts)}</div>
-          </div>
-          <div class="entry-item__score">${entry.score}</div>
-        </div>
-        <div class="entry-item__meta">
-          Sleep ${entry.sleep}h • Mood ${entry.mood}/10 • Stress ${entry.stress}/10 • ${entry.digestion} digestion • ${entry.soreness} soreness
-        </div>
-        ${entry.notes ? `<div class="entry-item__notes">${entry.notes}</div>` : ""}
-      </div>
-    `).join("");
-  }
+els.form.onsubmit=(ev)=>{
+ev.preventDefault();
 
-  [els.sleep, els.mood, els.stress, els.notes].forEach((el) => {
-    el.addEventListener("input", renderPreview);
-    el.addEventListener("change", renderPreview);
-  });
+els.saveBtn.classList.add("is-saving");
 
-  els.form.addEventListener("submit", (event) => {
-    event.preventDefault();
+setTimeout(()=>{
+const entry=buildEntry(payload());
+addEntry(entry);
 
-    const entry = buildEntry(getPayload());
-    addEntry(entry);
+els.saveBtn.classList.remove("is-saving");
+els.saveBtn.classList.add("is-success");
+els.saveBtn.textContent="Saved ✓";
 
-    renderPreview();
-    renderEntries();
+els.successBox.classList.add("show");
 
-    alert("Check-In saved.");
-  });
+renderCalendar();
+renderEntries();
 
-  bindChoiceGroups();
-  renderPreview();
-  renderEntries();
+setTimeout(()=>{
+window.location.href="/app/dashboard/";
+},1500);
+
+},600);
+};
+
+renderPreview();
+renderCalendar();
+renderEntries();
 </script>
 
 <!--#include file="src/app/_shell-bottom.html" -->
