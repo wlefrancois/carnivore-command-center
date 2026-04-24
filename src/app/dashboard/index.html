@@ -1,370 +1,598 @@
 <!--#include file="src/app/_shell-top.html" -->
 
 <style>
-.dashboard-v5{display:grid;gap:18px}
-.grid-top{display:grid;grid-template-columns:1.3fr .9fr;gap:18px}
-.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px}
-.panel{
-background:linear-gradient(180deg,rgba(10,16,28,.96),rgba(7,12,22,.98));
-border:1px solid rgba(70,96,152,.18);
-border-radius:22px;
-box-shadow:0 18px 60px rgba(0,0,0,.38);
-padding:22px;
-}
-.hero-title{
-font-size:52px;
-line-height:.94;
-letter-spacing:-.04em;
-font-weight:950;
-margin:0;
-}
-.sub{color:var(--app-muted);line-height:1.7}
-.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:18px}
-.kpi{
-padding:14px;border-radius:16px;
-background:rgba(255,255,255,.03);
-border:1px solid rgba(255,255,255,.06);
-}
-.kpi-label{
-font-size:10px;
-text-transform:uppercase;
-letter-spacing:.08em;
-font-weight:900;
-color:#bfd3ff;
-}
-.kpi-value{
-font-size:28px;
-font-weight:950;
-margin-top:8px;
-}
-.green{color:#22d07a}.orange{color:#ff9b3f}.blue{color:#6db5ff}
-.score-wrap{display:grid;grid-template-columns:240px 1fr;gap:18px;align-items:center}
-.score-ring{
-width:220px;height:220px;border-radius:50%;
-background:conic-gradient(#22d07a 0 72%,rgba(255,255,255,.06) 72% 100%);
-display:grid;place-items:center;margin:auto;
-}
-.score-inner{
-width:165px;height:165px;border-radius:50%;
-background:#08111c;
-border:1px solid rgba(255,255,255,.08);
-display:grid;place-items:center;text-align:center;
-}
-.score-big{font-size:66px;font-weight:950;line-height:.9;color:#22d07a}
-.score-mode{
-font-size:12px;
-text-transform:uppercase;
-letter-spacing:.08em;
-font-weight:900;
-color:#bfd3ff;
-}
-.stack{display:grid;gap:12px}
-.line{
-padding:14px;border-radius:16px;
-background:rgba(255,255,255,.03);
-border:1px solid rgba(255,255,255,.06);
-}
-.line strong{font-weight:900}
-.cta{
-display:inline-flex;
-padding:12px 18px;
-border-radius:14px;
-background:linear-gradient(180deg,#ffb15f,#ff7a00);
-color:#07101d;
-font-weight:900;
-text-decoration:none;
-}
-@media(max-width:1100px){
-.grid-top,.grid-3,.score-wrap{grid-template-columns:1fr}
-.kpi-row{grid-template-columns:repeat(2,1fr)}
-.hero-title{font-size:42px}
-}
+  .cinematic-dashboard {
+    --panel: rgba(5, 10, 18, .92);
+    --panel2: rgba(8, 14, 24, .96);
+    --line: rgba(255,255,255,.08);
+    --muted: #9fb0cc;
+    --text: #f1f5ff;
+    --orange: #ff7a00;
+    --orange2: #ff9b3f;
+    --green: #21d66b;
+    --blue: #2388ff;
+    display: grid;
+    gap: 16px;
+  }
+
+  .cinematic-dashboard * { box-sizing: border-box; }
+
+  .dash-hero {
+    display: grid;
+    grid-template-columns: 1.05fr 1fr 220px;
+    gap: 16px;
+  }
+
+  .dash-grid {
+    display: grid;
+    grid-template-columns: 320px 1fr 320px;
+    gap: 16px;
+  }
+
+  .dash-bottom {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+  }
+
+  .card {
+    background: linear-gradient(180deg, var(--panel), var(--panel2));
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 18px;
+    box-shadow: 0 18px 60px rgba(0,0,0,.42);
+  }
+
+  .hero-card {
+    min-height: 280px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-title {
+    font-size: 54px;
+    line-height: .92;
+    letter-spacing: -.05em;
+    margin: 0;
+    font-weight: 950;
+  }
+
+  .muted { color: var(--muted); }
+
+  .eyebrow {
+    color: var(--orange2);
+    font-size: 12px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+  }
+
+  .kpis {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-top: 18px;
+  }
+
+  .kpi {
+    border: 1px solid var(--line);
+    background: rgba(255,255,255,.035);
+    border-radius: 14px;
+    padding: 12px;
+  }
+
+  .kpi-label {
+    font-size: 10px;
+    color: #bad0ff;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    font-weight: 900;
+  }
+
+  .kpi-value {
+    font-size: 28px;
+    font-weight: 950;
+    margin-top: 6px;
+  }
+
+  .orange { color: var(--orange2); }
+  .green { color: var(--green); }
+  .blue { color: #62adff; }
+
+  .portrait {
+    min-height: 560px;
+    background: #05070b;
+    padding: 0;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .portrait img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+  }
+
+  .portrait-overlay {
+    position: absolute;
+    inset: auto 0 0 0;
+    padding: 18px;
+    background: linear-gradient(180deg, transparent, rgba(0,0,0,.88));
+  }
+
+  .portrait-overlay h2 {
+    font-size: 38px;
+    line-height: .9;
+    margin: 0;
+    font-weight: 950;
+  }
+
+  .score-card {
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    gap: 16px;
+    align-items: center;
+  }
+
+  .score {
+    font-size: 82px;
+    line-height: .85;
+    font-weight: 950;
+    color: var(--green);
+  }
+
+  .spark {
+    height: 140px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 10px;
+    background: rgba(255,255,255,.02);
+  }
+
+  .bar-meter {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 4px;
+    margin-top: 12px;
+  }
+
+  .bar-meter span {
+    height: 14px;
+    border-radius: 6px;
+    background: linear-gradient(90deg,#dc2626,#f97316,#facc15,#22c55e,#be123c);
+  }
+
+  .metric-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .metric-value {
+    font-size: 30px;
+    font-weight: 950;
+    margin-top: 8px;
+  }
+
+  .mini-bars {
+    height: 58px;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 6px;
+    align-items: end;
+    margin-top: 16px;
+  }
+
+  .mini-bars span {
+    border-radius: 6px 6px 2px 2px;
+    background: linear-gradient(180deg,#3da0ff,#1267c9);
+  }
+
+  .mission-list,
+  .win-list {
+    display: grid;
+    gap: 10px;
+  }
+
+  .mission {
+    display: flex;
+    gap: 10px;
+    align-items: start;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255,255,255,.06);
+  }
+
+  .mission:last-child { border-bottom: 0; }
+
+  .check {
+    width: 18px;
+    height: 18px;
+    border-radius: 5px;
+    border: 1px solid rgba(33,214,107,.45);
+    background: rgba(33,214,107,.14);
+    flex: 0 0 18px;
+    margin-top: 2px;
+  }
+
+  .focus-time {
+    font-size: 46px;
+    font-weight: 950;
+    color: var(--orange2);
+    margin-top: 18px;
+  }
+
+  .btn-orange {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 13px 18px;
+    border-radius: 12px;
+    background: linear-gradient(180deg,#ffad55,#ff7a00);
+    color: #08101d;
+    font-weight: 950;
+    text-decoration: none;
+    margin-top: 14px;
+  }
+
+  .ring {
+    width: 170px;
+    height: 170px;
+    border-radius: 50%;
+    background: conic-gradient(#e95d18 0 30%, #f4b323 30% 62%, #22c55e 62% 100%);
+    display: grid;
+    place-items: center;
+    margin: 10px auto 14px;
+  }
+
+  .ring-inner {
+    width: 112px;
+    height: 112px;
+    border-radius: 50%;
+    background: #050b14;
+    display: grid;
+    place-items: center;
+    text-align: center;
+  }
+
+  .trend-bars {
+    height: 150px;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+    align-items: end;
+    margin-top: 12px;
+  }
+
+  .trend-bars span {
+    min-height: 8px;
+    border-radius: 8px 8px 2px 2px;
+    background: linear-gradient(180deg,var(--green),#0d7f42);
+  }
+
+  @media(max-width:1200px) {
+    .dash-hero,
+    .dash-grid,
+    .dash-bottom,
+    .metric-grid {
+      grid-template-columns: 1fr;
+    }
+    .hero-title { font-size: 42px; }
+    .portrait { min-height: 420px; }
+  }
 </style>
 
-<div class="dashboard-v5">
+<div class="cinematic-dashboard">
 
-<div class="app-pagehead">
-<h1>Personalized Dashboard</h1>
-<p>Your profile now powers nutrition, program direction, and coaching.</p>
-</div>
+  <section class="dash-hero">
+    <article class="card hero-card">
+      <div class="eyebrow">Good Morning</div>
+      <h1 class="hero-title"><span id="heroName">Wayne</span>, win your next 24 hours.</h1>
+      <p class="muted" id="heroMeta">Carnivore · Fat Loss · Intermediate · Full Gym</p>
 
-<section class="grid-top">
+      <div class="kpis">
+        <div class="kpi">
+          <div class="kpi-label">Current Streak</div>
+          <div class="kpi-value orange" id="streakVal">0</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">7 Day Avg</div>
+          <div class="kpi-value blue" id="avgVal">0</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">Last Score</div>
+          <div class="kpi-value green" id="lastScoreVal">0</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">Goal Weight</div>
+          <div class="kpi-value" id="goalWeightVal">205</div>
+        </div>
+      </div>
 
-<div class="panel">
+      <a class="btn-orange" href="/app/log/">Complete Today’s Check-In</a>
+      <span class="muted" id="lastCheckin" style="margin-left:18px;">Last Check-In: Loading...</span>
+    </article>
 
-<div style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:#8af0bc;font-weight:900;">
-Founder Mode Active
-</div>
+    <article class="card score-card">
+      <div>
+        <div class="eyebrow">Metabo Readiness</div>
+        <div class="score" id="scoreMain">87</div>
+        <div class="green" style="font-weight:900;text-transform:uppercase;" id="modeMain">Optimal Zone</div>
+        <div class="muted" id="deltaText">▲ 0 vs. yesterday</div>
+      </div>
 
-<h2 class="hero-title" style="margin-top:14px;">
-<span id="heroName">Founder</span>, win your next 24 hours.
-</h2>
+      <div>
+        <div class="spark">
+          <svg viewBox="0 0 260 130" width="100%" height="100%" fill="none">
+            <path d="M8 112H252M8 82H252M8 52H252M8 22H252" stroke="rgba(255,255,255,.07)"/>
+            <path id="sparkPath" d="M15 95L55 82L95 66L135 48L175 58L215 40L250 24" stroke="#21d66b" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle id="sparkDot" cx="250" cy="24" r="5" fill="#21d66b"/>
+          </svg>
+        </div>
+        <div class="bar-meter"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+      </div>
+    </article>
 
-<p class="sub" id="heroMeta">
-Fat Loss · Carnivore · Beginner
-</p>
+    <article class="card">
+      <div class="eyebrow">Macros</div>
+      <div class="ring">
+        <div class="ring-inner">
+          <div>
+            <strong id="calVal" style="font-size:28px;">2500</strong><br>
+            <span class="muted">CAL</span>
+          </div>
+        </div>
+      </div>
+      <div class="mission-list">
+        <div class="mission"><span class="check"></span><div><strong>Protein</strong><br><span class="muted" id="proteinVal">185g</span></div></div>
+        <div class="mission"><span class="check"></span><div><strong>Water</strong><br><span class="muted" id="waterVal">3.5L</span></div></div>
+        <div class="mission"><span class="check"></span><div><strong>Diet Style</strong><br><span class="muted" id="dietVal">Carnivore</span></div></div>
+      </div>
+    </article>
+  </section>
 
-<div class="kpi-row">
+  <section class="dash-grid">
+    <article class="card portrait">
+      <img src="/assets/img/mascot/metabo-home-hero.webp" alt="CCC Metabo">
+      <div class="portrait-overlay">
+        <div class="eyebrow">Founder Built System</div>
+        <h2>Discipline is freedom.</h2>
+        <p class="muted">Your command center turns signals into direction.</p>
+      </div>
+    </article>
 
-<div class="kpi">
-<div class="kpi-label">Current Streak</div>
-<div class="kpi-value orange" id="kpiStreak">0</div>
-</div>
+    <div class="stack" style="display:grid;gap:16px;">
+      <div class="metric-grid">
+        <article class="card">
+          <div class="eyebrow">Sleep</div>
+          <div class="metric-value">7h 43m</div>
+          <p class="muted">Goal: 8h</p>
+          <div class="mini-bars"><span style="height:35%"></span><span style="height:45%"></span><span style="height:55%"></span><span style="height:65%"></span><span style="height:70%"></span><span style="height:78%"></span><span style="height:82%"></span></div>
+        </article>
 
-<div class="kpi">
-<div class="kpi-label">7 Day Avg</div>
-<div class="kpi-value blue" id="kpiAvg">0</div>
-</div>
+        <article class="card">
+          <div class="eyebrow">Hydration</div>
+          <div class="metric-value">88%</div>
+          <p class="muted">Daily target</p>
+          <div class="mini-bars"><span style="height:40%"></span><span style="height:50%"></span><span style="height:58%"></span><span style="height:65%"></span><span style="height:72%"></span><span style="height:78%"></span><span style="height:84%"></span></div>
+        </article>
 
-<div class="kpi">
-<div class="kpi-label">Last Score</div>
-<div class="kpi-value green" id="kpiScore">72</div>
-</div>
+        <article class="card">
+          <div class="eyebrow">Stress</div>
+          <div class="metric-value" id="stressLabel">Low</div>
+          <p class="muted">Recovery signal</p>
+          <div class="spark">
+            <svg viewBox="0 0 260 130" width="100%" height="100%" fill="none">
+              <path d="M10 92L50 88L90 74L130 96L170 50L210 82L250 72" stroke="#21d66b" stroke-width="4" fill="none" stroke-linecap="round"/>
+            </svg>
+          </div>
+        </article>
+      </div>
 
-<div class="kpi">
-<div class="kpi-label">Goal Weight</div>
-<div class="kpi-value" id="kpiGoalWeight">205</div>
-</div>
+      <div class="metric-grid">
+        <article class="card">
+          <div class="eyebrow">Today’s Game Plan</div>
+          <div class="mission-list">
+            <div class="mission"><span class="check"></span><strong id="mission1">Hydrate Early</strong></div>
+            <div class="mission"><span class="check"></span><strong id="mission2">Deep Work 90 Min</strong></div>
+            <div class="mission"><span class="check"></span><strong id="mission3">Protein Target</strong></div>
+            <div class="mission"><span class="check"></span><strong id="mission4">Protect Sleep</strong></div>
+          </div>
+        </article>
 
-</div>
+        <article class="card">
+          <div class="eyebrow">Active Protocol</div>
+          <h2 class="green" id="programName">Build Protocol</h2>
+          <p class="muted" id="programText">Progress today. Protect tomorrow.</p>
+          <div class="ring" style="width:120px;height:120px;">
+            <div class="ring-inner" style="width:82px;height:82px;">
+              <strong id="protocolPct">68%</strong>
+            </div>
+          </div>
+        </article>
 
-<div style="margin-top:18px">
-<a class="cta" href="/app/log/">Complete Today’s Check-In</a>
-</div>
+        <article class="card">
+          <div class="eyebrow">Next Up</div>
+          <h2 class="orange">Log Your Midday Check-In</h2>
+          <p class="muted">Stay sharp. Stay honest. 2:00 PM</p>
+          <a class="btn-orange" href="/app/log/">Log Check-In</a>
+        </article>
+      </div>
+    </div>
 
-</div>
+    <aside class="card">
+      <div class="eyebrow">Focus Mode</div>
+      <div class="focus-time">1:42:17</div>
+      <a class="btn-orange" href="#">Start Focus</a>
 
-<div class="panel">
+      <div style="margin-top:22px;" class="eyebrow">Savage Metabo</div>
+      <div class="card" style="margin-top:12px;padding:14px;">
+        <strong id="coachTitle">Locked In</strong>
+        <p class="muted" id="coachText">Strong enough to win. Keep standards high.</p>
+      </div>
 
-<div class="score-wrap">
+      <div style="margin-top:22px;" class="eyebrow">Profile</div>
+      <div class="mission-list" style="margin-top:12px;">
+        <div class="mission"><span class="check"></span><div><strong>Name</strong><br><span class="muted" id="snapName">Wayne</span></div></div>
+        <div class="mission"><span class="check"></span><div><strong>Goal</strong><br><span class="muted" id="snapGoal">Fat Loss</span></div></div>
+        <div class="mission"><span class="check"></span><div><strong>Training</strong><br><span class="muted" id="snapTraining">Intermediate</span></div></div>
+      </div>
+    </aside>
+  </section>
 
-<div class="score-ring" id="scoreRing">
-<div class="score-inner">
-<div>
-<div class="score-big" id="scoreMain">72</div>
-<div class="score-mode" id="scoreMode">Build Mode</div>
-</div>
-</div>
-</div>
+  <section class="dash-bottom">
+    <article class="card">
+      <div class="eyebrow">Readiness Factors</div>
+      <div class="mission-list" style="margin-top:12px;">
+        <div class="mission"><span class="check"></span><strong>Sleep Quality</strong><span class="green" style="margin-left:auto;">82</span></div>
+        <div class="mission"><span class="check"></span><strong>HRV Balance</strong><span class="green" style="margin-left:auto;">79</span></div>
+        <div class="mission"><span class="check"></span><strong>Recovery</strong><span class="green" style="margin-left:auto;">85</span></div>
+        <div class="mission"><span class="check"></span><strong>Hydration</strong><span class="green" style="margin-left:auto;">88</span></div>
+        <div class="mission"><span class="check"></span><strong>Stress Balance</strong><span class="orange" style="margin-left:auto;">22</span></div>
+      </div>
+    </article>
 
-<div class="stack">
+    <article class="card">
+      <div class="eyebrow">Real 7-Day Trend</div>
+      <div class="trend-bars" id="trendBars"></div>
+      <p class="green" id="trendText">Your trend is building.</p>
+    </article>
 
-<div class="line">
-<strong>Primary Mission</strong><br>
-<span class="sub" id="mission1">Build momentum and execute basics.</span>
-</div>
-
-<div class="line">
-<strong>Coach Guidance</strong><br>
-<span class="sub" id="coachLine">Strong enough to win. Stay disciplined.</span>
-</div>
-
-<div class="line">
-<strong>Daily Focus</strong><br>
-<span class="sub" id="focusLine">Protein early. Walk daily. Protect sleep.</span>
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-<section class="grid-3">
-
-<div class="panel">
-<div class="kpi-label">Nutrition Targets</div>
-
-<div class="stack" style="margin-top:14px">
-
-<div class="line">
-<strong>Calories</strong><br>
-<span class="sub" id="calories">2400</span>
-</div>
-
-<div class="line">
-<strong>Protein</strong><br>
-<span class="sub" id="protein">185g</span>
-</div>
-
-<div class="line">
-<strong>Water</strong><br>
-<span class="sub" id="water">3.5L</span>
-</div>
-
-</div>
-</div>
-
-<div class="panel">
-<div class="kpi-label">Program Engine</div>
-
-<div class="stack" style="margin-top:14px">
-
-<div class="line">
-<strong id="programName">Build Day</strong><br>
-<span class="sub" id="programText">Moderate training + steady momentum.</span>
-</div>
-
-<div class="line" id="program1">Lift / Strength</div>
-<div class="line" id="program2">Walk + Sunlight</div>
-<div class="line" id="program3">Recover Tonight</div>
-
-</div>
-</div>
-
-<div class="panel">
-<div class="kpi-label">Profile Snapshot</div>
-
-<div class="stack" style="margin-top:14px">
-
-<div class="line">
-<strong>Name</strong><br>
-<span class="sub" id="snapName">Founder</span>
-</div>
-
-<div class="line">
-<strong>Goal</strong><br>
-<span class="sub" id="snapGoal">Fat Loss</span>
-</div>
-
-<div class="line">
-<strong>Training</strong><br>
-<span class="sub" id="snapTraining">Beginner</span>
-</div>
-
-<div class="line">
-<strong>Gym Access</strong><br>
-<span class="sub" id="snapGym">Full Gym</span>
-</div>
-
-</div>
-</div>
-
-</section>
+    <article class="card">
+      <div class="eyebrow">Recent Wins</div>
+      <div class="win-list" style="margin-top:12px;">
+        <div class="mission"><span class="check"></span><strong>Hit Protein Target</strong></div>
+        <div class="mission"><span class="check"></span><strong><span id="winStreak">0</span> Day Streak</strong></div>
+        <div class="mission"><span class="check"></span><strong>Completed Check-In</strong></div>
+        <div class="mission"><span class="check"></span><strong>Program Active</strong></div>
+      </div>
+    </article>
+  </section>
 
 </div>
 
 <script type="module">
-import {
-getEntries,
-getStreakData,
-getAverageScore
-} from "/js/ccc-log-engine.js";
+import { getEntries, getStreakData, getAverageScore, formatDateTime } from "/js/ccc-log-engine.js";
 
-const byId=(id)=>document.getElementById(id);
+const byId = (id) => document.getElementById(id);
 
-function mode(score){
-if(score>=85)return "Execute";
-if(score>=70)return "Strong";
-if(score>=55)return "Build";
-return "Recover";
+function getProfile() {
+  try {
+    return JSON.parse(localStorage.getItem("cccProfile") || "{}");
+  } catch {
+    return {};
+  }
 }
 
-function coach(score,goal){
-if(score>=85)return `Hot today. ${goal} target moves now. Execute.`;
-if(score>=70)return `Strong enough to win. Stay disciplined.`;
-if(score>=55)return `Build momentum through basics today.`;
-return `Recover smart. Protect tomorrow.`;
+function mode(score) {
+  if (score >= 85) return "Optimal";
+  if (score >= 70) return "Strong";
+  if (score >= 55) return "Build";
+  return "Recover";
 }
 
-function nutrition(goal,weight){
-weight=Number(weight||220);
-
-if(goal==="Fat Loss"){
-return {
-cal: Math.round(weight*11),
-protein: Math.round(weight*.9)+"g",
-water:"3.8L"
-};
+function nutrition(goal, weight) {
+  weight = Number(weight || 220);
+  if (goal === "Muscle Gain") return { cal: Math.round(weight * 15), protein: Math.round(weight * 1) + "g", water: "3.6L" };
+  if (goal === "Fat Loss") return { cal: Math.round(weight * 11), protein: Math.round(weight * .9) + "g", water: "3.8L" };
+  return { cal: Math.round(weight * 13), protein: Math.round(weight * .95) + "g", water: "3.7L" };
 }
 
-if(goal==="Muscle Gain"){
-return {
-cal: Math.round(weight*15),
-protein: Math.round(weight*1)+"g",
-water:"3.6L"
-};
+function missionPack(score, goal) {
+  if (score >= 85) return ["Lift: Upper Body", "Deep Work 90 Min", "Protein on Target", "8 Hours Sleep"];
+  if (score >= 70) return ["Controlled Training", "Walk & Sunlight", "Protein Target", "Clean Evening"];
+  if (score >= 55) return ["Moderate Training", "Hydrate Early", "Simple Food", "Sleep on Time"];
+  return ["Recovery Walk", "Hydrate Fast", "Protein First", "Early Sleep"];
 }
 
-return {
-cal: Math.round(weight*13),
-protein: Math.round(weight*.95)+"g",
-water:"3.7L"
-};
+function coachPack(score) {
+  if (score >= 85) return ["Predator Mode", "Hot today. Stop negotiating. Execute with force."];
+  if (score >= 70) return ["Locked In", "Strong enough to win. Keep standards high."];
+  if (score >= 55) return ["Build Protocol", "Stack the basics. Momentum beats chaos."];
+  return ["Recovery Protocol", "Protect tomorrow. Recover hard today."];
 }
 
-function program(goal,training,gym,score){
-if(score<55){
-return ["Recovery Protocol","Protect tomorrow and restore.","Walk 20 min","Hydrate","Early sleep"];
+const profile = getProfile();
+const entries = getEntries();
+const latest = entries[entries.length - 1];
+const previous = entries[entries.length - 2];
+
+const name = profile.name || "Wayne";
+const goal = profile.goal || "Fat Loss";
+const diet = profile.diet || "Carnivore";
+const training = profile.training || "Intermediate";
+const gym = profile.gym || "Full Gym";
+const weight = profile.weight || 220;
+const goalWeight = profile.goalWeight || 205;
+
+const score = latest?.score || 87;
+const prevScore = previous?.score || score;
+const delta = score - prevScore;
+const streak = getStreakData(entries);
+const avg = getAverageScore(entries.slice(-7));
+const m = mode(score);
+const nut = nutrition(goal, weight);
+const missions = missionPack(score, goal);
+const coach = coachPack(score);
+
+byId("heroName").textContent = name;
+byId("heroMeta").textContent = `${goal} • ${diet} • ${training} • ${gym}`;
+byId("streakVal").textContent = streak.current || 0;
+byId("avgVal").textContent = avg || 0;
+byId("lastScoreVal").textContent = score;
+byId("goalWeightVal").textContent = goalWeight;
+byId("scoreMain").textContent = score;
+byId("modeMain").textContent = `${m} Zone`;
+byId("deltaText").textContent = `${delta >= 0 ? "▲ +" : "▼ "}${delta} vs. yesterday`;
+byId("lastCheckin").textContent = latest ? `Last Check-In: ${formatDateTime(latest.ts)}` : "Last Check-In: none yet";
+
+byId("calVal").textContent = nut.cal;
+byId("proteinVal").textContent = nut.protein;
+byId("waterVal").textContent = nut.water;
+byId("dietVal").textContent = diet;
+
+byId("mission1").textContent = missions[0];
+byId("mission2").textContent = missions[1];
+byId("mission3").textContent = missions[2];
+byId("mission4").textContent = missions[3];
+
+byId("programName").textContent = coach[0];
+byId("programText").textContent = goal + " • " + diet + " • " + training;
+byId("protocolPct").textContent = Math.max(35, Math.min(99, score)) + "%";
+
+byId("coachTitle").textContent = coach[0];
+byId("coachText").textContent = coach[1];
+
+byId("snapName").textContent = name;
+byId("snapGoal").textContent = goal;
+byId("snapTraining").textContent = training;
+byId("winStreak").textContent = streak.current || 0;
+
+const trend = entries.slice(-7);
+const bars = trend.length ? trend : [{score:45},{score:52},{score:60},{score:55},{score:62},{score:70},{score:score}];
+
+byId("trendBars").innerHTML = bars.map(e => {
+  const h = Math.max(10, Math.min(100, e.score || 50));
+  return `<span style="height:${h}%"></span>`;
+}).join("");
+
+byId("trendText").textContent = delta >= 0 ? "Your trend is improving. Keep stacking days." : "Trend dipped. Stabilize today.";
+
+const sparkScores = bars.map(e => e.score || 50);
+const pts = sparkScores.map((s, i) => {
+  const x = 15 + i * (235 / Math.max(1, sparkScores.length - 1));
+  const y = 115 - (Math.max(0, Math.min(100, s)) * .9);
+  return `${x},${y}`;
+});
+
+if (pts.length > 1) {
+  const d = "M" + pts.join("L");
+  byId("sparkPath").setAttribute("d", d);
+  const last = pts[pts.length - 1].split(",");
+  byId("sparkDot").setAttribute("cx", last[0]);
+  byId("sparkDot").setAttribute("cy", last[1]);
 }
-
-if(goal==="Fat Loss"){
-return ["Fat Loss Builder","Move often and train smart.","Strength circuit","Walk + Sun","Protein target"];
-}
-
-if(goal==="Muscle Gain"){
-return ["Growth Day","Train hard and eat enough.","Heavy compound lifts","Protein meals","Sleep 8h"];
-}
-
-return ["Performance Day","Output with recovery balance.","Explosive training","Mobility","High quality sleep"];
-}
-
-const profile=JSON.parse(localStorage.getItem("cccProfile")||"{}");
-
-const name=profile.name||"Founder";
-const goal=profile.goal||"Fat Loss";
-const diet=profile.diet||"Carnivore";
-const training=profile.training||"Beginner";
-const gym=profile.gym||"Full Gym";
-const weight=profile.weight||220;
-const goalWeight=profile.goalWeight||205;
-
-const entries=getEntries();
-const latest=entries[entries.length-1];
-const score=latest?.score || 72;
-
-const streak=getStreakData(entries);
-const avg=getAverageScore(entries.slice(-7));
-
-const m=mode(score);
-const nut=nutrition(goal,weight);
-const prog=program(goal,training,gym,score);
-
-byId("heroName").textContent=name;
-byId("heroMeta").textContent=`${goal} · ${diet} · ${training}`;
-
-byId("kpiStreak").textContent=streak.current;
-byId("kpiAvg").textContent=avg;
-byId("kpiScore").textContent=score;
-byId("kpiGoalWeight").textContent=goalWeight;
-
-byId("scoreMain").textContent=score;
-byId("scoreMode").textContent=m+" Mode";
-
-byId("mission1").textContent=`${goal}: win today through consistency.`;
-byId("coachLine").textContent=coach(score,goal);
-byId("focusLine").textContent=`${diet} nutrition + daily movement + recovery.`;
-
-byId("calories").textContent=nut.cal;
-byId("protein").textContent=nut.protein;
-byId("water").textContent=nut.water;
-
-byId("programName").textContent=prog[0];
-byId("programText").textContent=prog[1];
-byId("program1").textContent=prog[2];
-byId("program2").textContent=prog[3];
-byId("program3").textContent=prog[4];
-
-byId("snapName").textContent=name;
-byId("snapGoal").textContent=goal;
-byId("snapTraining").textContent=training;
-byId("snapGym").textContent=gym;
-
-const pct=Math.max(8,Math.min(score,100));
-byId("scoreRing").style.background=
-`conic-gradient(#22d07a 0 ${pct}%, rgba(255,255,255,.06) ${pct}% 100%)`;
 </script>
 
 <!--#include file="src/app/_shell-bottom.html" -->
