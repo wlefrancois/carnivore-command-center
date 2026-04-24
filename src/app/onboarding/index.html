@@ -3,298 +3,297 @@
 <style>
 .onboard-page{display:grid;gap:18px}
 .onboard-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:18px}
-.panel{
-background:linear-gradient(180deg,rgba(10,16,28,.96),rgba(7,12,22,.98));
-border:1px solid rgba(70,96,152,.18);
-border-radius:22px;
-box-shadow:0 18px 60px rgba(0,0,0,.38);
-padding:22px;
-}
-.hero-title{
-font-size:52px;
-line-height:.94;
-letter-spacing:-.04em;
-font-weight:950;
-margin:0;
-}
+.panel{background:linear-gradient(180deg,rgba(10,16,28,.96),rgba(7,12,22,.98));border:1px solid rgba(70,96,152,.18);border-radius:22px;box-shadow:0 18px 60px rgba(0,0,0,.38);padding:22px}
+.hero-title{font-size:52px;line-height:.94;letter-spacing:-.04em;font-weight:950;margin:0}
 .sub{color:var(--app-muted);line-height:1.7}
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px}
 .field{display:grid;gap:8px}
-.field label{
-font-size:11px;
-text-transform:uppercase;
-letter-spacing:.08em;
-font-weight:900;
-color:#bfd3ff;
-}
-.field input,.field select{
-width:100%;
-padding:12px 14px;
-border-radius:14px;
-background:rgba(255,255,255,.03);
-border:1px solid rgba(255,255,255,.08);
-color:#eef4ff;
-outline:none;
-}
-.field option{
-background:#101826;
-color:#eef4ff;
-}
+.field label{font-size:11px;text-transform:uppercase;letter-spacing:.08em;font-weight:900;color:#bfd3ff}
+.field input{width:100%;padding:12px 14px;border-radius:14px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);color:#eef4ff;outline:none}
 .full{grid-column:1/-1}
 .choice-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.choice{
-padding:12px;
-border-radius:14px;
-background:rgba(255,255,255,.03);
-border:1px solid rgba(255,255,255,.08);
-font-weight:800;
-cursor:pointer;
-text-align:center;
-transition:.16s ease;
-}
+.choice{padding:12px;border-radius:14px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);font-weight:800;cursor:pointer;text-align:center;transition:.16s ease}
 .choice:hover{transform:translateY(-1px);border-color:rgba(255,122,0,.35)}
-.choice.active{
-background:linear-gradient(180deg,#ffb15f,#ff7a00);
-color:#07101d;
-border-color:rgba(255,122,0,.7);
-box-shadow:0 12px 28px rgba(255,122,0,.16);
-}
+.choice.active{background:linear-gradient(180deg,#ffb15f,#ff7a00);color:#07101d;border-color:rgba(255,122,0,.7);box-shadow:0 12px 28px rgba(255,122,0,.16)}
 .summary-list{display:grid;gap:12px;margin-top:14px}
-.line{
-padding:14px;
-border-radius:15px;
-background:rgba(255,255,255,.03);
-border:1px solid rgba(255,255,255,.06);
-}
-.big{
-font-size:38px;
-font-weight:950;
-line-height:1;
-}
-@media(max-width:1100px){
-.onboard-grid{grid-template-columns:1fr}
-.form-grid{grid-template-columns:1fr}
-.choice-grid{grid-template-columns:1fr}
-.hero-title{font-size:42px}
-}
+.line{padding:14px;border-radius:15px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06)}
+.big{font-size:38px;font-weight:950;line-height:1}
+.success-note{display:none;margin-top:14px;padding:14px;border-radius:16px;background:rgba(34,208,122,.10);border:1px solid rgba(34,208,122,.24);color:#b7ffd6;font-weight:800}
+.success-note.show{display:block}
+@media(max-width:1100px){.onboard-grid{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.choice-grid{grid-template-columns:1fr}.hero-title{font-size:42px}}
 </style>
 
 <div class="onboard-page">
 
-<div class="app-pagehead">
-<h1>CCC Onboarding</h1>
-<p>Build your personal operating profile so CCC can customize readiness, nutrition, and training.</p>
-</div>
+  <div class="app-pagehead">
+    <h1>CCC Profile Setup</h1>
+    <p>Create or update your personal operating profile.</p>
+  </div>
 
-<section class="onboard-grid">
+  <section class="onboard-grid">
 
-<div class="panel">
+    <div class="panel">
+      <div class="badge">Profile Engine V2</div>
 
-<div class="badge-live">● Founder Setup</div>
+      <h2 class="hero-title" style="margin-top:14px;">Make CCC know you.</h2>
 
-<h2 class="hero-title" style="margin-top:14px;">Build your profile.</h2>
+      <p class="sub">
+        Your profile powers calories, protein, program logic, coaching tone,
+        and dashboard personalization.
+      </p>
 
-<p class="sub">
-These inputs power smarter dashboard targets, coaching mode, streak timing,
-program engine, and nutrition suggestions.
-</p>
+      <form id="onboardForm">
+        <div class="form-grid">
 
-<form id="onboardForm">
+          <div class="field">
+            <label for="name">Name</label>
+            <input id="name" value="Wayne" placeholder="Wayne">
+          </div>
 
-<div class="form-grid">
+          <div class="field">
+            <label for="age">Age</label>
+            <input id="age" type="number" value="47" placeholder="47">
+          </div>
 
-<div class="field">
-<label>Name</label>
-<input id="name" placeholder="Wayne">
-</div>
+          <div class="field">
+            <label for="weight">Weight (lb)</label>
+            <input id="weight" type="number" value="220" placeholder="220">
+          </div>
 
-<div class="field">
-<label>Age</label>
-<input id="age" type="number" placeholder="47">
-</div>
+          <div class="field">
+            <label for="goalWeight">Goal Weight</label>
+            <input id="goalWeight" type="number" value="205" placeholder="205">
+          </div>
 
-<div class="field">
-<label>Weight (lb)</label>
-<input id="weight" type="number" placeholder="220">
-</div>
+          <div class="field">
+            <label for="wakeTime">Wake Time</label>
+            <input id="wakeTime" type="time" value="05:30">
+          </div>
 
-<div class="field">
-<label>Goal Weight</label>
-<input id="goalWeight" type="number" placeholder="205">
-</div>
+          <div class="field">
+            <label for="checkinTime">Daily Check-In Time</label>
+            <input id="checkinTime" type="time" value="06:00">
+          </div>
 
-<div class="field">
-<label>Wake Time</label>
-<input id="wakeTime" type="time" value="05:30">
-</div>
+          <div class="field full">
+            <label>Main Goal</label>
+            <div class="choice-grid" data-group="goal">
+              <div class="choice active" data-value="Fat Loss">Fat Loss</div>
+              <div class="choice" data-value="Muscle Gain">Muscle Gain</div>
+              <div class="choice" data-value="Performance">Performance</div>
+            </div>
+          </div>
 
-<div class="field">
-<label>Daily Check-In Time</label>
-<input id="checkinTime" type="time" value="06:00">
-</div>
+          <div class="field full">
+            <label>Diet Style</label>
+            <div class="choice-grid" data-group="diet">
+              <div class="choice active" data-value="Carnivore">Carnivore</div>
+              <div class="choice" data-value="Keto">Keto</div>
+              <div class="choice" data-value="Mixed">Mixed</div>
+            </div>
+          </div>
 
-<div class="field full">
-<label>Main Goal</label>
-<div class="choice-grid" data-group="goal">
-<div class="choice active" data-value="Fat Loss">Fat Loss</div>
-<div class="choice" data-value="Muscle Gain">Muscle Gain</div>
-<div class="choice" data-value="Performance">Performance</div>
-</div>
-</div>
+          <div class="field full">
+            <label>Training Level</label>
+            <div class="choice-grid" data-group="training">
+              <div class="choice active" data-value="Beginner">Beginner</div>
+              <div class="choice" data-value="Intermediate">Intermediate</div>
+              <div class="choice" data-value="Advanced">Advanced</div>
+            </div>
+          </div>
 
-<div class="field full">
-<label>Diet Style</label>
-<div class="choice-grid" data-group="diet">
-<div class="choice active" data-value="Carnivore">Carnivore</div>
-<div class="choice" data-value="Keto">Keto</div>
-<div class="choice" data-value="Mixed">Mixed</div>
-</div>
-</div>
+          <div class="field full">
+            <label>Gym Access</label>
+            <div class="choice-grid" data-group="gym">
+              <div class="choice active" data-value="Full Gym">Full Gym</div>
+              <div class="choice" data-value="Home Gym">Home Gym</div>
+              <div class="choice" data-value="Bodyweight">Bodyweight</div>
+            </div>
+          </div>
 
-<div class="field full">
-<label>Training Level</label>
-<div class="choice-grid" data-group="training">
-<div class="choice active" data-value="Beginner">Beginner</div>
-<div class="choice" data-value="Intermediate">Intermediate</div>
-<div class="choice" data-value="Advanced">Advanced</div>
-</div>
-</div>
+          <div class="field full" style="margin-top:8px;">
+            <button class="app-btn app-btn--primary" type="submit">Save Profile</button>
+            <a class="app-btn" href="/app/dashboard/">Back to Dashboard</a>
+          </div>
 
-<div class="field full">
-<label>Gym Access</label>
-<div class="choice-grid" data-group="gym">
-<div class="choice active" data-value="Full Gym">Full Gym</div>
-<div class="choice" data-value="Home Gym">Home Gym</div>
-<div class="choice" data-value="Bodyweight">Bodyweight</div>
-</div>
-</div>
+        </div>
+      </form>
 
-<div class="field full" style="margin-top:8px;">
-<button class="app-btn app-btn--primary" type="submit">Complete Setup</button>
-<a class="app-btn" href="/app/dashboard/">Skip for now</a>
-</div>
+      <div class="success-note" id="successNote">
+        Profile saved. Dashboard personalization updated.
+      </div>
+    </div>
 
-</div>
-</form>
+    <div class="panel">
+      <div class="kpi-label">Live Profile Preview</div>
 
-</div>
+      <div class="summary-list">
+        <div class="line">
+          <div class="big" id="previewName">Wayne</div>
+          <div class="sub">Founder Profile</div>
+        </div>
 
-<div class="panel">
+        <div class="line">
+          <strong id="previewGoal">Fat Loss</strong><br>
+          <span class="sub">Primary mission</span>
+        </div>
 
-<div class="kpi-label">Live Profile Preview</div>
+        <div class="line">
+          <strong id="previewDiet">Carnivore</strong><br>
+          <span class="sub">Nutrition framework</span>
+        </div>
 
-<div class="summary-list">
+        <div class="line">
+          <strong id="previewTraining">Beginner</strong><br>
+          <span class="sub">Training level</span>
+        </div>
 
-<div class="line">
-<div class="big" id="previewName">Wayne</div>
-<div class="sub">Founder Profile</div>
-</div>
+        <div class="line">
+          <strong id="previewGym">Full Gym</strong><br>
+          <span class="sub">Gym access</span>
+        </div>
 
-<div class="line">
-<strong id="previewGoal">Fat Loss</strong><br>
-<span class="sub">Primary mission</span>
-</div>
+        <div class="line">
+          <strong id="previewTargets">220 → 205 lb</strong><br>
+          <span class="sub">Weight target</span>
+        </div>
 
-<div class="line">
-<strong id="previewDiet">Carnivore</strong><br>
-<span class="sub">Nutrition framework</span>
-</div>
+        <div class="line">
+          <strong id="previewRoutine">Wake 05:30 · Check-In 06:00</strong><br>
+          <span class="sub">Routine timing</span>
+        </div>
 
-<div class="line">
-<strong id="previewTraining">Beginner</strong><br>
-<span class="sub">Training level</span>
-</div>
+        <div class="line">
+          <strong>Profile powers</strong><br>
+          <span class="sub">
+            Nutrition targets<br>
+            Program engine<br>
+            Coaching copy<br>
+            Goal-specific missions
+          </span>
+        </div>
+      </div>
+    </div>
 
-<div class="line">
-<strong id="previewTargets">220 → 205 lb</strong><br>
-<span class="sub">Weight target</span>
-</div>
-
-<div class="line">
-<strong id="previewRoutine">Wake 5:30 AM · Check-In 6:00 AM</strong><br>
-<span class="sub">Routine timing</span>
-</div>
-
-<div class="line">
-<strong>What unlocks next</strong><br>
-<span class="sub">
-• Personalized calories/protein<br>
-• Program engine tuning<br>
-• Better coaching prompts<br>
-• Goal-specific missions
-</span>
-</div>
-
-</div>
-
-</div>
-
-</section>
+  </section>
 </div>
 
 <script type="module">
-const byId=(id)=>document.getElementById(id);
+const byId = (id) => document.getElementById(id);
 
-const groups=["goal","diet","training","gym"];
+const defaults = {
+  name: "Wayne",
+  age: "47",
+  weight: "220",
+  goalWeight: "205",
+  wakeTime: "05:30",
+  checkinTime: "06:00",
+  goal: "Fat Loss",
+  diet: "Carnivore",
+  training: "Beginner",
+  gym: "Full Gym"
+};
 
-function selected(group){
-return document.querySelector(`[data-group="${group}"] .choice.active`)?.dataset.value || "";
+function getProfile() {
+  try {
+    return { ...defaults, ...(JSON.parse(localStorage.getItem("cccProfile") || "{}")) };
+  } catch {
+    return defaults;
+  }
 }
 
-groups.forEach(group=>{
-document.querySelectorAll(`[data-group="${group}"] .choice`).forEach(btn=>{
-btn.onclick=()=>{
-document.querySelectorAll(`[data-group="${group}"] .choice`).forEach(x=>x.classList.remove("active"));
-btn.classList.add("active");
-renderPreview();
-};
-});
-});
-
-function renderPreview(){
-byId("previewName").textContent = byId("name").value || "Founder";
-byId("previewGoal").textContent = selected("goal");
-byId("previewDiet").textContent = selected("diet");
-byId("previewTraining").textContent = selected("training");
-
-const w = byId("weight").value || "220";
-const g = byId("goalWeight").value || "205";
-byId("previewTargets").textContent = `${w} → ${g} lb`;
-
-const wake = byId("wakeTime").value || "05:30";
-const check = byId("checkinTime").value || "06:00";
-byId("previewRoutine").textContent = `Wake ${wake} · Check-In ${check}`;
+function selected(group) {
+  return document.querySelector(`[data-group="${group}"] .choice.active`)?.dataset.value || defaults[group];
 }
 
-["name","weight","goalWeight","wakeTime","checkinTime"].forEach(id=>{
-byId(id).addEventListener("input",renderPreview);
+function activate(group, value) {
+  document.querySelectorAll(`[data-group="${group}"] .choice`).forEach((btn) => {
+    btn.classList.toggle("active", btn.dataset.value === value);
+  });
+}
+
+function setField(id, value) {
+  const el = byId(id);
+  if (el) el.value = value ?? "";
+}
+
+function loadProfile() {
+  const profile = getProfile();
+
+  setField("name", profile.name || defaults.name);
+  setField("age", profile.age || defaults.age);
+  setField("weight", profile.weight || defaults.weight);
+  setField("goalWeight", profile.goalWeight || defaults.goalWeight);
+  setField("wakeTime", profile.wakeTime || defaults.wakeTime);
+  setField("checkinTime", profile.checkinTime || defaults.checkinTime);
+
+  activate("goal", profile.goal || defaults.goal);
+  activate("diet", profile.diet || defaults.diet);
+  activate("training", profile.training || defaults.training);
+  activate("gym", profile.gym || defaults.gym);
+
+  renderPreview();
+}
+
+function renderPreview() {
+  const name = byId("name").value || defaults.name;
+  const weight = byId("weight").value || defaults.weight;
+  const goalWeight = byId("goalWeight").value || defaults.goalWeight;
+  const wake = byId("wakeTime").value || defaults.wakeTime;
+  const checkin = byId("checkinTime").value || defaults.checkinTime;
+
+  byId("previewName").textContent = name;
+  byId("previewGoal").textContent = selected("goal");
+  byId("previewDiet").textContent = selected("diet");
+  byId("previewTraining").textContent = selected("training");
+  byId("previewGym").textContent = selected("gym");
+  byId("previewTargets").textContent = `${weight} → ${goalWeight} lb`;
+  byId("previewRoutine").textContent = `Wake ${wake} · Check-In ${checkin}`;
+}
+
+["goal","diet","training","gym"].forEach((group) => {
+  document.querySelectorAll(`[data-group="${group}"] .choice`).forEach((btn) => {
+    btn.addEventListener("click", () => {
+      activate(group, btn.dataset.value);
+      renderPreview();
+    });
+  });
 });
 
-document.getElementById("onboardForm").onsubmit=(e)=>{
-e.preventDefault();
+["name","age","weight","goalWeight","wakeTime","checkinTime"].forEach((id) => {
+  byId(id).addEventListener("input", renderPreview);
+});
 
-const profile={
-name: byId("name").value || "Founder",
-age: byId("age").value || "",
-weight: byId("weight").value || "",
-goalWeight: byId("goalWeight").value || "",
-wakeTime: byId("wakeTime").value || "05:30",
-checkinTime: byId("checkinTime").value || "06:00",
-goal: selected("goal"),
-diet: selected("diet"),
-training: selected("training"),
-gym: selected("gym"),
-created: new Date().toISOString()
-};
+byId("onboardForm").addEventListener("submit", (event) => {
+  event.preventDefault();
 
-localStorage.setItem("cccProfile", JSON.stringify(profile));
+  const profile = {
+    name: byId("name").value || defaults.name,
+    age: byId("age").value || defaults.age,
+    weight: byId("weight").value || defaults.weight,
+    goalWeight: byId("goalWeight").value || defaults.goalWeight,
+    wakeTime: byId("wakeTime").value || defaults.wakeTime,
+    checkinTime: byId("checkinTime").value || defaults.checkinTime,
+    goal: selected("goal"),
+    diet: selected("diet"),
+    training: selected("training"),
+    gym: selected("gym"),
+    updated: new Date().toISOString()
+  };
 
-alert("Profile saved. Dashboard personalization unlocked.");
+  const existing = getProfile();
+  profile.created = existing.created || new Date().toISOString();
 
-window.location.href="/app/dashboard/";
-};
+  localStorage.setItem("cccProfile", JSON.stringify(profile));
 
-renderPreview();
+  byId("successNote").classList.add("show");
+
+  setTimeout(() => {
+    window.location.href = "/app/dashboard/";
+  }, 900);
+});
+
+loadProfile();
 </script>
 
 <!--#include file="src/app/_shell-bottom.html" -->
