@@ -108,9 +108,9 @@
 
 <style>
 .log-engine-page{display:grid;gap:18px}
-.log-grid{display:grid;grid-template-columns:minmax(0,1fr) 420px;gap:18px;align-items:start}
-.log-panel{background:linear-gradient(180deg,rgba(10,16,28,.96),rgba(7,12,22,.98));border:1px solid rgba(70,96,152,.18);border-radius:20px;box-shadow:0 18px 60px rgba(0,0,0,.38);padding:22px}
-.log-title{font-size:40px;line-height:.98;letter-spacing:-.04em;font-weight:950;margin:0}
+.log-grid{display:grid;grid-template-columns:minmax(0,1fr) 430px;gap:18px;align-items:start}
+.log-panel{background:linear-gradient(180deg,rgba(10,16,28,.96),rgba(7,12,22,.98));border:1px solid rgba(70,96,152,.18);border-radius:22px;box-shadow:0 18px 60px rgba(0,0,0,.38);padding:22px}
+.log-title{font-size:42px;line-height:.98;letter-spacing:-.04em;font-weight:950;margin:10px 0 0}
 .log-sub{color:var(--app-muted);margin-top:8px;line-height:1.7}
 .log-form{display:grid;gap:16px;margin-top:18px}
 .log-field{display:grid;gap:8px}
@@ -128,8 +128,8 @@
 .save-btn.is-success{background:linear-gradient(180deg,#22d07a,#16a34a)!important;color:#07101d!important}
 .success-box{margin-top:14px;padding:14px;border-radius:16px;background:linear-gradient(180deg,rgba(34,208,122,.12),rgba(34,208,122,.04));border:1px solid rgba(34,208,122,.28);display:none;color:#caffdd;font-weight:800}
 .success-box.show{display:block}
-.preview-score{font-size:56px;line-height:.9;font-weight:950;color:#22d07a}
-.preview-mode{font-size:22px;font-weight:800;margin-top:6px}
+.preview-score{font-size:60px;line-height:.9;font-weight:950;color:#22d07a;margin-top:10px}
+.preview-mode{font-size:22px;font-weight:900;margin-top:6px}
 .coach-box{margin-top:16px;padding:16px;border-radius:18px;background:linear-gradient(180deg,rgba(255,122,0,.08),rgba(76,141,255,.06));border:1px solid rgba(255,122,0,.14)}
 .checkin-calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-top:14px}
 .checkin-day{min-height:42px;border-radius:12px;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.03);color:var(--app-muted);display:grid;place-items:center;font-size:12px;font-weight:800}
@@ -144,18 +144,42 @@
 .xp-card{margin-top:16px;padding:14px;border-radius:16px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06)}
 .xpbar{height:12px;border-radius:999px;background:rgba(255,255,255,.08);overflow:hidden;margin-top:10px}
 .xpbar span{display:block;height:100%;width:0%;background:linear-gradient(90deg,#ff7a00,#22d07a)}
+.money-strip{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+.money-strip span{padding:10px 13px;border-radius:999px;border:1px solid rgba(255,122,0,.18);background:linear-gradient(180deg,rgba(255,122,0,.10),rgba(255,255,255,.03));color:#ffd2ac;font-size:13px;font-weight:900}
+.pro-lock-card{margin-top:16px;padding:16px;border-radius:18px;border:1px solid rgba(255,122,0,.18);background:linear-gradient(135deg,rgba(255,122,0,.12),rgba(76,141,255,.08))}
+.pro-lock-card h3{margin:0 0 8px;font-size:20px}
+.pro-lock-card p{margin:0 0 14px;color:var(--app-muted);line-height:1.6}
+.lock-list{display:grid;gap:10px;margin:14px 0}
+.lock-list div{padding:10px 12px;border-radius:12px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.06);color:#dce7ff;font-weight:800}
+.reward-pop{position:fixed;inset:0;z-index:9999;display:none;align-items:center;justify-content:center;pointer-events:none;background:rgba(0,0,0,.18)}
+.reward-pop.show{display:flex}
+.reward-pop__card{min-width:280px;padding:22px 26px;border-radius:22px;background:linear-gradient(180deg,rgba(12,20,34,.98),rgba(6,10,18,.98));border:1px solid rgba(255,122,0,.32);box-shadow:0 24px 80px rgba(0,0,0,.55),0 0 42px rgba(255,122,0,.18);text-align:center;animation:rewardPop .38s ease both}
+.reward-pop__xp{font-size:44px;line-height:1;font-weight:950;color:#ff9b3f}
+.reward-pop__title{margin-top:10px;font-weight:950;color:#eef4ff}
+.reward-pop__sub{margin-top:6px;color:#9fb0cc;font-size:14px}
+.mobile-checkin-bar{position:fixed;left:12px;right:12px;bottom:12px;z-index:80;display:none;grid-template-columns:1fr 1.2fr;gap:10px;padding:10px;border-radius:18px;background:rgba(6,11,20,.94);border:1px solid rgba(255,255,255,.08);backdrop-filter:blur(14px);box-shadow:0 18px 44px rgba(0,0,0,.35)}
+.mobile-checkin-bar a,.mobile-checkin-bar button{text-align:center;padding:14px 12px;border-radius:14px;font-weight:900;font-size:.95rem;border:0;cursor:pointer}
+.mobile-checkin-bar__ghost{background:rgba(255,255,255,.04);color:#eef4ff;border:1px solid rgba(255,255,255,.08)!important}
+.mobile-checkin-bar__cta{color:#08101d;background:linear-gradient(180deg,#ff9b3f,#ff7a00)}
+@keyframes rewardPop{from{opacity:0;transform:translateY(18px) scale(.92)}to{opacity:1;transform:translateY(0) scale(1)}}
 @media(max-width:980px){.log-grid{grid-template-columns:1fr}.premium-choice-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:760px){.money-strip{display:grid;grid-template-columns:1fr}.mobile-checkin-bar{display:grid}body{padding-bottom:92px}.log-title{font-size:36px}}
 </style>
 
 <div class="log-engine-page">
   <div class="app-pagehead">
     <h1>Daily Check-In</h1>
     <p>Capture your real inputs. Earn XP. Build streaks. Feed the dashboard.</p>
+    <div class="money-strip">
+      <span>🔥 60 sec daily check-in</span>
+      <span>⚡ Instant readiness score</span>
+      <span>🧠 Pro coaching unlocks deeper insights</span>
+    </div>
   </div>
 
   <div class="log-grid">
     <section class="log-panel">
-      <div class="badge">Premium Check-In V10</div>
+      <div class="badge">Free Check-In</div>
       <h2 class="log-title">Build today’s signal set.</h2>
       <p class="log-sub">Fast inputs. Better score. XP rewards. Real momentum.</p>
 
@@ -221,9 +245,7 @@
           <a class="app-btn" href="/app/dashboard/">Back to Dashboard</a>
         </div>
 
-        <div class="success-box" id="successBox">
-          Check-In saved. XP banked. Redirecting to dashboard...
-        </div>
+        <div class="success-box" id="successBox">Check-In saved. XP banked. Redirecting to dashboard...</div>
       </form>
     </section>
 
@@ -236,6 +258,17 @@
       <div class="coach-box">
         <div style="font-weight:900;margin-bottom:8px;">Savage Metabo</div>
         <div id="coachReaction">Good start. Stack another win before noon.</div>
+      </div>
+
+      <div class="pro-lock-card">
+        <h3>Unlock CCC Pro</h3>
+        <p>Turn this check-in into deeper coaching, 30-day trends, custom programs, and smarter next actions.</p>
+        <div class="lock-list">
+          <div>🔒 Savage Metabo AI Coach</div>
+          <div>🔒 30 / 60 / 90 day trend insights</div>
+          <div>🔒 Custom training + recovery programs</div>
+        </div>
+        <a class="app-btn app-btn--primary" href="/beta/">Get Founding Access</a>
       </div>
 
       <div class="xp-card">
@@ -258,6 +291,19 @@
       </div>
     </aside>
   </div>
+</div>
+
+<div class="reward-pop" id="rewardPop">
+  <div class="reward-pop__card">
+    <div class="reward-pop__xp" id="rewardXp">+50 XP</div>
+    <div class="reward-pop__title" id="rewardTitle">Check-In Complete</div>
+    <div class="reward-pop__sub" id="rewardSub">Streak updated. Dashboard unlocked.</div>
+  </div>
+</div>
+
+<div class="mobile-checkin-bar">
+  <button class="mobile-checkin-bar__ghost" type="submit" form="logForm">Save Check-In</button>
+  <a class="mobile-checkin-bar__cta" href="/beta/">Get Pro Access</a>
 </div>
 
 <script type="module">
@@ -294,7 +340,9 @@ const els = {
   saveBtn: byId("saveBtn"),
   successBox: byId("successBox"),
   xpPreview: byId("xpPreview"),
-  xpFill: byId("xpFill")
+  xpFill: byId("xpFill"),
+  rewardPop: byId("rewardPop"),
+  rewardSub: byId("rewardSub")
 };
 
 function getChoice(group) {
@@ -443,6 +491,15 @@ function renderEntries() {
   `).join("");
 }
 
+function showReward(game) {
+  if (!els.rewardPop || !els.rewardSub) return;
+  const xp = game.xp || 0;
+  const level = levelFromXp(xp);
+  els.rewardSub.textContent = `Level ${level} · Total XP ${xp}`;
+  els.rewardPop.classList.add("show");
+  setTimeout(() => els.rewardPop.classList.remove("show"), 1600);
+}
+
 [els.sleep, els.mood, els.stress, els.weight, els.notes].forEach((el) => {
   el.addEventListener("input", renderPreview);
   el.addEventListener("change", renderPreview);
@@ -484,12 +541,13 @@ els.form.addEventListener("submit", (event) => {
     els.successBox.innerHTML = `Check-In saved. ${game.lastReward}. Level ${level}. Redirecting...`;
     els.successBox.classList.add("show");
 
+    showReward(game);
     renderPreview();
     renderEntries();
 
     setTimeout(() => {
       window.location.href = "/app/dashboard/";
-    }, 1200);
+    }, 1400);
   }, 500);
 });
 
@@ -497,302 +555,7 @@ bindChoiceGroups();
 renderPreview();
 renderEntries();
 </script>
-<!-- V11 PATCH: add inside existing src/app/log/index.html before </body> (or before _shell-bottom include) -->
 
-<style>
-/* ===== V11 Reward Loop ===== */
-.reward-burst{
-position:fixed; inset:0; pointer-events:none; z-index:9999;
-display:flex; align-items:center; justify-content:center;
-}
-.reward-stack{
-display:grid; gap:14px; transform:translateY(20px); opacity:0;
-animation:rewardIn .35s ease forwards;
-}
-.reward-chip{
-padding:16px 22px;
-border-radius:18px;
-font-weight:950;
-font-size:28px;
-letter-spacing:-.02em;
-text-align:center;
-box-shadow:0 18px 50px rgba(0,0,0,.35);
-border:1px solid rgba(255,255,255,.12);
-}
-.reward-xp{
-background:linear-gradient(180deg,#ffb15f,#ff7a00);
-color:#07101d;
-}
-.reward-streak{
-background:linear-gradient(180deg,#3cf08a,#16a34a);
-color:#07101d;
-}
-.reward-level{
-background:linear-gradient(180deg,#76b7ff,#246bff);
-color:#fff;
-}
-.reward-badge{
-background:linear-gradient(180deg,#2a3348,#151c2b);
-color:#ffd27a;
-}
-@keyframes rewardIn{
-from{opacity:0;transform:translateY(30px) scale(.94)}
-to{opacity:1;transform:translateY(0) scale(1)}
-}
-@keyframes rewardOut{
-to{opacity:0;transform:translateY(-20px) scale(.96)}
-}
-
-.level-modal{
-position:fixed; inset:0; z-index:10000;
-display:none; align-items:center; justify-content:center;
-background:rgba(0,0,0,.55);
-backdrop-filter:blur(6px);
-}
-.level-modal.show{display:flex}
-.level-card{
-width:min(560px,92vw);
-padding:28px;
-border-radius:24px;
-background:linear-gradient(180deg,#0d1422,#09101a);
-border:1px solid rgba(255,255,255,.08);
-box-shadow:0 24px 80px rgba(0,0,0,.55);
-text-align:center;
-}
-.level-kicker{
-font-size:12px;
-text-transform:uppercase;
-letter-spacing:.12em;
-color:#ff9b3f;
-font-weight:900;
-}
-.level-big{
-font-size:72px;
-line-height:.9;
-font-weight:950;
-margin:10px 0;
-color:#22d07a;
-}
-.level-rank{
-font-size:24px;
-font-weight:900;
-margin-bottom:8px;
-}
-.level-sub{
-color:#9fb0cc;
-line-height:1.7;
-margin-bottom:18px;
-}
-.level-btn{
-display:inline-flex;
-padding:12px 18px;
-border-radius:14px;
-background:linear-gradient(180deg,#ffb15f,#ff7a00);
-color:#07101d;
-font-weight:900;
-border:none;
-cursor:pointer;
-}
-</style>
-
-<div class="level-modal" id="levelModal">
-  <div class="level-card">
-    <div class="level-kicker">Level Up</div>
-    <div class="level-big" id="levelBig">2</div>
-    <div class="level-rank" id="levelRank">Apprentice</div>
-    <div class="level-sub" id="levelSub">
-      Momentum compounds. Keep stacking wins.
-    </div>
-    <button class="level-btn" id="levelClose">Continue</button>
-  </div>
-</div>
-
-<script>
-/* ===== V11 Reward Engine ===== */
-(function(){
-
-function rank(level){
-  if(level>=10) return "Commander";
-  if(level>=7) return "Elite Operator";
-  if(level>=4) return "Operator";
-  if(level>=2) return "Apprentice";
-  return "Recruit";
-}
-
-function rewardBurst(items){
-  const wrap=document.createElement("div");
-  wrap.className="reward-burst";
-
-  const stack=document.createElement("div");
-  stack.className="reward-stack";
-
-  items.forEach(item=>{
-    const div=document.createElement("div");
-    div.className="reward-chip "+item.cls;
-    div.textContent=item.text;
-    stack.appendChild(div);
-  });
-
-  wrap.appendChild(stack);
-  document.body.appendChild(wrap);
-
-  setTimeout(()=>{
-    stack.style.animation="rewardOut .35s ease forwards";
-  },1800);
-
-  setTimeout(()=>{
-    wrap.remove();
-  },2300);
-}
-
-function showLevel(level){
-  const modal=document.getElementById("levelModal");
-  if(!modal) return;
-
-  document.getElementById("levelBig").textContent=level;
-  document.getElementById("levelRank").textContent=rank(level);
-  document.getElementById("levelSub").textContent=
-    level>=4
-    ? "You’re building serious consistency now."
-    : "Momentum compounds. Keep stacking wins.";
-
-  modal.classList.add("show");
-}
-
-const closeBtn=document.getElementById("levelClose");
-if(closeBtn){
-  closeBtn.onclick=()=>document.getElementById("levelModal").classList.remove("show");
-}
-
-/* Hook existing form submit */
-const form=document.getElementById("logForm");
-if(!form) return;
-
-form.addEventListener("submit", function(){
-  setTimeout(()=>{
-
-    let game={};
-    try{
-      game=JSON.parse(localStorage.getItem("cccGame")||"{}");
-    }catch(e){ game={}; }
-
-    const xp=game.xp||0;
-    const level=Math.floor(xp/200)+1;
-    const streakText=(document.getElementById("historyStats")?.textContent||"");
-
-    const rewards=[
-      {text:"+50 XP",cls:"reward-xp"}
-    ];
-
-    if(streakText.includes("2") || streakText.includes("3") || streakText.includes("4")){
-      rewards.push({text:"STREAK +1",cls:"reward-streak"});
-    }
-
-    if(xp===200 || xp===400 || xp===600 || xp===800 || xp===1000){
-      rewards.push({text:"LEVEL UP!",cls:"reward-level"});
-      setTimeout(()=>showLevel(level),700);
-    }
-
-    if(xp===50){
-      rewards.push({text:"Badge: First Check-In",cls:"reward-badge"});
-    }
-
-    rewardBurst(rewards);
-
-  },650);
-});
-
-})();
-</script>
-<style>
-.reward-pop {
-  position: fixed;
-  inset: 0;
-  z-index: 9999;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-}
-
-.reward-pop.show {
-  display: flex;
-}
-
-.reward-pop__card {
-  min-width: 280px;
-  padding: 22px 26px;
-  border-radius: 22px;
-  background: linear-gradient(180deg, rgba(12,20,34,.98), rgba(6,10,18,.98));
-  border: 1px solid rgba(255,122,0,.32);
-  box-shadow: 0 24px 80px rgba(0,0,0,.55), 0 0 42px rgba(255,122,0,.18);
-  text-align: center;
-  animation: rewardPop .38s ease both;
-}
-
-.reward-pop__xp {
-  font-size: 44px;
-  line-height: 1;
-  font-weight: 950;
-  color: #ff9b3f;
-}
-
-.reward-pop__title {
-  margin-top: 10px;
-  font-weight: 950;
-  color: #eef4ff;
-}
-
-.reward-pop__sub {
-  margin-top: 6px;
-  color: #9fb0cc;
-  font-size: 14px;
-}
-
-@keyframes rewardPop {
-  from { opacity: 0; transform: translateY(18px) scale(.92); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
-}
-</style>
-
-<div class="reward-pop" id="rewardPop">
-  <div class="reward-pop__card">
-    <div class="reward-pop__xp" id="rewardXp">+50 XP</div>
-    <div class="reward-pop__title" id="rewardTitle">Check-In Complete</div>
-    <div class="reward-pop__sub" id="rewardSub">Streak updated. Dashboard unlocked.</div>
-  </div>
-</div>
-
-<script>
-(function () {
-  const form = document.getElementById("logForm");
-  const rewardPop = document.getElementById("rewardPop");
-  const rewardSub = document.getElementById("rewardSub");
-
-  if (!form || !rewardPop) return;
-
-  form.addEventListener("submit", function () {
-    setTimeout(function () {
-      let game = {};
-      try {
-        game = JSON.parse(localStorage.getItem("cccGame") || "{}");
-      } catch {
-        game = {};
-      }
-
-      const xp = game.xp || 0;
-      const level = Math.floor(xp / 200) + 1;
-
-      rewardSub.textContent = "Level " + level + " · Total XP " + xp;
-      rewardPop.classList.add("show");
-
-      setTimeout(function () {
-  rewardPop.classList.remove("show");
-}, 3500);
-    }, 150);
-  });
-})();
-</script>
       <div class="app-minimal-footer">
         CCC App • Built under WDC LLC
       </div>
