@@ -822,6 +822,106 @@
       .macro-ring { width: 150px; height: 150px; }
       .macro-ring__inner { width: 102px; height: 102px; }
     }
+
+    /* =========================================================
+       CCC DASHBOARD CONVERSION V1
+    ========================================================= */
+
+    .proof-strip{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin:0 0 16px;
+    }
+
+    .proof-strip span{
+      padding:10px 14px;
+      border-radius:999px;
+      border:1px solid rgba(255,122,0,.16);
+      background:linear-gradient(180deg, rgba(255,122,0,.10), rgba(255,255,255,.03));
+      color:#ffd2ac;
+      font-size:.86rem;
+      font-weight:800;
+    }
+
+    .founding-urgency{
+      margin-top:8px;
+      color:#ffb347;
+      font-weight:800;
+      font-size:.9rem;
+    }
+
+    .upgrade-trust{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin:10px 0 14px;
+    }
+
+    .upgrade-trust span{
+      display:inline-flex;
+      align-items:center;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.08);
+      background:rgba(255,255,255,.035);
+      color:#ffd2ac;
+      font-size:.8rem;
+      font-weight:800;
+      line-height:1;
+    }
+
+    .mobile-upgrade-bar{
+      position:fixed;
+      left:12px;
+      right:12px;
+      bottom:12px;
+      z-index:60;
+      display:none;
+      grid-template-columns:1fr 1.2fr;
+      gap:10px;
+      padding:10px;
+      border-radius:18px;
+      background:rgba(6,11,20,.92);
+      border:1px solid rgba(255,255,255,.08);
+      backdrop-filter:blur(14px);
+      box-shadow:0 18px 44px rgba(0,0,0,.35);
+    }
+
+    .mobile-upgrade-bar a{
+      text-align:center;
+      padding:14px 12px;
+      border-radius:14px;
+      font-weight:800;
+      font-size:.95rem;
+    }
+
+    .mobile-upgrade-bar__ghost{
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.08);
+    }
+
+    .mobile-upgrade-bar__cta{
+      color:#08101d;
+      background:linear-gradient(180deg,#ff9b3f 0%, #ff7a00 100%);
+    }
+
+    @media (max-width:760px){
+      .proof-strip,
+      .upgrade-trust{
+        display:grid;
+        grid-template-columns:1fr;
+      }
+
+      .mobile-upgrade-bar{
+        display:grid;
+      }
+
+      body{
+        padding-bottom:92px;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -829,6 +929,12 @@
    
 
     <main class="page">
+      <div class="proof-strip">
+        <span>🔥 142 check-ins logged today</span>
+        <span>47-day sample streak</span>
+        <span>Founder beta open</span>
+      </div>
+
       <section class="hero-grid">
         <aside class="sidebar">
           <div>
@@ -1022,6 +1128,7 @@
               <div class="score-box">
                 <div class="score-box__value" id="readinessScoreMain">87</div>
                 <strong id="modeMain">Execute Mode</strong>
+                <div class="founding-urgency">Limited Founding Access Available</div>
                 <p id="recommendationText" style="margin-top:8px; color: var(--muted);">Strong readiness. Push today, but do it with structure. Lift upper body, protect protein, and get one clean deep work block done before noon.</p>
               </div>
               <div class="gameplan-list">
@@ -1047,9 +1154,16 @@
                 <div class="coach-chip">Retention play: users come back for the voice, not just the data</div>
               </div>
               <div class="upgrade-banner">
-                <h3>Upgrade to CCC Pro</h3>
-                <p>Unlock Savage Metabo coach mode, advanced insights, streak analytics, and guided programs.</p>
-                <a class="btn btn--primary" href="/beta/">Upgrade Now</a>
+                <h3>Unlock CCC Pro</h3>
+                <p>Get Savage Metabo AI Coach, trend analytics, body tracking, custom programs, and premium missions.</p>
+
+                <div class="upgrade-trust">
+                  <span>🔥 Founding pricing</span>
+                  <span>📈 Advanced insights</span>
+                  <span>🧠 AI coaching</span>
+                </div>
+
+                <a class="btn btn--primary" href="/beta/">Get Pro Access</a>
               </div>
             </article>
           </div>
@@ -1257,6 +1371,11 @@
       render(false);
     })();
   </script>
+  <div class="mobile-upgrade-bar">
+    <a href="/app/log/" class="mobile-upgrade-bar__ghost">Free Check-In</a>
+    <a href="/beta/" class="mobile-upgrade-bar__cta">Get Pro Access</a>
+  </div>
+
 </body>
 </html>
           

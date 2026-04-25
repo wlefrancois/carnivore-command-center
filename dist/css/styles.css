@@ -3158,3 +3158,47 @@ body.is-logged-in .nav__loggedIn{
     grid-template-columns:1fr;
   }
 }
+.mobile-upgrade-bar{
+  position:fixed;
+  left:12px;
+  right:12px;
+  bottom:12px;
+  z-index:60;
+  display:none;
+  grid-template-columns:1fr 1.2fr;
+  gap:10px;
+  padding:10px;
+  border-radius:18px;
+  background:rgba(6,11,20,.92);
+  border:1px solid rgba(255,255,255,.08);
+  backdrop-filter:blur(14px);
+  box-shadow:0 18px 44px rgba(0,0,0,.35);
+}
+
+.mobile-upgrade-bar a{
+  text-align:center;
+  padding:14px 12px;
+  border-radius:14px;
+  font-weight:800;
+  font-size:.95rem;
+}
+
+.mobile-upgrade-bar__ghost{
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.08);
+}
+
+.mobile-upgrade-bar__cta{
+  color:#08101d;
+  background:linear-gradient(180deg,#ff9b3f 0%, #ff7a00 100%);
+}
+
+@media (max-width:760px){
+  .mobile-upgrade-bar{
+    display:grid;
+  }
+
+  body{
+    padding-bottom:92px;
+  }
+}
