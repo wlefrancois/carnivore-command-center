@@ -3223,3 +3223,71 @@ body.is-logged-in .nav__loggedIn{
     width:100%;
   }
 }
+@media (max-width: 768px){
+
+  /* Kill giant blue shape clutter */
+  .hero::before,
+  .hero::after,
+  .site-shell::before,
+  .site-shell::after{
+    display:none !important;
+  }
+
+  /* Better hero spacing */
+  .hero{
+    padding:32px 0 18px;
+  }
+
+  .hero__copy h1,
+  .hero h1{
+    font-size:44px;
+    line-height:1.02;
+    letter-spacing:-0.03em;
+    max-width:100%;
+    margin-bottom:12px;
+  }
+
+  .lead{
+    font-size:17px;
+    line-height:1.55;
+  }
+
+  /* Cleaner buttons */
+  .hero__cta{
+    gap:10px;
+  }
+
+  .hero__cta .btn{
+    width:100%;
+    min-height:52px;
+  }
+
+  /* Better cards */
+  .cards--3,
+  .cards--2,
+  .stats-strip__grid,
+  .mode-grid,
+  .split,
+  .hero__grid,
+  .cta__inner--metabo{
+    grid-template-columns:1fr !important;
+  }
+
+  .card{
+    padding:18px;
+    border-radius:20px;
+  }
+
+  /* Smaller mascot images */
+  .metabo-card,
+  .cta__mascot img{
+    max-width:260px;
+    margin:0 auto;
+  }
+
+  /* Better sections */
+  section{
+    padding:52px 0;
+  }
+
+}
