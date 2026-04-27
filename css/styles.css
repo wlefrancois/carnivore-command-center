@@ -3406,3 +3406,33 @@ body.is-logged-in .nav__loggedIn{
     font-size:26px;
   }
 }
+/* =========================================================
+   RESET PAGE GUIDE PREVIEW
+========================================================= */
+
+.guide-preview-card{
+  border-radius:28px;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.04);
+  box-shadow:0 22px 70px rgba(0,0,0,.38);
+  padding:18px;
+  overflow:hidden;
+}
+
+.guide-preview-card img{
+  width:100%;
+  height:auto;
+  border-radius:20px;
+  display:block;
+}
+
+@media (max-width:768px){
+  .guide-preview-card{
+    padding:10px;
+    border-radius:20px;
+  }
+
+  .guide-preview-card img{
+    border-radius:14px;
+  }
+}
