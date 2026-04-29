@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Carnivore Command Center</title>
+  <meta name="description" content="Elite performance + metabolic intelligence. Track what matters, see patterns, and execute with confidence." />
+  <meta name="theme-color" content="#0b1020" />
+  <link rel="stylesheet" href="/css/styles.css" />
+  <link rel="stylesheet" href="/css/app.css" />
+</head>
+
+<body class="app-mode">
+  <main>
+
+<!-- SECTION 01: FOUNDER DAILY TRACKER -->
+<section class="section" id="founder-tracker">
+  <div class="container">
+
+    <div class="section__head section__head--center">
+      <div class="badge">Founder Mode</div>
+      <h1>CCC Daily Tracker</h1>
+      <p>Track the few numbers that actually move the business.</p>
+    </div>
+
+    <div class="card mini--bright">
+
+      <form class="founder-tracker-form">
+
+        <label>
+          Date
+          <input class="login-input" type="date" name="date">
+        </label>
+
+        <label>
+          Visitors Today
+          <input class="login-input" type="number" name="visitors" placeholder="0">
+        </label>
+
+        <label>
+          Email Leads
+          <input class="login-input" type="number" name="leads" placeholder="0">
+        </label>
+
+        <label>
+          Reset Starts
+          <input class="login-input" type="number" name="reset_starts" placeholder="0">
+        </label>
+
+        <label>
+          Check-Ins Started
+          <input class="login-input" type="number" name="checkins" placeholder="0">
+        </label>
+
+        <label>
+          Content Posted?
+          <select class="login-input" name="content_posted">
+            <option>No</option>
+            <option>Yes</option>
+          </select>
+        </label>
+
+        <label>
+          Revenue Today
+          <input class="login-input" type="number" name="revenue" placeholder="0">
+        </label>
+
+        <label>
+          Biggest Blocker
+          <textarea class="login-input" name="blocker" rows="3" placeholder="What slowed CCC down today?"></textarea>
+        </label>
+
+        <label>
+          Tomorrow’s Savage Move
+          <textarea class="login-input" name="tomorrow" rows="3" placeholder="One action that creates traffic, leads, or product usage."></textarea>
+        </label>
+
+        <button class="btn btn--primary btn--block" type="button">
+          Save Daily Tracker
+        </button>
+
+        <p class="microcopy">
+          MVP note: this form is visual for now. Next step is wiring it to Supabase or local storage.
+        </p>
+
+      </form>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- SECTION 02: DAILY SCOREBOARD -->
+<section class="section section--alt" id="daily-scoreboard">
+  <div class="container">
+
+    <div class="section__head section__head--center">
+      <h2>Daily Founder Scoreboard</h2>
+      <p>Win the day by creating traffic, leads, usage, or revenue.</p>
+    </div>
+
+    <div class="cards cards--4">
+      <div class="card">
+        <h3>Traffic</h3>
+        <p>Did people visit /reset/ or the homepage today?</p>
+      </div>
+
+      <div class="card">
+        <h3>Leads</h3>
+        <p>Did anyone join the email list or start the reset?</p>
+      </div>
+
+      <div class="card">
+        <h3>Usage</h3>
+        <p>Did anyone start a check-in or use CCC?</p>
+      </div>
+
+      <div class="card">
+        <h3>Revenue</h3>
+        <p>Did CCC generate or move closer to income?</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SECTION 03: FINAL CTA -->
+<section class="cta" id="final-cta">
+  <div class="container">
+
+    <div class="cta__inner cta__inner--metabo">
+
+      <div class="cta__content">
+        <div class="panel__title">Founder rule: no guessing.</div>
+        <div class="panel__subtitle">
+          Track the numbers. Make one move. Repeat tomorrow.
+        </div>
+      </div>
+
+      <div class="cta__actions">
+        <a class="btn btn--primary" href="/reset/">View Reset Funnel</a>
+        <a class="btn btn--ghost" href="/dashboard/">View Dashboard</a>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+</main>
+</body>
+</html>
