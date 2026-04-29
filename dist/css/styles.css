@@ -3615,3 +3615,13 @@ body.is-logged-in .nav__loggedIn{
     grid-template-columns:1fr;
   }
 }
+/* Founder tracker saved entries */
+.founder-summary-table .logs-row{
+  grid-template-columns:1fr 1fr 1fr 1fr 1fr;
+}
+
+@media (max-width:768px){
+  .founder-summary-table .logs-row{
+    grid-template-columns:1fr;
+  }
+}

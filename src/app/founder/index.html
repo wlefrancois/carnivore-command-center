@@ -133,5 +133,99 @@
 
   </div>
 </section>
+<script>
+  const form = document.querySelector(".founder-tracker-form");
+  const saveBtn = form.querySelector("button");
+  const storageKey = "cccFounderDailyTracker";
 
+  function getEntries() {
+    return JSON.parse(localStorage.getItem(storageKey) || "[]");
+  }
+
+  function saveEntries(entries) {
+    localStorage.setItem(storageKey, JSON.stringify(entries));
+  }
+
+  function todayISO() {
+    return new Date().toISOString().slice(0, 10);
+  }
+
+  function formData() {
+    return {
+      date: form.date.value || todayISO(),
+      visitors: Number(form.visitors.value || 0),
+      leads: Number(form.leads.value || 0),
+      reset_starts: Number(form.reset_starts.value || 0),
+      checkins: Number(form.checkins.value || 0),
+      content_posted: form.content_posted.value,
+      revenue: Number(form.revenue.value || 0),
+      blocker: form.blocker.value.trim(),
+      tomorrow: form.tomorrow.value.trim()
+    };
+  }
+
+  function saveToday() {
+    const entry = formData();
+    const entries = getEntries().filter(item => item.date !== entry.date);
+    entries.push(entry);
+    entries.sort((a, b) => b.date.localeCompare(a.date));
+    saveEntries(entries);
+    renderSummary();
+    alert("Saved founder tracker for " + entry.date);
+  }
+
+  function renderSummary() {
+    let summary = document.querySelector("#founder-summary");
+    if (!summary) {
+      summary = document.createElement("section");
+      summary.className = "section section--alt";
+      summary.id = "founder-summary";
+      summary.innerHTML = `
+        <div class="container">
+          <div class="section__head section__head--center">
+            <h2>Saved Founder Entries</h2>
+            <p>Your last 7 saved daily tracker entries.</p>
+          </div>
+          <div class="card">
+            <div class="founder-summary-table"></div>
+          </div>
+        </div>
+      `;
+      document.querySelector("#daily-scoreboard").after(summary);
+    }
+
+    const entries = getEntries().slice(0, 7);
+    const table = summary.querySelector(".founder-summary-table");
+
+    if (!entries.length) {
+      table.innerHTML = "<p>No entries saved yet.</p>";
+      return;
+    }
+
+    table.innerHTML = `
+      <div class="logs-table">
+        <div class="logs-row logs-row--head">
+          <strong>Date</strong>
+          <strong>Visitors</strong>
+          <strong>Leads</strong>
+          <strong>Check-Ins</strong>
+          <strong>Revenue</strong>
+        </div>
+        ${entries.map(e => `
+          <div class="logs-row">
+            <span>${e.date}</span>
+            <span>${e.visitors}</span>
+            <span>${e.leads}</span>
+            <span>${e.checkins}</span>
+            <span>$${e.revenue}</span>
+          </div>
+        `).join("")}
+      </div>
+    `;
+  }
+
+  form.date.value = todayISO();
+  saveBtn.addEventListener("click", saveToday);
+  renderSummary();
+</script>
 </main>
