@@ -1,5 +1,0 @@
-
-User-agent: *
-Allow: /
-
-Sitemap: https://carnivorecommandcenter.com/sitemap.xml
