@@ -823,6 +823,200 @@
       .macro-ring__inner { width: 102px; height: 102px; }
     }
 
+
+
+    /* =========================================================
+       CCC BODY INSIGHT ENGINE V1
+       Adds education + conversion-ready explanations without
+       removing existing dashboard behavior.
+    ========================================================= */
+
+    .insight-engine {
+      display: grid;
+      gap: 16px;
+    }
+
+    .insight-hero {
+      padding: 20px;
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(255, 122, 0, 0.16);
+      background:
+        radial-gradient(circle at top right, rgba(255, 122, 0, 0.14), transparent 32%),
+        linear-gradient(180deg, rgba(10, 16, 28, 0.96), rgba(7, 12, 22, 0.98));
+      box-shadow: var(--shadow);
+    }
+
+    .insight-hero__grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 320px;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .insight-eyebrow {
+      margin: 0 0 8px;
+      color: #ffd2ac;
+      font-size: 0.78rem;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .insight-hero h2 {
+      margin: 0 0 10px;
+      font-size: clamp(1.65rem, 2.4vw, 2.7rem);
+      line-height: 1;
+      letter-spacing: -0.04em;
+    }
+
+    .insight-hero h2 span { color: var(--orange-2); }
+
+    .insight-hero p {
+      margin: 0;
+      color: var(--muted);
+      max-width: 760px;
+      font-size: 1rem;
+    }
+
+    .insight-priority {
+      padding: 16px;
+      border-radius: 18px;
+      border: 1px solid rgba(34, 208, 122, 0.18);
+      background: rgba(34, 208, 122, 0.07);
+      display: grid;
+      align-content: center;
+      gap: 10px;
+    }
+
+    .insight-priority strong {
+      color: var(--green);
+      font-size: 1.1rem;
+    }
+
+    .insight-priority span {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .insight-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .body-insight-card,
+    .hydration-myth-card {
+      padding: 18px;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, var(--card), var(--card-2));
+      box-shadow: var(--shadow);
+      min-width: 0;
+    }
+
+    .body-insight-card__icon {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      background: rgba(255, 122, 0, 0.11);
+      border: 1px solid rgba(255, 122, 0, 0.16);
+      margin-bottom: 12px;
+      font-size: 1.35rem;
+    }
+
+    .body-insight-card h3,
+    .hydration-myth-card h3 {
+      margin: 0 0 8px;
+      font-size: 1.12rem;
+      letter-spacing: -0.02em;
+    }
+
+    .body-insight-card p,
+    .hydration-myth-card p {
+      margin: 0 0 12px;
+      color: var(--muted);
+      font-size: 0.93rem;
+    }
+
+    .insight-list {
+      display: grid;
+      gap: 8px;
+      margin: 14px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .insight-list li {
+      display: flex;
+      gap: 8px;
+      color: #c9d8f4;
+      font-size: 0.9rem;
+    }
+
+    .insight-list li::before {
+      content: "✓";
+      color: var(--green);
+      font-weight: 900;
+      flex: 0 0 auto;
+    }
+
+    .hydration-myth-card {
+      border-color: rgba(35, 136, 255, 0.22);
+      background:
+        radial-gradient(circle at top right, rgba(35, 136, 255, 0.13), transparent 34%),
+        linear-gradient(180deg, var(--card), var(--card-2));
+    }
+
+    .hydration-myth-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .hydration-myth-box {
+      padding: 14px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.035);
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .hydration-myth-box strong {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--text);
+    }
+
+    .hydration-myth-box span {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .insight-callout {
+      margin-top: 14px;
+      padding: 14px;
+      border-radius: 16px;
+      background: linear-gradient(180deg, rgba(255,122,0,0.10), rgba(76,141,255,0.06));
+      border: 1px solid rgba(255,122,0,0.14);
+      color: #dbe7ff;
+      font-size: 0.94rem;
+    }
+
+    .insight-callout strong { color: #ffd2ac; }
+
+    @media (max-width: 1280px) {
+      .insight-hero__grid,
+      .insight-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 760px) {
+      .insight-hero__grid,
+      .insight-grid,
+      .hydration-myth-grid { grid-template-columns: 1fr; }
+    }
+
     /* =========================================================
        CCC DASHBOARD CONVERSION V1
     ========================================================= */
@@ -943,6 +1137,7 @@
               <a class="is-active" href="#">Dashboard</a>
               <a href="#readiness">Readiness</a>
               <a href="#checkin">Daily Plan</a>
+              <a href="#body-insights">Body Insights</a>
               <a href="#trends">Log &amp; Analyze</a>
               <a href="#protocols">Protocols</a>
               <a href="#coach">Coaching</a>
@@ -1073,6 +1268,97 @@
               <p>Stay sharp. Stay honest. 2:00 PM</p>
             </article>
           </div>
+
+          <!-- =========================================================
+               BODY INSIGHT ENGINE
+          ========================================================= -->
+          <section class="insight-engine" id="body-insights">
+            <article class="insight-hero">
+              <div class="insight-hero__grid">
+                <div>
+                  <p class="insight-eyebrow">Body Insight Engine</p>
+                  <h2>Your score is only useful when you know <span>why it moved.</span></h2>
+                  <p>
+                    CCC turns carnivore signals into simple education: what your body needs, what that input controls,
+                    and what to fix first when energy, focus, digestion, or recovery starts drifting.
+                  </p>
+                </div>
+                <div class="insight-priority">
+                  <strong>Today’s Priority: Hydration First</strong>
+                  <span>Strong readiness, but hydration still drives energy, focus, digestion, and recovery. Fix this before chasing advanced tweaks.</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="hydration-myth-card">
+              <p class="insight-eyebrow">Hydration Myth Check</p>
+              <h3>Warm vs cold water: does it hydrate differently?</h3>
+              <p>
+                Water temperature is not the main hydration lever. Cold water and warm water both hydrate. The bigger drivers are total intake,
+                electrolytes, sweat loss, caffeine timing, and consistency.
+              </p>
+              <div class="hydration-myth-grid">
+                <div class="hydration-myth-box">
+                  <strong>🧊 Cold Water</strong>
+                  <span>Best when you want cooling, post-workout refresh, or help drinking more volume.</span>
+                </div>
+                <div class="hydration-myth-box">
+                  <strong>🔥 Warm Water</strong>
+                  <span>Best for comfort, morning routine, digestion comfort, and habit consistency.</span>
+                </div>
+              </div>
+              <div class="insight-callout">
+                <strong>CCC Insight:</strong> Do not overthink temperature. Hit your water target, add electrolytes when needed, and hydrate before coffee becomes your default fuel source.
+              </div>
+            </article>
+
+            <div class="insight-grid">
+              <article class="body-insight-card">
+                <div class="body-insight-card__icon">💧</div>
+                <h3>Hydration</h3>
+                <p>Water helps regulate blood volume, temperature, digestion, and cellular function.</p>
+                <ul class="insight-list">
+                  <li>Supports energy and mental clarity</li>
+                  <li>Helps digestion and bowel regularity</li>
+                  <li>Improves training output and recovery</li>
+                </ul>
+              </article>
+
+              <article class="body-insight-card">
+                <div class="body-insight-card__icon">🥩</div>
+                <h3>Protein</h3>
+                <p>Protein supplies amino acids your body uses to repair tissue and preserve lean mass.</p>
+                <ul class="insight-list">
+                  <li>Builds and repairs muscle</li>
+                  <li>Improves satiety and appetite control</li>
+                  <li>Supports recovery after training</li>
+                </ul>
+              </article>
+
+              <article class="body-insight-card">
+                <div class="body-insight-card__icon">🔥</div>
+                <h3>Fat</h3>
+                <p>Dietary fat provides dense energy and helps carnivore users avoid low-output days.</p>
+                <ul class="insight-list">
+                  <li>Stabilizes energy when carbs are low</li>
+                  <li>Supports hormones and cell membranes</li>
+                  <li>Helps meals feel satisfying</li>
+                </ul>
+              </article>
+
+              <article class="body-insight-card">
+                <div class="body-insight-card__icon">🧠</div>
+                <h3>Cholesterol</h3>
+                <p>Cholesterol is used by the body for hormones, vitamin D pathways, bile acids, and cell structure.</p>
+                <ul class="insight-list">
+                  <li>Supports hormone production pathways</li>
+                  <li>Helps build cell membranes</li>
+                  <li>Assists bile production for fat digestion</li>
+                </ul>
+              </article>
+            </div>
+          </section>
+
           <div class="mid-grid">
             <article class="panel" id="checkin">
               <div class="panel__title">Daily Check-In</div>
