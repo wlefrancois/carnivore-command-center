@@ -1,7 +1,7 @@
 // =============================================================================
 // FILE: site.js
 // PROJECT: Carnivore Command Center
-// VERSION: v1.1
+// VERSION: v1.2
 // DESCRIPTION:
 //   Shared site behavior for CCC pages.
 //   Handles footer year, active navigation highlighting, and mobile menu toggle.
@@ -10,24 +10,16 @@
 (function () {
   "use strict";
 
-  // ==========================================================================
-  // FOOTER YEAR
-  // ==========================================================================
-
   const year = document.getElementById("year");
 
   if (year) {
     year.textContent = new Date().getFullYear();
   }
 
-  // ==========================================================================
-  // ACTIVE NAV LINK
-  // ==========================================================================
-
   const path =
     window.location.pathname.replace(/\/$/, "") || "/";
 
-  document.querySelectorAll(".nav-links a").forEach((link) => {
+  document.querySelectorAll(".site-nav a").forEach((link) => {
     const href = link.getAttribute("href");
 
     if (!href) return;
@@ -43,44 +35,40 @@
     }
   });
 
-  // ==========================================================================
-// MOBILE NAV TOGGLE
-// ==========================================================================
+  const toggle = document.querySelector(".site-header__toggle");
+  const nav = document.querySelector(".site-nav");
 
-const toggle = document.querySelector(".site-header__toggle");
-const nav = document.querySelector(".site-nav");
+  if (!toggle || !nav) return;
 
-if (!toggle || !nav) return;
+  toggle.addEventListener("click", function (event) {
+    event.preventDefault();
+    event.stopPropagation();
 
-toggle.addEventListener("click", function (event) {
-  event.preventDefault();
-  event.stopPropagation();
+    const isOpen = nav.classList.toggle("is-open");
 
-  const isOpen = nav.classList.toggle("is-open");
-
-  toggle.classList.toggle("is-open", isOpen);
-  toggle.setAttribute("aria-expanded", String(isOpen));
-  document.body.classList.toggle("nav-is-open", isOpen);
-});
-
-nav.querySelectorAll("a").forEach((link) => {
-  link.addEventListener("click", function () {
-    nav.classList.remove("is-open");
-    toggle.classList.remove("is-open");
-    toggle.setAttribute("aria-expanded", "false");
-    document.body.classList.remove("nav-is-open");
+    toggle.classList.toggle("is-open", isOpen);
+    toggle.setAttribute("aria-expanded", String(isOpen));
+    document.body.classList.toggle("nav-is-open", isOpen);
   });
-});
 
-document.addEventListener("click", function (event) {
-  const clickedInsideNav = nav.contains(event.target);
-  const clickedToggle = toggle.contains(event.target);
+  nav.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", function () {
+      nav.classList.remove("is-open");
+      toggle.classList.remove("is-open");
+      toggle.setAttribute("aria-expanded", "false");
+      document.body.classList.remove("nav-is-open");
+    });
+  });
 
-  if (!clickedInsideNav && !clickedToggle) {
-    nav.classList.remove("is-open");
-    toggle.classList.remove("is-open");
-    toggle.setAttribute("aria-expanded", "false");
-    document.body.classList.remove("nav-is-open");
-  }
-});
+  document.addEventListener("click", function (event) {
+    const clickedInsideNav = nav.contains(event.target);
+    const clickedToggle = toggle.contains(event.target);
+
+    if (!clickedInsideNav && !clickedToggle) {
+      nav.classList.remove("is-open");
+      toggle.classList.remove("is-open");
+      toggle.setAttribute("aria-expanded", "false");
+      document.body.classList.remove("nav-is-open");
+    }
+  });
 })();

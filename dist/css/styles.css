@@ -3796,3 +3796,108 @@ body {
     grid-template-columns:1fr;
   }
 }
+/* =========================================================
+   SITE HEADER MOBILE NAV SYSTEM
+========================================================= */
+
+@media (max-width: 1100px){
+
+  .site-header{
+    position:sticky;
+    top:0;
+    z-index:5000;
+    backdrop-filter:blur(18px);
+    background:rgba(5,10,22,.92);
+    border-bottom:1px solid rgba(255,255,255,.08);
+  }
+
+  .site-header__inner{
+    position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    min-height:74px;
+    gap:16px;
+  }
+
+  .site-header__toggle{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    gap:5px;
+
+    width:46px;
+    height:46px;
+
+    margin-left:auto;
+
+    border-radius:14px;
+    border:1px solid rgba(255,255,255,.10);
+
+    background:rgba(255,255,255,.04);
+
+    cursor:pointer;
+
+    z-index:5002;
+  }
+
+  .site-header__toggle span{
+    display:block;
+    width:22px;
+    height:2px;
+    border-radius:999px;
+    background:#ffffff;
+  }
+
+  .site-nav{
+    position:absolute;
+
+    top:calc(100% + 10px);
+    left:0;
+    right:0;
+
+    display:none;
+
+    flex-direction:column;
+    gap:12px;
+
+    padding:18px;
+
+    border-radius:22px;
+
+    background:
+      linear-gradient(
+        180deg,
+        rgba(10,18,36,.98),
+        rgba(5,10,22,.98)
+      );
+
+    border:1px solid rgba(255,255,255,.08);
+
+    box-shadow:
+      0 20px 50px rgba(0,0,0,.45);
+
+    z-index:5001;
+  }
+
+  .site-nav.is-open{
+    display:flex;
+  }
+
+  .site-nav a{
+    width:100%;
+  }
+
+  .site-nav__actions{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:12px;
+    margin-top:8px;
+  }
+
+  .site-nav__actions .btn{
+    width:100%;
+    justify-content:center;
+  }
+}
