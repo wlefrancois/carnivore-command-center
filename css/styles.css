@@ -3212,6 +3212,119 @@ body.is-logged-in .nav__loggedIn{
     font-size:.8rem;
   }
 }
+@media (max-width: 760px){
+
+  /* existing css above */
+
+
+  /* ==========================================================================
+     MOBILE DASHBOARD COMPRESSION
+  ========================================================================== */
+
+  .sidebar {
+    display: none;
+  }
+
+  .hero-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .visual-rail {
+    display: none;
+  }
+
+  .page {
+    padding-top: 10px;
+  }
+
+  .top-strip,
+  .status-grid,
+  .mid-grid,
+  .lower-grid,
+  .nutrition-grid {
+    gap: 12px;
+  }
+
+  .metric-card,
+  .gameplan-card,
+  .focus-card,
+  .macro-card,
+  .mini-status-card,
+  .panel,
+  .coach-card,
+  .factors-card,
+  .trend-card,
+  .wins-card,
+  .insight-hero,
+  .myth-card,
+  .nutrition-card {
+    padding: 14px;
+  }
+
+  .metric-score__value {
+    font-size: 4rem;
+  }
+
+  .panel__title,
+  .insight-hero h2 {
+    font-size: 2rem;
+  }
+
+  .portrait-card {
+    min-height: 240px;
+  }
+
+  .insight-grid {
+    margin-top: 0 !important;
+  }
+
+  .insight-grid,
+  .mid-grid,
+  .lower-grid {
+    margin-left: 0 !important;
+  }
+
+  /* existing css below */
+
+}
+html,
+body {
+  overflow-x: hidden;
+}
+
+* {
+  max-width: 100%;
+}
+
+.hero-grid,
+.main-grid,
+.top-strip,
+.status-grid,
+.mid-grid,
+.lower-grid,
+.insight-grid,
+.nutrition-grid,
+.insight-hero {
+  width: 100%;
+  min-width: 0;
+}
+
+.insight-hero,
+.myth-grid,
+.metric-card__shell {
+  grid-template-columns: 1fr !important;
+}
+
+
+
+
+.insight-grid,
+.mid-grid,
+.lower-grid {
+  transform: none !important;
+  left: auto !important;
+}
+
 
 @media (max-width: 560px){
   .site-nav__actions{
@@ -3681,5 +3794,110 @@ body.is-logged-in .nav__loggedIn{
 @media (max-width:768px){
   .founder-summary-table .logs-row{
     grid-template-columns:1fr;
+  }
+}
+/* =========================================================
+   SITE HEADER MOBILE NAV SYSTEM
+========================================================= */
+
+@media (max-width: 1100px){
+
+  .site-header{
+    position:sticky;
+    top:0;
+    z-index:5000;
+    backdrop-filter:blur(18px);
+    background:rgba(5,10,22,.92);
+    border-bottom:1px solid rgba(255,255,255,.08);
+  }
+
+  .site-header__inner{
+    position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    min-height:74px;
+    gap:16px;
+  }
+
+  .site-header__toggle{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    gap:5px;
+
+    width:46px;
+    height:46px;
+
+    margin-left:auto;
+
+    border-radius:14px;
+    border:1px solid rgba(255,255,255,.10);
+
+    background:rgba(255,255,255,.04);
+
+    cursor:pointer;
+
+    z-index:5002;
+  }
+
+  .site-header__toggle span{
+    display:block;
+    width:22px;
+    height:2px;
+    border-radius:999px;
+    background:#ffffff;
+  }
+
+  .site-nav{
+    position:absolute;
+
+    top:calc(100% + 10px);
+    left:0;
+    right:0;
+
+    display:none;
+
+    flex-direction:column;
+    gap:12px;
+
+    padding:18px;
+
+    border-radius:22px;
+
+    background:
+      linear-gradient(
+        180deg,
+        rgba(10,18,36,.98),
+        rgba(5,10,22,.98)
+      );
+
+    border:1px solid rgba(255,255,255,.08);
+
+    box-shadow:
+      0 20px 50px rgba(0,0,0,.45);
+
+    z-index:5001;
+  }
+
+  .site-nav.is-open{
+    display:flex;
+  }
+
+  .site-nav a{
+    width:100%;
+  }
+
+  .site-nav__actions{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:12px;
+    margin-top:8px;
+  }
+
+  .site-nav__actions .btn{
+    width:100%;
+    justify-content:center;
   }
 }

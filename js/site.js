@@ -1,69 +1,74 @@
-// js/site.js
-(function () {
-  // Footer year (safe on all pages)
-  const y = document.getElementById("year");
-  if (y) y.textContent = new Date().getFullYear();
+// =============================================================================
+// FILE: site.js
+// PROJECT: Carnivore Command Center
+// VERSION: v1.2
+// DESCRIPTION:
+//   Shared site behavior for CCC pages.
+//   Handles footer year, active navigation highlighting, and mobile menu toggle.
+// =============================================================================
 
-  // Active nav link highlighting
-  const path = window.location.pathname.replace(/\/$/, "") || "/";
-  document.querySelectorAll(".nav-links a").forEach((a) => {
-    const href = a.getAttribute("href");
+(function () {
+  "use strict";
+
+  const year = document.getElementById("year");
+
+  if (year) {
+    year.textContent = new Date().getFullYear();
+  }
+
+  const path =
+    window.location.pathname.replace(/\/$/, "") || "/";
+
+  document.querySelectorAll(".site-nav a").forEach((link) => {
+    const href = link.getAttribute("href");
+
     if (!href) return;
 
-    const normalized = href === "/" ? "/" : href.replace(/\/$/, "");
+    const normalized =
+      href === "/"
+        ? "/"
+        : href.replace(/\/$/, "");
+
     if (normalized === path) {
-      a.classList.add("is-active");
-      a.setAttribute("aria-current", "page");
+      link.classList.add("is-active");
+      link.setAttribute("aria-current", "page");
     }
   });
 
-  // Mobile nav toggle
-  const toggle = document.querySelector(".nav__toggle");
-  const nav = document.querySelector(".nav-links[data-nav]");
+  const toggle = document.querySelector(".site-header__toggle");
+  const nav = document.querySelector(".site-nav");
 
-  if (toggle && nav) {
-    toggle.addEventListener("click", () => {
-      const open = nav.classList.toggle("is-open");
-      toggle.setAttribute("aria-expanded", open ? "true" : "false");
-    });
+  if (!toggle || !nav) return;
 
-    // Close after click (mobile UX)
-    nav.querySelectorAll("a").forEach((a) => {
-      a.addEventListener("click", () => {
-        nav.classList.remove("is-open");
-        toggle.setAttribute("aria-expanded", "false");
-      });
+  toggle.addEventListener("click", function (event) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const isOpen = nav.classList.toggle("is-open");
+
+    toggle.classList.toggle("is-open", isOpen);
+    toggle.setAttribute("aria-expanded", String(isOpen));
+    document.body.classList.toggle("nav-is-open", isOpen);
+  });
+
+  nav.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", function () {
+      nav.classList.remove("is-open");
+      toggle.classList.remove("is-open");
+      toggle.setAttribute("aria-expanded", "false");
+      document.body.classList.remove("nav-is-open");
     });
-  }
+  });
+
+  document.addEventListener("click", function (event) {
+    const clickedInsideNav = nav.contains(event.target);
+    const clickedToggle = toggle.contains(event.target);
+
+    if (!clickedInsideNav && !clickedToggle) {
+      nav.classList.remove("is-open");
+      toggle.classList.remove("is-open");
+      toggle.setAttribute("aria-expanded", "false");
+      document.body.classList.remove("nav-is-open");
+    }
+  });
 })();
-document.addEventListener("DOMContentLoaded", () => {
-  const toggle = document.querySelector(".nav__toggle");
-  const nav = document.querySelector("[data-nav]");
-
-  if (toggle && nav) {
-    toggle.addEventListener("click", () => {
-      const isOpen = nav.classList.toggle("is-open");
-      toggle.classList.toggle("is-open", isOpen);
-      toggle.setAttribute("aria-expanded", String(isOpen));
-    });
-
-    nav.querySelectorAll("a").forEach((link) => {
-      link.addEventListener("click", () => {
-        nav.classList.remove("is-open");
-        toggle.classList.remove("is-open");
-        toggle.setAttribute("aria-expanded", "false");
-      });
-    });
-
-    document.addEventListener("click", (event) => {
-      const clickedInsideNav = nav.contains(event.target);
-      const clickedToggle = toggle.contains(event.target);
-
-      if (!clickedInsideNav && !clickedToggle) {
-        nav.classList.remove("is-open");
-        toggle.classList.remove("is-open");
-        toggle.setAttribute("aria-expanded", "false");
-      }
-    });
-  }
-});

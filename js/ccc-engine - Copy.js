@@ -2,30 +2,10 @@
 ===============================================================================
 FILE: ccc-engine.js
 PROJECT: Carnivore Command Center
-VERSION: v1.1
-AUTHOR: WDC / Carnivore Command Center
-DESCRIPTION:
-  Frontend-only dashboard engine for Carnivore Command Center.
-
-  This engine powers the daily-use beta dashboard by handling:
-  - readiness scoring
-  - hydration scoring
-  - stress, sleep, and factor rendering
-  - protocol recommendation logic
-  - dynamic Next Up card logic
-  - streak calculation
-  - check-in persistence using localStorage
-  - dashboard UI updates
-
-DEPENDENCIES:
-  - No external JavaScript libraries
-  - Requires matching element IDs in src/dashboard/index.html
-  - Uses browser localStorage
-
-IMPORTANT:
-  - This is intentionally frontend-only for the founder beta.
-  - Future backend migration target: Supabase or similar account/cloud system.
-  - Keep this file simple, readable, and easy to evolve.
+VERSION: v1.0
+PURPOSE:
+  Frontend-only CCC dashboard engine for localStorage check-ins, readiness scoring,
+  hydration logic, mode recommendations, streak handling, and protocol generation.
 ===============================================================================
 */
 
@@ -33,41 +13,28 @@ IMPORTANT:
   "use strict";
 
   // ============================================================================
-  // CONFIGURATION
+  // STORAGE
   // ============================================================================
 
   const STORAGE_KEY = "ccc_checkins_v1";
   const LAST_ENTRY_KEY = "ccc_last_entry_v1";
 
-  const DEFAULT_INPUTS = {
-    sleep: 7,
-    mood: 8,
-    stress: 3,
-    digestion: "Good",
-    soreness: "Mild",
-    workoutYesterday: "yes"
-  };
-
   // ============================================================================
-  // DOM HELPERS
+  // HELPERS
   // ============================================================================
 
   const byId = (id) => document.getElementById(id);
 
   const setText = (id, value) => {
     const el = byId(id);
-
-    if (el) {
-      el.textContent = value;
-    }
+    if (el) el.textContent = value;
   };
 
-  const clamp = (value, min, max) => {
-    return Math.max(min, Math.min(max, value));
-  };
+  const clamp = (value, min, max) =>
+    Math.max(min, Math.min(max, value));
 
   // ============================================================================
-  // ELEMENT CACHE
+  // ELEMENTS
   // ============================================================================
 
   const els = {
@@ -95,73 +62,60 @@ IMPORTANT:
   function loadEntries() {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
-      const parsed = raw ? JSON.parse(raw) : [];
-
-      return Array.isArray(parsed) ? parsed : [];
-
+      return raw ? JSON.parse(raw) : [];
     } catch {
       return [];
     }
   }
 
   function saveEntries(entries) {
-    try {
-      localStorage.setItem(
-        STORAGE_KEY,
-        JSON.stringify(entries)
-      );
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify(entries)
+    );
+  }
 
-    } catch {
-      // localStorage can fail in private browsing or restricted environments.
-    }
+  function saveLastEntry(entry) {
+    localStorage.setItem(
+      LAST_ENTRY_KEY,
+      JSON.stringify(entry)
+    );
   }
 
   function loadLastEntry() {
     try {
       const raw = localStorage.getItem(LAST_ENTRY_KEY);
       return raw ? JSON.parse(raw) : null;
-
     } catch {
       return null;
     }
   }
 
-  function saveLastEntry(entry) {
-    try {
-      localStorage.setItem(
-        LAST_ENTRY_KEY,
-        JSON.stringify(entry)
-      );
-
-    } catch {
-      // No-op for local beta.
-    }
-  }
-
   // ============================================================================
-  // LOCAL STATE
+  // STATE
   // ============================================================================
 
   let entries = loadEntries();
-  let workoutYesterday = DEFAULT_INPUTS.workoutYesterday;
+
+  let workoutYesterday = "yes";
 
   // ============================================================================
-  // INPUT READING
+  // INPUTS
   // ============================================================================
 
   function readInputs() {
     return {
-      sleep: Number(els.sleep?.value || DEFAULT_INPUTS.sleep),
-      mood: Number(els.mood?.value || DEFAULT_INPUTS.mood),
-      stress: Number(els.stress?.value || DEFAULT_INPUTS.stress),
-      digestion: els.digestion?.value || DEFAULT_INPUTS.digestion,
-      soreness: els.soreness?.value || DEFAULT_INPUTS.soreness,
+      sleep: Number(els.sleep?.value || 7),
+      mood: Number(els.mood?.value || 8),
+      stress: Number(els.stress?.value || 3),
+      digestion: els.digestion?.value || "Good",
+      soreness: els.soreness?.value || "Mild",
       workoutYesterday
     };
   }
 
   // ============================================================================
-  // SCORE HELPERS
+  // SCORING ENGINE
   // ============================================================================
 
   function scoreDigestion(value) {
@@ -186,40 +140,26 @@ IMPORTANT:
     return map[value] || 70;
   }
 
-  function scoreStress(stress) {
-    return Math.round(
+  function computeReadiness(input) {
+
+    const sleepScore =
+      clamp((input.sleep / 8) * 100, 0, 100);
+
+    const moodScore =
+      clamp((input.mood / 10) * 100, 0, 100);
+
+    const stressScore =
       clamp(
-        100 - ((stress - 1) / 9) * 100,
+        100 - ((input.stress - 1) / 9) * 100,
         0,
         100
-      )
-    );
-  }
+      );
 
-  function scoreSleep(sleep) {
-    return Math.round(
-      clamp((sleep / 8) * 100, 0, 100)
-    );
-  }
+    const digestionScore =
+      scoreDigestion(input.digestion);
 
-  function scoreRecovery(soreness) {
-    return scoreSoreness(soreness);
-  }
-
-  // ============================================================================
-  // READINESS ENGINE
-  // ============================================================================
-
-  function computeReadiness(input) {
-    const sleepScore = scoreSleep(input.sleep);
-
-    const moodScore = Math.round(
-      clamp((input.mood / 10) * 100, 0, 100)
-    );
-
-    const stressScore = scoreStress(input.stress);
-    const digestionScore = scoreDigestion(input.digestion);
-    const sorenessScore = scoreSoreness(input.soreness);
+    const sorenessScore =
+      scoreSoreness(input.soreness);
 
     const workoutBonus =
       input.workoutYesterday === "yes"
@@ -240,10 +180,11 @@ IMPORTANT:
   }
 
   // ============================================================================
-  // HYDRATION ENGINE
+  // HYDRATION
   // ============================================================================
 
   function computeHydration(input, readiness) {
+
     let hydration = 88;
 
     if (readiness < 65) hydration -= 14;
@@ -256,12 +197,12 @@ IMPORTANT:
       clamp(hydration, 42, 96)
     );
   }
-
-  // ============================================================================
+    // ============================================================================
   // MODE ENGINE
   // ============================================================================
 
   function getMode(readiness) {
+
     if (readiness >= 82) {
       return {
         zone: "Optimal Zone",
@@ -298,9 +239,14 @@ IMPORTANT:
   // ============================================================================
 
   function getPrimaryLimiter(input, hydration, readiness) {
+
     if (hydration < 70) return "hydration";
-    if (input.sleep < 6.5) return "sleep";
-    if (input.stress >= 7) return "stress";
+
+    if (input.sleep < 6.5)
+      return "sleep";
+
+    if (input.stress >= 7)
+      return "stress";
 
     if (
       input.digestion === "Bad" ||
@@ -316,170 +262,211 @@ IMPORTANT:
       return "recovery";
     }
 
-    if (readiness >= 82) return "performance";
+    if (readiness >= 82)
+      return "performance";
 
     return "consistency";
   }
 
   // ============================================================================
-  // PROTOCOL / RECOMMENDATION ENGINE
+  // PROTOCOL ENGINE
   // ============================================================================
 
   function buildProtocol(input, hydration, readiness) {
+
     const limiter =
-      getPrimaryLimiter(input, hydration, readiness);
+      getPrimaryLimiter(
+        input,
+        hydration,
+        readiness
+      );
 
     const protocols = {
+
       hydration: {
         title: "Hydration First",
         insight:
           "Your hydration is low enough to affect energy, focus, digestion, and recovery.",
+
         recommendation:
           "Drink water early. Add electrolytes if training or sweating. Do not let coffee become your main fluid source.",
+
         missions: [
           "Hydrate + Electrolytes",
           "Walk 20 Minutes",
           "Protein on Target",
           "Sleep Priority"
         ],
+
         wins: [
           "32oz before noon",
           "Electrolytes added",
           "Hydration improved",
           "Energy stabilized"
         ],
+
         quote:
           "Water first. Then momentum."
       },
 
       sleep: {
         title: "Sleep Recovery",
+
         insight:
           "Low sleep suppresses recovery, focus, training output, and impulse control.",
+
         recommendation:
           "Reduce intensity today. Protect bedtime tonight. Hydrate and move early.",
+
         missions: [
           "Morning Sunlight",
           "Walk 20 Minutes",
           "Hydrate Early",
           "Early Bedtime"
         ],
+
         wins: [
           "Sunlight complete",
           "Hydration improved",
           "Stress reduced",
           "Sleep protected"
         ],
+
         quote:
           "You do not fix bad sleep with chaos."
       },
 
       stress: {
         title: "Stress Reduction",
+
         insight:
           "High stress flattens energy, digestion, recovery, and discipline.",
+
         recommendation:
           "Lower stimulation today. Walk, hydrate, breathe, and execute simply.",
+
         missions: [
           "Walk Outside",
           "Deep Work Block",
           "Hydrate Early",
           "No Late Caffeine"
         ],
+
         wins: [
           "Stress reduced",
           "Walk complete",
           "Focus improved",
           "Recovery protected"
         ],
+
         quote:
           "Reduce noise. Then execute."
       },
 
       digestion: {
         title: "Digestion Reset",
+
         insight:
           "Digestion issues affect energy, consistency, appetite control, and recovery.",
+
         recommendation:
           "Keep meals simple today. Hydrate. Walk after meals and reduce junk inputs.",
+
         missions: [
           "Simple Meals",
           "Hydrate Early",
           "Walk After Meal",
           "Track Digestion"
         ],
+
         wins: [
           "Simple meals complete",
           "Walk after eating",
           "Hydration improved",
           "Digestion tracked"
         ],
+
         quote:
           "Simple food. Simple data."
       },
 
       recovery: {
         title: "Recovery Focus",
+
         insight:
           "Recovery debt lowers output even when motivation is high.",
+
         recommendation:
           "Use movement, hydration, protein, mobility, and sleep instead of more intensity.",
+
         missions: [
           "Mobility 10 Min",
           "Walk 20 Min",
           "Protein on Target",
           "Sleep Priority"
         ],
+
         wins: [
           "Mobility complete",
           "Protein protected",
           "Hydration improved",
           "Recovery supported"
         ],
+
         quote:
           "Discipline is not always more intensity."
       },
 
       performance: {
         title: "Execute Mode",
+
         insight:
           "Readiness is high. Good day for training, focus, and building momentum.",
+
         recommendation:
           "Push today with structure. Train hard, hydrate, and finish meaningful work.",
+
         missions: [
           "Lift Hard",
           "Deep Work 90 Min",
           "Hydrate Early",
           "Protein Target"
         ],
+
         wins: [
           "Workout complete",
           "Deep work complete",
           "Protein target hit",
           "Momentum built"
         ],
+
         quote:
           "Momentum is hot. Do not waste it."
       },
 
       consistency: {
         title: "Consistency Day",
+
         insight:
           "Nothing is severely broken today. Keep execution simple and clean.",
+
         recommendation:
           "Hydrate, move, hit protein, and stay consistent.",
+
         missions: [
           "Hydrate Early",
           "Protein on Target",
           "Walk 20 Min",
           "Log Tonight"
         ],
+
         wins: [
           "Hydration improved",
           "Protein protected",
           "Movement complete",
           "Check-in logged"
         ],
+
         quote:
           "Boring consistency wins."
       }
@@ -487,82 +474,30 @@ IMPORTANT:
 
     return protocols[limiter];
   }
-
-  // ============================================================================
-  // NEXT UP ENGINE
-  // ============================================================================
-
-  function renderNextUp(input, readiness, hydration) {
-    let title = "Stay Consistent Today";
-    let text = "Protect momentum with simple execution.";
-
-    if (hydration < 70) {
-      title = "Hydrate Before More Coffee";
-      text = "Low hydration is reducing energy, focus, digestion, and recovery.";
-
-    } else if (input.sleep < 6) {
-      title = "Protect Recovery Today";
-      text = "Low sleep detected. Lower intensity and protect tonight's bedtime.";
-
-    } else if (input.stress >= 7) {
-      title = "Reduce Stress Load";
-      text = "High stress is suppressing readiness. Walk, hydrate, and simplify.";
-
-    } else if (
-      input.soreness === "High" ||
-      input.soreness === "Medium"
-    ) {
-      title = "Recovery Work First";
-      text = "Soreness is elevated. Mobility, walking, protein, and sleep matter.";
-
-    } else if (
-      input.digestion === "Bad" ||
-      input.digestion === "Okay"
-    ) {
-      title = "Keep Food Simple";
-      text = "Digestion needs a clean baseline. Simple meals and a post-meal walk.";
-
-    } else if (readiness >= 82) {
-      title = "Push Your Main Mission";
-      text = "High readiness detected. Strong day to train, focus, and build.";
-
-    } else if (readiness >= 68) {
-      title = "Build A Clean Day";
-      text = "Solid readiness. Execute the basics and protect momentum.";
-
-    } else {
-      title = "Reset The System";
-      text = "Low readiness. Hydrate, walk, eat simply, and avoid ego training.";
-    }
-
-    setText("nextUpTitle", title);
-    setText("nextUpText", text);
-  }
-
-  // ============================================================================
+    // ============================================================================
   // STREAK ENGINE
   // ============================================================================
 
-  function normalizeDay(dateLike) {
-    const d = new Date(dateLike);
-
-    return new Date(
-      d.getFullYear(),
-      d.getMonth(),
-      d.getDate()
-    ).toISOString();
-  }
-
   function computeStreak(entriesList) {
-    if (!entriesList.length) {
+
+    if (!entriesList.length)
       return 0;
-    }
 
     const uniqueDays = Array.from(
       new Set(
-        entriesList.map((entry) => normalizeDay(entry.ts))
+        entriesList.map((entry) => {
+          const d = new Date(entry.ts);
+
+          return new Date(
+            d.getFullYear(),
+            d.getMonth(),
+            d.getDate()
+          ).toISOString();
+        })
       )
-    ).sort((a, b) => new Date(b) - new Date(a));
+    ).sort((a, b) =>
+      new Date(b) - new Date(a)
+    );
 
     let streak = 0;
 
@@ -575,9 +510,12 @@ IMPORTANT:
     );
 
     for (const day of uniqueDays) {
-      const expected = cursor.toISOString();
+
+      const expected =
+        cursor.toISOString();
 
       if (day === expected) {
+
         streak++;
 
         cursor.setDate(
@@ -588,11 +526,13 @@ IMPORTANT:
       }
 
       if (streak === 0) {
+
         cursor.setDate(
           cursor.getDate() - 1
         );
 
         if (day === cursor.toISOString()) {
+
           streak++;
 
           cursor.setDate(
@@ -610,48 +550,71 @@ IMPORTANT:
   }
 
   // ============================================================================
-  // RENDER: INPUT VALUES
+  // RENDER FUNCTIONS
   // ============================================================================
 
   function renderInputs(input) {
-    if (els.sleepValue) {
+
+    if (els.sleepValue)
       els.sleepValue.textContent =
         input.sleep.toFixed(1);
-    }
 
-    if (els.moodValue) {
+    if (els.moodValue)
       els.moodValue.textContent =
-        String(input.mood);
-    }
+        input.mood;
 
-    if (els.stressValue) {
+    if (els.stressValue)
       els.stressValue.textContent =
-        String(input.stress);
-    }
+        input.stress;
   }
 
-  // ============================================================================
-  // RENDER: READINESS
-  // ============================================================================
+  function renderReadiness(
+    readiness,
+    mode
+  ) {
 
-  function renderReadiness(readiness, mode) {
-    setText("readinessScoreTop", readiness);
-    setText("readinessScoreMain", readiness);
-    setText("readinessZoneTop", mode.zone);
-    setText("readinessDeltaTop", mode.delta);
-    setText("modeMain", mode.mode + " Mode");
+    setText(
+      "readinessScoreTop",
+      readiness
+    );
+
+    setText(
+      "readinessScoreMain",
+      readiness
+    );
+
+    setText(
+      "readinessZoneTop",
+      mode.zone
+    );
+
+    setText(
+      "readinessDeltaTop",
+      mode.delta
+    );
+
+    setText(
+      "modeMain",
+      mode.mode + " Mode"
+    );
   }
-
-  // ============================================================================
-  // RENDER: HYDRATION
-  // ============================================================================
 
   function renderHydration(hydration) {
-    setText("hydrationPercent", hydration + "%");
-    setText("hydrationFactorScore", hydration);
+
+    setText(
+      "hydrationPercent",
+      hydration + "%"
+    );
+
+    setText(
+      "hydrationFactorScore",
+      hydration
+    );
 
     const liters =
-      ((3.6 * hydration) / 100).toFixed(1);
+      (
+        (3.6 * hydration) / 100
+      ).toFixed(1);
 
     setText(
       "hydrationGoal",
@@ -659,75 +622,44 @@ IMPORTANT:
     );
   }
 
-  // ============================================================================
-  // RENDER: STRESS
-  // ============================================================================
-
   function renderStress(input) {
-    const stress = Number(input.stress || 3);
 
-    let label = "Low";
-    let detail = "HRV: 72";
+  const stress =
+    Number(input.stress || 3);
 
-    if (stress >= 8) {
-      label = "High";
-      detail = "Recovery pressure high";
+  let label = "Low";
+  let detail = "HRV: 72";
 
-    } else if (stress >= 5) {
-      label = "Moderate";
-      detail = "Monitor output";
-    }
+  if (stress >= 8) {
 
-    setText("stressStatus", label);
-    setText("stressDetail", detail);
+    label = "High";
+    detail =
+      "Recovery pressure high";
+
+  } else if (stress >= 5) {
+
+    label = "Moderate";
+    detail =
+      "Monitor output";
   }
 
-  // ============================================================================
-  // RENDER: SLEEP
-  // ============================================================================
+  setText(
+    "stressStatus",
+    label
+  );
 
-  function renderSleep(input) {
-    const sleep = Number(input.sleep || 7);
-    const hours = Math.floor(sleep);
-    const minutes = Math.round((sleep - hours) * 60);
-
-    setText(
-      "sleepStatus",
-      hours + "h " + minutes + "m"
-    );
-
-    setText(
-      "sleepDetail",
-      sleep >= 8
-        ? "Goal hit"
-        : "Goal: 8h"
-    );
-  }
-
-  // ============================================================================
-  // RENDER: FACTORS
-  // ============================================================================
-
-  function renderFactors(input, readiness, hydration) {
-    const sleepScore = scoreSleep(input.sleep);
-    const stressScore = scoreStress(input.stress);
-    const recoveryScore = scoreRecovery(input.soreness);
-
-    setText("sleepFactorScore", sleepScore);
-    setText("hrvFactorScore", stressScore);
-    setText("recoveryFactorScore", recoveryScore);
-    setText("hydrationFactorScore", hydration);
-    setText("stressFactorScore", stressScore);
-  }
-
-  // ============================================================================
-  // RENDER: PROTOCOL
-  // ============================================================================
+  setText(
+    "stressDetail",
+    detail
+  );
+}
 
   function renderProtocol(protocol) {
+
     setText(
       "topInsightTitle",
-      "Today's Priority: " + protocol.title
+      "Today's Priority: " +
+        protocol.title
     );
 
     setText(
@@ -740,87 +672,223 @@ IMPORTANT:
       protocol.recommendation
     );
 
-    setText("mission1", protocol.missions[0]);
-    setText("mission2", protocol.missions[1]);
-    setText("mission3", protocol.missions[2]);
-    setText("mission4", protocol.missions[3]);
+    setText(
+      "mission1",
+      protocol.missions[0]
+    );
 
-    setText("win1", protocol.wins[0]);
-    setText("win2", protocol.wins[1]);
-    setText("win3", protocol.wins[2]);
-    setText("focusTop", protocol.wins[3]);
+    setText(
+      "mission2",
+      protocol.missions[1]
+    );
 
-    setText("coachQuote", protocol.quote);
+    setText(
+      "mission3",
+      protocol.missions[2]
+    );
+
+    setText(
+      "mission4",
+      protocol.missions[3]
+    );
+
+    setText(
+      "win1",
+      protocol.wins[0]
+    );
+
+    setText(
+      "win2",
+      protocol.wins[1]
+    );
+
+    setText(
+      "win3",
+      protocol.wins[2]
+    );
+
+    setText(
+      "focusTop",
+      protocol.wins[3]
+    );
+
+    setText(
+      "coachQuote",
+      protocol.quote
+    );
   }
 
-  // ============================================================================
-  // RENDER: STREAK
-  // ============================================================================
-
   function renderStreak(entriesList) {
-    const streak = computeStreak(entriesList);
+
+    const streak =
+      computeStreak(entriesList);
 
     const label =
       streak > 0
         ? streak + " Days"
         : "Start Today";
 
-    const detail =
-      streak > 0
-        ? "Keep it moving."
-        : "Log today to begin.";
+    setText(
+      "streakValue",
+      label
+    );
 
-    setText("streakValue", label);
-    setText("sidebarStreakValue", label);
-    setText("sidebarStreakDetail", detail);
+    setText(
+      "sidebarStreakValue",
+      label
+    );
   }
-
-  // ============================================================================
+    // ============================================================================
   // MAIN RENDER
   // ============================================================================
 
   function render(save = false) {
-    const input = readInputs();
-    const readiness = computeReadiness(input);
-    const hydration = computeHydration(input, readiness);
-    const mode = getMode(readiness);
-    const protocol = buildProtocol(input, hydration, readiness);
+
+    const input =
+      readInputs();
+
+    const readiness =
+      computeReadiness(input);
+
+    const hydration =
+      computeHydration(
+        input,
+        readiness
+      );
+
+    const mode =
+      getMode(readiness);
+
+    const protocol =
+      buildProtocol(
+        input,
+        hydration,
+        readiness
+      );
 
     renderInputs(input);
-    renderReadiness(readiness, mode);
-    renderHydration(hydration);
-    renderStress(input);
-    renderSleep(input);
-    renderFactors(input, readiness, hydration);
-    renderProtocol(protocol);
-    renderNextUp(input, readiness, hydration);
+
+    renderReadiness(
+      readiness,
+      mode
+    );
+
+    renderHydration(
+  hydration
+);
+
+renderStress(input);
+
+renderSleep(input);
+
+renderFactors(
+  input,
+  readiness,
+  hydration
+);
+    function renderSleep(input) {
+
+  const sleep =
+    Number(input.sleep || 7);
+
+  const hours =
+    Math.floor(sleep);
+
+  const minutes =
+    Math.round((sleep - hours) * 60);
+
+  setText(
+    "sleepStatus",
+    hours + "h " + minutes + "m"
+  );
+
+  setText(
+    "sleepDetail",
+    sleep >= 8
+      ? "Goal hit"
+      : "Goal: 8h"
+  );
+}
+
+function renderFactors(input, readiness, hydration) {
+
+  const sleepScore =
+    Math.round(
+      clamp((input.sleep / 8) * 100, 0, 100)
+    );
+
+  const stressScore =
+    Math.round(
+      clamp(
+        100 - ((input.stress - 1) / 9) * 100,
+        0,
+        100
+      )
+    );
+
+  const recoveryScore =
+    input.soreness === "None"
+      ? 95
+      : input.soreness === "Mild"
+        ? 82
+        : input.soreness === "Medium"
+          ? 62
+          : 42;
+
+  setText("sleepFactorScore", sleepScore);
+  setText("hrvFactorScore", stressScore);
+  setText("recoveryFactorScore", recoveryScore);
+  setText("hydrationFactorScore", hydration);
+  setText("stressFactorScore", stressScore);
+}
+
+    renderProtocol(
+      protocol
+    );
+
     renderStreak(entries);
 
+    // ========================================================================
+    // SAVE ENTRY
+    // ========================================================================
+
     if (save) {
+
       const entry = {
         ts: new Date().toISOString(),
+
         ...input,
+
         readiness,
         hydration,
+
         mode: mode.mode,
-        protocol: protocol.title
+
+        protocol:
+          protocol.title
       };
 
       entries.push(entry);
-      entries = entries.slice(-90);
+
+      entries =
+        entries.slice(-90);
 
       saveEntries(entries);
+
       saveLastEntry(entry);
 
       renderStreak(entries);
 
       if (els.submit) {
-        els.submit.textContent = "Check-In Saved";
+
+        els.submit.textContent =
+          "Check-In Saved";
 
         setTimeout(() => {
-          if (els.submit) {
-            els.submit.textContent = "Submit Check-In";
-          }
+
+          els.submit.textContent =
+            "Submit Check-In";
+
         }, 1400);
       }
     }
@@ -831,20 +899,35 @@ IMPORTANT:
   // ============================================================================
 
   function wireEvents() {
-    els.workoutButtons.forEach((button) => {
-      button.addEventListener("click", () => {
-        workoutYesterday =
-          button.dataset.workout || DEFAULT_INPUTS.workoutYesterday;
 
-        els.workoutButtons.forEach((candidate) => {
-          candidate.classList.remove("is-active");
-        });
+    els.workoutButtons.forEach(
+      (button) => {
 
-        button.classList.add("is-active");
+        button.addEventListener(
+          "click",
+          () => {
 
-        render(false);
-      });
-    });
+            workoutYesterday =
+              button.dataset.workout;
+
+            els.workoutButtons.forEach(
+              (candidate) => {
+
+                candidate.classList.remove(
+                  "is-active"
+                );
+              }
+            );
+
+            button.classList.add(
+              "is-active"
+            );
+
+            render(false);
+          }
+        );
+      }
+    );
 
     [
       els.sleep,
@@ -854,6 +937,7 @@ IMPORTANT:
       els.soreness
 
     ].forEach((el) => {
+
       if (!el) return;
 
       el.addEventListener(
@@ -868,6 +952,7 @@ IMPORTANT:
     });
 
     if (els.submit) {
+
       els.submit.addEventListener(
         "click",
         () => render(true)
@@ -876,74 +961,86 @@ IMPORTANT:
   }
 
   // ============================================================================
-  // INITIAL STATE RESTORE
-  // ============================================================================
-
-  function restoreLastEntry() {
-    const lastEntry =
-      loadLastEntry() ||
-      entries[entries.length - 1];
-
-    if (!lastEntry) return;
-
-    if (
-      els.sleep &&
-      typeof lastEntry.sleep === "number"
-    ) {
-      els.sleep.value = lastEntry.sleep;
-    }
-
-    if (
-      els.mood &&
-      typeof lastEntry.mood === "number"
-    ) {
-      els.mood.value = lastEntry.mood;
-    }
-
-    if (
-      els.stress &&
-      typeof lastEntry.stress === "number"
-    ) {
-      els.stress.value = lastEntry.stress;
-    }
-
-    if (
-      els.digestion &&
-      lastEntry.digestion
-    ) {
-      els.digestion.value = lastEntry.digestion;
-    }
-
-    if (
-      els.soreness &&
-      lastEntry.soreness
-    ) {
-      els.soreness.value = lastEntry.soreness;
-    }
-
-    workoutYesterday =
-      lastEntry.workoutYesterday ||
-      DEFAULT_INPUTS.workoutYesterday;
-
-    els.workoutButtons.forEach((button) => {
-      button.classList.toggle(
-        "is-active",
-        button.dataset.workout === workoutYesterday
-      );
-    });
-  }
-
-  // ============================================================================
   // INITIALIZE
   // ============================================================================
 
   function init() {
-    restoreLastEntry();
+
+    const lastEntry =
+      loadLastEntry();
+
+    if (lastEntry) {
+
+      if (
+        els.sleep &&
+        typeof lastEntry.sleep ===
+          "number"
+      ) {
+        els.sleep.value =
+          lastEntry.sleep;
+      }
+
+      if (
+        els.mood &&
+        typeof lastEntry.mood ===
+          "number"
+      ) {
+        els.mood.value =
+          lastEntry.mood;
+      }
+
+      if (
+        els.stress &&
+        typeof lastEntry.stress ===
+          "number"
+      ) {
+        els.stress.value =
+          lastEntry.stress;
+      }
+
+      if (
+        els.digestion &&
+        lastEntry.digestion
+      ) {
+        els.digestion.value =
+          lastEntry.digestion;
+      }
+
+      if (
+        els.soreness &&
+        lastEntry.soreness
+      ) {
+        els.soreness.value =
+          lastEntry.soreness;
+      }
+
+      workoutYesterday =
+        lastEntry.workoutYesterday ||
+        "yes";
+
+      els.workoutButtons.forEach(
+        (button) => {
+
+          button.classList.toggle(
+            "is-active",
+
+            button.dataset.workout ===
+              workoutYesterday
+          );
+        }
+      );
+    }
+
     wireEvents();
+
     render(false);
 
-    // Debug access for founder beta testing.
+    // ========================================================================
+    // DEBUG ACCESS
+    // ========================================================================
+
     window.CCCEngine = {
+
       render,
       loadEntries,
       computeReadiness,
@@ -954,16 +1051,21 @@ IMPORTANT:
   }
 
   // ============================================================================
-  // STARTUP
+  // START
   // ============================================================================
 
-  if (document.readyState === "loading") {
+  if (
+    document.readyState ===
+    "loading"
+  ) {
+
     document.addEventListener(
       "DOMContentLoaded",
       init
     );
 
   } else {
+
     init();
   }
 

@@ -17,7 +17,7 @@
   <link rel="stylesheet" href="/css/app.css" />
 </head>
 
-<body data-page="dashboard/index.backup.html">
+<body data-page="dashboard/index.pre-nextup-backup.html">
   <header class="site-header">
   <div class="container site-header__inner">
     <a class="site-brand" href="/">
@@ -58,14 +58,25 @@
 </header>
 
   <main>
-    <!doctype html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CCC Dashboard | Carnivore Command Center</title>
-  <meta name="description" content="CCC dashboard production UI with readiness score, daily plan, check-in, trends, and Savage Metabo coach panel." />
-  <style>
+    <!-- =============================================================================
+     PAGE: CCC Dashboard
+     SITE: Carnivore Command Center
+     VERSION: v5.1 RELEASE-CANDIDATE
+     PURPOSE:
+       Dashboard page content only. This file is meant for the CCC static build
+       template, which already injects the shared header and footer. This page
+       presents the live readiness demo, dynamic check-in flow, educational body
+       insight engine, and beta/pro upgrade path.
+
+     IMPORTANT:
+       - No <!doctype>, <html>, <head>, or <body> tags.
+       - Replace: src/dashboard/index.html
+============================================================================= -->
+
+<style>
+    /* ==========================================================================
+       DESIGN TOKENS
+    ========================================================================== */
     :root {
       --bg: #060b14;
       --bg-soft: #0a1222;
@@ -79,6 +90,7 @@
       --green: #22d07a;
       --yellow: #ffb347;
       --blue: #2388ff;
+      --cyan: #67e8f9;
       --shadow: 0 18px 60px rgba(0, 0, 0, 0.48);
       --radius-xl: 26px;
       --radius-lg: 18px;
@@ -86,8 +98,12 @@
       --max: 1520px;
     }
 
+    /* ==========================================================================
+       BASE / RESET
+    ========================================================================== */
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
+
     body {
       margin: 0;
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -135,6 +151,9 @@
       background: rgba(255, 122, 0, 0.13);
     }
 
+    /* ==========================================================================
+       SHARED COMPONENTS
+    ========================================================================== */
     .btn {
       display: inline-flex;
       align-items: center;
@@ -159,115 +178,6 @@
 
     .btn--primary:hover { box-shadow: 0 18px 38px rgba(255, 122, 0, 0.32); }
 
-    .app-topbar {
-      position: sticky;
-      top: 0;
-      z-index: 20;
-      backdrop-filter: blur(16px);
-      background: rgba(6, 11, 20, 0.82);
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-    }
-
-    .app-topbar__inner {
-      width: min(calc(100% - 24px), var(--max));
-      margin: 0 auto;
-      min-height: 76px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 18px;
-    }
-
-    .app-brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      min-width: 0;
-    }
-
-    .app-brand__mark {
-      width: 42px;
-      height: 42px;
-      border-radius: 12px;
-      object-fit: contain;
-      background: rgba(255,255,255,0.03);
-      padding: 5px;
-    }
-
-    .app-brand__name {
-      font-weight: 800;
-      font-size: 1rem;
-      line-height: 1.05;
-    }
-
-    .app-brand__tag {
-      font-size: 0.78rem;
-      color: var(--muted);
-      margin-top: 3px;
-    }
-
-    .app-userbar {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-    }
-
-    .app-icon-btn {
-      border: 1px solid rgba(255,255,255,0.06);
-      background: rgba(255,255,255,0.02);
-      color: var(--text);
-      border-radius: 14px;
-      padding: 10px 14px;
-      cursor: pointer;
-    }
-
-    .app-user {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 8px 10px;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,0.06);
-      background: rgba(255,255,255,0.02);
-    }
-
-    .app-user__avatar {
-      width: 38px;
-      height: 38px;
-      border-radius: 12px;
-      object-fit: cover;
-      object-position: center top;
-    }
-
-    .app-user__name {
-      font-size: 0.95rem;
-      font-weight: 800;
-      line-height: 1.05;
-    }
-
-    .app-user__meta {
-      font-size: 0.74rem;
-      color: var(--muted);
-      margin-top: 2px;
-    }
-
-    .page {
-      width: min(calc(100% - 24px), var(--max));
-      margin: 0 auto;
-      padding: 18px 0 34px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 160px 320px minmax(0, 1fr);
-      gap: 18px;
-      align-items: stretch;
-    }
-
     .sidebar,
     .portrait-card,
     .streak-card,
@@ -280,21 +190,91 @@
     .coach-card,
     .factors-card,
     .trend-card,
-    .wins-card {
+    .wins-card,
+    .insight-hero,
+    .myth-card,
+    .nutrition-card {
       background: linear-gradient(180deg, var(--card), var(--card-2));
       border: 1px solid var(--line);
       border-radius: var(--radius-lg);
       box-shadow: var(--shadow);
     }
 
+    .card-kicker,
+    .section-kicker {
+      color: #f4f6fb;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-size: 0.78rem;
+      font-weight: 800;
+      margin-bottom: 14px;
+    }
+
+    .card-kicker .accent,
+    .section-kicker .accent {
+      color: var(--orange-2);
+      float: right;
+    }
+
+    .panel__title {
+      margin: 0 0 4px;
+      font-size: 2.15rem;
+      line-height: 0.95;
+      letter-spacing: -0.06em;
+      font-weight: 900;
+    }
+
+    .panel__sub {
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+
+    /* ==========================================================================
+       PAGE SHELL / MAIN GRID
+    ========================================================================== */
+    .page {
+      width: min(calc(100% - 24px), var(--max));
+      margin: 0 auto;
+      padding: 18px 0 34px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .proof-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 0 0 16px;
+    }
+
+    .proof-strip span {
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,122,0,.16);
+      background: linear-gradient(180deg, rgba(255,122,0,.10), rgba(255,255,255,.03));
+      color: #ffd2ac;
+      font-size: .86rem;
+      font-weight: 800;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 160px 320px minmax(0, 1fr);
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    /* ==========================================================================
+       LEFT WORKSPACE SIDEBAR
+    ========================================================================== */
     .sidebar {
-      padding: 14px;
+       padding: 14px;
       position: sticky;
       top: 94px;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      min-height: calc(100vh - 124px);
+      justify-content: flex-start;
+      min-height: auto;
     }
 
     .sidebar__title {
@@ -337,7 +317,7 @@
     }
 
     .sidebar__foot {
-      margin-top: 18px;
+      margin-top: 24px;
       padding-top: 18px;
       border-top: 1px solid rgba(255,255,255,0.06);
     }
@@ -357,6 +337,23 @@
       letter-spacing: 0.06em;
     }
 
+    .sidebar__foot p:first-of-type {
+      margin: 10px 0 0;
+      color: var(--text);
+      font-size: 2rem;
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .sidebar__foot p:last-of-type {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    /* ==========================================================================
+       VISUAL RAIL
+    ========================================================================== */
     .visual-rail {
       display: grid;
       gap: 16px;
@@ -410,7 +407,6 @@
     .portrait-overlay p,
     .metric-score__delta,
     .field__hint,
-    .panel__sub,
     .gameplan-item span,
     .factor-item span,
     .wins-item span,
@@ -418,7 +414,9 @@
     .coach-chip,
     .macro-item span,
     .streak-card p,
-    .mini-status-card p { color: var(--muted); }
+    .mini-status-card p {
+      color: var(--muted);
+    }
 
     .streak-card {
       padding: 16px;
@@ -441,6 +439,11 @@
       color: var(--orange-2);
     }
 
+    .streak-card p { margin: 0; }
+
+    /* ==========================================================================
+       MAIN DASHBOARD GRIDS
+    ========================================================================== */
     .main-grid {
       display: grid;
       gap: 16px;
@@ -453,6 +456,37 @@
       gap: 16px;
     }
 
+    .status-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .insight-grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .nutrition-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .mid-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(0, 1.18fr) minmax(300px, 0.92fr);
+      gap: 16px;
+      align-items: start;
+    }
+
+    .lower-grid {
+      display: grid;
+      grid-template-columns: minmax(330px, 0.9fr) minmax(0, 1.2fr) minmax(300px, 0.82fr);
+      gap: 16px;
+      align-items: start;
+    }
+
     .metric-card,
     .gameplan-card,
     .focus-card,
@@ -462,22 +496,17 @@
     .trend-card,
     .wins-card,
     .panel,
-    .coach-card {
+    .coach-card,
+    .insight-hero,
+    .myth-card,
+    .nutrition-card {
       padding: 18px;
       min-width: 0;
     }
 
-    .card-kicker {
-      color: #f4f6fb;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      font-size: 0.78rem;
-      font-weight: 800;
-      margin-bottom: 14px;
-    }
-
-    .card-kicker .accent { color: var(--orange-2); float: right; }
-
+    /* ==========================================================================
+       READINESS CARD
+    ========================================================================== */
     .metric-card__shell {
       display: grid;
       grid-template-columns: 1fr 1.15fr;
@@ -485,7 +514,11 @@
       align-items: stretch;
     }
 
-    .metric-score { display: grid; align-content: start; gap: 6px; }
+    .metric-score {
+      display: grid;
+      align-content: start;
+      gap: 6px;
+    }
 
     .metric-score__value {
       font-size: 5.2rem;
@@ -536,6 +569,9 @@
       opacity: 0.9;
     }
 
+    /* ==========================================================================
+       LISTS / SMALL ICONS
+    ========================================================================== */
     .gameplan-list,
     .macro-list,
     .wins-list,
@@ -582,6 +618,9 @@
     .wins-item strong,
     .factor-item strong { font-weight: 700; }
 
+    /* ==========================================================================
+       FOCUS / MACROS / STATUS
+    ========================================================================== */
     .focus-card {
       display: grid;
       gap: 14px;
@@ -658,13 +697,191 @@
     .macro-dot.yellow { background: #f59e0b; }
     .macro-dot.green { background: #16a34a; }
 
-    .mid-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 1.08fr) minmax(0, 1.18fr) minmax(300px, 0.92fr);
-      gap: 16px;
-      align-items: start;
+    .mini-status-card__value {
+      font-size: 2rem;
+      font-weight: 900;
+      margin-bottom: 4px;
     }
 
+    .mini-status-card p { margin: 0; }
+
+    .mini-status-card__bars {
+      height: 54px;
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 8px;
+      align-items: end;
+      margin-top: 14px;
+    }
+
+    .mini-status-card__bars span {
+      display: block;
+      border-radius: 6px 6px 2px 2px;
+      background: linear-gradient(180deg, rgba(35,136,255,0.95), rgba(35,136,255,0.75));
+    }
+
+    .mini-status-card__spark svg {
+      width: 100%;
+      height: 66px;
+      margin-top: 12px;
+    }
+
+    /* ==========================================================================
+       BODY INSIGHT ENGINE
+       PURPOSE:
+         Explains why inputs matter instead of only showing scores.
+    ========================================================================== */
+    .insight-hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 300px;
+      gap: 18px;
+      align-items: stretch;
+      border-radius: var(--radius-xl);
+      background:
+        linear-gradient(135deg, rgba(255,122,0,0.10), rgba(35,136,255,0.07)),
+        linear-gradient(180deg, var(--card), var(--card-2));
+      border-color: rgba(255,122,0,0.15);
+    }
+
+    .insight-hero h2 {
+      margin: 0 0 8px;
+      font-size: 2.8rem;
+      line-height: 0.94;
+      letter-spacing: -0.055em;
+    }
+
+    .insight-hero h2 span { color: var(--orange-2); }
+
+    .insight-hero p {
+      margin: 0;
+      color: var(--muted);
+      max-width: 780px;
+    }
+
+    .priority-card {
+      padding: 18px;
+      border-radius: 18px;
+      background: linear-gradient(180deg, rgba(34,208,122,0.14), rgba(34,208,122,0.05));
+      border: 1px solid rgba(34,208,122,0.22);
+    }
+
+    .priority-card strong {
+      color: var(--green);
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .priority-card p {
+      color: #bfd3ff;
+      font-size: 0.94rem;
+      margin: 0;
+    }
+
+    .myth-card {
+      background:
+        radial-gradient(circle at top right, rgba(35,136,255,0.15), transparent 34%),
+        linear-gradient(180deg, rgba(8, 18, 34, 0.98), rgba(7, 12, 22, 0.98));
+      border-color: rgba(35,136,255,0.18);
+    }
+
+    .myth-card h3 {
+      margin: 0 0 8px;
+      font-size: 1.25rem;
+      letter-spacing: -0.035em;
+    }
+
+    .myth-card p {
+      margin: 0 0 14px;
+      color: var(--muted);
+    }
+
+    .myth-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .myth-box {
+      padding: 14px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.045);
+      border: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .myth-box strong {
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .myth-box p {
+      font-size: 0.92rem;
+      margin: 0;
+    }
+
+    .insight-callout {
+      margin-top: 14px;
+      padding: 14px;
+      border-radius: 14px;
+      background: rgba(255,122,0,0.08);
+      border: 1px solid rgba(255,122,0,0.14);
+      color: #bfd3ff;
+      font-size: 0.95rem;
+    }
+
+    .nutrition-card {
+      box-shadow: 0 14px 40px rgba(0,0,0,0.32);
+    }
+
+    .nutrition-icon {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      background: rgba(255,122,0,0.11);
+      border: 1px solid rgba(255,122,0,0.16);
+      margin-bottom: 12px;
+      font-size: 1.25rem;
+    }
+
+    .nutrition-card h3 {
+      margin: 0 0 8px;
+      letter-spacing: -0.035em;
+    }
+
+    .nutrition-card p {
+      margin: 0 0 12px;
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    .nutrition-card ul {
+      display: grid;
+      gap: 8px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .nutrition-card li {
+      color: #bfd3ff;
+      font-size: 0.9rem;
+      padding-left: 22px;
+      position: relative;
+    }
+
+    .nutrition-card li::before {
+      content: "✓";
+      color: var(--green);
+      position: absolute;
+      left: 0;
+      font-weight: 900;
+    }
+
+    /* ==========================================================================
+       CHECK-IN FORM
+    ========================================================================== */
     .checkin-form { display: grid; gap: 14px; }
     .field { display: grid; gap: 8px; }
 
@@ -688,7 +905,10 @@
       min-width: 0;
     }
 
-    .field input[type="range"] { padding: 0; }
+    .field input[type="range"] {
+      padding: 0;
+      accent-color: var(--cyan);
+    }
 
     .toggle-row {
       display: grid;
@@ -729,6 +949,16 @@
       margin-bottom: 8px;
     }
 
+    .founding-urgency {
+      margin-top: 8px;
+      color: #ffb347;
+      font-weight: 800;
+      font-size: .9rem;
+    }
+
+    /* ==========================================================================
+       COACH / UPGRADE / TREND
+    ========================================================================== */
     .coach-card { display: grid; gap: 12px; }
 
     .coach-card__top {
@@ -791,11 +1021,24 @@
     .upgrade-banner h3 { margin: 0 0 8px; font-size: 1.1rem; }
     .upgrade-banner p { margin: 0 0 14px; color: var(--muted); }
 
-    .lower-grid {
-      display: grid;
-      grid-template-columns: minmax(330px, 0.9fr) minmax(0, 1.2fr) minmax(300px, 0.82fr);
-      gap: 16px;
-      align-items: start;
+    .upgrade-trust {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 10px 0 14px;
+    }
+
+    .upgrade-trust span {
+      display: inline-flex;
+      align-items: center;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.035);
+      color: #ffd2ac;
+      font-size: .8rem;
+      font-weight: 800;
+      line-height: 1;
     }
 
     .trend-card__plot {
@@ -812,39 +1055,62 @@
     .factor-score.good { color: var(--green); }
     .factor-score.warn { color: var(--yellow); }
 
-    .status-grid {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 16px;
+    /* ==========================================================================
+       MOBILE UPGRADE BAR
+    ========================================================================== */
+    .mobile-upgrade-bar {
+      position: fixed;
+      left: 12px;
+      right: 12px;
+      bottom: 12px;
+      z-index: 60;
+      display: none;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 10px;
+      padding: 10px;
+      border-radius: 18px;
+      background: rgba(6,11,20,.92);
+      border: 1px solid rgba(255,255,255,.08);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 18px 44px rgba(0,0,0,.35);
     }
 
-    .mini-status-card__value {
-      font-size: 2rem;
-      font-weight: 900;
-      margin-bottom: 4px;
+    .mobile-upgrade-bar a {
+      text-align: center;
+      padding: 14px 12px;
+      border-radius: 14px;
+      font-weight: 800;
+      font-size: .95rem;
     }
 
-    .mini-status-card__bars {
-      height: 54px;
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 8px;
-      align-items: end;
-      margin-top: 14px;
+    .mobile-upgrade-bar__ghost {
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.08);
     }
 
-    .mini-status-card__bars span {
-      display: block;
-      border-radius: 6px 6px 2px 2px;
-      background: linear-gradient(180deg, rgba(35,136,255,0.95), rgba(35,136,255,0.75));
+    .mobile-upgrade-bar__cta {
+      color: #08101d;
+      background: linear-gradient(180deg,#ff9b3f 0%, #ff7a00 100%);
     }
 
-    .mini-status-card__spark svg {
-      width: 100%;
-      height: 66px;
-      margin-top: 12px;
-    }
 
+    /* ==========================================================================
+      BODY INSIGHT POSITIONING
+       Pull insight section upward to reduce dead space.
+    ========================================================================== */
+
+    .insight-grid {
+      margin-top: -80px;
+    }
+    .insight-grid,
+    .mid-grid,
+    .lower-grid {
+      margin-left: -340px;
+}
+
+    /* ==========================================================================
+       RESPONSIVE
+    ========================================================================== */
     @media (max-width: 1450px) {
       .hero-grid { grid-template-columns: 150px 280px minmax(0, 1fr); }
     }
@@ -852,9 +1118,11 @@
     @media (max-width: 1280px) {
       .hero-grid,
       .top-strip,
+      .status-grid,
       .mid-grid,
       .lower-grid,
-      .status-grid { grid-template-columns: 1fr; }
+      .nutrition-grid,
+      .insight-hero { grid-template-columns: 1fr; }
 
       .visual-rail {
         grid-template-columns: minmax(0, 1fr) 220px;
@@ -867,128 +1135,34 @@
     }
 
     @media (max-width: 760px) {
-      .app-topbar__inner {
-        min-height: 70px;
-        align-items: flex-start;
-        padding: 12px 0;
-      }
-      .app-userbar { width: 100%; justify-content: flex-start; }
       .page { width: min(calc(100% - 18px), var(--max)); }
       .visual-rail,
       .metric-card__shell,
-      .toggle-row { grid-template-columns: 1fr; }
+      .toggle-row,
+      .myth-grid { grid-template-columns: 1fr; }
+
       .portrait-card { min-height: 380px; }
       .portrait-overlay h2 { font-size: 2.1rem; }
+      .insight-hero h2 { font-size: 2.1rem; }
       .macro-ring { width: 150px; height: 150px; }
       .macro-ring__inner { width: 102px; height: 102px; }
-    }
 
-    /* =========================================================
-       CCC DASHBOARD CONVERSION V1
-    ========================================================= */
-
-    .proof-strip{
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-      margin:0 0 16px;
-    }
-
-    .proof-strip span{
-      padding:10px 14px;
-      border-radius:999px;
-      border:1px solid rgba(255,122,0,.16);
-      background:linear-gradient(180deg, rgba(255,122,0,.10), rgba(255,255,255,.03));
-      color:#ffd2ac;
-      font-size:.86rem;
-      font-weight:800;
-    }
-
-    .founding-urgency{
-      margin-top:8px;
-      color:#ffb347;
-      font-weight:800;
-      font-size:.9rem;
-    }
-
-    .upgrade-trust{
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-      margin:10px 0 14px;
-    }
-
-    .upgrade-trust span{
-      display:inline-flex;
-      align-items:center;
-      padding:8px 10px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.08);
-      background:rgba(255,255,255,.035);
-      color:#ffd2ac;
-      font-size:.8rem;
-      font-weight:800;
-      line-height:1;
-    }
-
-    .mobile-upgrade-bar{
-      position:fixed;
-      left:12px;
-      right:12px;
-      bottom:12px;
-      z-index:60;
-      display:none;
-      grid-template-columns:1fr 1.2fr;
-      gap:10px;
-      padding:10px;
-      border-radius:18px;
-      background:rgba(6,11,20,.92);
-      border:1px solid rgba(255,255,255,.08);
-      backdrop-filter:blur(14px);
-      box-shadow:0 18px 44px rgba(0,0,0,.35);
-    }
-
-    .mobile-upgrade-bar a{
-      text-align:center;
-      padding:14px 12px;
-      border-radius:14px;
-      font-weight:800;
-      font-size:.95rem;
-    }
-
-    .mobile-upgrade-bar__ghost{
-      background:rgba(255,255,255,.04);
-      border:1px solid rgba(255,255,255,.08);
-    }
-
-    .mobile-upgrade-bar__cta{
-      color:#08101d;
-      background:linear-gradient(180deg,#ff9b3f 0%, #ff7a00 100%);
-    }
-
-    @media (max-width:760px){
       .proof-strip,
-      .upgrade-trust{
-        display:grid;
-        grid-template-columns:1fr;
+      .upgrade-trust {
+        display: grid;
+        grid-template-columns: 1fr;
       }
 
-      .mobile-upgrade-bar{
-        display:grid;
-      }
-
-      body{
-        padding-bottom:92px;
-      }
+      .mobile-upgrade-bar { display: grid; }
+      body { padding-bottom: 92px; }
     }
-
   </style>
-</head>
-<body>
-  <div class="app-shell">
-   
 
+<div class="app-shell">
     <main class="page">
+      <!-- =======================================================================
+           SOCIAL PROOF STRIP
+      ======================================================================== -->
       <div class="proof-strip">
         <span>🔥 142 check-ins logged today</span>
         <span>47-day sample streak</span>
@@ -996,13 +1170,17 @@
       </div>
 
       <section class="hero-grid">
+        <!-- =====================================================================
+             LEFT WORKSPACE SIDEBAR
+        ====================================================================== -->
         <aside class="sidebar">
           <div>
             <div class="sidebar__title">Workspace</div>
-            <nav class="sidebar__nav">
+            <nav class="sidebar__nav" aria-label="Dashboard sections">
               <a class="is-active" href="#">Dashboard</a>
               <a href="#readiness">Readiness</a>
               <a href="#checkin">Daily Plan</a>
+              <a href="#body-insights">Body Insights</a>
               <a href="#trends">Log &amp; Analyze</a>
               <a href="#protocols">Protocols</a>
               <a href="#coach">Coaching</a>
@@ -1010,13 +1188,17 @@
               <a href="#settings">Settings</a>
             </nav>
           </div>
+
           <div class="sidebar__foot">
             <div class="sidebar__badge">Streak</div>
-            <p style="margin:10px 0 0; color: var(--text); font-size:2rem; font-weight:900; line-height:1;">47 Days</p>
-            <p style="margin:8px 0 0; color: var(--muted); font-size:0.92rem;">Keep it moving.</p>
+            <p id="sidebarStreakValue">47 Days</p>
+            <p id="sidebarStreakDetail">Keep it moving.</p>
           </div>
         </aside>
 
+        <!-- =====================================================================
+             VISUAL / BRAND RAIL
+        ====================================================================== -->
         <section class="visual-rail">
           <article class="portrait-card">
             <img src="/assets/img/mascot/metabo-home-hero.webp" alt="Savage Metabo dashboard portrait" />
@@ -1027,36 +1209,43 @@
             </div>
           </article>
 
-          <article class="streak-card">
-            <div class="streak-card__label">🔥 Streak</div>
-            <div class="streak-card__value">47 Days</div>
-            <div style="color: var(--muted);">Discipline. Freedom. Momentum.</div>
-          </article>
+          
         </section>
 
+        <!-- =====================================================================
+             MAIN DASHBOARD CONTENT / LIVE DEMO AREA
+        ====================================================================== -->
         <section class="main-grid">
+          <!-- ===================================================================
+               TOP STRIP: READINESS / GAMEPLAN / FOCUS / MACROS
+          ==================================================================== -->
           <div class="top-strip">
             <article class="metric-card" id="readiness">
               <div class="card-kicker">Metabo Readiness</div>
+
               <div class="metric-card__shell">
                 <div class="metric-score">
                   <div class="metric-score__value" id="readinessScoreTop">87</div>
-                  <div class="metric-score__zone">Optimal Zone</div>
-                  <div class="metric-score__delta">▲ 4 vs. yesterday</div>
+                  <div class="metric-score__zone" id="readinessZoneTop">Optimal Zone</div>
+                  <div class="metric-score__delta" id="readinessDeltaTop">▲ 4 vs. yesterday</div>
                 </div>
+
                 <div>
                   <div class="spark-panel">
-                    <svg class="spark-svg" viewBox="0 0 220 120" fill="none">
+                    <svg class="spark-svg" viewBox="0 0 220 120" fill="none" aria-hidden="true">
                       <path d="M10 110V10H210" stroke="rgba(255,255,255,0.08)"/>
                       <path d="M10 86L42 78L74 56L106 44L138 48L170 43L202 18" stroke="#22d07a" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
                       <circle cx="202" cy="18" r="6" fill="#22d07a"/>
                     </svg>
+
                     <div class="spark-axis">
                       <div>M</div><div>T</div><div>W</div><div>T</div><div>F</div><div>S</div><div>S</div>
                     </div>
                   </div>
-                  <div class="meter-row">
-                    <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+
+                  <div class="meter-row" aria-hidden="true">
+                    <span></span><span></span><span></span><span></span>
+                    <span></span><span></span><span></span><span></span>
                   </div>
                 </div>
               </div>
@@ -1065,7 +1254,7 @@
             <article class="gameplan-card">
               <div class="card-kicker">Today’s Game Plan <span class="accent">View Plan</span></div>
               <div class="gameplan-list">
-                <div class="gameplan-item"><div class="gameplan-item__left"><span class="check-icon"></span><strong>Hydrate Early</strong></div></div>
+                <div class="gameplan-item"><div class="gameplan-item__left"><span class="check-icon"></span><strong id="gameHydrate">Hydrate Early</strong></div></div>
                 <div class="gameplan-item"><div class="gameplan-item__left"><span class="check-icon"></span><strong>Deep Work 90 Min</strong></div></div>
                 <div class="gameplan-item"><div class="gameplan-item__left"><span class="check-icon"></span><strong id="mission1">Lift: Upper Body</strong></div></div>
                 <div class="gameplan-item"><div class="gameplan-item__left"><span class="check-icon"></span><strong id="mission2">Walk &amp; Sunlight</strong></div></div>
@@ -1076,50 +1265,60 @@
 
             <article class="focus-card">
               <div class="card-kicker">Focus Mode</div>
-              <div class="focus-icon"></div>
-              <div class="focus-time">1:42:17</div>
-              <button class="btn btn--primary" type="button">Start Focus</button>
+              <div class="focus-icon" aria-hidden="true"></div>
+              <div class="focus-time" id="focusTimer">1:42:17</div>
+              <button class="btn btn--primary" id="focusButton" type="button">Start Focus</button>
             </article>
 
             <article class="macro-card">
               <div class="card-kicker">Macros <span class="accent">Details</span></div>
-              <div class="macro-ring">
+
+              <div class="macro-ring" aria-label="macro target ring">
                 <div class="macro-ring__inner">
                   <div>
-                    <strong>2,589</strong>
+                    <strong id="macroCalories">2,589</strong>
                     <span>Cal</span>
                   </div>
                 </div>
               </div>
+
               <div class="macro-list">
-                <div class="macro-item"><div class="macro-item__left"><span class="macro-dot orange"></span><strong>Protein</strong></div><span>186g</span></div>
-                <div class="macro-item"><div class="macro-item__left"><span class="macro-dot yellow"></span><strong>Fat</strong></div><span>172g</span></div>
-                <div class="macro-item"><div class="macro-item__left"><span class="macro-dot green"></span><strong>Carbs</strong></div><span>23g</span></div>
+                <div class="macro-item"><div class="macro-item__left"><span class="macro-dot orange"></span><strong>Protein</strong></div><span id="macroProtein">186g</span></div>
+                <div class="macro-item"><div class="macro-item__left"><span class="macro-dot yellow"></span><strong>Fat</strong></div><span id="macroFat">172g</span></div>
+                <div class="macro-item"><div class="macro-item__left"><span class="macro-dot green"></span><strong>Carbs</strong></div><span id="macroCarbs">23g</span></div>
               </div>
-              <div style="margin-top:14px; color: var(--muted); font-size:0.88rem;">Target: 2,500 cal</div>
+
+              <div id="macroTarget" style="margin-top:14px; color: var(--muted); font-size:0.88rem;">Target: 2,500 cal</div>
             </article>
           </div>
 
+          <!-- ===================================================================
+               STATUS STRIP: SLEEP / HYDRATION / STRESS / NEXT ACTION
+          ==================================================================== -->
           <div class="status-grid">
             <article class="mini-status-card">
               <div class="card-kicker">Sleep</div>
-              <div class="mini-status-card__value">7h 43m</div>
-              <p>Goal: 8h</p>
-              <div class="mini-status-card__bars"><span style="height:38px"></span><span style="height:42px"></span><span style="height:46px"></span><span style="height:48px"></span><span style="height:46px"></span><span style="height:50px"></span><span style="height:52px"></span></div>
+              <div class="mini-status-card__value" id="sleepStatus">7h 43m</div>
+              <p id="sleepDetail">Goal: 8h</p>
+              <div class="mini-status-card__bars" aria-hidden="true">
+                <span style="height:38px"></span><span style="height:42px"></span><span style="height:46px"></span><span style="height:48px"></span><span style="height:46px"></span><span style="height:50px"></span><span style="height:52px"></span>
+              </div>
             </article>
 
-            <article class="mini-status-card">
+            <article class="mini-status-card" id="hydrationStatusCard">
               <div class="card-kicker">Hydration</div>
-              <div class="mini-status-card__value">88%</div>
-              <p>3.2L / 3.6L goal</p>
-              <div class="mini-status-card__bars"><span style="height:36px"></span><span style="height:40px"></span><span style="height:44px"></span><span style="height:46px"></span><span style="height:45px"></span><span style="height:48px"></span><span style="height:50px"></span></div>
+              <div class="mini-status-card__value" id="hydrationPercent">88%</div>
+              <p id="hydrationGoal">3.2L / 3.6L goal</p>
+              <div class="mini-status-card__bars" aria-hidden="true">
+                <span style="height:36px"></span><span style="height:40px"></span><span style="height:44px"></span><span style="height:46px"></span><span style="height:45px"></span><span style="height:48px"></span><span style="height:50px"></span>
+              </div>
             </article>
 
             <article class="mini-status-card">
               <div class="card-kicker">Stress</div>
-              <div class="mini-status-card__value">Low</div>
-              <p>HRV: 72</p>
-              <div class="mini-status-card__spark">
+              <div class="mini-status-card__value" id="stressStatus">Low</div>
+              <p id="stressDetail">HRV: 72</p>
+              <div class="mini-status-card__spark" aria-hidden="true">
                 <svg viewBox="0 0 220 70" fill="none">
                   <path d="M8 54L40 50L72 38L104 55L136 24L168 49L210 41" stroke="#22d07a" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
                   <circle cx="136" cy="24" r="5" fill="#22d07a"/>
@@ -1129,30 +1328,136 @@
 
             <article class="mini-status-card">
               <div class="card-kicker">Next Up</div>
-              <div class="mini-status-card__value" style="font-size:2.4rem; color: var(--orange-2);">Log Your Midday Check-In</div>
-              <p>Stay sharp. Stay honest. 2:00 PM</p>
+              <div class="mini-status-card__value" id="nextUpTitle" style="font-size:2.4rem; color: var(--orange-2);">Log Your Midday Check-In</div>
+              <p id="nextUpDetail">Stay sharp. Stay honest. 2:00 PM</p>
             </article>
           </div>
+
+          <!-- ===================================================================
+               BODY INSIGHT ENGINE
+          ==================================================================== -->
+          <section class="insight-grid" id="body-insights">
+            <article class="insight-hero">
+              <div>
+                <div class="section-kicker">Body Insight Engine</div>
+                <h2>Your score is only useful when you know <span>why it moved.</span></h2>
+                <p>
+                  CCC turns carnivore signals into simple education: what your body needs,
+                  what that input controls, and what to fix first when energy, focus,
+                  digestion, or recovery starts drifting.
+                </p>
+              </div>
+
+              <aside class="priority-card" id="topInsightCard">
+                <strong id="topInsightTitle">Today’s Priority: Hydration First</strong>
+                <p id="topInsightText">
+                  Strong readiness, but hydration still drives energy, focus, digestion,
+                  and recovery. Fix this before chasing advanced tweaks.
+                </p>
+              </aside>
+            </article>
+
+            <article class="myth-card">
+              <div class="section-kicker">Hydration Myth Check</div>
+              <h3>Warm vs cold water: does it hydrate differently?</h3>
+              <p>
+                Water temperature is not the main hydration lever. Cold water and warm water both hydrate.
+                The bigger drivers are total intake, electrolytes, sweat loss, caffeine timing, and consistency.
+              </p>
+
+              <div class="myth-grid">
+                <div class="myth-box">
+                  <strong>🧊 Cold Water</strong>
+                  <p>Best when you want cooling, post-workout refresh, or help drinking more volume.</p>
+                </div>
+
+                <div class="myth-box">
+                  <strong>🔥 Warm Water</strong>
+                  <p>Best for comfort, morning routine, digestion comfort, and habit consistency.</p>
+                </div>
+              </div>
+
+              <div class="insight-callout">
+                <strong>CCC Insight:</strong>
+                Do not overthink temperature. Hit your water target, add electrolytes when needed,
+                and hydrate before coffee becomes your default fuel source.
+              </div>
+            </article>
+
+            <div class="nutrition-grid">
+              <article class="nutrition-card">
+                <div class="nutrition-icon">💧</div>
+                <h3>Hydration</h3>
+                <p>Water helps regulate blood volume, temperature, digestion, and cellular function.</p>
+                <ul>
+                  <li>Supports energy and mental clarity</li>
+                  <li>Helps digestion and bowel regularity</li>
+                  <li>Improves training output and recovery</li>
+                </ul>
+              </article>
+
+              <article class="nutrition-card">
+                <div class="nutrition-icon">🥩</div>
+                <h3>Protein</h3>
+                <p>Protein supplies amino acids your body uses to repair tissue and preserve lean mass.</p>
+                <ul>
+                  <li>Builds and repairs muscle</li>
+                  <li>Improves satiety and appetite control</li>
+                  <li>Supports recovery after training</li>
+                </ul>
+              </article>
+
+              <article class="nutrition-card">
+                <div class="nutrition-icon">🔥</div>
+                <h3>Fat</h3>
+                <p>Dietary fat provides dense energy and helps carnivore users avoid low-output days.</p>
+                <ul>
+                  <li>Stabilizes energy when carbs are low</li>
+                  <li>Supports hormones and cell membranes</li>
+                  <li>Helps meals feel satisfying</li>
+                </ul>
+              </article>
+
+              <article class="nutrition-card">
+                <div class="nutrition-icon">🧠</div>
+                <h3>Cholesterol</h3>
+                <p>Cholesterol is used by the body for hormones, vitamin D pathways, bile acids, and cell structure.</p>
+                <ul>
+                  <li>Supports hormone production pathways</li>
+                  <li>Helps build cell membranes</li>
+                  <li>Assists bile production for fat digestion</li>
+                </ul>
+              </article>
+            </div>
+          </section>
+
+          <!-- ===================================================================
+               DAILY CHECK-IN / RECOMMENDATION / COACH
+          ==================================================================== -->
           <div class="mid-grid">
             <article class="panel" id="checkin">
-              <div class="panel__title">Daily Check-In</div>
+              <h2 class="panel__title">Daily Check-In</h2>
               <div class="panel__sub">Fast inputs. Better score. Better decisions.</div>
+
               <form class="checkin-form">
                 <div class="field">
                   <label for="sleep">Sleep Hours</label>
                   <input id="sleep" type="range" min="0" max="10" value="7" />
                   <div class="field__hint"><span id="sleepValue">7.0</span> hours</div>
                 </div>
+
                 <div class="field">
                   <label for="mood">Mood</label>
                   <input id="mood" type="range" min="1" max="10" value="8" />
                   <div class="field__hint"><span id="moodValue">8</span>/10</div>
                 </div>
+
                 <div class="field">
                   <label for="stress">Stress</label>
                   <input id="stress" type="range" min="1" max="10" value="3" />
                   <div class="field__hint"><span id="stressValue">3</span>/10</div>
                 </div>
+
                 <div class="field">
                   <label for="digestion">Digestion</label>
                   <select id="digestion">
@@ -1162,6 +1467,7 @@
                     <option>Great</option>
                   </select>
                 </div>
+
                 <div class="field">
                   <label for="soreness">Soreness</label>
                   <select id="soreness">
@@ -1171,6 +1477,7 @@
                     <option>High</option>
                   </select>
                 </div>
+
                 <div class="field">
                   <label>Workout Yesterday</label>
                   <div class="toggle-row">
@@ -1178,19 +1485,25 @@
                     <button class="toggle" type="button" data-workout="no">No</button>
                   </div>
                 </div>
+
                 <button class="btn btn--primary" id="submitCheckin" type="button">Submit Check-In</button>
               </form>
             </article>
 
             <article class="panel">
-              <div class="panel__title">Today’s Recommendation</div>
+              <h2 class="panel__title">Today’s Recommendation</h2>
               <div class="panel__sub">The metabolic dashboard engine is translating your inputs into action.</div>
+
               <div class="score-box">
                 <div class="score-box__value" id="readinessScoreMain">87</div>
                 <strong id="modeMain">Execute Mode</strong>
                 <div class="founding-urgency">Limited Founding Access Available</div>
-                <p id="recommendationText" style="margin-top:8px; color: var(--muted);">Strong readiness. Push today, but do it with structure. Lift upper body, protect protein, and get one clean deep work block done before noon.</p>
+                <p id="recommendationText" style="margin-top:8px; color: var(--muted);">
+                  Strong readiness. Push today, but do it with structure. Lift upper body, protect protein,
+                  and get one clean deep work block done before noon.
+                </p>
               </div>
+
               <div class="gameplan-list">
                 <div class="gameplan-item"><div class="gameplan-item__left"><span class="check-icon"></span><strong>Mission 1</strong></div><span id="win1">Lift upper body</span></div>
                 <div class="gameplan-item"><div class="gameplan-item__left"><span class="check-icon"></span><strong>Mission 2</strong></div><span id="win2">90 min deep work</span></div>
@@ -1207,12 +1520,17 @@
                   <div class="coach-card__mode">Coach Mode · Premium Layer</div>
                 </div>
               </div>
-              <div class="coach-card__quote" id="coachQuote">You are hot right now. Stop negotiating. Lift. Focus. Protein. Momentum is hot. Do not waste it.</div>
+
+              <div class="coach-card__quote" id="coachQuote">
+                You are hot right now. Stop negotiating. Lift. Focus. Protein. Momentum is hot. Do not waste it.
+              </div>
+
               <div class="coach-card__actions">
                 <div class="coach-chip">Normal Mode: clear, supportive guidance</div>
                 <div class="coach-chip">Savage Mode: identity + discipline coaching</div>
                 <div class="coach-chip">Retention play: users come back for the voice, not just the data</div>
               </div>
+
               <div class="upgrade-banner">
                 <h3>Unlock CCC Pro</h3>
                 <p>Get Savage Metabo AI Coach, trend analytics, body tracking, custom programs, and premium missions.</p>
@@ -1228,32 +1546,42 @@
             </article>
           </div>
 
+          <!-- ===================================================================
+               FACTORS / TRENDS / WINS
+          ==================================================================== -->
+          
           <div class="lower-grid">
             <article class="factors-card" id="protocols">
               <div class="card-kicker">Readiness Factors <span class="accent">Weighted Impact</span></div>
+
               <div class="factor-list">
-                <div class="factor-item"><div class="factor-item__left"><span class="factor-icon"></span><strong>Sleep Quality</strong></div><span class="factor-score good">82</span></div>
-                <div class="factor-item"><div class="factor-item__left"><span class="factor-icon"></span><strong>HRV Balance</strong></div><span class="factor-score good">79</span></div>
-                <div class="factor-item"><div class="factor-item__left"><span class="factor-icon"></span><strong>Recovery</strong></div><span class="factor-score good">85</span></div>
-                <div class="factor-item"><div class="factor-item__left"><span class="factor-icon"></span><strong>Hydration</strong></div><span class="factor-score good">88</span></div>
-                <div class="factor-item"><div class="factor-item__left"><span class="factor-icon"></span><strong>Stress Balance</strong></div><span class="factor-score warn">22</span></div>
+                <div class="factor-item"><div class="factor-item__left"><span class="factor-icon"></span><strong>Sleep Quality</strong></div><span class="factor-score good" id="sleepFactorScore">82</span></div>
+                <div class="factor-item"><div class="factor-item__left"><span class="factor-icon"></span><strong>HRV Balance</strong></div><span class="factor-score good" id="hrvFactorScore">79</span></div>
+                <div class="factor-item"><div class="factor-item__left"><span class="factor-icon"></span><strong>Recovery</strong></div><span class="factor-score good" id="recoveryFactorScore">85</span></div>
+                <div class="factor-item"><div class="factor-item__left"><span class="factor-icon"></span><strong>Hydration</strong></div><span class="factor-score good" id="hydrationFactorScore">88</span></div>
+                <div class="factor-item"><div class="factor-item__left"><span class="factor-icon"></span><strong>Stress Balance</strong></div><span class="factor-score warn" id="stressFactorScore">22</span></div>
               </div>
             </article>
 
             <article class="trend-card" id="trends">
               <div class="card-kicker">7 Day Trend</div>
+
               <div class="trend-card__plot">
-                <svg viewBox="0 0 560 180" fill="none">
+                <svg viewBox="0 0 560 180" fill="none" aria-hidden="true">
                   <path d="M30 150H530" stroke="rgba(255,255,255,0.10)"/>
                   <path d="M30 120L95 108L160 78L225 92L290 112L355 118L420 86L500 52" stroke="#22d07a" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
                   <circle cx="500" cy="52" r="6" fill="#22d07a"/>
                 </svg>
               </div>
-              <div class="spark-axis" style="margin-top:12px;"><div>MON</div><div>TUE</div><div>WED</div><div>THU</div><div>FRI</div><div>SAT</div><div>SUN</div></div>
+
+              <div class="spark-axis" style="margin-top:12px;">
+                <div>MON</div><div>TUE</div><div>WED</div><div>THU</div><div>FRI</div><div>SAT</div><div>SUN</div>
+              </div>
             </article>
 
             <article class="wins-card" id="community">
               <div class="card-kicker">Recent Wins <span class="accent">View All</span></div>
+
               <div class="wins-list">
                 <div class="wins-item"><div class="wins-item__left"><span class="trophy-icon"></span><strong>Hit Protein Target 6 Days</strong></div></div>
                 <div class="wins-item"><div class="wins-item__left"><span class="trophy-icon"></span><strong>47 Day Streak</strong></div></div>
@@ -1268,177 +1596,22 @@
     </main>
   </div>
 
-  <script>
-    (() => {
-      const byId = (id) => document.getElementById(id);
-      const setText = (id, value) => {
-        const el = byId(id);
-        if (el) el.textContent = value;
-      };
+  <!-- ===========================================================================
+       PAGE JAVASCRIPT
+       PURPOSE:
+         Loads the external CCC dashboard engine. The engine handles readiness
+         scoring, localStorage check-in saves, hydration/stress/sleep rendering,
+         recommendation updates, mission switching, and future dynamic widgets.
+  ============================================================================ -->
+  <script src="/js/ccc-engine.js"></script>
 
-      const els = {
-        sleep: byId('sleep'),
-        mood: byId('mood'),
-        stress: byId('stress'),
-        digestion: byId('digestion'),
-        soreness: byId('soreness'),
-        sleepValue: byId('sleepValue'),
-        moodValue: byId('moodValue'),
-        stressValue: byId('stressValue'),
-        workoutButtons: Array.from(document.querySelectorAll('[data-workout]')),
-        submit: byId('submitCheckin')
-      };
-
-      let workoutYesterday = 'yes';
-      let entries = [];
-      try {
-        entries = JSON.parse(localStorage.getItem('cccEntries') || '[]');
-      } catch {
-        entries = [];
-      }
-
-      const clamp = (n, min, max) => Math.max(min, Math.min(max, n));
-
-      function computeScore() {
-        if (!els.sleep || !els.mood || !els.stress || !els.digestion || !els.soreness) return 72;
-        const sleep = parseFloat(els.sleep.value);
-        const mood = parseFloat(els.mood.value);
-        const stress = parseFloat(els.stress.value);
-        const digestionMap = { Bad: -14, Okay: -6, Good: 4, Great: 8 };
-        const sorenessMap = { None: 6, Mild: 2, Medium: -5, High: -12 };
-
-        let score = 50;
-        score += (sleep - 7) * 8;
-        score += (mood - 5) * 4;
-        score -= (stress - 3) * 5;
-        score += digestionMap[els.digestion.value] || 0;
-        score += sorenessMap[els.soreness.value] || 0;
-        score += workoutYesterday === 'yes' ? 4 : -2;
-
-        return Math.round(clamp(score, 35, 98));
-      }
-
-      function buildState(score) {
-        if (score >= 80) {
-          return {
-            mode: 'Execute',
-            recommendation: 'Strong readiness. Push today, but do it with structure. Lift upper body, protect protein, and get one clean deep work block done before noon.',
-            missions: ['Lift: Upper Body', 'Walk & Sunlight', 'Protein on Target', '8 Hours Sleep'],
-            wins: ['Lift upper body', '90 min deep work', 'Hydrate before coffee 2'],
-            quote: 'You are hot right now. Stop negotiating. Lift. Focus. Protein. Momentum is hot. Do not waste it.'
-          };
-        }
-        if (score >= 65) {
-          return {
-            mode: 'Build',
-            recommendation: 'Good day to execute, but stay measured. Moderate training, lock in protein, and protect the evening so momentum keeps building.',
-            missions: ['Moderate Lift', 'Deep Work 60 Min', 'Hydrate Early', 'Sleep on Time'],
-            wins: ['Moderate training', 'One clean focus block', 'Protect recovery tonight'],
-            quote: 'Solid enough to move. Do not waste energy on chaos. Build a clean day and keep momentum alive.'
-          };
-        }
-        if (score >= 50) {
-          return {
-            mode: 'Recover',
-            recommendation: 'Recovery should lead today. Walk, hydrate, reduce intensity, and make tonight’s sleep the real win.',
-            missions: ['20 Min Walk', 'Hydrate + Electrolytes', 'Light Mobility', 'Sleep Priority'],
-            wins: ['Walk complete', 'Hydration improved', 'Protect sleep tonight'],
-            quote: 'Not every win is a hard push. Recover on purpose so tomorrow does not have to pay for today.'
-          };
-        }
-        return {
-          mode: 'Reset',
-          recommendation: 'Bad inputs detected. Reset today. No ego training, no chaos. Hydrate, walk, simplify food, and protect sleep tonight.',
-          missions: ['Hydrate Aggressively', 'Walk Only', 'Simple Food', 'Early Bedtime'],
-          wins: ['Electrolytes in', 'Walk complete', 'Early bedtime locked'],
-          quote: 'You are not behind. You are unstable. Reset the system, stop forcing it, and win the basics.'
-        };
-      }
-
-      function render(save = false) {
-        if (els.sleepValue && els.sleep) els.sleepValue.textContent = Number(els.sleep.value).toFixed(1);
-        if (els.moodValue && els.mood) els.moodValue.textContent = els.mood.value;
-        if (els.stressValue && els.stress) els.stressValue.textContent = els.stress.value;
-
-        const score = computeScore();
-        const state = buildState(score);
-
-        setText('readinessScoreTop', score);
-        setText('readinessScoreMain', score);
-        setText('modeMain', `${state.mode} Mode`);
-        setText('recommendationText', state.recommendation);
-        setText('mission1', state.missions[0]);
-        setText('mission2', state.missions[1]);
-        setText('mission3', state.missions[2]);
-        setText('mission4', state.missions[3]);
-        setText('win1', state.wins[0]);
-        setText('win2', state.wins[1]);
-        setText('win3', state.wins[2]);
-        setText('coachQuote', state.quote);
-
-        if (save && els.submit) {
-          const entry = {
-            ts: new Date().toISOString(),
-            sleep: Number(els.sleep?.value || 7),
-            mood: Number(els.mood?.value || 8),
-            stress: Number(els.stress?.value || 3),
-            digestion: els.digestion?.value || 'Good',
-            soreness: els.soreness?.value || 'Mild',
-            workoutYesterday,
-            score,
-            mode: state.mode
-          };
-          entries.push(entry);
-          entries = entries.slice(-30);
-          try { localStorage.setItem('cccEntries', JSON.stringify(entries)); } catch {}
-          els.submit.textContent = 'Check-In Saved';
-          setTimeout(() => {
-            if (els.submit) els.submit.textContent = 'Submit Check-In';
-          }, 1400);
-        }
-      }
-
-      els.workoutButtons.forEach((btn) => {
-        btn.addEventListener('click', () => {
-          workoutYesterday = btn.dataset.workout;
-          els.workoutButtons.forEach((b) => b.classList.remove('is-active'));
-          btn.classList.add('is-active');
-          render(false);
-        });
-      });
-
-      [els.sleep, els.mood, els.stress, els.digestion, els.soreness].forEach((el) => {
-        if (!el) return;
-        el.addEventListener('input', () => render(false));
-        el.addEventListener('change', () => render(false));
-      });
-
-      if (els.submit) {
-        els.submit.addEventListener('click', () => render(true));
-      }
-
-      if (entries.length) {
-        const last = entries[entries.length - 1];
-        if (els.sleep) els.sleep.value = last.sleep;
-        if (els.mood) els.mood.value = last.mood;
-        if (els.stress) els.stress.value = last.stress;
-        if (els.digestion) els.digestion.value = last.digestion;
-        if (els.soreness) els.soreness.value = last.soreness;
-        workoutYesterday = last.workoutYesterday || 'yes';
-        els.workoutButtons.forEach((b) => b.classList.toggle('is-active', b.dataset.workout === workoutYesterday));
-      }
-
-      render(false);
-    })();
-  </script>
+  <!-- ===========================================================================
+       MOBILE QUICK ACTION BAR
+  ============================================================================ -->
   <div class="mobile-upgrade-bar">
-    <a href="/app/log/" class="mobile-upgrade-bar__ghost">Free Check-In</a>
+    <a href="/dashboard/#checkin" class="mobile-upgrade-bar__ghost">Free Check-In</a>
     <a href="/beta/" class="mobile-upgrade-bar__cta">Get Pro Access</a>
   </div>
-
-</body>
-</html>
-          
 
   </main>
 
