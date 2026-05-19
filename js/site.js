@@ -67,3 +67,18 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+// =============================================================================
+// MOBILE NAV TOGGLE
+// =============================================================================
+
+document.addEventListener("DOMContentLoaded", () => {
+  const toggle = document.querySelector(".nav__toggle");
+  const navLinks = document.querySelector(".nav-links");
+
+  if (!toggle || !navLinks) return;
+
+  toggle.addEventListener("click", () => {
+    toggle.classList.toggle("is-open");
+    navLinks.classList.toggle("is-open");
+  });
+});
