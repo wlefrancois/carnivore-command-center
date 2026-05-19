@@ -3212,6 +3212,119 @@ body.is-logged-in .nav__loggedIn{
     font-size:.8rem;
   }
 }
+@media (max-width: 760px){
+
+  /* existing css above */
+
+
+  /* ==========================================================================
+     MOBILE DASHBOARD COMPRESSION
+  ========================================================================== */
+
+  .sidebar {
+    display: none;
+  }
+
+  .hero-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .visual-rail {
+    display: none;
+  }
+
+  .page {
+    padding-top: 10px;
+  }
+
+  .top-strip,
+  .status-grid,
+  .mid-grid,
+  .lower-grid,
+  .nutrition-grid {
+    gap: 12px;
+  }
+
+  .metric-card,
+  .gameplan-card,
+  .focus-card,
+  .macro-card,
+  .mini-status-card,
+  .panel,
+  .coach-card,
+  .factors-card,
+  .trend-card,
+  .wins-card,
+  .insight-hero,
+  .myth-card,
+  .nutrition-card {
+    padding: 14px;
+  }
+
+  .metric-score__value {
+    font-size: 4rem;
+  }
+
+  .panel__title,
+  .insight-hero h2 {
+    font-size: 2rem;
+  }
+
+  .portrait-card {
+    min-height: 240px;
+  }
+
+  .insight-grid {
+    margin-top: 0 !important;
+  }
+
+  .insight-grid,
+  .mid-grid,
+  .lower-grid {
+    margin-left: 0 !important;
+  }
+
+  /* existing css below */
+
+}
+html,
+body {
+  overflow-x: hidden;
+}
+
+* {
+  max-width: 100%;
+}
+
+.hero-grid,
+.main-grid,
+.top-strip,
+.status-grid,
+.mid-grid,
+.lower-grid,
+.insight-grid,
+.nutrition-grid,
+.insight-hero {
+  width: 100%;
+  min-width: 0;
+}
+
+.insight-hero,
+.myth-grid,
+.metric-card__shell {
+  grid-template-columns: 1fr !important;
+}
+
+
+
+
+.insight-grid,
+.mid-grid,
+.lower-grid {
+  transform: none !important;
+  left: auto !important;
+}
+
 
 @media (max-width: 560px){
   .site-nav__actions{
