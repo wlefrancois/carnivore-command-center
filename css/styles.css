@@ -2003,6 +2003,35 @@ body.is-logged-in .nav__loggedIn{
   .nav-links__actions{
     grid-template-columns:1fr;
   }
+
+  .site-nav.is-open{
+    max-height:calc(100vh - 120px);
+    overflow-y:auto;
+  }
+
+  body.nav-is-open{
+    overflow:hidden;
+  }
+
+  .workspace-orb,
+  .hero-orb,
+  .dashboard-orb,
+  .orange-orb,
+  .glow-orb,
+  .bg-orb{
+    display:none !important;
+  }
+
+  .floating-actions,
+  .workspace-actions,
+  .app-actions,
+  .bottom-actions{
+    position:relative !important;
+    bottom:auto !important;
+    left:auto !important;
+    right:auto !important;
+    width:100% !important;
+  }
 }
 /* =========================================================
    CCC DASHBOARD ELITE REAL V2
