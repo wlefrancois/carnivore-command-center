@@ -3930,3 +3930,67 @@ body {
     justify-content:center;
   }
 }
+/* =========================================================
+   LAUNCH FIX: MOBILE HEADER MENU OVERLAY
+========================================================= */
+
+@media (max-width: 1100px){
+
+  body.nav-is-open{
+    overflow:hidden;
+  }
+
+  body.nav-is-open .mobile-upgrade-bar,
+  body.nav-is-open .app-mobile-nav,
+  body.nav-is-open .app-tabs,
+  body.nav-is-open .workspace-tabs,
+  body.nav-is-open .floating-actions,
+  body.nav-is-open .bottom-actions{
+    display:none !important;
+  }
+
+  .site-nav.is-open{
+    position:fixed !important;
+    top:74px !important;
+    left:16px !important;
+    right:16px !important;
+    bottom:16px !important;
+
+    display:flex !important;
+    flex-direction:column !important;
+    gap:12px !important;
+
+    padding:18px !important;
+    overflow-y:auto !important;
+
+    background:#07101f !important;
+    border:1px solid rgba(255,255,255,.12) !important;
+    border-radius:22px !important;
+    box-shadow:0 24px 70px rgba(0,0,0,.65) !important;
+
+    z-index:99999 !important;
+  }
+
+  .site-nav.is-open::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.72);
+    z-index:-1;
+  }
+
+  .site-nav.is-open > a,
+  .site-nav.is-open .btn{
+    width:100% !important;
+    min-height:52px !important;
+    justify-content:flex-start !important;
+    text-align:left !important;
+  }
+
+  .site-nav__actions{
+    display:grid !important;
+    grid-template-columns:1fr !important;
+    gap:12px !important;
+    margin-top:12px !important;
+  }
+}
