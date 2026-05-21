@@ -1,6 +1,38 @@
+<!-- =============================================================================
+     PAGE: CCC 7-Day Reset Landing Page
+     SITE: Carnivore Command Center
+     VERSION: v2.0 RESET-FIRST LAUNCH
+     PURPOSE:
+       Primary lead magnet landing page for the free 7-Day Carnivore Reset.
+       This page explains the reset offer, captures the visitor email directly,
+       previews the guide, and routes users into the Kit email sequence.
+
+     PRIMARY USER FLOW:
+       Visitor clicks Get Free 7-Day Reset
+       -> lands on /reset/
+       -> enters email directly on this page
+       -> submits to Kit form 9117546
+       -> receives guide / confirmation email
+
+     LAUNCH STRATEGY:
+       Reset-guide-first.
+       Remove extra beta detours and avoid duplicate email entry.
+       Beta/dashboard access can be promoted later through email follow-up.
+
+     IMPORTANT:
+       - Page content only.
+       - No <!doctype>, <html>, <head>, or <body> tags.
+       - Shared header and footer are injected by the CCC static build template.
+       - Replace: src/reset/index.html
+============================================================================= -->
+
 <main>
 
-<!-- SECTION 01: HERO -->
+<!-- =============================================================================
+     SECTION 01: HERO + DIRECT EMAIL CAPTURE
+     PURPOSE:
+       Present the reset promise and capture email immediately.
+============================================================================= -->
 <section class="hero hero--metabo hero--elite" id="top">
   <div class="container hero__grid hero__grid--elite">
 
@@ -11,12 +43,29 @@
 
       <p class="lead">
         Use the CCC 7-Day Carnivore Reset Guide to reduce cravings, simplify meals,
-        rebuild consistency, and track your daily signals.
+        rebuild consistency, and start tracking the signals that affect your energy,
+        digestion, sleep, and progress.
       </p>
 
+      <form
+        class="lead-form"
+        action="https://app.kit.com/forms/9117546/subscriptions"
+        method="post">
+
+        <input
+          type="email"
+          name="email_address"
+          placeholder="Enter your email"
+          required>
+
+        <button class="btn btn--primary" type="submit">
+          Send My Free Guide
+        </button>
+      </form>
+
       <div class="hero__cta">
-        <a class="btn btn--primary" href="#signup">Get Free Access</a>
         <a class="btn btn--ghost" href="#guide-preview">Preview Guide</a>
+        <a class="btn btn--ghost" href="/dashboard/">See Live Dashboard</a>
       </div>
 
       <div class="trust-bar">
@@ -24,13 +73,19 @@
         <span>✔ 7-day reset</span>
         <span>✔ Track inside CCC</span>
       </div>
+
+      <div class="microcopy">
+        Free guide • No spam • Built for carnivore, keto, and low-carb lifestyles
+      </div>
     </div>
 
     <div class="hero__visual">
       <div class="metabo-card metabo-card--hero">
-        <img class="metabo-card__img metabo-card__img--hero"
-             src="/assets/img/mascot/metabo-nutrition-hero.png"
-             alt="CCC 7-Day Carnivore Reset">
+        <img
+          class="metabo-card__img metabo-card__img--hero"
+          src="/assets/img/mascot/metabo-nutrition-hero.png"
+          alt="CCC 7-Day Carnivore Reset">
+
         <div class="metabo-card__label">
           <div class="metabo-card__name">Metabo Reset</div>
           <div class="metabo-card__role">Your 7-day momentum plan</div>
@@ -41,13 +96,19 @@
   </div>
 </section>
 
-<!-- SECTION 02: GUIDE PREVIEW IMAGE -->
+<!-- =============================================================================
+     SECTION 02: GUIDE PREVIEW
+     PURPOSE:
+       Show the visual guide asset so visitors understand what they receive.
+============================================================================= -->
 <section class="section section--alt" id="guide-preview">
   <div class="container">
 
     <div class="section__head section__head--center">
       <div class="badge">GUIDE PREVIEW</div>
+
       <h2>The Full 7-Day Reset Plan</h2>
+
       <p>
         A visual reset guide built around simple food rules, daily focus,
         damage control, and tracking your progress inside CCC.
@@ -57,13 +118,19 @@
     <div class="guide-preview-card">
       <img
         src="/assets/img/CCC-7-Day-Carnivore-Reset-Guide-9Panel.png"
-        alt="CCC 7-Day Carnivore Reset Guide preview">
+        alt="CCC 7-Day Carnivore Reset Guide preview"
+        loading="lazy"
+        decoding="async">
     </div>
 
   </div>
 </section>
 
-<!-- SECTION 03: WHAT YOU GET -->
+<!-- =============================================================================
+     SECTION 03: WHAT YOU GET
+     PURPOSE:
+       Clarify the value of the reset guide in three simple outcome-driven cards.
+============================================================================= -->
 <section class="section" id="what-you-get">
   <div class="container">
 
@@ -73,6 +140,7 @@
     </div>
 
     <div class="cards cards--3">
+
       <div class="card mini--bright">
         <div class="card__kicker">1</div>
         <h3>Simple Food Rules</h3>
@@ -87,82 +155,101 @@
 
       <div class="card mini--bright">
         <div class="card__kicker">3</div>
-        <h3>CCC Tracking</h3>
-        <p>Use CCC to log energy, cravings, sleep, digestion, and readiness.</p>
+        <h3>Signal Tracking</h3>
+        <p>Track energy, cravings, sleep, digestion, and readiness inside CCC.</p>
       </div>
+
     </div>
 
   </div>
 </section>
 
-<!-- SECTION 04: EMAIL SIGNUP -->
-<section class="section section--alt" id="signup">
+<!-- =============================================================================
+     SECTION 04: WHY IT WORKS
+     PURPOSE:
+       Connect the reset guide to the larger CCC product promise.
+============================================================================= -->
+<section class="section section--alt" id="why-it-works">
   <div class="container">
 
-    <div class="lead-box lead-box--premium">
-      <div class="lead-box__content">
-        <div class="badge">START FREE</div>
+    <div class="section__head section__head--center">
+      <h2>Don’t Just Reset. Learn What Changed.</h2>
 
-        <h2>Get The Reset + Track Your 7 Days Inside CCC</h2>
+      <p>
+        The reset helps simplify your inputs. CCC helps you see what those changes
+        are doing to your body, energy, cravings, and consistency.
+      </p>
+    </div>
 
-        <p>
-          Enter your email and start the 7-day reset. Use CCC to monitor your signals,
-          spot patterns, and stay accountable.
-        </p>
+    <div class="cards cards--3">
+
+      <div class="card">
+        <h3>Reduce Noise</h3>
+        <p>Simple food rules make it easier to understand how your body responds.</p>
+      </div>
+
+      <div class="card">
+        <h3>Track Signals</h3>
+        <p>Daily check-ins reveal patterns across energy, sleep, digestion, and cravings.</p>
+      </div>
+
+      <div class="card">
+        <h3>Build Momentum</h3>
+        <p>Use your reset as the starting point for a more consistent routine.</p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- =============================================================================
+     SECTION 05: FINAL CTA
+     PURPOSE:
+       End with one clear action: submit email and get the guide.
+============================================================================= -->
+<section class="cta" id="final-cta">
+  <div class="container">
+
+    <div class="cta__inner cta__inner--metabo">
+
+      <div class="cta__content">
+        <div class="panel__title">Start your reset today.</div>
+
+        <div class="panel__subtitle">
+          Get the free 7-day reset, track your signals, and stop guessing what your body needs.
+        </div>
 
         <form
           class="lead-form"
           action="https://app.kit.com/forms/9117546/subscriptions"
-          method="post">
+          method="post"
+          style="margin-top:18px;">
 
           <input
             type="email"
             name="email_address"
             placeholder="Enter your email"
-           required>
+            required>
 
           <button class="btn btn--primary" type="submit">
             Send My Free Guide
           </button>
-      </form>
+        </form>
 
         <div class="microcopy">
-          Free guide • No spam • Use code <strong>RESET7</strong> for your 7-day dashboard pass when available.
-        </div>
-      </div>
-
-      <div class="lead-box__visual">
-        <div class="guide-card">
-          <div class="guide-card__label">FREE PASS</div>
-          <h3>RESET7</h3>
-          <p>Track your reset inside CCC and learn what your body is telling you.</p>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- SECTION 05: FINAL CTA -->
-<section class="cta" id="final-cta">
-  <div class="container">
-
-    <div class="cta__inner cta__inner--metabo">
-      <div class="cta__content">
-        <div class="panel__title">Track it. Learn it. Improve it.</div>
-        <div class="panel__subtitle">
-          Don’t just do the reset — measure what changes.
-        </div>
-
-        <div class="cta__actions" style="margin-top:18px;">
-          <a class="btn btn--primary" href="#signup">Send My Free Guide</a>
-          <a class="btn btn--ghost" href="/app/log/">Start Check-In</a>
+          Free guide • No spam • Unsubscribe anytime.
         </div>
       </div>
 
       <div class="cta__mascot">
-        <img src="/assets/img/mascot/metabo-damage-control.png" alt="Metabo Damage Control">
+        <img
+          src="/assets/img/mascot/metabo-damage-control.png"
+          alt="Metabo Damage Control"
+          loading="lazy"
+          decoding="async">
       </div>
+
     </div>
 
   </div>
