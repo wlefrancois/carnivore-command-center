@@ -2798,10 +2798,10 @@ body.is-logged-in .nav__loggedIn{
 ========================= */
 @media (max-width: 1100px){
   .nav.nav--elite .nav-links{
-    position:absolute;
-    top:calc(100% + 10px);
-    right:0;
-    left:0;
+    position:fixed;
+    top:74px;
+    left:12px;
+    right:12px;
     display:none;
     flex-direction:column;
     align-items:stretch;
@@ -2814,6 +2814,8 @@ body.is-logged-in .nav__loggedIn{
       radial-gradient(600px 180px at 88% 0%, rgba(255,138,31,.18), transparent 60%),
       linear-gradient(180deg, rgba(12,20,38,.97), rgba(7,13,26,.99));
     box-shadow:0 18px 44px rgba(0,0,0,.34);
+    max-height:calc(100vh - 100px);
+    overflow-y:auto;
   }
 
   .nav.nav--elite .nav-links.is-open{
