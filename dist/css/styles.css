@@ -3996,3 +3996,38 @@ body {
     margin-top:12px !important;
   }
 }
+/* =========================================================
+   LAUNCH FIX: FORCE MOBILE MENU LINKS VISIBLE
+========================================================= */
+
+@media (max-width: 1100px){
+
+  .site-nav.is-open,
+  .nav-links.is-open{
+    display:flex !important;
+    visibility:visible !important;
+    opacity:1 !important;
+  }
+
+  .site-nav.is-open > a,
+  .site-nav.is-open .site-nav__actions,
+  .site-nav.is-open .btn,
+  .nav-links.is-open > a,
+  .nav-links.is-open .nav-links__actions,
+  .nav-links.is-open .btn{
+    display:flex !important;
+    visibility:visible !important;
+    opacity:1 !important;
+  }
+
+  .site-nav.is-open > a,
+  .nav-links.is-open > a{
+    color:#eef4ff !important;
+    min-height:52px;
+    align-items:center;
+    padding:14px 16px;
+    border-radius:16px;
+    background:rgba(255,255,255,.04);
+    border:1px solid rgba(255,255,255,.08);
+  }
+}
