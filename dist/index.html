@@ -61,16 +61,24 @@
     <!-- =============================================================================
      PAGE: CCC Homepage
      SITE: Carnivore Command Center
-     VERSION: v5.1 RELEASE-CANDIDATE
+     VERSION: v5.2 RESET-FIRST RELEASE CANDIDATE
      PURPOSE:
-       Public landing page for Carnivore Command Center. This page introduces the
-       value proposition, captures interest through the free 7-day reset, explains
-       the problem CCC solves, showcases the dashboard experience, and routes new
-       prospects toward the dashboard, reset guide, recipes, and beta funnel.
+       Public landing page for Carnivore Command Center. This version positions the
+       free 7-Day Carnivore Reset as the primary launch offer and routes visitors
+       toward the reset funnel first, with dashboard/product exploration as secondary.
 
-     USER FLOW:
-       Visitor lands on homepage -> understands the promise -> claims free reset
-       or views dashboard -> learns how CCC works -> returns to dashboard/check-in.
+     PRIMARY USER FLOW:
+       Visitor lands on homepage
+       -> understands the reset promise
+       -> clicks Get Free 7-Day Reset
+       -> lands on /reset/
+       -> signs up
+       -> receives guide / thank-you flow
+
+     LAUNCH STRATEGY:
+       Reset-guide-first.
+       Beta/dashboard access becomes secondary and can be promoted later through
+       email follow-up and onboarding.
 
      IMPORTANT:
        - Page content only.
@@ -81,47 +89,55 @@
 
 <main>
 
-<!-- SECTION 01: HERO -->
+<!-- =============================================================================
+     SECTION 01: HERO
+     PURPOSE:
+       Establish the primary promise quickly: reset momentum, reduce guessing,
+       and begin understanding body signals through the free 7-day reset.
+============================================================================= -->
 <section class="hero hero--metabo hero--elite" id="top">
   <div class="container hero__grid hero__grid--elite">
 
     <div class="hero__copy">
-      <div class="badge">FREE RESET GUIDE • FREE TO START</div>
+      <div class="badge">FREE 7-DAY RESET • FREE TO START</div>
 
       <h1>
-        Stop Guessing.<br>
-        Start Understanding Your Body.
+        Reset Your Momentum.<br>
+        Understand Your Body.
       </h1>
 
       <p class="lead">
-Track energy, cravings, sleep, digestion, workouts, and readiness in 60 seconds a day — then know exactly what helps or hurts progress.
-</p>
+        Use the free 7-day carnivore reset to reduce cravings, rebuild consistency,
+        and start tracking the signals that affect your energy, sleep, digestion,
+        and progress.
+      </p>
 
       <div class="hero__cta">
-       <a class="btn btn--primary" href="/reset/">Get Free 7-Day Reset</a>
-<a class="btn btn--ghost" href="/dashboard/">View Live Dashboard</a>
-<a class="btn btn--ghost" href="/recipes/">Browse Recipes</a>
+        <a class="btn btn--primary" href="/reset/">Get Free 7-Day Reset</a>
+        <a class="btn btn--ghost" href="/dashboard/">See Live Dashboard</a>
       </div>
 
       <div class="trust-bar">
-        <span>✔ 60 sec daily</span>
+        <span>✔ Simple daily plan</span>
         <span>✔ No wearable needed</span>
-        <span>✔ Built from real results</span>
+        <span>✔ Track in 60 seconds</span>
       </div>
 
       <div class="hero__proof">
-Built after losing 30 lbs and wanting a better system for consistency.
-</div>
+        Built after losing 30 lbs and needing a better system for consistency.
+      </div>
     </div>
 
     <div class="hero__visual">
       <div class="metabo-card metabo-card--hero metabo-card--hero-elite">
-        <img class="metabo-card__img metabo-card__img--hero"
-             src="/assets/img/mascot/metabo-focus.png"
-             alt="Metabo readiness coach">
+        <img
+          class="metabo-card__img metabo-card__img--hero"
+          src="/assets/img/mascot/metabo-focus.png"
+          alt="Metabo readiness coach">
+
         <div class="metabo-card__label">
           <div class="metabo-card__name">Meet Metabo</div>
-          <div class="metabo-card__role">Your daily progress coach</div>
+          <div class="metabo-card__role">Your daily reset coach</div>
         </div>
       </div>
     </div>
@@ -129,20 +145,24 @@ Built after losing 30 lbs and wanting a better system for consistency.
   </div>
 </section>
 
-<!-- SECTION 02: EMAIL CAPTURE / FREE GUIDE -->
+<!-- =============================================================================
+     SECTION 02: PRIMARY LEAD MAGNET
+     PURPOSE:
+       Convert visitors into reset-guide subscribers. This is the primary launch CTA.
+============================================================================= -->
 <section class="section section--alt" id="free-guide">
   <div class="container">
 
     <div class="lead-box lead-box--premium">
 
       <div class="lead-box__content">
-        <div class="badge">FREE 7-DAY GUIDE</div>
+        <div class="badge">START HERE</div>
 
-        <h2>Reset Your Carnivore Momentum In 7 Days</h2>
+        <h2>Get The Free 7-Day Carnivore Reset</h2>
 
         <p>
-          Get a simple 7-day reset plan to improve energy, reduce cravings,
-          tighten consistency, and start seeing patterns in your body again.
+          A simple reset plan to tighten meals, reduce cravings, improve energy,
+          and help you see what your body responds to.
         </p>
 
         <form class="lead-form" action="/reset/" method="get">
@@ -165,7 +185,9 @@ Built after losing 30 lbs and wanting a better system for consistency.
       <div class="lead-box__visual">
         <div class="guide-card">
           <div class="guide-card__label">CCC FREE GUIDE</div>
+
           <h3>7-Day Carnivore Reset</h3>
+
           <ul>
             <li>Daily focus</li>
             <li>Simple food rules</li>
@@ -181,64 +203,78 @@ Built after losing 30 lbs and wanting a better system for consistency.
   </div>
 </section>
 
-<!-- SECTION 03: WHY PEOPLE STALL -->
-<section class="section section--alt" id="why-people-stall">
+<!-- =============================================================================
+     SECTION 03: PROBLEM
+     PURPOSE:
+       Explain why users feel stuck and why a reset + simple signal tracking matters.
+============================================================================= -->
+<section class="section" id="why">
   <div class="container">
+
     <div class="section__head section__head--center">
       <h2>Why Progress Feels Random</h2>
-<p>CCC helps you finally see what drives good days and bad days.</p>
+      <p>Most people do not need more noise. They need a simple daily signal.</p>
     </div>
 
     <div class="cards cards--3">
+
       <div class="card mini--bright">
         <div class="card__kicker">1</div>
-        <h3>Energy Feels Random</h3>
-        <p>Some days feel great. Other days feel off. CCC helps you spot what changed.</p>
+        <h3>Cravings Come Back</h3>
+        <p>The reset helps you simplify food choices before momentum disappears.</p>
       </div>
 
       <div class="card mini--bright">
         <div class="card__kicker">2</div>
-        <h3>Progress Gets Stuck</h3>
-        <p>Track weight, cravings, sleep, digestion, and consistency so stalls are easier to understand.</p>
+        <h3>Energy Changes Daily</h3>
+        <p>Track sleep, hydration, digestion, stress, and workouts so patterns become visible.</p>
       </div>
 
       <div class="card mini--bright">
         <div class="card__kicker">3</div>
-        <h3>You Need A Daily Signal</h3>
-        <p>Your score gives you a simple way to know when to push, recover, or reset.</p>
+        <h3>You Need Direction</h3>
+        <p>CCC helps turn quick check-ins into readiness, recovery, and next actions.</p>
       </div>
+
     </div>
+
   </div>
 </section>
 
-<!-- SECTION 04: QUICK STATS -->
+<!-- =============================================================================
+     SECTION 04: QUICK PROOF STRIP
+     PURPOSE:
+       Reinforce the reset-first offer with fast-scanning benefit chips.
+============================================================================= -->
 <section class="stats-strip" id="quick-stats">
   <div class="container">
+
     <div class="stats-strip__grid">
+      <div class="stats-chip"><strong>7 days</strong><span>Simple reset</span></div>
       <div class="stats-chip"><strong>60 sec</strong><span>Daily check-in</span></div>
       <div class="stats-chip"><strong>Free</strong><span>To start</span></div>
-      <div class="stats-chip"><strong>7-Day</strong><span>Reset guide</span></div>
       <div class="stats-chip"><strong>Real</strong><span>Built from results</span></div>
     </div>
+
   </div>
 </section>
 
 <!-- =============================================================================
      SECTION 05: DASHBOARD SHOWCASE
      PURPOSE:
-       Shows the strongest product visual and explains how CCC turns simple daily
-       signals into readiness, recommendations, and momentum tracking.
+       Show that CCC is more than a guide. The reset leads into daily tracking,
+       readiness, recommendations, and progress insight.
 ============================================================================= -->
 <section class="dashboard-showcase" id="dashboard-showcase">
   <div class="container">
 
     <div class="section__head section__head--center">
-      <div class="badge">LIVE READINESS SYSTEM</div>
+      <div class="badge">TRACK YOUR RESET</div>
 
       <h2>See Your Signals Become Action.</h2>
 
       <p>
-        CCC transforms sleep, hydration, stress, recovery,
+        CCC helps turn sleep, hydration, cravings, digestion, stress, recovery,
         and energy into simple daily direction.
       </p>
     </div>
@@ -252,10 +288,7 @@ Built after losing 30 lbs and wanting a better system for consistency.
 
           <div>
             <h3>Daily Readiness Score</h3>
-            <p>
-              Know when to push harder, recover, hydrate,
-              or slow down before burnout hits.
-            </p>
+            <p>Know when to push, recover, hydrate, or slow down.</p>
           </div>
         </div>
 
@@ -264,9 +297,7 @@ Built after losing 30 lbs and wanting a better system for consistency.
 
           <div>
             <h3>Recovery Recommendations</h3>
-            <p>
-              CCC turns your body signals into practical next actions.
-            </p>
+            <p>Turn body signals into practical next actions.</p>
           </div>
         </div>
 
@@ -275,120 +306,139 @@ Built after losing 30 lbs and wanting a better system for consistency.
 
           <div>
             <h3>Momentum Tracking</h3>
-            <p>
-              Streaks, trends, and readiness history help users stay consistent.
-            </p>
+            <p>Use streaks, trends, and history to stay consistent.</p>
           </div>
         </div>
 
       </div>
 
       <div class="dashboard-showcase__visual">
-
         <img
           src="/assets/img/dashboard/dashboard-preview-v1.png"
           alt="CCC Dashboard Preview"
           loading="lazy"
-          decoding="async"
-        >
-
+          decoding="async">
       </div>
 
     </div>
 
     <div class="hero__cta" style="justify-content:center; margin-top:32px;">
-      <a class="btn btn--primary" href="/dashboard/">View Live Dashboard</a>
-      <a class="btn btn--ghost" href="/reset/">Get Free Reset</a>
+      <a class="btn btn--primary" href="/reset/">Get Free Reset</a>
+      <a class="btn btn--ghost" href="/dashboard/">View Dashboard</a>
     </div>
 
   </div>
 </section>
 
-<!-- SECTION 06: HOW CCC WORKS -->
-<section class="section" id="how-it-works">
+<!-- =============================================================================
+     SECTION 06: HOW IT WORKS
+     PURPOSE:
+       Explain the simple sequence: reset, check in, learn patterns.
+============================================================================= -->
+<section class="section section--alt" id="how-it-works">
   <div class="container">
+
     <div class="section__head section__head--center">
-      <h2>Know What’s Helping. Know What’s Hurting.</h2>
-      <p>CCC turns quick daily inputs into clarity you can actually use.</p>
+      <h2>How It Works</h2>
+      <p>Start with the reset. Track what changes. Improve with better signals.</p>
     </div>
 
     <div class="cards cards--3">
+
       <div class="card mini--bright">
         <div class="card__kicker">1</div>
-        <h3>Check In</h3>
-        <p>Log sleep, energy, cravings, digestion, soreness, workouts, and mood.</p>
+        <h3>Start The Reset</h3>
+        <p>Follow a simple 7-day carnivore reset plan designed to remove guesswork.</p>
       </div>
 
       <div class="card mini--bright">
         <div class="card__kicker">2</div>
-        <h3>Get Clarity</h3>
-        <p>CCC turns your inputs into a simple readiness score and trend view.</p>
+        <h3>Check In Daily</h3>
+        <p>Log energy, cravings, sleep, digestion, soreness, workouts, and mood.</p>
       </div>
 
       <div class="card mini--bright">
         <div class="card__kicker">3</div>
-        <h3>Improve Faster</h3>
-        <p>See what to change so progress does not stall and momentum stays alive.</p>
+        <h3>Learn Your Patterns</h3>
+        <p>See what helps, what hurts, and what to adjust next.</p>
       </div>
+
     </div>
+
   </div>
 </section>
 
-<!-- SECTION 07: FOUNDER STORY -->
-<section class="section section--alt" id="founder-story">
+<!-- =============================================================================
+     SECTION 07: FOUNDER STORY
+     PURPOSE:
+       Humanize CCC and explain why the product exists without over-emphasizing beta.
+============================================================================= -->
+<section class="section" id="founder-story">
   <div class="container">
+
     <div class="split">
+
       <div>
         <div class="section__head">
           <h2>Why I Built CCC</h2>
+
           <p>
-            I wanted a simple system to help me stay consistent, lose weight,
-            and feel better. After real progress, I built the tool I wish existed.
-            Now I’m sharing it.
+            I wanted a simple system to stay consistent, lose weight, and feel better.
+            After real progress, I built the tool I wish existed.
           </p>
         </div>
 
         <div class="hero__cta">
-  <a class="btn btn--primary" href="/reset/">Get Free Reset</a>
-  <a class="btn btn--ghost" href="/recipes/">Recipes</a>
-</div>
+          <a class="btn btn--primary" href="/reset/">Get Free Reset</a>
+          <a class="btn btn--ghost" href="/recipes/">Browse Recipes</a>
+        </div>
       </div>
 
       <div class="metabo-card metabo-card--support">
-        <img class="metabo-card__img--support"
-             src="/assets/img/mascot/metabo-welcome.png"
-             alt="Metabo welcome mascot">
+        <img
+          class="metabo-card__img--support"
+          src="/assets/img/mascot/metabo-welcome.png"
+          alt="Metabo welcome mascot">
       </div>
+
     </div>
+
   </div>
 </section>
 
-<!-- SECTION 08: FINAL CTA -->
+<!-- =============================================================================
+     SECTION 08: FINAL CTA
+     PURPOSE:
+       End with one clear action: start the free reset.
+============================================================================= -->
 <section class="cta" id="final-cta">
   <div class="container">
+
     <div class="cta__inner cta__inner--metabo">
 
       <div class="cta__content">
-        <div class="panel__title">Stop guessing. Start understanding your body.</div>
+        <div class="panel__title">Start with the reset. Build from there.</div>
 
-<div class="panel__subtitle">
-  Use the free 7-day reset and track your signals with CCC.
-</div>
+        <div class="panel__subtitle">
+          Get the free 7-day reset, track your signals, and stop guessing what your body needs.
+        </div>
 
         <div class="cta__actions" style="margin-top:18px;">
-  <a class="btn btn--primary" href="/dashboard/">Track Today</a>
-<a class="btn btn--ghost" href="/reset/">Get Free Reset</a>
-</div>
+          <a class="btn btn--primary" href="/reset/">Get Free Reset</a>
+          <a class="btn btn--ghost" href="/dashboard/">See Dashboard</a>
+        </div>
       </div>
 
       <div class="cta__mascot">
-        <img src="/assets/img/mascot/metabo-focus.png"
-             alt=""
-             loading="lazy"
-             decoding="async">
+        <img
+          src="/assets/img/mascot/metabo-focus.png"
+          alt=""
+          loading="lazy"
+          decoding="async">
       </div>
 
     </div>
+
   </div>
 </section>
 
