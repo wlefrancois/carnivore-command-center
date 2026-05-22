@@ -4171,3 +4171,28 @@ body {
     z-index:99999 !important;
   }
 }
+/* =========================================================
+   LAUNCH FIX: MOBILE LOG FORM FIRST
+========================================================= */
+
+@media (max-width: 760px){
+
+  body:has(#logForm) .app-sidebar,
+  body:has(#logForm) .workspace-sidebar,
+  body:has(#logForm) .sidebar{
+    display:none !important;
+  }
+
+  body:has(#logForm) #logForm{
+    display:block !important;
+    margin-top:18px !important;
+    padding-bottom:120px !important;
+  }
+
+  body:has(#logForm) .mobile-checkin-bar{
+    z-index:99999 !important;
+  }
+}
+.simple-mobile-header{
+  margin-bottom:18px;
+}

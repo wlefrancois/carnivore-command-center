@@ -11,100 +11,7 @@
 </head>
 
 <body class="app-mode">
-  <div class="app">
-  <header class="app-topbar">
-    <div class="app-topbar__inner">
-      <a class="app-brand" href="/app/dashboard/">
-        <img
-          class="app-brand__logo"
-          src="/assets/img/ccc_logo_primary_transparent.png"
-          alt="Carnivore Command Center logo"
-        />
-        <div class="app-brand__text">
-          <div class="app-brand__name">Carnivore Command Center</div>
-          <div class="app-brand__tag">Metabolic intelligence • app mode</div>
-        </div>
-      </a>
-
-      <div class="app-topbar__actions">
-        <a class="app-chip" href="/">Home</a>
-        <a class="app-chip" href="/app/dashboard/">Dashboard</a>
-        <a class="app-chip" href="/app/log/">Check-In</a>
-
-        <button class="app-btn" type="button" onclick="alert('Search is coming soon.')">
-          Search
-        </button>
-
-        <button class="app-btn" type="button" onclick="alert('No alerts yet.')">
-          Alerts
-        </button>
-
-        <a class="app-btn" href="/app/">Account</a>
-        <a class="app-btn app-btn--primary" href="/app/log/">+ Check-In</a>
-      </div>
-    </div>
-  </header>
-
-  <div class="app-layout">
-    <aside class="app-sidebar">
-      <div class="app-sidebar__label">Workspace</div>
-
-      <nav class="app-nav">
-        <a href="/app/dashboard/">
-          <span class="app-nav__dot"></span>
-          <span>Dashboard</span>
-        </a>
-
-        <a href="/app/log/">
-          <span class="app-nav__dot"></span>
-          <span>Check-In</span>
-        </a>
-
-        <a href="/app/onboarding/">
-          <span class="app-nav__dot"></span>
-          <span>Onboarding</span>
-        </a>
-
-        <a href="/dashboard/">
-          <span class="app-nav__dot"></span>
-          <span>Public Demo</span>
-        </a>
-      </nav>
-
-      <div class="app-sidebar__foot">
-        <div class="app-sidebar__label">Site</div>
-
-        <nav class="app-nav">
-          <a href="/">
-            <span class="app-nav__dot"></span>
-            <span>Home</span>
-          </a>
-
-          <a href="/product/">
-            <span class="app-nav__dot"></span>
-            <span>Product</span>
-          </a>
-
-          <a href="/beta/">
-            <span class="app-nav__dot"></span>
-            <span>Beta</span>
-          </a>
-        </nav>
-      </div>
-
-      <div class="app-sidebar__foot">
-        <div class="app-sidebar__label">Account</div>
-
-        <nav class="app-nav">
-          <a href="/app/" onclick="localStorage.clear(); sessionStorage.clear();">
-            <span class="app-nav__dot"></span>
-            <span>Logout</span>
-          </a>
-        </nav>
-      </div>
-    </aside>
-
-    <main class="app-main">
+  
 
 <style>
 .log-engine-page{display:grid;gap:18px}
@@ -165,6 +72,15 @@
 @media(max-width:980px){.log-grid{grid-template-columns:1fr}.premium-choice-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:760px){.money-strip{display:grid;grid-template-columns:1fr}.mobile-checkin-bar{display:grid}body{padding-bottom:92px}.log-title{font-size:36px}}
 </style>
+<header class="simple-mobile-header">
+  <div class="container">
+    <div class="badge">CCC Daily Check-In</div>
+    <h1 style="margin-top:10px;">Build momentum today.</h1>
+    <p class="log-sub">
+      Fast inputs. Better decisions. Stronger consistency.
+    </p>
+  </div>
+</header>
 
 <div class="log-engine-page">
   <div class="app-pagehead">
@@ -561,11 +477,6 @@ renderPreview();
 renderEntries();
 </script>
 
-      <div class="app-minimal-footer">
-        CCC App • Built under WDC LLC
-      </div>
-    </main>
-  </div>
-</div>
+
 </body>
 </html>
