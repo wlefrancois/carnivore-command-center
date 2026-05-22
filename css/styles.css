@@ -4104,3 +4104,44 @@ body {
     visibility:visible !important;
   }
 }
+/* =========================================================
+   LAUNCH FIX: APP LOG MOBILE CLEANUP
+========================================================= */
+
+@media (max-width: 760px){
+
+  .app-shell,
+  .app-layout,
+  .dashboard-shell{
+    padding-top:18px !important;
+  }
+
+  .app-sidebar,
+  .sidebar,
+  .workspace-sidebar{
+    position:relative !important;
+    top:auto !important;
+    z-index:1 !important;
+    margin-bottom:18px !important;
+  }
+
+  .app-main,
+  .dashboard-main,
+  .page-main{
+    position:relative !important;
+    z-index:2 !important;
+  }
+
+  .orange-orb,
+  .dashboard-orb,
+  .workspace-orb,
+  .hero-orb,
+  .glow-orb,
+  .bg-orb{
+    display:none !important;
+  }
+
+  .mobile-upgrade-bar{
+    z-index:9999 !important;
+  }
+}
