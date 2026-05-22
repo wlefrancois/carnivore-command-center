@@ -4145,3 +4145,29 @@ body {
     z-index:9999 !important;
   }
 }
+/* =========================================================
+   LAUNCH FIX: MOBILE CHECK-IN ENTRY
+========================================================= */
+
+@media (max-width: 760px){
+
+  body:has(#logForm) .app-sidebar,
+  body:has(#logForm) .sidebar,
+  body:has(#logForm) .workspace-sidebar,
+  body:has(#logForm) .workspace-nav,
+  body:has(#logForm) .app-nav{
+    display:none !important;
+  }
+
+  body:has(#logForm) .app-main,
+  body:has(#logForm) .dashboard-main,
+  body:has(#logForm) .page-main,
+  body:has(#logForm) main{
+    padding-top:18px !important;
+    margin-top:0 !important;
+  }
+
+  body:has(#logForm) .mobile-checkin-bar{
+    z-index:99999 !important;
+  }
+}
