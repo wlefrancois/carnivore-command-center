@@ -1,0 +1,210 @@
+<!-- =============================================================================
+     PAGE: CCC How It Works
+     SITE: Carnivore Command Center
+     VERSION: v1.0 LAUNCH
+     PURPOSE:
+       Animated step-by-step guide showing users how to use CCC, complete daily
+       check-ins, understand dashboard signals, and build momentum over time.
+============================================================================= -->
+
+<style>
+.how-steps{display:grid;gap:18px;margin-top:28px}
+.how-step{
+  display:grid;
+  grid-template-columns:72px 1fr;
+  gap:18px;
+  align-items:start;
+  padding:22px;
+  border-radius:24px;
+  border:1px solid rgba(255,255,255,.09);
+  background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.025));
+  box-shadow:0 16px 44px rgba(0,0,0,.24);
+  animation:stepIn .55s ease both;
+}
+.how-step:nth-child(2){animation-delay:.08s}
+.how-step:nth-child(3){animation-delay:.16s}
+.how-step:nth-child(4){animation-delay:.24s}
+.how-step:nth-child(5){animation-delay:.32s}
+.how-step:nth-child(6){animation-delay:.40s}
+.how-step__num{
+  width:56px;
+  height:56px;
+  border-radius:18px;
+  display:grid;
+  place-items:center;
+  font-weight:950;
+  color:#07101d;
+  background:linear-gradient(180deg,#ffb15f,#ff7a00);
+  box-shadow:0 14px 32px rgba(255,122,0,.22);
+}
+.how-step h3{margin:0 0 8px;font-size:24px}
+.how-step p{margin:0;color:var(--muted);line-height:1.65}
+.how-mascot{max-width:260px;margin:26px auto 0}
+@keyframes stepIn{
+  from{opacity:0;transform:translateY(18px)}
+  to{opacity:1;transform:translateY(0)}
+}
+@media(max-width:760px){
+  .how-step{grid-template-columns:1fr}
+}
+</style>
+
+<main>
+
+<section class="hero hero--metabo hero--elite">
+  <div class="container hero__grid hero__grid--elite">
+
+    <div class="hero__copy">
+      <div class="badge">HOW CCC WORKS</div>
+
+      <h1>Track Your Signals. Find Your Patterns.</h1>
+
+      <p class="lead">
+        CCC helps you understand how sleep, stress, digestion, workouts,
+        cravings, nutrition quality, and consistency affect your daily readiness.
+      </p>
+
+      <div class="hero__cta">
+        <a class="btn btn--primary" href="/app/log/">Start Check-In</a>
+        <a class="btn btn--ghost" href="/dashboard/">View Dashboard</a>
+      </div>
+
+      <div class="trust-bar">
+        <span>✔ 60 sec daily</span>
+        <span>✔ Momentum over perfection</span>
+        <span>✔ Built for real life</span>
+      </div>
+    </div>
+
+    <div class="hero__visual">
+      <div class="metabo-card metabo-card--hero">
+        <img
+          class="metabo-card__img metabo-card__img--hero"
+          src="/assets/img/mascot/metabo-focus.png"
+          alt="Metabo coach">
+        <div class="metabo-card__label">
+          <div class="metabo-card__name">Metabo Coach</div>
+          <div class="metabo-card__role">Your daily momentum guide</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="section section--alt">
+  <div class="container narrow">
+
+    <div class="section__head section__head--center">
+      <div class="badge">STEP BY STEP</div>
+      <h2>How To Use The Dashboard</h2>
+      <p>
+        The goal is not perfection. The goal is learning what helps,
+        what hurts, and how quickly you can get back on track.
+      </p>
+    </div>
+
+    <div class="how-steps">
+
+      <div class="how-step">
+        <div class="how-step__num">1</div>
+        <div>
+          <h3>Start Your Daily Check-In</h3>
+          <p>
+            Open the check-in page and enter your daily signals. It only takes
+            about 60 seconds and gives CCC the data it needs to build your score.
+          </p>
+        </div>
+      </div>
+
+      <div class="how-step">
+        <div class="how-step__num">2</div>
+        <div>
+          <h3>Enter Sleep, Mood, Stress, And Recovery</h3>
+          <p>
+            These signals help explain why some days feel strong and others feel off.
+            Sleep, stress, soreness, digestion, and energy all affect readiness.
+          </p>
+        </div>
+      </div>
+
+      <div class="how-step">
+        <div class="how-step__num">3</div>
+        <div>
+          <h3>Choose Your Nutrition Quality</h3>
+          <p>
+            Pick the closest match: Strict Carnivore, Animal-Based, Low Carb,
+            or High Carb. This keeps the free version simple while Pro can later
+            unlock deeper macro and meal tracking.
+          </p>
+        </div>
+      </div>
+
+      <div class="how-step">
+        <div class="how-step__num">4</div>
+        <div>
+          <h3>Save Your Progress</h3>
+          <p>
+            Saving your check-in adds XP, updates your streak, and creates a history
+            you can compare over time. One day does not define you — returning does.
+          </p>
+        </div>
+      </div>
+
+      <div class="how-step">
+        <div class="how-step__num">5</div>
+        <div>
+          <h3>Review Your Dashboard</h3>
+          <p>
+            Your dashboard shows readiness, trends, recent entries, and momentum.
+            Use it to see whether your choices are helping or making consistency harder.
+          </p>
+        </div>
+      </div>
+
+      <div class="how-step">
+        <div class="how-step__num">6</div>
+        <div>
+          <h3>Watch Patterns Over Time</h3>
+          <p>
+            If carbs or sugar bring back cravings, track it. If better sleep improves
+            energy, track it. CCC helps you learn your body instead of guessing.
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<section class="cta">
+  <div class="container">
+    <div class="cta__inner cta__inner--metabo">
+
+      <div class="cta__content">
+        <div class="panel__title">Ready to build today’s signal?</div>
+
+        <div class="panel__subtitle">
+          Start with one check-in. Keep it simple. Let the patterns build over time.
+        </div>
+
+        <div class="cta__actions" style="margin-top:18px;">
+          <a class="btn btn--primary" href="/app/log/">Start Check-In</a>
+          <a class="btn btn--ghost" href="/reset/">Get Free 7-Day Reset</a>
+        </div>
+      </div>
+
+      <div class="cta__mascot">
+        <img
+          src="/assets/img/mascot/metabo-welcome.png"
+          alt="Metabo welcome mascot"
+          loading="lazy"
+          decoding="async">
+      </div>
+
+    </div>
+  </div>
+</section>
+
+</main>
