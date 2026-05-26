@@ -1921,6 +1921,75 @@ body.is-logged-in .nav__loggedIn{
 }
 
 /* =========================================================
+   STEP ACTIONS
+========================================================= */
+
+.ccc-step-actions{
+  width:min(760px,100%);
+  margin:0 auto 2rem;
+
+  display:grid;
+  gap:14px;
+}
+
+.ccc-step-action{
+  display:flex;
+  align-items:center;
+  gap:16px;
+
+  padding:18px 20px;
+
+  border-radius:20px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,.05),
+      rgba(255,255,255,.025)
+    );
+
+  border:1px solid rgba(255,255,255,.08);
+
+  color:#d9e3f2;
+
+  font-size:17px;
+  line-height:1.5;
+}
+
+.ccc-step-action span{
+  width:34px;
+  height:34px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  border-radius:12px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ff9a3d,
+      #ffc14d
+    );
+
+  color:#120a02;
+
+  font-weight:900;
+  flex-shrink:0;
+}
+
+@media (max-width:760px){
+
+  .ccc-step-action{
+    align-items:flex-start;
+    padding:16px 16px;
+    font-size:16px;
+  }
+
+}
+
+/* =========================================================
    CTA BUTTONS
 ========================================================= */
 

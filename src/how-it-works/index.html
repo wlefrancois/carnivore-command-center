@@ -4,16 +4,12 @@ File: src/how-it-works/index.html
 Purpose:
 - Premium cinematic onboarding walkthrough
 - 14-step guided CCC daily check-in journey
-- Centered mobile-first visual system
+- Clear action steps under each visual
 - Lightweight architecture using /js/how-it-works.js
-- No sticky dashboard UI
 ========================================================= -->
 
 <section class="ccc-onboarding ccc-onboarding--centered" data-onboarding-root>
 
-  <!-- =======================================================
-  ONBOARDING PROGRESS
-  ======================================================== -->
   <div class="ccc-onboarding-progress" aria-label="Onboarding progress">
     <span id="cccStepCounter">Welcome</span>
     <div class="ccc-progress-track">
@@ -30,8 +26,8 @@ Purpose:
       <p class="ccc-eyebrow">Welcome to CCC</p>
       <h1>Understand the signals. Build unstoppable momentum.</h1>
       <p class="ccc-step-description">
-        Carnivore Command Center helps you understand readiness, recovery,
-        cravings, patterns, and momentum before the day gets away from you.
+        This walkthrough shows exactly how CCC turns a simple daily check-in
+        into readiness, recovery, pattern awareness, and momentum.
       </p>
     </div>
 
@@ -46,20 +42,10 @@ Purpose:
     </div>
 
     <div class="ccc-onboarding-flow">
-      <span>Sleep</span>
-      <span>Stress</span>
-      <span>Mood</span>
-      <span>Digestion</span>
-      <span>Soreness</span>
-      <span>Nutrition</span>
-      <span>Weight</span>
-      <span>Ritual</span>
-      <span>Save</span>
-      <span>Readiness</span>
-      <span>Patterns</span>
-      <span>Damage Control</span>
-      <span>Momentum</span>
-      <span>Dashboard</span>
+      <span>Sleep</span><span>Stress</span><span>Mood</span><span>Digestion</span>
+      <span>Soreness</span><span>Nutrition</span><span>Weight</span><span>Ritual</span>
+      <span>Save</span><span>Readiness</span><span>Patterns</span>
+      <span>Damage Control</span><span>Momentum</span><span>Dashboard</span>
     </div>
 
     <div class="ccc-step-nav">
@@ -78,23 +64,24 @@ Purpose:
   STEP 01 — SLEEP
   ======================================================== -->
   <section id="sleep" class="ccc-onboard-step ccc-onboard-step--cinematic" data-step="sleep">
+
     <div class="ccc-onboard-copy ccc-onboard-copy--center">
       <p class="ccc-eyebrow">Step 1 of 14 — Sleep</p>
       <h2>Recovery starts before motivation does.</h2>
       <p class="ccc-step-description">
-        CCC uses sleep as one of the strongest readiness signals.
-        Even one poor night can impact cravings, stress tolerance,
-        energy, discipline, and recovery.
+        Sleep is one of the strongest readiness signals because it affects cravings,
+        discipline, stress tolerance, energy, and recovery.
       </p>
     </div>
 
     <div class="ccc-step-image ccc-step-image--cinematic">
-      <img
-        src="/assets/img/onboarding/step-01-sleep-checkin.png"
-        alt="Carnivore Command Center sleep recovery walkthrough"
-        loading="lazy"
-        decoding="async"
-      />
+      <img src="/assets/img/onboarding/step-01-sleep-checkin.png" alt="Sleep check-in walkthrough" loading="lazy" decoding="async" />
+    </div>
+
+    <div class="ccc-step-actions">
+      <div class="ccc-step-action"><span>1</span> Tap the Sleep check-in card.</div>
+      <div class="ccc-step-action"><span>2</span> Move the slider to your sleep hours.</div>
+      <div class="ccc-step-action"><span>3</span> Save today’s sleep value.</div>
     </div>
 
     <div class="ccc-step-learn">
@@ -116,28 +103,31 @@ Purpose:
         <div class="ccc-step-next-arrow">→</div>
       </a>
     </div>
+
   </section>
 
   <!-- =======================================================
   STEP 02 — STRESS
   ======================================================== -->
   <section id="stress" class="ccc-onboard-step ccc-onboard-step--cinematic" data-step="stress">
+
     <div class="ccc-onboard-copy ccc-onboard-copy--center">
       <p class="ccc-eyebrow">Step 2 of 14 — Stress</p>
       <h2>Stress changes the difficulty level.</h2>
       <p class="ccc-step-description">
-        CCC uses stress to understand cravings, discipline risk,
-        recovery pressure, and whether today needs a softer plan.
+        Stress helps CCC understand cravings, decision fatigue, recovery pressure,
+        and whether today needs a softer plan.
       </p>
     </div>
 
     <div class="ccc-step-image ccc-step-image--cinematic">
-      <img
-        src="/assets/img/onboarding/step-02-stress-checkin.png"
-        alt="Carnivore Command Center stress check-in walkthrough"
-        loading="lazy"
-        decoding="async"
-      />
+      <img src="/assets/img/onboarding/step-02-stress-checkin.png" alt="Stress check-in walkthrough" loading="lazy" decoding="async" />
+    </div>
+
+    <div class="ccc-step-actions">
+      <div class="ccc-step-action"><span>1</span> Tap the Stress check-in card.</div>
+      <div class="ccc-step-action"><span>2</span> Rate today’s stress from low to high.</div>
+      <div class="ccc-step-action"><span>3</span> Save the stress signal for your readiness score.</div>
     </div>
 
     <div class="ccc-step-learn">
@@ -159,12 +149,14 @@ Purpose:
         <div class="ccc-step-next-arrow">→</div>
       </a>
     </div>
+
   </section>
 
   <!-- =======================================================
   STEP 03 — MOOD
   ======================================================== -->
   <section id="mood" class="ccc-onboard-step ccc-onboard-step--cinematic" data-step="mood">
+
     <div class="ccc-onboard-copy ccc-onboard-copy--center">
       <p class="ccc-eyebrow">Step 3 of 14 — Mood</p>
       <h2>Your mindset is part of the data.</h2>
@@ -176,6 +168,12 @@ Purpose:
 
     <div class="ccc-step-image ccc-step-image--cinematic">
       <img src="/assets/img/onboarding/step-03-mood-checkin.png" alt="Mood check-in walkthrough" loading="lazy" decoding="async" />
+    </div>
+
+    <div class="ccc-step-actions">
+      <div class="ccc-step-action"><span>1</span> Tap the Mood check-in card.</div>
+      <div class="ccc-step-action"><span>2</span> Rate how steady, focused, or drained you feel.</div>
+      <div class="ccc-step-action"><span>3</span> Save your emotional readiness signal.</div>
     </div>
 
     <div class="ccc-step-learn">
@@ -196,23 +194,31 @@ Purpose:
         <div class="ccc-step-next-arrow">→</div>
       </a>
     </div>
+
   </section>
 
   <!-- =======================================================
   STEP 04 — DIGESTION
   ======================================================== -->
   <section id="digestion" class="ccc-onboard-step ccc-onboard-step--cinematic" data-step="digestion">
+
     <div class="ccc-onboard-copy ccc-onboard-copy--center">
       <p class="ccc-eyebrow">Step 4 of 14 — Digestion</p>
       <h2>Your body responds before the scale does.</h2>
       <p class="ccc-step-description">
-        Digestion can reveal food response, inflammation patterns,
-        gut stress, and recovery issues.
+        Digestion can reveal food response, inflammation patterns, gut stress,
+        and recovery issues.
       </p>
     </div>
 
     <div class="ccc-step-image ccc-step-image--cinematic">
       <img src="/assets/img/onboarding/step-04-digestion-checkin.png" alt="Digestion check-in walkthrough" loading="lazy" decoding="async" />
+    </div>
+
+    <div class="ccc-step-actions">
+      <div class="ccc-step-action"><span>1</span> Tap the Digestion check-in card.</div>
+      <div class="ccc-step-action"><span>2</span> Rate comfort, bloating, heaviness, or gut stress.</div>
+      <div class="ccc-step-action"><span>3</span> Save the signal so patterns can build.</div>
     </div>
 
     <div class="ccc-step-learn">
@@ -233,12 +239,14 @@ Purpose:
         <div class="ccc-step-next-arrow">→</div>
       </a>
     </div>
+
   </section>
 
   <!-- =======================================================
   STEP 05 — SORENESS
   ======================================================== -->
   <section id="soreness" class="ccc-onboard-step ccc-onboard-step--cinematic" data-step="soreness">
+
     <div class="ccc-onboard-copy ccc-onboard-copy--center">
       <p class="ccc-eyebrow">Step 5 of 14 — Soreness</p>
       <h2>Know when to push and when to recover.</h2>
@@ -250,6 +258,12 @@ Purpose:
 
     <div class="ccc-step-image ccc-step-image--cinematic">
       <img src="/assets/img/onboarding/step-05-soreness-checkin.png" alt="Soreness check-in walkthrough" loading="lazy" decoding="async" />
+    </div>
+
+    <div class="ccc-step-actions">
+      <div class="ccc-step-action"><span>1</span> Tap the Soreness check-in card.</div>
+      <div class="ccc-step-action"><span>2</span> Rate how sore or physically drained you feel.</div>
+      <div class="ccc-step-action"><span>3</span> Save the signal so CCC can adjust readiness.</div>
     </div>
 
     <div class="ccc-step-learn">
@@ -270,12 +284,14 @@ Purpose:
         <div class="ccc-step-next-arrow">→</div>
       </a>
     </div>
+
   </section>
 
   <!-- =======================================================
   STEP 06 — NUTRITION
   ======================================================== -->
   <section id="nutrition" class="ccc-onboard-step ccc-onboard-step--cinematic" data-step="nutrition">
+
     <div class="ccc-onboard-copy ccc-onboard-copy--center">
       <p class="ccc-eyebrow">Step 6 of 14 — Nutrition</p>
       <h2>Log food quality, not guilt.</h2>
@@ -287,6 +303,12 @@ Purpose:
 
     <div class="ccc-step-image ccc-step-image--cinematic">
       <img src="/assets/img/onboarding/step-06-nutrition-checkin.png" alt="Nutrition check-in walkthrough" loading="lazy" decoding="async" />
+    </div>
+
+    <div class="ccc-step-actions">
+      <div class="ccc-step-action"><span>1</span> Tap the Nutrition check-in card.</div>
+      <div class="ccc-step-action"><span>2</span> Rate food quality and consistency for the day.</div>
+      <div class="ccc-step-action"><span>3</span> Save the signal without judgment or guilt.</div>
     </div>
 
     <div class="ccc-step-learn">
@@ -307,12 +329,14 @@ Purpose:
         <div class="ccc-step-next-arrow">→</div>
       </a>
     </div>
+
   </section>
 
   <!-- =======================================================
   STEP 07 — WEIGHT
   ======================================================== -->
   <section id="weight" class="ccc-onboard-step ccc-onboard-step--cinematic" data-step="weight">
+
     <div class="ccc-onboard-copy ccc-onboard-copy--center">
       <p class="ccc-eyebrow">Step 7 of 14 — Weight</p>
       <h2>Weight is optional context.</h2>
@@ -324,6 +348,12 @@ Purpose:
 
     <div class="ccc-step-image ccc-step-image--cinematic">
       <img src="/assets/img/onboarding/step-07-weight-checkin.png" alt="Weight check-in walkthrough" loading="lazy" decoding="async" />
+    </div>
+
+    <div class="ccc-step-actions">
+      <div class="ccc-step-action"><span>1</span> Tap the Weight check-in card.</div>
+      <div class="ccc-step-action"><span>2</span> Enter today’s weight if you want to track it.</div>
+      <div class="ccc-step-action"><span>3</span> Save it as trend context, not judgment.</div>
     </div>
 
     <div class="ccc-step-learn">
@@ -344,12 +374,14 @@ Purpose:
         <div class="ccc-step-next-arrow">→</div>
       </a>
     </div>
+
   </section>
 
   <!-- =======================================================
   STEP 08 — RITUAL
   ======================================================== -->
   <section id="timer" class="ccc-onboard-step ccc-onboard-step--cinematic" data-step="timer">
+
     <div class="ccc-onboard-copy ccc-onboard-copy--center">
       <p class="ccc-eyebrow">Step 8 of 14 — Ritual</p>
       <h2>Turn the check-in into a daily pause.</h2>
@@ -361,6 +393,12 @@ Purpose:
 
     <div class="ccc-step-image ccc-step-image--cinematic">
       <img src="/assets/img/onboarding/step-08-timer-ritual.png" alt="Timer ritual walkthrough" loading="lazy" decoding="async" />
+    </div>
+
+    <div class="ccc-step-actions">
+      <div class="ccc-step-action"><span>1</span> Start the check-in ritual.</div>
+      <div class="ccc-step-action"><span>2</span> Pause long enough to answer honestly.</div>
+      <div class="ccc-step-action"><span>3</span> Finish the check-in before the day takes over.</div>
     </div>
 
     <div class="ccc-step-learn">
@@ -381,12 +419,14 @@ Purpose:
         <div class="ccc-step-next-arrow">→</div>
       </a>
     </div>
+
   </section>
 
   <!-- =======================================================
   STEP 09 — SAVE
   ======================================================== -->
   <section id="save" class="ccc-onboard-step ccc-onboard-step--cinematic" data-step="save">
+
     <div class="ccc-onboard-copy ccc-onboard-copy--center">
       <p class="ccc-eyebrow">Step 9 of 14 — Save Check-In</p>
       <h2>Save today’s signal snapshot.</h2>
@@ -398,6 +438,12 @@ Purpose:
 
     <div class="ccc-step-image ccc-step-image--cinematic">
       <img src="/assets/img/onboarding/step-09-save-checkin.png" alt="Save check-in walkthrough" loading="lazy" decoding="async" />
+    </div>
+
+    <div class="ccc-step-actions">
+      <div class="ccc-step-action"><span>1</span> Review your daily signals.</div>
+      <div class="ccc-step-action"><span>2</span> Tap Save Check-In.</div>
+      <div class="ccc-step-action"><span>3</span> Let CCC update your dashboard and readiness.</div>
     </div>
 
     <div class="ccc-step-learn">
@@ -418,12 +464,14 @@ Purpose:
         <div class="ccc-step-next-arrow">→</div>
       </a>
     </div>
+
   </section>
 
   <!-- =======================================================
   STEP 10 — READINESS
   ======================================================== -->
   <section id="readiness" class="ccc-onboard-step ccc-onboard-step--cinematic" data-step="readiness">
+
     <div class="ccc-onboard-copy ccc-onboard-copy--center">
       <p class="ccc-eyebrow">Step 10 of 14 — Readiness</p>
       <h2>Turn signals into a readiness score.</h2>
@@ -435,6 +483,12 @@ Purpose:
 
     <div class="ccc-step-image ccc-step-image--cinematic">
       <img src="/assets/img/onboarding/step-10-readiness-score.png" alt="Readiness score walkthrough" loading="lazy" decoding="async" />
+    </div>
+
+    <div class="ccc-step-actions">
+      <div class="ccc-step-action"><span>1</span> Open your readiness view.</div>
+      <div class="ccc-step-action"><span>2</span> Check whether today is high, medium, or low readiness.</div>
+      <div class="ccc-step-action"><span>3</span> Use the score to decide whether to push or recover.</div>
     </div>
 
     <div class="ccc-step-learn">
@@ -455,12 +509,14 @@ Purpose:
         <div class="ccc-step-next-arrow">→</div>
       </a>
     </div>
+
   </section>
 
   <!-- =======================================================
   STEP 11 — PATTERNS
   ======================================================== -->
   <section id="patterns" class="ccc-onboard-step ccc-onboard-step--cinematic" data-step="patterns">
+
     <div class="ccc-onboard-copy ccc-onboard-copy--center">
       <p class="ccc-eyebrow">Step 11 of 14 — Patterns</p>
       <h2>CCC connects the dots over time.</h2>
@@ -472,6 +528,12 @@ Purpose:
 
     <div class="ccc-step-image ccc-step-image--cinematic">
       <img src="/assets/img/onboarding/step-11-patterns.png" alt="Pattern tracking walkthrough" loading="lazy" decoding="async" />
+    </div>
+
+    <div class="ccc-step-actions">
+      <div class="ccc-step-action"><span>1</span> Review your trend and pattern cards.</div>
+      <div class="ccc-step-action"><span>2</span> Notice what repeatedly lowers readiness.</div>
+      <div class="ccc-step-action"><span>3</span> Use patterns to make better next-day decisions.</div>
     </div>
 
     <div class="ccc-step-learn">
@@ -492,12 +554,14 @@ Purpose:
         <div class="ccc-step-next-arrow">→</div>
       </a>
     </div>
+
   </section>
 
   <!-- =======================================================
   STEP 12 — DAMAGE CONTROL
   ======================================================== -->
   <section id="damage" class="ccc-onboard-step ccc-onboard-step--cinematic" data-step="damage">
+
     <div class="ccc-onboard-copy ccc-onboard-copy--center">
       <p class="ccc-eyebrow">Step 12 of 14 — Damage Control</p>
       <h2>One bad day is data — not defeat.</h2>
@@ -509,6 +573,12 @@ Purpose:
 
     <div class="ccc-step-image ccc-step-image--cinematic">
       <img src="/assets/img/onboarding/step-12-damage-control.png" alt="Damage control walkthrough" loading="lazy" decoding="async" />
+    </div>
+
+    <div class="ccc-step-actions">
+      <div class="ccc-step-action"><span>1</span> Identify when readiness or consistency drops.</div>
+      <div class="ccc-step-action"><span>2</span> Choose a simple recovery action.</div>
+      <div class="ccc-step-action"><span>3</span> Get back on track without starting over.</div>
     </div>
 
     <div class="ccc-step-learn">
@@ -529,12 +599,14 @@ Purpose:
         <div class="ccc-step-next-arrow">→</div>
       </a>
     </div>
+
   </section>
 
   <!-- =======================================================
   STEP 13 — MOMENTUM
   ======================================================== -->
   <section id="momentum" class="ccc-onboard-step ccc-onboard-step--cinematic" data-step="momentum">
+
     <div class="ccc-onboard-copy ccc-onboard-copy--center">
       <p class="ccc-eyebrow">Step 13 of 14 — Momentum</p>
       <h2>The longer you show up, the harder it is to stop.</h2>
@@ -546,6 +618,12 @@ Purpose:
 
     <div class="ccc-step-image ccc-step-image--cinematic">
       <img src="/assets/img/onboarding/step-13-momentum.png" alt="Momentum tracking walkthrough" loading="lazy" decoding="async" />
+    </div>
+
+    <div class="ccc-step-actions">
+      <div class="ccc-step-action"><span>1</span> Check your streaks and consistency signals.</div>
+      <div class="ccc-step-action"><span>2</span> Watch small wins stack over time.</div>
+      <div class="ccc-step-action"><span>3</span> Use momentum as proof that the system is working.</div>
     </div>
 
     <div class="ccc-step-learn">
@@ -566,12 +644,14 @@ Purpose:
         <div class="ccc-step-next-arrow">→</div>
       </a>
     </div>
+
   </section>
 
   <!-- =======================================================
   STEP 14 — DASHBOARD
   ======================================================== -->
   <section id="dashboard" class="ccc-onboard-step ccc-onboard-step--cinematic" data-step="dashboard">
+
     <div class="ccc-onboard-copy ccc-onboard-copy--center">
       <p class="ccc-eyebrow">Step 14 of 14 — Dashboard</p>
       <h2>Your dashboard turns daily signals into direction.</h2>
@@ -583,6 +663,12 @@ Purpose:
 
     <div class="ccc-step-image ccc-step-image--cinematic">
       <img src="/assets/img/onboarding/step-14-dashboard.png" alt="Carnivore Command Center dashboard walkthrough" loading="lazy" decoding="async" />
+    </div>
+
+    <div class="ccc-step-actions">
+      <div class="ccc-step-action"><span>1</span> Open your CCC dashboard.</div>
+      <div class="ccc-step-action"><span>2</span> Review readiness, trends, and recommendations.</div>
+      <div class="ccc-step-action"><span>3</span> Use the dashboard to decide your next best move.</div>
     </div>
 
     <div class="ccc-step-learn">
@@ -603,8 +689,7 @@ Purpose:
         <div class="ccc-step-next-arrow">→</div>
       </a>
     </div>
+
   </section>
 
 </section>
-
-<script src="/js/how-it-works.js"></script>
