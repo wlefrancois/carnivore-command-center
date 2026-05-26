@@ -1526,128 +1526,479 @@ body.is-logged-in .nav__loggedIn{
 }
 
 /* =========================================================
-   ONBOARDING
+   CCC ONBOARDING EXPERIENCE
+   Purpose:
+   - Clean centered onboarding flow
+   - Mobile-first cinematic walkthrough
+   - Removes sticky dashboard complexity
+   - Keeps focus on instructional visuals
 ========================================================= */
 
-.wizard-shell{
-  display:grid;
-  grid-template-columns:1.08fr .92fr;
-  gap:24px;
-  align-items:start;
+.ccc-onboarding{
+  position:relative;
+  width:min(1120px,94vw);
+  margin:0 auto;
+  padding:40px 0 100px;
+  display:flex;
+  flex-direction:column;
+  gap:90px;
 }
 
-.wizard-main,
-.wizard-side{
-  padding:32px;
+/* =============================================================================
+   CCC ONBOARDING — WELCOME LAYOUT
+============================================================================= */
+
+.ccc-onboard-step--welcome {
+  min-height:auto;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  text-align: center;
+  padding: 1.5rem 1.5rem 3rem;
 }
 
-.wizard-progress{
-  margin:22px 0 26px;
+.ccc-step-image--welcome {
+  width: min(1080px, 100%);
+  margin: 1rem auto 1.5rem;
 }
 
-.wizard-progress__bar{
-  height:12px;
-  border-radius:999px;
-  background:rgba(255,255,255,.08);
-  overflow:hidden;
-  border:1px solid rgba(255,255,255,.06);
+.ccc-step-image--welcome img {
+  width: 100%;
+  display: block;
+  border-radius: 28px;
 }
 
-.wizard-progress__bar span{
-  display:block;
-  height:100%;
-  border-radius:999px;
-  background:linear-gradient(90deg, rgba(94,162,255,.96), rgba(124,140,255,.88));
+.ccc-onboarding-flow {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: .65rem;
+  max-width: 980px;
+  margin: 0 auto 2.25rem;
 }
 
-.wizard-progress__labels{
-  display:grid;
-  grid-template-columns:repeat(4, 1fr);
-  gap:10px;
-  margin-top:10px;
-  font-size:13px;
-  color:var(--muted);
+.ccc-onboarding-flow span {
+  padding: .6rem .9rem;
+  border-radius: 999px;
+  background: rgba(255,255,255,.055);
+  border: 1px solid rgba(255,255,255,.09);
+  color: rgba(255,255,255,.78);
+  font-size: .78rem;
+  line-height: 1;
 }
 
-.wizard-progress__labels .is-active{
+.ccc-onboarding-flow span.is-active {
+  background: linear-gradient(135deg, rgba(255,154,61,.95), rgba(255,193,77,.95));
+  border-color: rgba(255,193,77,.55);
+  color: #120a02;
+  font-weight: 900;
+  box-shadow: 0 12px 34px rgba(255,154,61,.22);
+}
+
+@media (max-width: 768px) {
+  .ccc-onboard-step--welcome {
+    padding: 2rem 1rem 3rem;
+  }
+
+  .ccc-step-image--welcome {
+    margin: 2rem auto;
+  }
+
+  .ccc-step-image--welcome img {
+    border-radius: 20px;
+  }
+
+  .ccc-onboarding-flow {
+    gap: .42rem;
+  }
+
+  .ccc-onboarding-flow span {
+    font-size: .72rem;
+    padding: .48rem .68rem;
+  }
+
+  .ccc-onboard-copy h1{
+    max-width:10ch;
+    margin-left:auto;
+    margin-right:auto;
+  }
+}
+
+
+/* =============================================================================
+   CCC ONBOARDING — CINEMATIC STEP SYSTEM
+============================================================================= */
+
+.ccc-onboard-step--cinematic {
+  padding-top: 7rem;
+  padding-bottom: 7rem;
+}
+
+.ccc-step-description {
+  max-width: 720px;
+  margin: 1.5rem auto 0;
+}
+
+.ccc-step-image--cinematic {
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+}
+
+.ccc-step-image--cinematic img {
+  width: 100%;
+  max-width: 960px;
+  border-radius: 28px;
+  display: block;
+  margin: 0 auto;
+}
+
+.ccc-onboard-step{
+  opacity:1;
+  transform:none;
+  transition:none;
+}
+
+
+/* =========================================================
+   STEP NAVIGATION
+========================================================= */
+
+.ccc-step-nav{
+  display:flex;
+  justify-content:center;
+  margin-top:42px;
+}
+
+.ccc-step-next{
+  display:flex;
+  align-items:center;
+  gap:18px;
+
+  padding:18px 24px;
+  border-radius:24px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,.06),
+      rgba(255,255,255,.03)
+    );
+
+  border:1px solid rgba(255,255,255,.08);
+
+  text-decoration:none;
   color:#fff;
+
+  transition:
+    transform .18s ease,
+    border-color .18s ease,
+    background .18s ease;
+}
+
+.ccc-step-next:hover{
+  transform:translateY(-2px);
+  border-color:rgba(255,170,60,.28);
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,170,60,.12),
+      rgba(255,255,255,.04)
+    );
+}
+
+.ccc-step-next-label{
+  font-size:11px;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  opacity:.6;
+}
+
+.ccc-step-next-title{
+  font-size:18px;
   font-weight:800;
 }
 
-.wizard-form{
+.ccc-step-next-arrow{
+  font-size:22px;
+  color:#ffb347;
+}
+
+/* =============================================================================
+   MOBILE OPTIMIZATION
+============================================================================= */
+
+@media (max-width: 768px) {
+
+  .ccc-onboard-step--cinematic {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+
+  .ccc-step-image--cinematic {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .ccc-step-image--cinematic img {
+    border-radius: 20px;
+  }
+
+  .ccc-onboard-copy h1,
+.ccc-onboard-copy h2 {
+  line-height: 1.1;
+  }
+    line-height: 1.1;
+
+
+}
+
+/* =========================================================
+   ONBOARDING PROGRESS
+========================================================= */
+
+.ccc-onboarding-progress{
+  position:sticky;
+  top:72px;
+  z-index:50;
+  width:min(680px,92vw);
+  margin:0 auto;
+  padding:16px 20px;
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:999px;
+  background:rgba(7,10,18,.78);
+  backdrop-filter:blur(18px);
+  display:flex;
+  align-items:center;
   gap:18px;
 }
 
-.wizard-grid{
+.ccc-onboarding-progress span{
+  color:#f3f7ff;
+  font-size:13px;
+  font-weight:700;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  white-space:nowrap;
+}
+
+.ccc-progress-track{
+  position:relative;
+  flex:1;
+  height:8px;
+  border-radius:999px;
+  overflow:hidden;
+  background:rgba(255,255,255,.08);
+}
+
+.ccc-progress-track span{
+  position:absolute;
+  inset:0 auto 0 0;
+  width:0%;
+  background:linear-gradient(
+    90deg,
+    #ff8a1f,
+    #ffb347
+  );
+  border-radius:999px;
+  transition:width .35s ease;
+}
+
+/* =========================================================
+   ONBOARDING STEP
+========================================================= */
+
+.ccc-onboard-step{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:38px;
+  text-align:center;
+}
+
+/* =========================================================
+   INTRO / COPY
+========================================================= */
+
+.ccc-onboard-copy{
+  width:min(760px,100%);
+}
+
+.ccc-onboard-copy--center{
+  margin:0 auto;
+}
+
+.ccc-eyebrow{
+  margin:0 0 16px;
+  color:#ff9a3d;
+  font-size:13px;
+  font-weight:700;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+}
+
+.ccc-onboard-copy h1,
+.ccc-onboard-copy h2{
+  margin:0 0 20px;
+  color:#f8fbff;
+  line-height:1.06;
+  letter-spacing:-0.04em;
+}
+
+.ccc-onboard-copy h1{
+  font-size:clamp(48px,7vw,82px);
+}
+
+.ccc-onboard-copy h2{
+  font-size:clamp(36px,5vw,60px);
+}
+
+.ccc-onboard-copy p{
+  margin:0 auto;
+  width:min(720px,100%);
+  color:#b7c3d8;
+  font-size:20px;
+  line-height:1.8;
+}
+
+/* =========================================================
+   CINEMATIC STEP IMAGE
+========================================================= */
+
+.ccc-step-image{
+  width:min(980px,100%);
+  margin:0 auto;
+  border-radius:34px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.08);
+
+  box-shadow:
+    0 40px 120px rgba(0,0,0,.50),
+    0 0 50px rgba(255,140,31,.08);
+}
+
+.ccc-step-image img{
+  width:100%;
+  display:block;
+}
+
+/* =========================================================
+   LEARNING / BENEFIT BLOCK
+========================================================= */
+
+.ccc-step-learn{
+  width:min(760px,100%);
+  margin:0 auto;
+  padding:34px;
+  border-radius:28px;
+  border:1px solid rgba(255,255,255,.06);
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,.03),
+      rgba(255,255,255,.015)
+    );
+}
+
+.ccc-step-learn h3{
+  margin:0 0 20px;
+  color:#f8fbff;
+  font-size:28px;
+  letter-spacing:-0.03em;
+}
+
+.ccc-step-learn ul{
+  margin:0;
+  padding:0;
+  list-style:none;
   display:grid;
-  grid-template-columns:1fr 1fr;
   gap:16px;
 }
 
-.choice-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
+.ccc-step-learn li{
+  color:#c3cfdf;
+  font-size:18px;
+  line-height:1.7;
 }
 
-.choice-card{
-  padding:14px 16px;
-  border-radius:16px;
-  border:1px solid rgba(255,255,255,.10);
+/* =========================================================
+   CTA BUTTONS
+========================================================= */
+
+.ccc-onboard-actions{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:18px;
+}
+.ccc-primary-btn,
+.ccc-secondary-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:48px;
+  padding:12px 18px;
+  border-radius:999px;
+  font-weight:900;
+  text-decoration:none;
+}
+
+.ccc-primary-btn{
+  background:linear-gradient(135deg,#ff9a3d,#ffc14d);
+  color:#120a02;
+}
+
+.ccc-secondary-btn{
+  border:1px solid rgba(255,255,255,.12);
   background:rgba(255,255,255,.04);
   color:#fff;
-  font-size:15px;
-  font-weight:700;
-  text-align:left;
-  cursor:pointer;
-  transition:transform .18s ease, border-color .18s ease, background .18s ease, box-shadow .18s ease;
 }
 
-.choice-card:hover{
-  transform:translateY(-1px);
-  border-color:rgba(255,255,255,.16);
-  background:rgba(255,255,255,.06);
-}
+/* =========================================================
+   MOBILE
+========================================================= */
 
-.choice-card.is-selected{
-  border-color:rgba(94,162,255,.40);
-  background:linear-gradient(180deg, rgba(94,162,255,.18), rgba(255,255,255,.05));
-  box-shadow:0 10px 26px rgba(0,0,0,.18);
-}
+@media (max-width: 760px){
 
-.wizard-actions{
-  display:flex;
-  justify-content:space-between;
-  gap:14px;
-  flex-wrap:wrap;
-  margin-top:8px;
-}
+  .ccc-onboarding{
+    width:min(94vw,100%);
+    padding:80px 0 90px;
+    gap:90px;
+  }
 
-.wizard-side{
-  background:
-    radial-gradient(500px 180px at 20% 0%, rgba(94,162,255,.14), transparent 60%),
-    linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.025));
-}
+  .ccc-onboarding-progress{
+    top:72px;
+    padding:14px 16px;
+  }
 
-.wizard-side h2{
-  margin:8px 0 10px;
-  font-size:34px;
-  line-height:1.08;
-}
+  .ccc-onboard-copy h1{
+    font-size:clamp(42px,12vw,62px);
+  }
 
-.wizard-side__image-wrap{
-  display:flex;
-  justify-content:center;
-  margin:20px 0 22px;
-}
+  .ccc-onboard-copy h2{
+    font-size:clamp(32px,9vw,46px);
+  }
 
-.wizard-side__image{
-  width:min(320px, 100%);
-  height:auto;
-  object-fit:contain;
-  filter:
-    drop-shadow(0 18px 40px rgba(0,0,0,.40))
-    drop-shadow(0 0 26px rgba(94,162,255,.20));
+  .ccc-onboard-copy p{
+    font-size:18px;
+    line-height:1.7;
+  }
+
+  .ccc-step-image{
+    border-radius:24px;
+  }
+
+  .ccc-step-learn{
+    padding:26px;
+  }
+
+  .ccc-step-learn h3{
+    font-size:24px;
+  }
+
+  .ccc-step-learn li{
+    font-size:17px;
+  }
+
 }
 
 /* =========================================================
@@ -2032,7 +2383,9 @@ body.is-logged-in .nav__loggedIn{
     right:auto !important;
     width:100% !important;
   }
+
 }
+
 /* =========================================================
    CCC DASHBOARD ELITE REAL V2
 ========================================================= */
