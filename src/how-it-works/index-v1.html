@@ -1,0 +1,846 @@
+<!-- =========================================================
+CCC HOW IT WORKS / REAL ONBOARDING EXPERIENCE
+File: src/how-it-works/index.html
+Purpose: Animated mobile-first onboarding walkthrough
+========================================================= -->
+
+<section class="hiw-page">
+
+  <!-- =======================================================
+  HERO / PRODUCT PROMISE
+  ======================================================== -->
+  <section class="hiw-section hiw-hero" data-scene="hero">
+    <div class="hiw-copy">
+      <p class="hiw-eyebrow">Carnivore Command Center</p>
+      <h1>Stop guessing how your body feels.</h1>
+      <p>
+        CCC connects sleep, stress, mood, digestion, and nutrition quality into one
+        readiness picture — so you can build momentum instead of chasing perfection.
+      </p>
+
+      <div class="hiw-actions">
+        <a href="#daily-checkin" class="hiw-btn hiw-btn-primary">Start Walkthrough</a>
+        <a href="/dashboard/" class="hiw-btn hiw-btn-secondary">Open Dashboard</a>
+      </div>
+    </div>
+
+    <div class="hiw-visual">
+      <div class="hiw-phone">
+        <div class="hiw-screen" id="hiw-screen">
+
+          <div class="hiw-phone-top">
+            <span>CCC</span>
+            <span id="scene-label">Ready</span>
+          </div>
+
+          <div class="hiw-ring">
+            <svg viewBox="0 0 120 120" class="hiw-ring-chart">
+              <circle class="hiw-ring-bg" cx="60" cy="60" r="52"></circle>
+              <circle class="hiw-ring-progress" id="ring-progress" cx="60" cy="60" r="52"></circle>
+            </svg>
+
+            <div class="hiw-ring-center">
+              <strong id="readiness-score">84</strong>
+              <span>Readiness</span>
+            </div>
+          </div>
+
+          <div class="hiw-metrics">
+            <div class="hiw-metric">
+              <span>Sleep</span>
+              <strong id="sleep-score">8.1h</strong>
+            </div>
+            <div class="hiw-metric">
+              <span>Stress</span>
+              <strong id="stress-score">3/10</strong>
+            </div>
+            <div class="hiw-metric">
+              <span>Nutrition</span>
+              <strong id="nutrition-score">88%</strong>
+            </div>
+            <div class="hiw-metric">
+              <span>Streak</span>
+              <strong id="momentum-score">7 days</strong>
+            </div>
+          </div>
+
+          <div class="hiw-momentum">
+            <div class="hiw-card-top">
+              <span>Momentum</span>
+              <strong id="momentum-label">Stable</strong>
+            </div>
+            <div class="hiw-momentum-bar">
+              <span id="momentum-fill"></span>
+            </div>
+          </div>
+
+          <div class="hiw-pills" id="warning-pills">
+            <span>Recovered</span>
+            <span>Stable Energy</span>
+          </div>
+
+          <div class="hiw-trend">
+            <div class="hiw-card-top">
+              <span>Pattern Trend</span>
+              <strong id="trend-label">Stable</strong>
+            </div>
+
+            <div class="hiw-bars" id="fake-chart">
+              <span style="height:42%"></span>
+              <span style="height:55%"></span>
+              <span style="height:68%"></span>
+              <span style="height:76%"></span>
+              <span style="height:84%"></span>
+            </div>
+          </div>
+
+          <div class="hiw-coach-card">
+            <strong id="coach-title">You’re building momentum.</strong>
+            <p id="coach-copy">
+              Small daily signals help CCC show what is helping and what is hurting.
+            </p>
+          </div>
+
+        </div>
+      </div>
+
+      <img
+        src="/assets/img/onboarding/mascot/metabo-coach-standing.png"
+        alt="CCC Coach Mascot"
+        class="hiw-mascot"
+      />
+    </div>
+  </section>
+
+  <!-- =======================================================
+  DAILY CHECK-IN
+  ======================================================== -->
+  <section id="daily-checkin" class="hiw-section" data-scene="checkin">
+    <div class="hiw-copy">
+      <p class="hiw-eyebrow">Daily Check-In</p>
+      <h2>One minute. Five signals.</h2>
+      <p>
+        Sleep, stress, mood, digestion, and nutrition quality give CCC the signals it needs
+        to show how your body is responding.
+      </p>
+
+      <div class="hiw-lessons">
+        <article>Sleep shows recovery debt.</article>
+        <article>Stress predicts cravings.</article>
+        <article>Mood reveals consistency risk.</article>
+        <article>Digestion shows food response.</article>
+        <article>Nutrition quality drives energy.</article>
+      </div>
+    </div>
+  </section>
+
+  <!-- =======================================================
+  SLEEP
+  ======================================================== -->
+  <section class="hiw-section" data-scene="sleep">
+    <div class="hiw-copy">
+      <p class="hiw-eyebrow">Sleep</p>
+      <h2>Poor sleep lowers readiness before motivation notices.</h2>
+      <p>
+        CCC helps users see recovery debt early, before cravings and fatigue take over.
+      </p>
+    </div>
+  </section>
+
+  <!-- =======================================================
+  STRESS
+  ======================================================== -->
+  <section class="hiw-section" data-scene="stress">
+    <div class="hiw-copy">
+      <p class="hiw-eyebrow">Stress</p>
+      <h2>Stress changes decisions before it changes weight.</h2>
+      <p>
+        When stress rises, cravings and poor choices usually follow. CCC makes that pattern visible.
+      </p>
+    </div>
+  </section>
+
+  <!-- =======================================================
+  NUTRITION QUALITY
+  ======================================================== -->
+  <section class="hiw-section" data-scene="nutrition">
+    <div class="hiw-copy">
+      <p class="hiw-eyebrow">Nutrition Quality</p>
+      <h2>This is not calorie obsession.</h2>
+      <p>
+        CCC focuses on food quality, consistency, energy, digestion, and recovery signals.
+      </p>
+    </div>
+  </section>
+
+  <!-- =======================================================
+  RECOVERY
+  ======================================================== -->
+  <section class="hiw-section" data-scene="cheat">
+    <div class="hiw-copy">
+      <p class="hiw-eyebrow">Recovery</p>
+      <h2>One bad day is data — not defeat.</h2>
+      <p>
+        CCC helps users recover quickly after cheat days instead of spiraling or quitting.
+      </p>
+
+      <div class="hiw-lessons">
+        <article>Hydrate</article>
+        <article>Eat clean next meal</article>
+        <article>Sleep early</article>
+        <article>Log honestly</article>
+        <article>Rebuild tomorrow</article>
+      </div>
+    </div>
+  </section>
+
+  <!-- =======================================================
+  MOMENTUM
+  ======================================================== -->
+  <section class="hiw-section" data-scene="momentum">
+    <div class="hiw-copy">
+      <p class="hiw-eyebrow">Momentum</p>
+      <h2>Consistency compounds.</h2>
+      <p>
+        The goal is not perfection. The goal is repeated evidence that you are still in the fight.
+      </p>
+
+      <div class="hiw-actions">
+        <a href="/check-in/" class="hiw-btn hiw-btn-primary">Start Daily Check-In</a>
+        <a href="/dashboard/" class="hiw-btn hiw-btn-secondary">View Dashboard</a>
+      </div>
+    </div>
+  </section>
+
+</section>
+
+<style>
+/* =========================================================
+CCC HOW IT WORKS STYLES
+========================================================= */
+
+:root {
+  --ccc-bg: #050816;
+  --ccc-bg-deep: #03050d;
+  --ccc-surface: #0d1320;
+  --ccc-card: #131b2b;
+  --ccc-card-soft: rgba(255,255,255,.045);
+
+  --ccc-primary: #6ff7d8;
+  --ccc-primary-strong: #39f0c3;
+  --ccc-amber: #f7c873;
+  --ccc-danger: #ff7f7f;
+
+  --ccc-text: #f3f6fb;
+  --ccc-text-soft: #a7b4c8;
+  --ccc-border: rgba(255,255,255,.1);
+
+  --ccc-shadow: 0 3rem 8rem rgba(0,0,0,.55);
+}
+
+/* =========================================================
+PAGE BASE
+========================================================= */
+
+.hiw-page {
+  min-height: 100vh;
+  color: var(--ccc-text);
+  background:
+    radial-gradient(circle at 18% 8%, rgba(57,240,195,.16), transparent 28rem),
+    radial-gradient(circle at 86% 92%, rgba(247,200,115,.12), transparent 26rem),
+    linear-gradient(180deg, var(--ccc-bg), var(--ccc-bg-deep));
+  overflow: hidden;
+}
+
+.hiw-section {
+  min-height: 72vh;
+  padding: 5rem 1.25rem;
+  display: grid;
+  align-items: center;
+  gap: 2rem;
+}
+
+.hiw-hero {
+  min-height: 92vh;
+}
+
+.hiw-copy {
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.hiw-eyebrow {
+  color: var(--ccc-primary);
+  text-transform: uppercase;
+  letter-spacing: .18em;
+  font-size: .74rem;
+  font-weight: 900;
+  margin-bottom: .85rem;
+}
+
+.hiw-copy h1,
+.hiw-copy h2 {
+  font-size: clamp(2.45rem, 8vw, 5.4rem);
+  line-height: .92;
+  letter-spacing: -.055em;
+  margin: 0 0 1rem;
+}
+
+.hiw-copy p {
+  max-width: 58ch;
+  color: var(--ccc-text-soft);
+  font-size: 1.08rem;
+  line-height: 1.72;
+}
+
+/* =========================================================
+BUTTONS
+========================================================= */
+
+.hiw-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .85rem;
+  margin-top: 1.6rem;
+}
+
+.hiw-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  border-radius: 999px;
+  padding: .85rem 1.2rem;
+  text-decoration: none;
+  font-weight: 900;
+  letter-spacing: -.01em;
+}
+
+.hiw-btn-primary {
+  background: linear-gradient(135deg, var(--ccc-primary), var(--ccc-primary-strong));
+  color: #04100d;
+  box-shadow: 0 1rem 2.5rem rgba(57,240,195,.22);
+}
+
+.hiw-btn-secondary {
+  border: 1px solid var(--ccc-border);
+  color: var(--ccc-text);
+  background: rgba(255,255,255,.035);
+}
+
+/* =========================================================
+VISUAL / PHONE
+========================================================= */
+
+.hiw-visual {
+  position: relative;
+  width: min(520px, 96vw);
+  margin: 0 auto;
+}
+
+.hiw-phone {
+  width: min(440px, 96vw);
+  margin: 0 auto;
+  border-radius: 2.4rem;
+  padding: .85rem;
+  background:
+    linear-gradient(145deg, rgba(255,255,255,.12), rgba(255,255,255,.02)),
+    #060a12;
+  box-shadow: var(--ccc-shadow);
+  position: sticky;
+  top: 80px;
+  z-index: 3;
+}
+
+.hiw-screen {
+  min-height: 760px;
+  border-radius: 1.75rem;
+  padding: 1.1rem;
+  background:
+    radial-gradient(circle at top, rgba(111,247,216,.18), transparent 18rem),
+    var(--ccc-surface);
+  border: 1px solid var(--ccc-border);
+  transition: background .8s ease, border-color .6s ease, box-shadow .8s ease;
+}
+
+.hiw-screen.state-good {
+  background:
+    radial-gradient(circle at top, rgba(111,247,216,.2), transparent 18rem),
+    var(--ccc-surface);
+}
+
+.hiw-screen.state-warning {
+  background:
+    radial-gradient(circle at top, rgba(247,200,115,.2), transparent 18rem),
+    #11101b;
+}
+
+.hiw-screen.state-danger {
+  background:
+    radial-gradient(circle at top, rgba(255,127,127,.2), transparent 18rem),
+    #150d16;
+}
+
+.hiw-phone-top,
+.hiw-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--ccc-text);
+  font-size: .85rem;
+}
+
+/* =========================================================
+READINESS RING
+========================================================= */
+
+.hiw-ring {
+  position: relative;
+  width: 210px;
+  height: 210px;
+  margin: 2.1rem auto;
+}
+
+.hiw-ring-chart {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.hiw-ring-bg {
+  fill: none;
+  stroke: rgba(255,255,255,.08);
+  stroke-width: 8;
+}
+
+.hiw-ring-progress {
+  fill: none;
+  stroke: var(--ccc-primary);
+  stroke-width: 8;
+  stroke-linecap: round;
+  stroke-dasharray: 326;
+  stroke-dashoffset: 52;
+  transition: stroke-dashoffset .7s ease, stroke .5s ease;
+}
+
+.hiw-ring-center {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  text-align: center;
+}
+
+.hiw-ring-center strong {
+  font-size: 3rem;
+  line-height: 1;
+}
+
+.hiw-ring-center span {
+  display: block;
+  color: var(--ccc-text-soft);
+  font-size: .78rem;
+  margin-top: .25rem;
+}
+
+/* =========================================================
+DASHBOARD CARDS
+========================================================= */
+
+.hiw-metrics {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: .8rem;
+}
+
+.hiw-metric,
+.hiw-trend,
+.hiw-coach-card,
+.hiw-momentum,
+.hiw-lessons article {
+  border: 1px solid var(--ccc-border);
+  background: var(--ccc-card-soft);
+  border-radius: 1.25rem;
+  padding: 1rem;
+  backdrop-filter: blur(10px);
+}
+
+.hiw-metric span {
+  display: block;
+  color: var(--ccc-text-soft);
+  font-size: .76rem;
+}
+
+.hiw-metric strong {
+  font-size: 1.25rem;
+}
+
+.hiw-momentum,
+.hiw-trend,
+.hiw-coach-card {
+  margin-top: .9rem;
+}
+
+.hiw-momentum-bar {
+  height: 12px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: rgba(255,255,255,.08);
+  margin-top: .8rem;
+}
+
+.hiw-momentum-bar span {
+  display: block;
+  height: 100%;
+  width: 70%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--ccc-primary), var(--ccc-amber));
+  transition: width .6s ease;
+}
+
+.hiw-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  margin-top: 1rem;
+}
+
+.hiw-pills span {
+  padding: .45rem .7rem;
+  border-radius: 999px;
+  font-size: .72rem;
+  font-weight: 900;
+  background: rgba(255,255,255,.08);
+  color: var(--ccc-text);
+}
+
+.hiw-bars {
+  height: 130px;
+  display: flex;
+  align-items: end;
+  gap: .6rem;
+  padding-top: 1rem;
+}
+
+.hiw-bars span {
+  flex: 1;
+  border-radius: 999px 999px .35rem .35rem;
+  background: linear-gradient(to top, var(--ccc-primary), var(--ccc-amber));
+  transition: height .55s ease, background .55s ease;
+}
+
+.hiw-coach-card {
+  border-color: rgba(111,247,216,.2);
+}
+
+.hiw-coach-card p {
+  margin: .45rem 0 0;
+  font-size: .92rem;
+  color: var(--ccc-text-soft);
+  line-height: 1.55;
+}
+
+/* =========================================================
+LESSON CARDS
+========================================================= */
+
+.hiw-lessons {
+  display: grid;
+  gap: .8rem;
+  margin-top: 1.5rem;
+}
+
+.hiw-lessons article {
+  color: var(--ccc-text);
+  font-weight: 850;
+}
+
+/* =========================================================
+MASCOT
+========================================================= */
+
+.hiw-mascot {
+  position: absolute;
+  width: 240px;
+  right: -90px;
+  bottom: -20px;
+  z-index: 10;
+  pointer-events: none;
+  filter: drop-shadow(0 25px 45px rgba(0,0,0,.55));
+  animation: hiwMascotFloat 5s ease-in-out infinite;
+}
+
+@keyframes hiwMascotFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* =========================================================
+RESPONSIVE
+========================================================= */
+
+@media (max-width: 899px) {
+  .hiw-section {
+    min-height: auto;
+    padding: 4rem 1rem;
+  }
+
+  .hiw-hero {
+    min-height: auto;
+    padding-top: 4rem;
+  }
+
+  .hiw-phone {
+    position: relative;
+    top: auto;
+    width: min(390px, 96vw);
+  }
+
+  .hiw-screen {
+    min-height: 680px;
+  }
+
+  .hiw-mascot {
+    width: 130px;
+    right: -8px;
+    bottom: -10px;
+  }
+}
+
+@media (min-width: 900px) {
+  .hiw-section {
+    grid-template-columns: minmax(0, 1fr) 520px;
+    padding: 5.5rem max(2rem, 7vw);
+  }
+
+  .hiw-copy {
+    margin: 0;
+  }
+}
+</style>
+
+<script>
+/* =========================================================
+CCC HOW IT WORKS SCENE ENGINE
+========================================================= */
+
+const sceneStates = {
+  hero: {
+    mood: "good",
+    label: "Ready",
+    readiness: 84,
+    sleep: "8.1h",
+    stress: "3/10",
+    nutrition: "88%",
+    momentum: "7 days",
+    momentumLabel: "Stable",
+    momentumFill: 78,
+    trend: "Stable",
+    warnings: ["Recovered", "Stable Energy"],
+    coachTitle: "You’re building momentum.",
+    coachCopy: "Small daily signals help CCC show what is helping and what is hurting.",
+    bars: [42, 55, 68, 76, 84]
+  },
+  checkin: {
+    mood: "good",
+    label: "Check-In",
+    readiness: 78,
+    sleep: "7.2h",
+    stress: "4/10",
+    nutrition: "82%",
+    momentum: "8 days",
+    momentumLabel: "Logging",
+    momentumFill: 72,
+    trend: "Daily Snapshot",
+    warnings: ["Logged Today", "Pattern Building"],
+    coachTitle: "Five signals. One daily snapshot.",
+    coachCopy: "Sleep, stress, mood, digestion, and nutrition create the pattern CCC watches.",
+    bars: [50, 58, 62, 70, 78]
+  },
+  sleep: {
+    mood: "warning",
+    label: "Sleep Debt",
+    readiness: 61,
+    sleep: "5.4h",
+    stress: "5/10",
+    nutrition: "79%",
+    momentum: "8 days",
+    momentumLabel: "Watch",
+    momentumFill: 55,
+    trend: "Recovery Dip",
+    warnings: ["Sleep Debt", "Lower Readiness"],
+    coachTitle: "Sleep is pulling readiness down.",
+    coachCopy: "Poor sleep often creates cravings before users realize motivation is fading.",
+    bars: [82, 74, 65, 58, 51]
+  },
+  stress: {
+    mood: "danger",
+    label: "Stress Spike",
+    readiness: 52,
+    sleep: "5.8h",
+    stress: "8/10",
+    nutrition: "64%",
+    momentum: "8 days",
+    momentumLabel: "Risk",
+    momentumFill: 42,
+    trend: "Craving Risk",
+    warnings: ["Stress Load", "Craving Risk"],
+    coachTitle: "Stress is increasing decision risk.",
+    coachCopy: "CCC shows when stress may be driving cravings, low energy, and inconsistent choices.",
+    bars: [72, 66, 58, 49, 42]
+  },
+  nutrition: {
+    mood: "good",
+    label: "Nutrition",
+    readiness: 73,
+    sleep: "6.9h",
+    stress: "5/10",
+    nutrition: "91%",
+    momentum: "9 days",
+    momentumLabel: "Improving",
+    momentumFill: 68,
+    trend: "Energy Stabilizing",
+    warnings: ["Clean Inputs", "Better Energy"],
+    coachTitle: "Nutrition quality is stabilizing energy.",
+    coachCopy: "CCC focuses on food quality and recovery signals — not calorie obsession.",
+    bars: [44, 55, 63, 70, 78]
+  },
+  cheat: {
+    mood: "danger",
+    label: "Recovery",
+    readiness: 48,
+    sleep: "6.0h",
+    stress: "7/10",
+    nutrition: "42%",
+    momentum: "Reset",
+    momentumLabel: "Recover",
+    momentumFill: 35,
+    trend: "Recovery Plan",
+    warnings: ["Hydrate", "Next Meal Clean", "Sleep Priority"],
+    coachTitle: "Bad days are data — not defeat.",
+    coachCopy: "Log honestly, recover quickly, and rebuild momentum with the next clean choice.",
+    bars: [80, 70, 45, 52, 61]
+  },
+  momentum: {
+    mood: "good",
+    label: "Momentum",
+    readiness: 86,
+    sleep: "8.0h",
+    stress: "3/10",
+    nutrition: "93%",
+    momentum: "14 days",
+    momentumLabel: "Compounding",
+    momentumFill: 90,
+    trend: "Compounding",
+    warnings: ["Consistent", "Recovered", "Momentum Up"],
+    coachTitle: "Consistency is compounding.",
+    coachCopy: "Perfection is not required. Repeated recovery is the real skill.",
+    bars: [48, 58, 69, 78, 88]
+  }
+};
+
+const hiwEls = {
+  screen: document.getElementById("hiw-screen"),
+  label: document.getElementById("scene-label"),
+  readiness: document.getElementById("readiness-score"),
+  sleep: document.getElementById("sleep-score"),
+  stress: document.getElementById("stress-score"),
+  nutrition: document.getElementById("nutrition-score"),
+  momentum: document.getElementById("momentum-score"),
+  momentumLabel: document.getElementById("momentum-label"),
+  momentumFill: document.getElementById("momentum-fill"),
+  trend: document.getElementById("trend-label"),
+  coachTitle: document.getElementById("coach-title"),
+  coachCopy: document.getElementById("coach-copy"),
+  chart: document.getElementById("fake-chart"),
+  warnings: document.getElementById("warning-pills")
+};
+
+function updateReadinessRing(value) {
+  const circle = document.getElementById("ring-progress");
+  const radius = 52;
+  const circumference = 2 * Math.PI * radius;
+  const offset = circumference - (value / 100) * circumference;
+
+  circle.style.strokeDasharray = circumference;
+  circle.style.strokeDashoffset = offset;
+
+  if (value >= 75) {
+    circle.style.stroke = "var(--ccc-primary)";
+  } else if (value >= 55) {
+    circle.style.stroke = "var(--ccc-amber)";
+  } else {
+    circle.style.stroke = "var(--ccc-danger)";
+  }
+}
+
+function renderWarnings(warnings) {
+  hiwEls.warnings.innerHTML = "";
+
+  warnings.forEach((warning) => {
+    const pill = document.createElement("span");
+    pill.textContent = warning;
+    hiwEls.warnings.appendChild(pill);
+  });
+}
+
+function setScreenMood(mood) {
+  hiwEls.screen.classList.remove(
+    "state-good",
+    "state-warning",
+    "state-danger"
+  );
+
+  hiwEls.screen.classList.add(`state-${mood}`);
+}
+
+function activateScene(sceneName) {
+  const state = sceneStates[sceneName];
+
+  if (!state) {
+    return;
+  }
+
+  setScreenMood(state.mood);
+
+  hiwEls.label.textContent = state.label;
+  hiwEls.readiness.textContent = state.readiness;
+  hiwEls.sleep.textContent = state.sleep;
+  hiwEls.stress.textContent = state.stress;
+  hiwEls.nutrition.textContent = state.nutrition;
+  hiwEls.momentum.textContent = state.momentum;
+  hiwEls.momentumLabel.textContent = state.momentumLabel;
+  hiwEls.momentumFill.style.width = `${state.momentumFill}%`;
+  hiwEls.trend.textContent = state.trend;
+  hiwEls.coachTitle.textContent = state.coachTitle;
+  hiwEls.coachCopy.textContent = state.coachCopy;
+
+  updateReadinessRing(state.readiness);
+  renderWarnings(state.warnings);
+
+  [...hiwEls.chart.children].forEach((bar, index) => {
+    bar.style.height = `${state.bars[index]}%`;
+  });
+}
+
+const hiwObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      activateScene(entry.target.dataset.scene);
+    }
+  });
+}, {
+  threshold: 0.55
+});
+
+document.querySelectorAll("[data-scene]").forEach((section) => {
+  hiwObserver.observe(section);
+});
+
+activateScene("hero");
+</script>

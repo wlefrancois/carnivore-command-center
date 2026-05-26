@@ -58,216 +58,616 @@
 </header>
 
   <main>
-    <!-- =============================================================================
-     PAGE: CCC How It Works
-     SITE: Carnivore Command Center
-     VERSION: v1.0 LAUNCH
-     PURPOSE:
-       Animated step-by-step guide showing users how to use CCC, complete daily
-       check-ins, understand dashboard signals, and build momentum over time.
-============================================================================= -->
+    <!-- =========================================================
+CCC HOW IT WORKS — GUIDED ONBOARDING EXPERIENCE
+File: src/how-it-works/index.html
+Purpose:
+- Premium cinematic onboarding walkthrough
+- 14-step guided CCC daily check-in journey
+- Centered mobile-first visual system
+- Lightweight architecture using /js/how-it-works.js
+- No sticky dashboard UI
+========================================================= -->
 
-<style>
-.how-steps{display:grid;gap:18px;margin-top:28px}
-.how-step{
-  display:grid;
-  grid-template-columns:72px 1fr;
-  gap:18px;
-  align-items:start;
-  padding:22px;
-  border-radius:24px;
-  border:1px solid rgba(255,255,255,.09);
-  background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.025));
-  box-shadow:0 16px 44px rgba(0,0,0,.24);
-  animation:stepIn .55s ease both;
-}
-.how-step:nth-child(2){animation-delay:.08s}
-.how-step:nth-child(3){animation-delay:.16s}
-.how-step:nth-child(4){animation-delay:.24s}
-.how-step:nth-child(5){animation-delay:.32s}
-.how-step:nth-child(6){animation-delay:.40s}
-.how-step__num{
-  width:56px;
-  height:56px;
-  border-radius:18px;
-  display:grid;
-  place-items:center;
-  font-weight:950;
-  color:#07101d;
-  background:linear-gradient(180deg,#ffb15f,#ff7a00);
-  box-shadow:0 14px 32px rgba(255,122,0,.22);
-}
-.how-step h3{margin:0 0 8px;font-size:24px}
-.how-step p{margin:0;color:var(--muted);line-height:1.65}
-.how-mascot{max-width:260px;margin:26px auto 0}
-@keyframes stepIn{
-  from{opacity:0;transform:translateY(18px)}
-  to{opacity:1;transform:translateY(0)}
-}
-@media(max-width:760px){
-  .how-step{grid-template-columns:1fr}
-}
-</style>
+<section class="ccc-onboarding ccc-onboarding--centered" data-onboarding-root>
 
-<main>
-
-<section class="hero hero--metabo hero--elite">
-  <div class="container hero__grid hero__grid--elite">
-
-    <div class="hero__copy">
-      <div class="badge">HOW CCC WORKS</div>
-
-      <h1>Track Your Signals. Find Your Patterns.</h1>
-
-      <p class="lead">
-        CCC helps you understand how sleep, stress, digestion, workouts,
-        cravings, nutrition quality, and consistency affect your daily readiness.
-      </p>
-
-      <div class="hero__cta">
-        <a class="btn btn--primary" href="/app/log/">Start Check-In</a>
-        <a class="btn btn--ghost" href="/dashboard/">View Dashboard</a>
-      </div>
-
-      <div class="trust-bar">
-        <span>✔ 60 sec daily</span>
-        <span>✔ Momentum over perfection</span>
-        <span>✔ Built for real life</span>
-      </div>
+  <!-- =======================================================
+  ONBOARDING PROGRESS
+  ======================================================== -->
+  <div class="ccc-onboarding-progress" aria-label="Onboarding progress">
+    <span id="cccStepCounter">Welcome</span>
+    <div class="ccc-progress-track">
+      <span id="cccStepProgress"></span>
     </div>
-
-    <div class="hero__visual">
-      <div class="metabo-card metabo-card--hero">
-        <img
-          class="metabo-card__img metabo-card__img--hero"
-          src="/assets/img/mascot/metabo-focus.png"
-          alt="Metabo coach">
-        <div class="metabo-card__label">
-          <div class="metabo-card__name">Metabo Coach</div>
-          <div class="metabo-card__role">Your daily momentum guide</div>
-        </div>
-      </div>
-    </div>
-
   </div>
-</section>
 
-<section class="section section--alt">
-  <div class="container narrow">
+  <!-- =======================================================
+  WELCOME
+  ======================================================== -->
+  <section id="welcome" class="ccc-onboard-step ccc-onboard-step--welcome" data-step="welcome">
 
-    <div class="section__head section__head--center">
-      <div class="badge">STEP BY STEP</div>
-      <h2>How To Use The Dashboard</h2>
-      <p>
-        The goal is not perfection. The goal is learning what helps,
-        what hurts, and how quickly you can get back on track.
+    <div class="ccc-onboard-copy ccc-onboard-copy--center">
+      <p class="ccc-eyebrow">Welcome to CCC</p>
+      <h1>Understand the signals. Build unstoppable momentum.</h1>
+      <p class="ccc-step-description">
+        Carnivore Command Center helps you understand readiness, recovery,
+        cravings, patterns, and momentum before the day gets away from you.
       </p>
     </div>
 
-    <div class="how-steps">
-
-      <div class="how-step">
-        <div class="how-step__num">1</div>
-        <div>
-          <h3>Start Your Daily Check-In</h3>
-          <p>
-            Open the check-in page and enter your daily signals. It only takes
-            about 60 seconds and gives CCC the data it needs to build your score.
-          </p>
-        </div>
-      </div>
-
-      <div class="how-step">
-        <div class="how-step__num">2</div>
-        <div>
-          <h3>Enter Sleep, Mood, Stress, And Recovery</h3>
-          <p>
-            These signals help explain why some days feel strong and others feel off.
-            Sleep, stress, soreness, digestion, and energy all affect readiness.
-          </p>
-        </div>
-      </div>
-
-      <div class="how-step">
-        <div class="how-step__num">3</div>
-        <div>
-          <h3>Choose Your Nutrition Quality</h3>
-          <p>
-            Pick the closest match: Strict Carnivore, Animal-Based, Low Carb,
-            or High Carb. This keeps the free version simple while Pro can later
-            unlock deeper macro and meal tracking.
-          </p>
-        </div>
-      </div>
-
-      <div class="how-step">
-        <div class="how-step__num">4</div>
-        <div>
-          <h3>Save Your Progress</h3>
-          <p>
-            Saving your check-in adds XP, updates your streak, and creates a history
-            you can compare over time. One day does not define you — returning does.
-          </p>
-        </div>
-      </div>
-
-      <div class="how-step">
-        <div class="how-step__num">5</div>
-        <div>
-          <h3>Review Your Dashboard</h3>
-          <p>
-            Your dashboard shows readiness, trends, recent entries, and momentum.
-            Use it to see whether your choices are helping or making consistency harder.
-          </p>
-        </div>
-      </div>
-
-      <div class="how-step">
-        <div class="how-step__num">6</div>
-        <div>
-          <h3>Watch Patterns Over Time</h3>
-          <p>
-            If carbs or sugar bring back cravings, track it. If better sleep improves
-            energy, track it. CCC helps you learn your body instead of guessing.
-          </p>
-        </div>
-      </div>
-
+    <div class="ccc-step-image ccc-step-image--welcome">
+      <img
+        src="/assets/img/onboarding/welcome-coach-dashboard.png"
+        alt="Carnivore Command Center welcome dashboard walkthrough"
+        loading="eager"
+        decoding="async"
+        fetchpriority="high"
+      />
     </div>
 
-  </div>
-</section>
-
-<section class="cta">
-  <div class="container">
-    <div class="cta__inner cta__inner--metabo">
-
-      <div class="cta__content">
-        <div class="panel__title">Ready to build today’s signal?</div>
-
-        <div class="panel__subtitle">
-          Start with one check-in. Keep it simple. Let the patterns build over time.
-        </div>
-
-        <div class="cta__actions" style="margin-top:18px;">
-          <a class="btn btn--primary" href="/app/log/">Start Check-In</a>
-          <a class="btn btn--ghost" href="/reset/">Get Free 7-Day Reset</a>
-        </div>
-      </div>
-
-      <div class="cta__mascot">
-        <img
-          src="/assets/img/mascot/metabo-welcome.png"
-          alt="Metabo welcome mascot"
-          loading="lazy"
-          decoding="async">
-      </div>
-
+    <div class="ccc-onboarding-flow">
+      <span>Sleep</span>
+      <span>Stress</span>
+      <span>Mood</span>
+      <span>Digestion</span>
+      <span>Soreness</span>
+      <span>Nutrition</span>
+      <span>Weight</span>
+      <span>Ritual</span>
+      <span>Save</span>
+      <span>Readiness</span>
+      <span>Patterns</span>
+      <span>Damage Control</span>
+      <span>Momentum</span>
+      <span>Dashboard</span>
     </div>
-  </div>
+
+    <div class="ccc-step-nav">
+      <a href="#sleep" class="ccc-step-next">
+        <div class="ccc-step-next-copy">
+          <div class="ccc-step-next-label">START HERE</div>
+          <div class="ccc-step-next-title">Build Your Sleep Foundation</div>
+        </div>
+        <div class="ccc-step-next-arrow">→</div>
+      </a>
+    </div>
+
+  </section>
+
+  <!-- =======================================================
+  STEP 01 — SLEEP
+  ======================================================== -->
+  <section id="sleep" class="ccc-onboard-step ccc-onboard-step--cinematic" data-step="sleep">
+    <div class="ccc-onboard-copy ccc-onboard-copy--center">
+      <p class="ccc-eyebrow">Step 1 of 14 — Sleep</p>
+      <h2>Recovery starts before motivation does.</h2>
+      <p class="ccc-step-description">
+        CCC uses sleep as one of the strongest readiness signals.
+        Even one poor night can impact cravings, stress tolerance,
+        energy, discipline, and recovery.
+      </p>
+    </div>
+
+    <div class="ccc-step-image ccc-step-image--cinematic">
+      <img
+        src="/assets/img/onboarding/step-01-sleep-checkin.png"
+        alt="Carnivore Command Center sleep recovery walkthrough"
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
+
+    <div class="ccc-step-learn">
+      <h3>What CCC learns from sleep</h3>
+      <ul>
+        <li>Recovery debt accumulation</li>
+        <li>Craving vulnerability patterns</li>
+        <li>Discipline risk before the day starts</li>
+        <li>Whether today should be push or recover</li>
+      </ul>
+    </div>
+
+    <div class="ccc-step-nav">
+      <a href="#stress" class="ccc-step-next">
+        <div class="ccc-step-next-copy">
+          <div class="ccc-step-next-label">NEXT STEP</div>
+          <div class="ccc-step-next-title">Stress & Recovery Signals</div>
+        </div>
+        <div class="ccc-step-next-arrow">→</div>
+      </a>
+    </div>
+  </section>
+
+  <!-- =======================================================
+  STEP 02 — STRESS
+  ======================================================== -->
+  <section id="stress" class="ccc-onboard-step ccc-onboard-step--cinematic" data-step="stress">
+    <div class="ccc-onboard-copy ccc-onboard-copy--center">
+      <p class="ccc-eyebrow">Step 2 of 14 — Stress</p>
+      <h2>Stress changes the difficulty level.</h2>
+      <p class="ccc-step-description">
+        CCC uses stress to understand cravings, discipline risk,
+        recovery pressure, and whether today needs a softer plan.
+      </p>
+    </div>
+
+    <div class="ccc-step-image ccc-step-image--cinematic">
+      <img
+        src="/assets/img/onboarding/step-02-stress-checkin.png"
+        alt="Carnivore Command Center stress check-in walkthrough"
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
+
+    <div class="ccc-step-learn">
+      <h3>What CCC learns from stress</h3>
+      <ul>
+        <li>Decision fatigue risk</li>
+        <li>Craving pressure</li>
+        <li>Recovery demand</li>
+        <li>Whether today needs discipline or damage control</li>
+      </ul>
+    </div>
+
+    <div class="ccc-step-nav">
+      <a href="#mood" class="ccc-step-next">
+        <div class="ccc-step-next-copy">
+          <div class="ccc-step-next-label">NEXT STEP</div>
+          <div class="ccc-step-next-title">Mood & Emotional Readiness</div>
+        </div>
+        <div class="ccc-step-next-arrow">→</div>
+      </a>
+    </div>
+  </section>
+
+  <!-- =======================================================
+  STEP 03 — MOOD
+  ======================================================== -->
+  <section id="mood" class="ccc-onboard-step ccc-onboard-step--cinematic" data-step="mood">
+    <div class="ccc-onboard-copy ccc-onboard-copy--center">
+      <p class="ccc-eyebrow">Step 3 of 14 — Mood</p>
+      <h2>Your mindset is part of the data.</h2>
+      <p class="ccc-step-description">
+        Mood gives CCC emotional context so your check-in becomes more than
+        numbers on a dashboard.
+      </p>
+    </div>
+
+    <div class="ccc-step-image ccc-step-image--cinematic">
+      <img src="/assets/img/onboarding/step-03-mood-checkin.png" alt="Mood check-in walkthrough" loading="lazy" decoding="async" />
+    </div>
+
+    <div class="ccc-step-learn">
+      <h3>What CCC learns from mood</h3>
+      <ul>
+        <li>Burnout patterns</li>
+        <li>Emotional recovery</li>
+        <li>Consistency risk</li>
+      </ul>
+    </div>
+
+    <div class="ccc-step-nav">
+      <a href="#digestion" class="ccc-step-next">
+        <div class="ccc-step-next-copy">
+          <div class="ccc-step-next-label">NEXT STEP</div>
+          <div class="ccc-step-next-title">Digestion & Inflammation Signals</div>
+        </div>
+        <div class="ccc-step-next-arrow">→</div>
+      </a>
+    </div>
+  </section>
+
+  <!-- =======================================================
+  STEP 04 — DIGESTION
+  ======================================================== -->
+  <section id="digestion" class="ccc-onboard-step ccc-onboard-step--cinematic" data-step="digestion">
+    <div class="ccc-onboard-copy ccc-onboard-copy--center">
+      <p class="ccc-eyebrow">Step 4 of 14 — Digestion</p>
+      <h2>Your body responds before the scale does.</h2>
+      <p class="ccc-step-description">
+        Digestion can reveal food response, inflammation patterns,
+        gut stress, and recovery issues.
+      </p>
+    </div>
+
+    <div class="ccc-step-image ccc-step-image--cinematic">
+      <img src="/assets/img/onboarding/step-04-digestion-checkin.png" alt="Digestion check-in walkthrough" loading="lazy" decoding="async" />
+    </div>
+
+    <div class="ccc-step-learn">
+      <h3>What CCC learns from digestion</h3>
+      <ul>
+        <li>Food response trends</li>
+        <li>Readiness impact</li>
+        <li>Repeating discomfort patterns</li>
+      </ul>
+    </div>
+
+    <div class="ccc-step-nav">
+      <a href="#soreness" class="ccc-step-next">
+        <div class="ccc-step-next-copy">
+          <div class="ccc-step-next-label">NEXT STEP</div>
+          <div class="ccc-step-next-title">Recovery & Soreness Signals</div>
+        </div>
+        <div class="ccc-step-next-arrow">→</div>
+      </a>
+    </div>
+  </section>
+
+  <!-- =======================================================
+  STEP 05 — SORENESS
+  ======================================================== -->
+  <section id="soreness" class="ccc-onboard-step ccc-onboard-step--cinematic" data-step="soreness">
+    <div class="ccc-onboard-copy ccc-onboard-copy--center">
+      <p class="ccc-eyebrow">Step 5 of 14 — Soreness</p>
+      <h2>Know when to push and when to recover.</h2>
+      <p class="ccc-step-description">
+        Soreness helps CCC understand training load, recovery debt,
+        and whether today should be a push day or pull-back day.
+      </p>
+    </div>
+
+    <div class="ccc-step-image ccc-step-image--cinematic">
+      <img src="/assets/img/onboarding/step-05-soreness-checkin.png" alt="Soreness check-in walkthrough" loading="lazy" decoding="async" />
+    </div>
+
+    <div class="ccc-step-learn">
+      <h3>What CCC learns from soreness</h3>
+      <ul>
+        <li>Physical fatigue</li>
+        <li>Recovery debt</li>
+        <li>Training readiness</li>
+      </ul>
+    </div>
+
+    <div class="ccc-step-nav">
+      <a href="#nutrition" class="ccc-step-next">
+        <div class="ccc-step-next-copy">
+          <div class="ccc-step-next-label">NEXT STEP</div>
+          <div class="ccc-step-next-title">Nutrition & Fuel Quality</div>
+        </div>
+        <div class="ccc-step-next-arrow">→</div>
+      </a>
+    </div>
+  </section>
+
+  <!-- =======================================================
+  STEP 06 — NUTRITION
+  ======================================================== -->
+  <section id="nutrition" class="ccc-onboard-step ccc-onboard-step--cinematic" data-step="nutrition">
+    <div class="ccc-onboard-copy ccc-onboard-copy--center">
+      <p class="ccc-eyebrow">Step 6 of 14 — Nutrition</p>
+      <h2>Log food quality, not guilt.</h2>
+      <p class="ccc-step-description">
+        CCC focuses on consistency, clean inputs, cravings, digestion,
+        and recovery support.
+      </p>
+    </div>
+
+    <div class="ccc-step-image ccc-step-image--cinematic">
+      <img src="/assets/img/onboarding/step-06-nutrition-checkin.png" alt="Nutrition check-in walkthrough" loading="lazy" decoding="async" />
+    </div>
+
+    <div class="ccc-step-learn">
+      <h3>What CCC learns from nutrition</h3>
+      <ul>
+        <li>Food quality consistency</li>
+        <li>Craving connections</li>
+        <li>Readiness support</li>
+      </ul>
+    </div>
+
+    <div class="ccc-step-nav">
+      <a href="#weight" class="ccc-step-next">
+        <div class="ccc-step-next-copy">
+          <div class="ccc-step-next-label">NEXT STEP</div>
+          <div class="ccc-step-next-title">Weight & Trend Awareness</div>
+        </div>
+        <div class="ccc-step-next-arrow">→</div>
+      </a>
+    </div>
+  </section>
+
+  <!-- =======================================================
+  STEP 07 — WEIGHT
+  ======================================================== -->
+  <section id="weight" class="ccc-onboard-step ccc-onboard-step--cinematic" data-step="weight">
+    <div class="ccc-onboard-copy ccc-onboard-copy--center">
+      <p class="ccc-eyebrow">Step 7 of 14 — Weight</p>
+      <h2>Weight is optional context.</h2>
+      <p class="ccc-step-description">
+        Daily weight can fluctuate from water, stress, sleep, salt,
+        and digestion. CCC treats it as trend data, not judgment.
+      </p>
+    </div>
+
+    <div class="ccc-step-image ccc-step-image--cinematic">
+      <img src="/assets/img/onboarding/step-07-weight-checkin.png" alt="Weight check-in walkthrough" loading="lazy" decoding="async" />
+    </div>
+
+    <div class="ccc-step-learn">
+      <h3>What CCC learns from weight</h3>
+      <ul>
+        <li>Long-term direction</li>
+        <li>Water-weight fluctuations</li>
+        <li>Trend context without shame</li>
+      </ul>
+    </div>
+
+    <div class="ccc-step-nav">
+      <a href="#timer" class="ccc-step-next">
+        <div class="ccc-step-next-copy">
+          <div class="ccc-step-next-label">NEXT STEP</div>
+          <div class="ccc-step-next-title">Build Daily Rituals</div>
+        </div>
+        <div class="ccc-step-next-arrow">→</div>
+      </a>
+    </div>
+  </section>
+
+  <!-- =======================================================
+  STEP 08 — RITUAL
+  ======================================================== -->
+  <section id="timer" class="ccc-onboard-step ccc-onboard-step--cinematic" data-step="timer">
+    <div class="ccc-onboard-copy ccc-onboard-copy--center">
+      <p class="ccc-eyebrow">Step 8 of 14 — Ritual</p>
+      <h2>Turn the check-in into a daily pause.</h2>
+      <p class="ccc-step-description">
+        The ritual makes checking in feel intentional instead of rushed.
+        It becomes a quick reset before the day takes over.
+      </p>
+    </div>
+
+    <div class="ccc-step-image ccc-step-image--cinematic">
+      <img src="/assets/img/onboarding/step-08-timer-ritual.png" alt="Timer ritual walkthrough" loading="lazy" decoding="async" />
+    </div>
+
+    <div class="ccc-step-learn">
+      <h3>What the ritual builds</h3>
+      <ul>
+        <li>Daily awareness</li>
+        <li>Reflection before reaction</li>
+        <li>A repeatable habit loop</li>
+      </ul>
+    </div>
+
+    <div class="ccc-step-nav">
+      <a href="#save" class="ccc-step-next">
+        <div class="ccc-step-next-copy">
+          <div class="ccc-step-next-label">NEXT STEP</div>
+          <div class="ccc-step-next-title">Save Your Daily Check-In</div>
+        </div>
+        <div class="ccc-step-next-arrow">→</div>
+      </a>
+    </div>
+  </section>
+
+  <!-- =======================================================
+  STEP 09 — SAVE
+  ======================================================== -->
+  <section id="save" class="ccc-onboard-step ccc-onboard-step--cinematic" data-step="save">
+    <div class="ccc-onboard-copy ccc-onboard-copy--center">
+      <p class="ccc-eyebrow">Step 9 of 14 — Save Check-In</p>
+      <h2>Save today’s signal snapshot.</h2>
+      <p class="ccc-step-description">
+        One check-in is useful. Seven check-ins become powerful.
+        CCC gets smarter as patterns build.
+      </p>
+    </div>
+
+    <div class="ccc-step-image ccc-step-image--cinematic">
+      <img src="/assets/img/onboarding/step-09-save-checkin.png" alt="Save check-in walkthrough" loading="lazy" decoding="async" />
+    </div>
+
+    <div class="ccc-step-learn">
+      <h3>What happens after saving</h3>
+      <ul>
+        <li>Your dashboard updates</li>
+        <li>Trends begin forming</li>
+        <li>Momentum starts building</li>
+      </ul>
+    </div>
+
+    <div class="ccc-step-nav">
+      <a href="#readiness" class="ccc-step-next">
+        <div class="ccc-step-next-copy">
+          <div class="ccc-step-next-label">NEXT STEP</div>
+          <div class="ccc-step-next-title">Understanding Readiness</div>
+        </div>
+        <div class="ccc-step-next-arrow">→</div>
+      </a>
+    </div>
+  </section>
+
+  <!-- =======================================================
+  STEP 10 — READINESS
+  ======================================================== -->
+  <section id="readiness" class="ccc-onboard-step ccc-onboard-step--cinematic" data-step="readiness">
+    <div class="ccc-onboard-copy ccc-onboard-copy--center">
+      <p class="ccc-eyebrow">Step 10 of 14 — Readiness</p>
+      <h2>Turn signals into a readiness score.</h2>
+      <p class="ccc-step-description">
+        Readiness combines your signals into a simple view of how prepared
+        your body is today.
+      </p>
+    </div>
+
+    <div class="ccc-step-image ccc-step-image--cinematic">
+      <img src="/assets/img/onboarding/step-10-readiness-score.png" alt="Readiness score walkthrough" loading="lazy" decoding="async" />
+    </div>
+
+    <div class="ccc-step-learn">
+      <h3>How to use readiness</h3>
+      <ul>
+        <li>High = push intelligently</li>
+        <li>Medium = stay steady</li>
+        <li>Low = recover before you spiral</li>
+      </ul>
+    </div>
+
+    <div class="ccc-step-nav">
+      <a href="#patterns" class="ccc-step-next">
+        <div class="ccc-step-next-copy">
+          <div class="ccc-step-next-label">NEXT STEP</div>
+          <div class="ccc-step-next-title">Patterns Reveal Truth</div>
+        </div>
+        <div class="ccc-step-next-arrow">→</div>
+      </a>
+    </div>
+  </section>
+
+  <!-- =======================================================
+  STEP 11 — PATTERNS
+  ======================================================== -->
+  <section id="patterns" class="ccc-onboard-step ccc-onboard-step--cinematic" data-step="patterns">
+    <div class="ccc-onboard-copy ccc-onboard-copy--center">
+      <p class="ccc-eyebrow">Step 11 of 14 — Patterns</p>
+      <h2>CCC connects the dots over time.</h2>
+      <p class="ccc-step-description">
+        Sleep, stress, digestion, soreness, nutrition, cravings, and readiness
+        begin revealing patterns as your check-ins stack.
+      </p>
+    </div>
+
+    <div class="ccc-step-image ccc-step-image--cinematic">
+      <img src="/assets/img/onboarding/step-11-patterns.png" alt="Pattern tracking walkthrough" loading="lazy" decoding="async" />
+    </div>
+
+    <div class="ccc-step-learn">
+      <h3>What becomes visible</h3>
+      <ul>
+        <li>What lowers readiness</li>
+        <li>What triggers cravings</li>
+        <li>What actually helps you recover</li>
+      </ul>
+    </div>
+
+    <div class="ccc-step-nav">
+      <a href="#damage" class="ccc-step-next">
+        <div class="ccc-step-next-copy">
+          <div class="ccc-step-next-label">NEXT STEP</div>
+          <div class="ccc-step-next-title">Damage Control Mode</div>
+        </div>
+        <div class="ccc-step-next-arrow">→</div>
+      </a>
+    </div>
+  </section>
+
+  <!-- =======================================================
+  STEP 12 — DAMAGE CONTROL
+  ======================================================== -->
+  <section id="damage" class="ccc-onboard-step ccc-onboard-step--cinematic" data-step="damage">
+    <div class="ccc-onboard-copy ccc-onboard-copy--center">
+      <p class="ccc-eyebrow">Step 12 of 14 — Damage Control</p>
+      <h2>One bad day is data — not defeat.</h2>
+      <p class="ccc-step-description">
+        CCC helps you recover quickly after rough days instead of quitting
+        or starting over.
+      </p>
+    </div>
+
+    <div class="ccc-step-image ccc-step-image--cinematic">
+      <img src="/assets/img/onboarding/step-12-damage-control.png" alt="Damage control walkthrough" loading="lazy" decoding="async" />
+    </div>
+
+    <div class="ccc-step-learn">
+      <h3>Damage control direction</h3>
+      <ul>
+        <li>Hydrate</li>
+        <li>Eat clean next meal</li>
+        <li>Sleep early and rebuild tomorrow</li>
+      </ul>
+    </div>
+
+    <div class="ccc-step-nav">
+      <a href="#momentum" class="ccc-step-next">
+        <div class="ccc-step-next-copy">
+          <div class="ccc-step-next-label">NEXT STEP</div>
+          <div class="ccc-step-next-title">Momentum Changes Everything</div>
+        </div>
+        <div class="ccc-step-next-arrow">→</div>
+      </a>
+    </div>
+  </section>
+
+  <!-- =======================================================
+  STEP 13 — MOMENTUM
+  ======================================================== -->
+  <section id="momentum" class="ccc-onboard-step ccc-onboard-step--cinematic" data-step="momentum">
+    <div class="ccc-onboard-copy ccc-onboard-copy--center">
+      <p class="ccc-eyebrow">Step 13 of 14 — Momentum</p>
+      <h2>The longer you show up, the harder it is to stop.</h2>
+      <p class="ccc-step-description">
+        CCC turns repeated check-ins into visible momentum so progress feels
+        earned, measurable, and repeatable.
+      </p>
+    </div>
+
+    <div class="ccc-step-image ccc-step-image--cinematic">
+      <img src="/assets/img/onboarding/step-13-momentum.png" alt="Momentum tracking walkthrough" loading="lazy" decoding="async" />
+    </div>
+
+    <div class="ccc-step-learn">
+      <h3>What momentum reinforces</h3>
+      <ul>
+        <li>Daily consistency</li>
+        <li>Identity-based discipline</li>
+        <li>Proof that effort is stacking</li>
+      </ul>
+    </div>
+
+    <div class="ccc-step-nav">
+      <a href="#dashboard" class="ccc-step-next">
+        <div class="ccc-step-next-copy">
+          <div class="ccc-step-next-label">NEXT STEP</div>
+          <div class="ccc-step-next-title">Your CCC Dashboard</div>
+        </div>
+        <div class="ccc-step-next-arrow">→</div>
+      </a>
+    </div>
+  </section>
+
+  <!-- =======================================================
+  STEP 14 — DASHBOARD
+  ======================================================== -->
+  <section id="dashboard" class="ccc-onboard-step ccc-onboard-step--cinematic" data-step="dashboard">
+    <div class="ccc-onboard-copy ccc-onboard-copy--center">
+      <p class="ccc-eyebrow">Step 14 of 14 — Dashboard</p>
+      <h2>Your dashboard turns daily signals into direction.</h2>
+      <p class="ccc-step-description">
+        CCC brings your check-ins, readiness, patterns, recovery signals,
+        and momentum together so you know what to do next.
+      </p>
+    </div>
+
+    <div class="ccc-step-image ccc-step-image--cinematic">
+      <img src="/assets/img/onboarding/step-14-dashboard.png" alt="Carnivore Command Center dashboard walkthrough" loading="lazy" decoding="async" />
+    </div>
+
+    <div class="ccc-step-learn">
+      <h3>What the dashboard gives you</h3>
+      <ul>
+        <li>A clear readiness snapshot</li>
+        <li>Pattern awareness over time</li>
+        <li>Daily direction without overthinking</li>
+      </ul>
+    </div>
+
+    <div class="ccc-step-nav">
+      <a href="/dashboard/" class="ccc-step-next">
+        <div class="ccc-step-next-copy">
+          <div class="ccc-step-next-label">FINISH</div>
+          <div class="ccc-step-next-title">Open Your Dashboard</div>
+        </div>
+        <div class="ccc-step-next-arrow">→</div>
+      </a>
+    </div>
+  </section>
+
 </section>
 
-</main>
+<script src="/js/how-it-works.js"></script>
   </main>
 
   <footer class="site-footer">
