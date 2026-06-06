@@ -12,6 +12,7 @@
   <meta property="og:title" content="Carnivore Command Center" />
   <meta property="og:description" content="Elite performance + metabolic intelligence. Track what matters, see patterns, and execute with confidence." />
   <meta property="og:type" content="website" />
+
   <link rel="icon" href="/favicon.ico">
   <link rel="stylesheet" href="/css/styles.css" />
   <link rel="stylesheet" href="/css/app.css" />
@@ -57,7 +58,7 @@
   </div>
 </header>
 
-  <main>
+  <main id="top">
     <!-- =========================================================
 CCC HOW IT WORKS — GUIDED ONBOARDING EXPERIENCE
 File: src/how-it-works/index.html
@@ -102,11 +103,21 @@ Purpose:
     </div>
 
     <div class="ccc-onboarding-flow">
-      <span>Sleep</span><span>Stress</span><span>Mood</span><span>Digestion</span>
-      <span>Soreness</span><span>Nutrition</span><span>Weight</span><span>Ritual</span>
-      <span>Save</span><span>Readiness</span><span>Patterns</span>
-      <span>Damage Control</span><span>Momentum</span><span>Dashboard</span>
-    </div>
+  <a href="#sleep">Sleep</a>
+  <a href="#stress">Stress</a>
+  <a href="#mood">Mood</a>
+  <a href="#digestion">Digestion</a>
+  <a href="#soreness">Soreness</a>
+  <a href="#nutrition">Nutrition</a>
+  <a href="#weight">Weight</a>
+  <a href="#timer">Ritual</a>
+  <a href="#save">Save</a>
+  <a href="#readiness">Readiness</a>
+  <a href="#patterns">Patterns</a>
+  <a href="#damage">Damage Control</a>
+  <a href="#momentum">Momentum</a>
+  <a href="#dashboard">Dashboard</a>
+</div>
 
     <div class="ccc-step-nav">
       <a href="#sleep" class="ccc-step-next">
@@ -753,6 +764,19 @@ Purpose:
   </section>
 
 </section>
+
+<button
+  id="backToTop"
+  class="back-to-top"
+  aria-label="Back to top"
+  onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"
+>
+  ↑
+</button>
+  ↑
+</button>
+
+<script src="/js/how-it-works.js" defer></script>
   </main>
 
   <footer class="site-footer">
@@ -777,10 +801,15 @@ Purpose:
 </footer>
 
 
+  <a id="backToTop" class="back-to-top" href="#top" aria-label="Back to top">
+    ↑
+  </a>
+
   <script>
     const y = document.getElementById("year");
     if (y) y.textContent = new Date().getFullYear();
   </script>
+
   <script src="/js/site.js" defer></script>
 </body>
 </html>

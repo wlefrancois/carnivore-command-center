@@ -12,6 +12,7 @@
   <meta property="og:title" content="{{TITLE}}" />
   <meta property="og:description" content="{{DESCRIPTION}}" />
   <meta property="og:type" content="website" />
+
   <link rel="icon" href="/favicon.ico">
   <link rel="stylesheet" href="/css/styles.css" />
   <link rel="stylesheet" href="/css/app.css" />
@@ -20,16 +21,21 @@
 <body data-page="{{PAGE}}">
   <!--#include file="/partials/header.html" -->
 
-  <main>
+  <main id="top">
     {{CONTENT}}
   </main>
 
   <!--#include file="/partials/footer.html" -->
 
+  <a id="backToTop" class="back-to-top" href="#top" aria-label="Back to top">
+    ↑
+  </a>
+
   <script>
     const y = document.getElementById("year");
     if (y) y.textContent = new Date().getFullYear();
   </script>
+
   <script src="/js/site.js" defer></script>
 </body>
 </html>

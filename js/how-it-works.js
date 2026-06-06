@@ -5,26 +5,15 @@
 document.addEventListener("DOMContentLoaded", () => {
   const counter = document.getElementById("cccStepCounter");
   const progress = document.getElementById("cccStepProgress");
-  const chips = Array.from(document.querySelectorAll(".ccc-onboarding-flow span"));
+  const chips = Array.from(document.querySelectorAll(".ccc-onboarding-flow a"));
+  const backToTop = document.getElementById("backToTop");
 
   if (!counter || !progress) return;
 
   const stepOrder = [
-    "welcome",
-    "sleep",
-    "stress",
-    "mood",
-    "digestion",
-    "soreness",
-    "nutrition",
-    "weight",
-    "timer",
-    "save",
-    "readiness",
-    "patterns",
-    "damage",
-    "momentum",
-    "dashboard"
+    "welcome", "sleep", "stress", "mood", "digestion", "soreness",
+    "nutrition", "weight", "timer", "save", "readiness", "patterns",
+    "damage", "momentum", "dashboard"
   ];
 
   const stepLabels = {
@@ -91,6 +80,19 @@ document.addEventListener("DOMContentLoaded", () => {
       setTimeout(updateProgressFromHash, 80);
     });
   });
+
+  if (backToTop) {
+    window.addEventListener("scroll", () => {
+      backToTop.classList.toggle("is-visible", window.scrollY > 300);
+    });
+
+    backToTop.addEventListener("click", () => {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+    });
+  }
 
   updateProgressFromHash();
 });

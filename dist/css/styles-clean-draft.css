@@ -1,0 +1,3458 @@
+/* =============================================================================
+   CARNIVORE COMMAND CENTER
+   MASTER STYLESHEET
+   File: /css/styles.css
+
+   Purpose:
+   - Shared global styling system
+   - Homepage
+   - Dashboard
+   - Onboarding walkthrough
+   - Authentication pages
+   - Beta pages
+   - Shared components
+
+   Architecture:
+   01. Foundation / Global Reset
+   02. Layout System
+   03. Header / Navigation
+   04. Buttons
+   05. Typography / Sections
+   06. Hero System
+   07. Shared Components
+   08. Dashboard System
+   09. Onboarding Experience
+   10. Forms / Auth
+   11. CTA / Footer
+   12. Responsive System
+
+============================================================================= */
+
+
+/* =============================================================================
+   01 — FOUNDATION / GLOBAL RESET
+   Purpose:
+   - Global variables
+   - Document sizing
+   - Typography foundation
+   - Shared background system
+   - Element normalization
+============================================================================= */
+
+:root{
+
+  /* ==========================================================================
+     BACKGROUNDS
+  ========================================================================== */
+
+  --bg0:#050814;
+  --bg1:#081021;
+  --bg2:#0a1328;
+
+
+  /* ==========================================================================
+     SURFACES
+  ========================================================================== */
+
+  --card:rgba(255,255,255,.07);
+  --card2:rgba(255,255,255,.10);
+  --line:rgba(255,255,255,.10);
+
+
+  /* ==========================================================================
+     TEXT
+  ========================================================================== */
+
+  --text:#eef4ff;
+  --muted:rgba(230,238,255,.74);
+
+
+  /* ==========================================================================
+     BRAND COLORS
+  ========================================================================== */
+
+  --accent:#5ea2ff;
+  --accent2:#7c8cff;
+
+  --positive:#35d07f;
+  --warning:#ffb347;
+  --danger:#ff6b6b;
+
+  --ccc-orange:#ff8a1f;
+  --ccc-orange-2:#ffb15c;
+  --ccc-orange-3:#ff6f00;
+
+
+  /* ==========================================================================
+     GLOWS
+  ========================================================================== */
+
+  --ccc-blue-glow:rgba(76,141,255,.20);
+  --ccc-orange-glow:rgba(255,138,31,.30);
+  --ccc-orange-glow-strong:rgba(255,138,31,.42);
+
+
+  /* ==========================================================================
+     SHADOWS
+  ========================================================================== */
+
+  --shadow:0 22px 80px rgba(0,0,0,.42);
+  --shadow2:0 14px 40px rgba(0,0,0,.28);
+
+
+  /* ==========================================================================
+     RADII
+  ========================================================================== */
+
+  --r:18px;
+  --r2:24px;
+}
+
+
+/* =============================================================================
+   GLOBAL RESET
+============================================================================= */
+
+*{
+  box-sizing:border-box;
+}
+
+html{
+  height:100%;
+  font-size:16px;
+  scroll-behavior:smooth;
+}
+
+body{
+  min-height:100%;
+
+  margin:0;
+
+  color:var(--text);
+
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+
+  font-size:18px;
+  line-height:1.6;
+
+  background:
+    radial-gradient(
+      1200px 700px at 15% -10%,
+      rgba(76,120,255,.22) 0%,
+      transparent 60%
+    ),
+
+    radial-gradient(
+      900px 600px at 85% 0%,
+      rgba(70,160,255,.18) 0%,
+      transparent 60%
+    ),
+
+    linear-gradient(
+      180deg,
+      #050814 0%,
+      #081021 42%,
+      #0a1328 100%
+    );
+}
+
+
+/* =============================================================================
+   ELEMENT NORMALIZATION
+============================================================================= */
+
+img{
+  max-width:100%;
+  display:block;
+}
+
+a{
+  color:inherit;
+  text-decoration:none;
+}
+
+button,
+input,
+select,
+textarea{
+  font:inherit;
+}
+
+
+/* =============================================================================
+   SHARED LAYOUT CONTAINERS
+============================================================================= */
+
+main{
+  padding-bottom:96px;
+}
+
+.container{
+  width:min(1120px,92vw);
+  margin:0 auto;
+}
+
+.narrow{
+  width:min(920px,92vw);
+  margin:0 auto;
+}
+
+
+/* =============================================================================
+   SHARED HELPERS
+============================================================================= */
+
+.divider{
+  height:1px;
+  margin:22px 0;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255,255,255,.16),
+      transparent
+    );
+}
+
+.micro,
+.muted,
+.footer__muted{
+  color:var(--muted);
+}
+
+.micro{
+  font-size:12.5px;
+  line-height:1.5;
+}
+/* =============================================================================
+   02 — LAYOUT SYSTEM
+   Purpose:
+   - Shared page spacing
+   - Grid systems
+   - Split layouts
+   - Section structure
+   - Shared stacking utilities
+============================================================================= */
+
+
+/* =============================================================================
+   SECTION SPACING
+============================================================================= */
+
+section{
+  padding:88px 0;
+}
+
+.section{
+  padding:88px 0;
+}
+
+.section__head{
+  margin-bottom:28px;
+}
+
+.section__head--center{
+  text-align:center;
+  max-width:760px;
+  margin:0 auto 22px;
+}
+
+
+/* =============================================================================
+   TYPOGRAPHY HELPERS
+============================================================================= */
+
+.section__head h2{
+  margin:0 0 8px;
+
+  font-size:clamp(34px,4vw,48px);
+  line-height:1.08;
+  letter-spacing:-0.02em;
+}
+
+.section__head p{
+  margin:0;
+
+  color:rgba(225,233,248,.82);
+
+  font-size:18px;
+  line-height:1.65;
+}
+
+.lead{
+  max-width:760px;
+
+  margin:0 0 18px;
+
+  font-size:22px;
+  line-height:1.6;
+
+  color:rgba(234,240,255,.88);
+}
+
+
+/* =============================================================================
+   GRID SYSTEMS
+============================================================================= */
+
+.cards{
+  display:grid;
+  gap:18px;
+}
+
+.cards--2{
+  grid-template-columns:repeat(2,1fr);
+}
+
+.cards--3{
+  grid-template-columns:repeat(3,1fr);
+}
+
+.cards--4{
+  grid-template-columns:repeat(4,1fr);
+}
+
+
+/* =============================================================================
+   SPLIT LAYOUTS
+============================================================================= */
+
+.split{
+  display:grid;
+  grid-template-columns:1.05fr .95fr;
+  gap:36px;
+  align-items:center;
+}
+
+.stack{
+  display:grid;
+  gap:14px;
+}
+
+
+/* =============================================================================
+   FLEX HELPERS
+============================================================================= */
+
+.pillrow{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:14px;
+}
+
+
+/* =============================================================================
+   RESPONSIVE LAYOUT FOUNDATION
+============================================================================= */
+
+@media (max-width:1100px){
+
+  .cards--4{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+}
+
+@media (max-width:760px){
+
+  body{
+    font-size:17px;
+  }
+
+  section,
+  .section{
+    padding:64px 0;
+  }
+
+  .lead{
+    font-size:19px;
+  }
+
+  .cards--2,
+  .cards--3,
+  .cards--4{
+    grid-template-columns:1fr;
+  }
+
+}
+
+@media (max-width:560px){
+
+  .lead{
+    font-size:18px;
+  }
+
+}
+/* =============================================================================
+   03 — HEADER / NAVIGATION
+   Purpose:
+   - Sticky navigation
+   - Brand system
+   - Mobile navigation
+   - Header polish
+============================================================================= */
+
+
+/* =============================================================================
+   HEADER SHELL
+============================================================================= */
+
+.nav{
+  position:sticky;
+  top:0;
+  z-index:1000;
+
+  backdrop-filter:blur(14px);
+
+  background:rgba(7,14,30,.78);
+
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+
+/* =============================================================================
+   ELITE HEADER VARIANT
+============================================================================= */
+
+.nav.nav--elite{
+
+  background:
+    radial-gradient(
+      700px 180px at 8% -10%,
+      rgba(76,141,255,.18),
+      transparent 58%
+    ),
+
+    radial-gradient(
+      560px 220px at 94% -20%,
+      var(--ccc-orange-glow-strong),
+      transparent 52%
+    ),
+
+    linear-gradient(
+      90deg,
+      rgba(5,12,24,.92) 0%,
+      rgba(8,16,31,.84) 58%,
+      rgba(18,12,8,.72) 100%
+    );
+
+  box-shadow:
+    0 10px 28px rgba(0,0,0,.24),
+    inset 0 -1px 0 rgba(255,255,255,.03);
+}
+
+.nav.nav--elite::after{
+  content:"";
+
+  position:absolute;
+  inset:auto 0 0 0;
+
+  height:1px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(76,141,255,.18) 18%,
+      rgba(255,138,31,.20) 50%,
+      rgba(255,138,31,.34) 82%,
+      transparent 100%
+    );
+}
+
+
+/* =============================================================================
+   NAV INNER
+============================================================================= */
+
+.nav__inner{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  gap:24px;
+
+  min-height:84px;
+}
+
+
+/* =============================================================================
+   BRAND
+============================================================================= */
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:14px;
+
+  text-decoration:none;
+
+  min-width:0;
+  flex-shrink:0;
+}
+
+.brand__logo{
+  width:42px;
+  height:42px;
+
+  object-fit:contain;
+  flex-shrink:0;
+}
+
+.brand__text{
+  display:flex;
+  flex-direction:column;
+
+  min-width:0;
+}
+
+.brand__name{
+  color:#fff;
+
+  font-size:22px;
+  font-weight:800;
+  line-height:1.08;
+  letter-spacing:-0.02em;
+
+  white-space:nowrap;
+}
+
+.brand__tag{
+  margin-top:3px;
+
+  color:rgba(255,255,255,.72);
+
+  font-size:14px;
+  line-height:1.25;
+
+  white-space:nowrap;
+}
+
+
+/* =============================================================================
+   NAV LINKS
+============================================================================= */
+
+.nav-links{
+  display:flex;
+  align-items:center;
+  gap:10px;
+
+  margin-left:auto;
+
+  flex-wrap:nowrap;
+}
+
+.nav-links a{
+  color:rgba(255,255,255,.88);
+  font-size:.96rem;
+}
+
+.nav-links > a{
+  padding:12px 16px;
+
+  border-radius:16px;
+
+  border:1px solid rgba(255,255,255,.08);
+
+  background:rgba(255,255,255,.03);
+
+  transition:all .18s ease;
+}
+
+.nav-links > a:hover{
+  background:rgba(255,255,255,.06);
+
+  border-color:rgba(255,255,255,.14);
+
+  transform:translateY(-1px);
+}
+
+
+/* =============================================================================
+   NAV ACTIONS
+============================================================================= */
+
+.nav-links__actions{
+  display:flex;
+  align-items:center;
+  gap:10px;
+
+  margin-left:6px;
+}
+
+
+/* =============================================================================
+   MOBILE TOGGLE
+============================================================================= */
+
+.nav__toggle{
+  display:none;
+
+  width:48px;
+  height:48px;
+
+  border-radius:14px;
+
+  border:1px solid rgba(255,255,255,.10);
+
+  background:rgba(255,255,255,.04);
+
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+
+  gap:5px;
+
+  cursor:pointer;
+
+  transition:all .18s ease;
+}
+
+.nav__toggle:hover{
+  background:rgba(255,255,255,.07);
+}
+
+.nav__toggle span{
+  display:block;
+
+  width:20px;
+  height:2px;
+
+  border-radius:999px;
+
+  background:#fff;
+
+  transition:all .2s ease;
+}
+
+
+/* =============================================================================
+   MOBILE TOGGLE ANIMATION
+============================================================================= */
+
+.nav__toggle.is-open span:nth-child(1){
+  transform:translateY(7px) rotate(45deg);
+}
+
+.nav__toggle.is-open span:nth-child(2){
+  opacity:0;
+}
+
+.nav__toggle.is-open span:nth-child(3){
+  transform:translateY(-7px) rotate(-45deg);
+}
+
+
+/* =============================================================================
+   AUTH VISIBILITY
+============================================================================= */
+
+.nav__loggedIn{
+  display:none;
+}
+
+.nav__loggedOut{
+  display:inline-flex;
+}
+
+body.is-logged-in .nav__loggedOut{
+  display:none;
+}
+
+body.is-logged-in .nav__loggedIn{
+  display:inline-flex;
+}
+
+
+/* =============================================================================
+   RESPONSIVE HEADER
+============================================================================= */
+
+@media (max-width:1320px){
+
+  .brand__name{
+    font-size:1.55rem;
+  }
+
+  .brand__tag{
+    font-size:.88rem;
+  }
+
+}
+
+@media (max-width:1100px){
+
+  .nav__inner{
+    min-height:78px;
+    position:relative;
+  }
+
+  .brand{
+    max-width:calc(100% - 60px);
+  }
+
+  .brand__logo{
+    width:46px;
+    height:46px;
+  }
+
+  .brand__name{
+    font-size:1.2rem;
+    white-space:normal;
+  }
+
+  .brand__tag{
+    font-size:.8rem;
+    white-space:normal;
+  }
+
+  .nav__toggle{
+    display:flex;
+    margin-left:auto;
+  }
+
+  .nav-links{
+    position:absolute;
+
+    top:calc(100% + 10px);
+    right:0;
+    left:0;
+
+    display:none;
+    flex-direction:column;
+    align-items:stretch;
+
+    gap:10px;
+
+    padding:16px;
+
+    border-radius:22px;
+
+    border:1px solid rgba(255,255,255,.10);
+
+    background:
+      radial-gradient(
+        600px 180px at 20% 0%,
+        rgba(94,162,255,.16),
+        transparent 60%
+      ),
+
+      linear-gradient(
+        180deg,
+        rgba(15,24,48,.96),
+        rgba(8,14,29,.96)
+      );
+
+    box-shadow:0 18px 44px rgba(0,0,0,.34);
+  }
+
+  .nav-links.is-open{
+    display:flex;
+  }
+
+  .nav-links > a{
+    width:100%;
+    text-align:left;
+    padding:14px 16px;
+  }
+
+  .nav-links__actions{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+
+    gap:10px;
+
+    margin-left:0;
+    margin-top:4px;
+  }
+
+}
+
+@media (max-width:760px){
+
+  .brand{
+    min-width:auto;
+    gap:10px;
+  }
+
+  .brand__logo{
+    width:40px;
+    height:40px;
+  }
+
+  .brand__name{
+    font-size:1.05rem;
+    line-height:1.05;
+  }
+
+  .brand__tag{
+    font-size:.74rem;
+    line-height:1.15;
+  }
+
+}
+
+@media (max-width:560px){
+
+  .nav-links__actions{
+    grid-template-columns:1fr;
+  }
+
+}
+/* =============================================================================
+   04 — BUTTON SYSTEM
+   Purpose:
+   - Primary CTA buttons
+   - Secondary buttons
+   - Ghost buttons
+   - Shared interaction styling
+============================================================================= */
+
+
+/* =============================================================================
+   BASE BUTTON
+============================================================================= */
+
+.btn{
+  position:relative;
+
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+
+  min-height:52px;
+
+  padding:0 22px;
+
+  border:none;
+  border-radius:18px;
+
+  cursor:pointer;
+
+  font-weight:700;
+  font-size:15px;
+  line-height:1;
+
+  transition:
+    transform .18s ease,
+    box-shadow .18s ease,
+    background .18s ease,
+    border-color .18s ease;
+
+  text-decoration:none;
+
+  overflow:hidden;
+}
+
+.btn:hover{
+  transform:translateY(-1px);
+}
+
+.btn:active{
+  transform:translateY(0);
+}
+
+
+/* =============================================================================
+   PRIMARY BUTTON
+============================================================================= */
+
+.btn--primary{
+
+  color:#07111f;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ffb347,
+      #ff8a1f
+    );
+
+  box-shadow:
+    0 12px 30px rgba(255,138,31,.28),
+    inset 0 1px 0 rgba(255,255,255,.30);
+}
+
+.btn--primary:hover{
+
+  box-shadow:
+    0 16px 36px rgba(255,138,31,.38),
+    inset 0 1px 0 rgba(255,255,255,.34);
+}
+
+
+/* =============================================================================
+   SECONDARY BUTTON
+============================================================================= */
+
+.btn--secondary{
+
+  color:#eef4ff;
+
+  border:1px solid rgba(255,255,255,.10);
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,.06),
+      rgba(255,255,255,.03)
+    );
+
+  box-shadow:var(--shadow2);
+}
+
+.btn--secondary:hover{
+  border-color:rgba(255,255,255,.16);
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,.09),
+      rgba(255,255,255,.04)
+    );
+}
+
+
+/* =============================================================================
+   GHOST BUTTON
+============================================================================= */
+
+.btn--ghost{
+  color:#dce8ff;
+
+  border:1px solid rgba(255,255,255,.08);
+
+  background:transparent;
+}
+
+.btn--ghost:hover{
+  background:rgba(255,255,255,.04);
+}
+
+
+/* =============================================================================
+   BUTTON ROWS
+============================================================================= */
+
+.btn-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+
+  margin-top:24px;
+}
+
+
+/* =============================================================================
+   ICON BUTTONS
+============================================================================= */
+
+.btn__icon{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+
+  width:18px;
+  height:18px;
+
+  flex-shrink:0;
+}
+
+
+/* =============================================================================
+   RESPONSIVE BUTTONS
+============================================================================= */
+
+@media (max-width:760px){
+
+  .btn{
+    width:100%;
+    min-height:54px;
+  }
+
+  .btn-row{
+    flex-direction:column;
+    align-items:stretch;
+  }
+
+}
+/* =============================================================================
+   05 — TYPOGRAPHY / SECTION SYSTEM
+   Purpose:
+   - Shared headings
+   - Eyebrows
+   - Section copy
+   - Shared content widths
+   - Cinematic text presentation
+============================================================================= */
+
+
+/* =============================================================================
+   HEADINGS
+============================================================================= */
+
+h1,
+h2,
+h3,
+h4{
+  margin:0;
+
+  letter-spacing:-0.03em;
+
+  line-height:1.02;
+
+  color:#f4f7ff;
+}
+
+h1{
+  font-size:clamp(52px,7vw,96px);
+  font-weight:900;
+}
+
+h2{
+  font-size:clamp(38px,5vw,64px);
+  font-weight:850;
+}
+
+h3{
+  font-size:clamp(24px,3vw,34px);
+  font-weight:800;
+}
+
+h4{
+  font-size:20px;
+  font-weight:700;
+}
+
+
+/* =============================================================================
+   PARAGRAPHS
+============================================================================= */
+
+p{
+  margin:0 0 16px;
+}
+
+.text-large{
+  font-size:22px;
+  line-height:1.7;
+
+  color:rgba(235,241,255,.88);
+}
+
+.text-medium{
+  font-size:18px;
+  line-height:1.7;
+
+  color:rgba(228,236,250,.84);
+}
+
+.text-small{
+  font-size:15px;
+  line-height:1.65;
+
+  color:rgba(215,225,242,.74);
+}
+
+
+/* =============================================================================
+   EYEBROWS / LABELS
+============================================================================= */
+
+.eyebrow,
+.ccc-eyebrow{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+
+  margin-bottom:18px;
+
+  color:#ffb15c;
+
+  font-size:13px;
+  font-weight:800;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+}
+
+.eyebrow::before,
+.ccc-eyebrow::before{
+  content:"";
+
+  width:32px;
+  height:1px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      #ff8a1f
+    );
+}
+
+
+/* =============================================================================
+   CONTENT WIDTHS
+============================================================================= */
+
+.content-width{
+  width:min(760px,100%);
+}
+
+.content-width--narrow{
+  width:min(620px,100%);
+}
+
+.content-width--wide{
+  width:min(980px,100%);
+}
+
+
+/* =============================================================================
+   TEXT ALIGNMENT HELPERS
+============================================================================= */
+
+.text-center{
+  text-align:center;
+}
+
+.text-left{
+  text-align:left;
+}
+
+.text-right{
+  text-align:right;
+}
+
+
+/* =============================================================================
+   SECTION COPY
+============================================================================= */
+
+.section-copy{
+  display:grid;
+  gap:18px;
+}
+
+.section-copy--center{
+  justify-items:center;
+  text-align:center;
+}
+
+.section-copy p:last-child{
+  margin-bottom:0;
+}
+
+
+/* =============================================================================
+   CINEMATIC TEXT BLOCKS
+============================================================================= */
+
+.cinematic-copy{
+  width:min(860px,100%);
+
+  margin:0 auto;
+
+  text-align:center;
+}
+
+.cinematic-copy p{
+  font-size:clamp(18px,2vw,24px);
+
+  line-height:1.75;
+
+  color:rgba(230,236,248,.82);
+}
+
+
+/* =============================================================================
+   RESPONSIVE TYPOGRAPHY
+============================================================================= */
+
+@media (max-width:980px){
+
+  h1{
+    font-size:clamp(48px,8vw,82px);
+  }
+
+}
+
+@media (max-width:760px){
+
+  h1{
+    font-size:clamp(40px,12vw,64px);
+    line-height:.96;
+  }
+
+  h2{
+    font-size:clamp(34px,9vw,52px);
+    line-height:1;
+  }
+
+  h3{
+    font-size:28px;
+  }
+
+  .text-large{
+    font-size:20px;
+  }
+
+  .text-medium{
+    font-size:17px;
+  }
+
+  .cinematic-copy p{
+    font-size:18px;
+    line-height:1.7;
+  }
+
+}
+
+@media (max-width:560px){
+
+  h1{
+    max-width:9ch;
+  }
+
+}
+/* =============================================================================
+   06 — HERO SYSTEM
+   Purpose:
+   - Homepage hero
+   - Hero layouts
+   - Hero visual system
+   - Trust indicators
+   - CTA presentation
+============================================================================= */
+
+
+/* =============================================================================
+   HERO ROOT
+============================================================================= */
+
+.hero{
+  position:relative;
+
+  overflow:hidden;
+
+  padding:
+    clamp(72px,10vw,140px)
+    0
+    clamp(64px,8vw,120px);
+}
+
+
+/* =============================================================================
+   HERO BACKGROUND GLOW
+============================================================================= */
+
+.hero::before{
+  content:"";
+
+  position:absolute;
+  inset:-10%;
+
+  pointer-events:none;
+
+  background:
+    radial-gradient(
+      900px 500px at 18% 10%,
+      rgba(76,141,255,.18),
+      transparent 65%
+    ),
+
+    radial-gradient(
+      700px 500px at 85% 0%,
+      rgba(255,138,31,.14),
+      transparent 60%
+    );
+
+  opacity:.95;
+}
+
+
+/* =============================================================================
+   HERO INNER
+============================================================================= */
+
+.hero__inner{
+  position:relative;
+  z-index:2;
+
+  display:grid;
+  grid-template-columns:1.05fr .95fr;
+  gap:56px;
+  align-items:center;
+}
+
+
+/* =============================================================================
+   HERO COPY
+============================================================================= */
+
+.hero__copy{
+  display:grid;
+  gap:24px;
+}
+
+.hero__copy p{
+  max-width:720px;
+
+  font-size:22px;
+  line-height:1.75;
+
+  color:rgba(231,238,250,.84);
+}
+
+
+/* =============================================================================
+   HERO VISUAL
+============================================================================= */
+
+.hero__visual{
+  position:relative;
+}
+
+.hero__visual img{
+  width:100%;
+  height:auto;
+
+  border-radius:32px;
+
+  box-shadow:
+    0 24px 80px rgba(0,0,0,.42),
+    0 0 0 1px rgba(255,255,255,.06);
+}
+
+
+/* =============================================================================
+   HERO CTA ROW
+============================================================================= */
+
+.hero__cta{
+  display:flex;
+  flex-wrap:wrap;
+  gap:14px;
+
+  margin-top:10px;
+}
+
+
+/* =============================================================================
+   TRUST BAR
+============================================================================= */
+
+.hero__trust{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+
+  margin-top:18px;
+}
+
+.hero__trust-item{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+
+  min-height:44px;
+
+  padding:0 16px;
+
+  border-radius:999px;
+
+  border:1px solid rgba(255,255,255,.08);
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,.06),
+      rgba(255,255,255,.025)
+    );
+
+  color:#dbe6fb;
+
+  font-size:14px;
+  font-weight:600;
+}
+
+
+/* =============================================================================
+   HERO METRICS
+============================================================================= */
+
+.hero__metrics{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:16px;
+
+  margin-top:18px;
+}
+
+.hero__metric{
+  padding:18px;
+
+  border-radius:24px;
+
+  border:1px solid rgba(255,255,255,.08);
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,.06),
+      rgba(255,255,255,.03)
+    );
+
+  box-shadow:var(--shadow2);
+}
+
+.hero__metric-value{
+  font-size:34px;
+  font-weight:900;
+  line-height:1;
+
+  color:#fff;
+}
+
+.hero__metric-label{
+  margin-top:8px;
+
+  color:rgba(220,230,246,.74);
+
+  font-size:14px;
+  line-height:1.45;
+}
+
+
+/* =============================================================================
+   HERO GLASS PANEL
+============================================================================= */
+
+.hero__glass{
+  position:relative;
+
+  padding:26px;
+
+  border-radius:30px;
+
+  border:1px solid rgba(255,255,255,.08);
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,.08),
+      rgba(255,255,255,.03)
+    );
+
+  backdrop-filter:blur(14px);
+
+  box-shadow:var(--shadow);
+}
+
+
+/* =============================================================================
+   RESPONSIVE HERO
+============================================================================= */
+
+@media (max-width:1100px){
+
+  .hero__inner{
+    grid-template-columns:1fr;
+    gap:46px;
+  }
+
+  .hero__copy{
+    text-align:center;
+    justify-items:center;
+  }
+
+  .hero__copy p{
+    max-width:760px;
+  }
+
+  .hero__cta{
+    justify-content:center;
+  }
+
+  .hero__trust{
+    justify-content:center;
+  }
+
+}
+
+@media (max-width:760px){
+
+  .hero{
+    padding:
+      72px
+      0
+      64px;
+  }
+
+  .hero__copy{
+    gap:20px;
+  }
+
+  .hero__copy p{
+    font-size:18px;
+    line-height:1.7;
+  }
+
+  .hero__metrics{
+    grid-template-columns:1fr;
+  }
+
+  .hero__glass{
+    padding:20px;
+    border-radius:24px;
+  }
+
+}
+
+@media (max-width:560px){
+
+  .hero__trust{
+    gap:10px;
+  }
+
+  .hero__trust-item{
+    width:100%;
+    justify-content:center;
+  }
+
+}
+/* =============================================================================
+   07 — SHARED COMPONENT SYSTEM
+   Purpose:
+   - Cards
+   - Pills
+   - Badges
+   - Glass panels
+   - Shared UI surfaces
+============================================================================= */
+
+
+/* =============================================================================
+   BASE CARD
+============================================================================= */
+
+.card{
+  position:relative;
+
+  padding:24px;
+
+  border-radius:28px;
+
+  border:1px solid rgba(255,255,255,.08);
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,.06),
+      rgba(255,255,255,.03)
+    );
+
+  box-shadow:var(--shadow2);
+
+  overflow:hidden;
+}
+
+
+/* =============================================================================
+   CARD HOVER
+============================================================================= */
+
+.card:hover{
+  border-color:rgba(255,255,255,.14);
+
+  transform:translateY(-2px);
+
+  transition:
+    transform .18s ease,
+    border-color .18s ease,
+    background .18s ease;
+}
+
+
+/* =============================================================================
+   GLASS CARD
+============================================================================= */
+
+.card--glass{
+  backdrop-filter:blur(14px);
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,.08),
+      rgba(255,255,255,.04)
+    );
+}
+
+
+/* =============================================================================
+   ELITE CARD
+============================================================================= */
+
+.card--elite{
+
+  background:
+    radial-gradient(
+      120% 140% at 100% 0%,
+      rgba(255,138,31,.10),
+      transparent 45%
+    ),
+
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,.08),
+      rgba(255,255,255,.03)
+    );
+}
+
+
+/* =============================================================================
+   CARD CONTENT
+============================================================================= */
+
+.card h3{
+  margin-bottom:10px;
+}
+
+.card p:last-child{
+  margin-bottom:0;
+}
+
+
+/* =============================================================================
+   MINI CARD
+============================================================================= */
+
+.mini-card{
+  padding:16px 18px;
+
+  border-radius:20px;
+
+  border:1px solid rgba(255,255,255,.08);
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,.05),
+      rgba(255,255,255,.025)
+    );
+}
+
+
+/* =============================================================================
+   PILLS
+============================================================================= */
+
+.pill{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+
+  min-height:36px;
+
+  padding:0 14px;
+
+  border-radius:999px;
+
+  border:1px solid rgba(255,255,255,.08);
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,.06),
+      rgba(255,255,255,.025)
+    );
+
+  color:#dbe5f7;
+
+  font-size:13px;
+  font-weight:700;
+  letter-spacing:.02em;
+}
+
+
+/* =============================================================================
+   STATUS PILLS
+============================================================================= */
+
+.pill--green{
+  border-color:rgba(53,208,127,.22);
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(53,208,127,.18),
+      rgba(53,208,127,.08)
+    );
+
+  color:#8cf0bb;
+}
+
+.pill--orange{
+  border-color:rgba(255,179,71,.24);
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,179,71,.18),
+      rgba(255,179,71,.08)
+    );
+
+  color:#ffd08d;
+}
+
+.pill--red{
+  border-color:rgba(255,107,107,.24);
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,107,107,.18),
+      rgba(255,107,107,.08)
+    );
+
+  color:#ffb0b0;
+}
+
+
+/* =============================================================================
+   BADGES
+============================================================================= */
+
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+
+  padding:8px 12px;
+
+  border-radius:14px;
+
+  border:1px solid rgba(255,255,255,.08);
+
+  background:rgba(255,255,255,.04);
+
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+}
+
+
+/* =============================================================================
+   GLASS PANELS
+============================================================================= */
+
+.glass{
+  position:relative;
+
+  border-radius:30px;
+
+  border:1px solid rgba(255,255,255,.08);
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,.08),
+      rgba(255,255,255,.03)
+    );
+
+  backdrop-filter:blur(16px);
+
+  box-shadow:var(--shadow);
+}
+
+
+/* =============================================================================
+   SURFACE STACKS
+============================================================================= */
+
+.surface-stack{
+  display:grid;
+  gap:18px;
+}
+
+.surface-stack--tight{
+  gap:12px;
+}
+
+
+/* =============================================================================
+   ICON WRAPPERS
+============================================================================= */
+
+.icon-wrap{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+
+  width:52px;
+  height:52px;
+
+  border-radius:18px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255,138,31,.22),
+      rgba(255,138,31,.10)
+    );
+
+  color:#ffb15c;
+}
+
+
+/* =============================================================================
+   RESPONSIVE COMPONENTS
+============================================================================= */
+
+@media (max-width:760px){
+
+  .card{
+    padding:20px;
+    border-radius:24px;
+  }
+
+  .glass{
+    border-radius:24px;
+  }
+
+}
+/* =============================================================================
+   08 — DASHBOARD SYSTEM
+   Purpose:
+   - Dashboard shell
+   - Readiness cards
+   - Signal rows
+   - Trend charts
+   - Logs
+   - Recovery drivers
+============================================================================= */
+
+
+/* =============================================================================
+   DASHBOARD SHELL
+============================================================================= */
+
+.dashboard-shell{
+  display:grid;
+  gap:24px;
+}
+
+.dashboard-title{
+  margin:12px 0 10px;
+
+  font-size:clamp(38px,5vw,56px);
+  line-height:1.04;
+  letter-spacing:-0.03em;
+}
+
+.dashboard-lead{
+  max-width:680px;
+}
+
+
+/* =============================================================================
+   DASHBOARD HERO / GRID
+============================================================================= */
+
+.dashboard-hero{
+  display:grid;
+  grid-template-columns:1.05fr .95fr;
+  gap:24px;
+  align-items:stretch;
+}
+
+.dashboard-grid{
+  display:grid;
+  gap:18px;
+}
+
+.dashboard-grid--2{
+  grid-template-columns:1fr 1fr;
+}
+
+.dashboard-grid--4{
+  grid-template-columns:1.4fr 1fr 1fr 1fr;
+}
+
+.dashboard-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+
+  margin-top:18px;
+}
+
+
+/* =============================================================================
+   STAT CARDS
+============================================================================= */
+
+.stat-card{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+
+  min-height:160px;
+}
+
+.stat-card--big{
+  min-height:180px;
+}
+
+.stat-card__value{
+  margin-top:10px;
+
+  font-size:42px;
+  font-weight:900;
+  line-height:1;
+  letter-spacing:-0.03em;
+}
+
+.stat-card__value--green{
+  color:var(--positive);
+}
+
+.stat-card__sub{
+  margin-top:10px;
+
+  color:var(--muted);
+
+  font-size:16px;
+}
+
+
+/* =============================================================================
+   DASHBOARD MODE CARD
+============================================================================= */
+
+.dashboard-mode{
+  height:100%;
+
+  background:
+    radial-gradient(
+      500px 180px at 20% 0%,
+      rgba(94,162,255,.14),
+      transparent 60%
+    ),
+
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,.06),
+      rgba(255,255,255,.025)
+    );
+}
+
+.dashboard-mode__top{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:16px;
+}
+
+.dashboard-mode h2{
+  margin:6px 0 8px;
+
+  font-size:28px;
+  line-height:1.1;
+}
+
+.dashboard-mode__img{
+  width:120px;
+  height:auto;
+
+  object-fit:contain;
+
+  filter:drop-shadow(0 10px 24px rgba(0,0,0,.28));
+}
+
+
+/* =============================================================================
+   READINESS SCORE CARD
+============================================================================= */
+
+.dashboard-score-card{
+  min-height:100%;
+
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+
+  background:
+    radial-gradient(
+      500px 180px at 20% 0%,
+      rgba(94,162,255,.14),
+      transparent 60%
+    ),
+
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,.06),
+      rgba(255,255,255,.025)
+    );
+}
+
+.dashboard-score-wrap{
+  display:grid;
+  grid-template-columns:160px 1fr;
+  gap:22px;
+  align-items:center;
+
+  margin-top:14px;
+}
+
+.dashboard-score-meta h3{
+  margin:0 0 8px;
+
+  font-size:28px;
+  line-height:1.08;
+}
+
+.dashboard-score-tags{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+
+  margin-top:12px;
+}
+
+
+/* =============================================================================
+   SIGNAL ROWS
+============================================================================= */
+
+.signal-list{
+  display:grid;
+  gap:16px;
+}
+
+.signal-row{
+  display:grid;
+  grid-template-columns:110px 1fr 44px;
+  gap:14px;
+  align-items:center;
+}
+
+.signal-row__label{
+  font-weight:800;
+}
+
+.signal-row__bar{
+  height:12px;
+
+  border-radius:999px;
+
+  background:rgba(255,255,255,.08);
+
+  overflow:hidden;
+
+  border:1px solid rgba(255,255,255,.06);
+}
+
+.signal-row__bar span{
+  display:block;
+
+  height:100%;
+
+  border-radius:999px;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(94,162,255,.96),
+      rgba(124,140,255,.88)
+    );
+}
+
+.signal-row__value{
+  text-align:right;
+
+  color:var(--muted);
+
+  font-weight:800;
+}
+
+
+/* =============================================================================
+   RECOVERY DRIVERS
+============================================================================= */
+
+.dashboard-driver-card .driver-grid{
+  display:grid;
+  gap:14px;
+
+  margin-top:10px;
+}
+
+.driver{
+  padding:18px;
+
+  border-radius:18px;
+
+  border:1px solid rgba(255,255,255,.08);
+
+  background:rgba(255,255,255,.03);
+}
+
+.driver__label{
+  margin-bottom:6px;
+
+  color:var(--muted);
+
+  font-size:13px;
+  font-weight:800;
+  letter-spacing:.02em;
+  text-transform:uppercase;
+}
+
+.driver__title{
+  margin-bottom:8px;
+
+  font-size:22px;
+  font-weight:900;
+  line-height:1.1;
+}
+
+.driver p{
+  margin:0;
+
+  color:var(--muted);
+
+  line-height:1.6;
+}
+
+.driver--good{
+  border-color:rgba(53,208,127,.20);
+  box-shadow:inset 0 0 0 1px rgba(53,208,127,.03);
+}
+
+.driver--warn{
+  border-color:rgba(255,179,71,.20);
+  box-shadow:inset 0 0 0 1px rgba(255,179,71,.03);
+}
+
+
+/* =============================================================================
+   INSIGHT BOX
+============================================================================= */
+
+.insight-box{
+  display:grid;
+  grid-template-columns:140px 1fr;
+  gap:18px;
+  align-items:center;
+}
+
+.insight-box__img{
+  width:140px;
+  height:auto;
+
+  object-fit:contain;
+
+  filter:drop-shadow(0 12px 26px rgba(0,0,0,.28));
+}
+
+
+/* =============================================================================
+   TREND CHART
+============================================================================= */
+
+.trend-chart{
+  margin-top:10px;
+}
+
+.trend-bars{
+  display:flex;
+  align-items:flex-end;
+  gap:10px;
+
+  height:180px;
+}
+
+.bar{
+  flex:1;
+
+  border-radius:10px 10px 4px 4px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #5ea2ff,
+      #7c8cff
+    );
+
+  box-shadow:0 10px 22px rgba(0,0,0,.18);
+}
+
+.trend-days{
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  gap:10px;
+
+  margin-top:12px;
+
+  color:var(--muted);
+
+  font-size:13px;
+  text-align:center;
+}
+
+
+/* =============================================================================
+   LOG TABLE
+============================================================================= */
+
+.logs-table{
+  display:grid;
+  gap:10px;
+}
+
+.logs-row{
+  display:grid;
+  grid-template-columns:.7fr .8fr .8fr .8fr 2fr;
+  gap:14px;
+  align-items:center;
+
+  padding:14px 16px;
+
+  border-radius:16px;
+
+  border:1px solid rgba(255,255,255,.08);
+
+  background:rgba(255,255,255,.03);
+}
+
+.logs-row--head{
+  padding:0 4px 8px;
+
+  color:var(--muted);
+
+  background:transparent;
+
+  border:none;
+}
+
+
+/* =============================================================================
+   DASHBOARD RESPONSIVE
+============================================================================= */
+
+@media (max-width:1100px){
+
+  .dashboard-hero,
+  .dashboard-grid--2{
+    grid-template-columns:1fr;
+  }
+
+  .dashboard-grid--4{
+    grid-template-columns:1fr 1fr;
+  }
+
+}
+
+@media (max-width:980px){
+
+  .dashboard-score-wrap{
+    grid-template-columns:1fr;
+    justify-items:start;
+  }
+
+  .insight-box{
+    grid-template-columns:1fr;
+  }
+
+  .logs-row{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .logs-row--head{
+    display:none;
+  }
+
+}
+
+@media (max-width:760px){
+
+  .dashboard-grid--4{
+    grid-template-columns:1fr;
+  }
+
+  .signal-row{
+    grid-template-columns:90px 1fr 40px;
+    gap:10px;
+  }
+
+}
+/* =============================================================================
+   09 — ONBOARDING EXPERIENCE
+   Purpose:
+   - Guided onboarding walkthrough
+   - Progress tracking
+   - Cinematic onboarding sections
+   - Step actions
+   - Learning blocks
+   - Mobile-first onboarding UX
+============================================================================= */
+
+
+/* =============================================================================
+   ONBOARDING ROOT
+============================================================================= */
+
+.ccc-onboarding{
+  display:grid;
+  gap:56px;
+
+  padding:
+    clamp(40px,6vw,72px)
+    0
+    120px;
+}
+
+.ccc-onboarding--centered{
+  justify-items:center;
+}
+
+
+/* =============================================================================
+   ONBOARDING PROGRESS
+============================================================================= */
+
+.ccc-onboarding-progress{
+  position:sticky;
+  top:78px;
+  z-index:40;
+
+  width:min(980px,92vw);
+
+  display:grid;
+  gap:12px;
+
+  padding:16px 18px;
+
+  border-radius:22px;
+
+  border:1px solid rgba(255,255,255,.08);
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(9,16,31,.88),
+      rgba(7,12,24,.82)
+    );
+
+  backdrop-filter:blur(14px);
+
+  box-shadow:0 18px 40px rgba(0,0,0,.22);
+}
+
+#cccStepCounter{
+  color:#f4f7ff;
+
+  font-size:15px;
+  font-weight:800;
+  letter-spacing:.02em;
+}
+
+.ccc-progress-track{
+  position:relative;
+
+  width:100%;
+  height:10px;
+
+  overflow:hidden;
+
+  border-radius:999px;
+
+  background:rgba(255,255,255,.08);
+}
+
+#cccStepProgress{
+  display:block;
+
+  width:6%;
+  height:100%;
+
+  border-radius:999px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #ff8a1f,
+      #ffb15c
+    );
+
+  transition:
+    width .35s ease;
+}
+
+
+/* =============================================================================
+   ONBOARDING STEP ROOT
+============================================================================= */
+
+.ccc-onboard-step{
+  width:min(1120px,92vw);
+
+  display:grid;
+  gap:30px;
+}
+
+.ccc-onboard-step--welcome{
+  padding:
+    .5rem
+    1.25rem
+    2rem;
+
+  justify-items:center;
+  text-align:center;
+}
+
+.ccc-onboard-step--cinematic{
+  padding:
+    3.5rem
+    1.25rem;
+}
+
+
+/* =============================================================================
+   STEP COPY
+============================================================================= */
+
+.ccc-onboard-copy{
+  width:min(860px,100%);
+}
+
+.ccc-onboard-copy--center{
+  margin:0 auto;
+  text-align:center;
+}
+
+.ccc-onboard-copy h1,
+.ccc-onboard-copy h2{
+  margin-bottom:16px;
+}
+
+.ccc-step-description{
+  max-width:760px;
+
+  margin:0 auto;
+
+  color:rgba(230,236,248,.82);
+
+  font-size:21px;
+  line-height:1.75;
+}
+
+
+/* =============================================================================
+   STEP IMAGE SYSTEM
+============================================================================= */
+
+.ccc-step-image{
+  width:min(980px,100%);
+  margin:0 auto;
+}
+
+.ccc-step-image img{
+  width:100%;
+  height:auto;
+
+  border-radius:34px;
+
+  border:1px solid rgba(255,255,255,.06);
+
+  box-shadow:
+    0 28px 80px rgba(0,0,0,.38),
+    0 0 0 1px rgba(255,255,255,.03);
+}
+
+.ccc-step-image--cinematic img{
+  background:#08101f;
+}
+
+
+/* =============================================================================
+   ONBOARDING FLOW CHIPS
+============================================================================= */
+
+.ccc-onboarding-flow{
+  width:min(920px,100%);
+
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:12px;
+
+  margin:8px auto 0;
+}
+
+.ccc-onboarding-flow span{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+
+  min-height:38px;
+
+  padding:0 16px;
+
+  border-radius:999px;
+
+  border:1px solid rgba(255,255,255,.08);
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,.06),
+      rgba(255,255,255,.025)
+    );
+
+  color:#dbe5f7;
+
+  font-size:13px;
+  font-weight:700;
+
+  transition:
+    background .18s ease,
+    border-color .18s ease,
+    transform .18s ease;
+}
+
+.ccc-onboarding-flow span.is-active{
+
+  border-color:rgba(255,138,31,.34);
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,138,31,.24),
+      rgba(255,138,31,.10)
+    );
+
+  color:#fff;
+
+  transform:translateY(-1px);
+}
+
+
+/* =============================================================================
+   STEP ACTIONS
+============================================================================= */
+
+.ccc-step-actions{
+  width:min(760px,100%);
+
+  margin:0 auto;
+
+  display:grid;
+  gap:14px;
+}
+
+.ccc-step-action{
+  display:flex;
+  align-items:center;
+  gap:16px;
+
+  padding:18px 20px;
+
+  border-radius:22px;
+
+  border:1px solid rgba(255,255,255,.08);
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,.06),
+      rgba(255,255,255,.025)
+    );
+
+  color:#d9e3f2;
+
+  font-size:17px;
+  line-height:1.55;
+}
+
+.ccc-step-action span{
+  width:36px;
+  height:36px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  flex-shrink:0;
+
+  border-radius:12px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ff8a1f,
+      #ffb15c
+    );
+
+  color:#120a02;
+
+  font-weight:900;
+}
+
+
+/* =============================================================================
+   LEARNING BLOCK
+============================================================================= */
+
+.ccc-step-learn{
+  width:min(760px,100%);
+
+  margin:0 auto;
+
+  padding:28px;
+
+  border-radius:28px;
+
+  border:1px solid rgba(255,255,255,.08);
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,.05),
+      rgba(255,255,255,.025)
+    );
+}
+
+.ccc-step-learn h3{
+  margin-bottom:16px;
+
+  font-size:24px;
+}
+
+.ccc-step-learn ul{
+  margin:0;
+  padding-left:18px;
+
+  display:grid;
+  gap:10px;
+
+  color:rgba(225,233,248,.84);
+
+  line-height:1.65;
+}
+
+
+/* =============================================================================
+   NEXT STEP NAVIGATION
+============================================================================= */
+
+.ccc-step-nav{
+  width:min(760px,100%);
+  margin:0 auto;
+}
+
+.ccc-step-next{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
+
+  padding:22px 24px;
+
+  border-radius:28px;
+
+  border:1px solid rgba(255,255,255,.08);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255,138,31,.14),
+      rgba(94,162,255,.08)
+    );
+
+  transition:
+    transform .18s ease,
+    border-color .18s ease,
+    background .18s ease;
+}
+
+.ccc-step-next:hover{
+  transform:translateY(-2px);
+
+  border-color:rgba(255,138,31,.24);
+}
+
+.ccc-step-next-copy{
+  display:grid;
+  gap:6px;
+}
+
+.ccc-step-next-label{
+  color:#ffb15c;
+
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:.16em;
+}
+
+.ccc-step-next-title{
+  font-size:22px;
+  font-weight:800;
+  line-height:1.15;
+}
+
+.ccc-step-next-arrow{
+  font-size:28px;
+  font-weight:900;
+
+  color:#ffb15c;
+}
+
+
+/* =============================================================================
+   SCROLL REVEAL
+============================================================================= */
+
+.ccc-onboard-step{
+  opacity:.4;
+  transform:translateY(24px);
+
+  transition:
+    opacity .5s ease,
+    transform .5s ease;
+}
+
+.ccc-onboard-step.is-visible{
+  opacity:1;
+  transform:none;
+}
+
+
+/* =============================================================================
+   RESPONSIVE ONBOARDING
+============================================================================= */
+
+@media (max-width:980px){
+
+  .ccc-step-description{
+    font-size:19px;
+  }
+
+}
+
+@media (max-width:760px){
+
+  .ccc-onboarding{
+    gap:56px;
+  }
+
+  .ccc-onboarding-progress{
+    top:72px;
+
+    padding:14px 14px;
+  }
+
+  .ccc-onboard-step--cinematic{
+    padding:
+      2rem
+      1rem;
+  }
+
+  .ccc-step-description{
+    font-size:18px;
+    line-height:1.7;
+  }
+
+  .ccc-step-image img{
+    border-radius:24px;
+  }
+
+  .ccc-step-action{
+    align-items:flex-start;
+
+    padding:16px;
+
+    font-size:16px;
+  }
+
+  .ccc-step-learn{
+    padding:22px;
+    border-radius:24px;
+  }
+
+  .ccc-step-next{
+    padding:18px 18px;
+    border-radius:24px;
+  }
+
+  .ccc-step-next-title{
+    font-size:19px;
+  }
+
+}
+
+@media (max-width:560px){
+
+  .ccc-onboard-copy h1{
+    max-width:9ch;
+  }
+
+  .ccc-step-next{
+    align-items:flex-start;
+  }
+
+}
+/* =============================================================================
+   10 — FORMS / AUTH SYSTEM
+   Purpose:
+   - Login forms
+   - Beta signup forms
+   - Input styling
+   - Form layouts
+   - Embedded forms
+============================================================================= */
+
+
+/* =============================================================================
+   FORM SHELL
+============================================================================= */
+
+.form-shell{
+  width:min(560px,100%);
+
+  margin:0 auto;
+
+  padding:32px;
+
+  border-radius:32px;
+
+  border:1px solid rgba(255,255,255,.08);
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,.07),
+      rgba(255,255,255,.03)
+    );
+
+  backdrop-filter:blur(16px);
+
+  box-shadow:var(--shadow);
+}
+
+
+/* =============================================================================
+   FORM HEADERS
+============================================================================= */
+
+.form-shell__head{
+  margin-bottom:28px;
+}
+
+.form-shell__head h1,
+.form-shell__head h2{
+  margin-bottom:10px;
+}
+
+.form-shell__head p{
+  color:rgba(228,236,248,.78);
+}
+
+
+/* =============================================================================
+   FORM LAYOUT
+============================================================================= */
+
+.form-grid{
+  display:grid;
+  gap:18px;
+}
+
+.form-row{
+  display:grid;
+  gap:10px;
+}
+
+
+/* =============================================================================
+   LABELS
+============================================================================= */
+
+label{
+  color:#eef4ff;
+
+  font-size:14px;
+  font-weight:700;
+  letter-spacing:.02em;
+}
+
+
+/* =============================================================================
+   INPUTS
+============================================================================= */
+
+input,
+select,
+textarea{
+
+  width:100%;
+
+  min-height:56px;
+
+  padding:0 18px;
+
+  border-radius:18px;
+
+  border:1px solid rgba(255,255,255,.10);
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,.06),
+      rgba(255,255,255,.03)
+    );
+
+  color:#f4f7ff;
+
+  outline:none;
+
+  transition:
+    border-color .18s ease,
+    background .18s ease,
+    box-shadow .18s ease;
+}
+
+textarea{
+  min-height:140px;
+
+  padding:16px 18px;
+
+  resize:vertical;
+}
+
+input::placeholder,
+textarea::placeholder{
+  color:rgba(220,230,246,.46);
+}
+
+
+/* =============================================================================
+   INPUT STATES
+============================================================================= */
+
+input:focus,
+select:focus,
+textarea:focus{
+
+  border-color:rgba(255,138,31,.34);
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,.08),
+      rgba(255,255,255,.04)
+    );
+
+  box-shadow:
+    0 0 0 4px rgba(255,138,31,.10);
+}
+
+
+/* =============================================================================
+   CHECKBOX / TERMS
+============================================================================= */
+
+.form-check{
+  display:flex;
+  align-items:flex-start;
+  gap:12px;
+
+  color:rgba(224,233,247,.74);
+
+  font-size:14px;
+  line-height:1.6;
+}
+
+.form-check input{
+  width:18px;
+  height:18px;
+
+  min-height:auto;
+
+  margin-top:3px;
+}
+
+
+/* =============================================================================
+   FORM ACTIONS
+============================================================================= */
+
+.form-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+
+  margin-top:10px;
+}
+
+
+/* =============================================================================
+   FORM HELP TEXT
+============================================================================= */
+
+.form-help{
+  color:rgba(210,222,240,.64);
+
+  font-size:13px;
+  line-height:1.55;
+}
+
+
+/* =============================================================================
+   EMBEDDED KIT / CONVERTKIT FORMS
+============================================================================= */
+
+.form-embed{
+  width:100%;
+}
+
+.form-embed iframe{
+  width:100%;
+
+  border:none;
+  border-radius:24px;
+
+  background:#fff;
+}
+
+
+/* =============================================================================
+   AUTH SPLIT LAYOUT
+============================================================================= */
+
+.auth-layout{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:36px;
+  align-items:center;
+}
+
+.auth-visual img{
+  width:100%;
+  height:auto;
+
+  border-radius:32px;
+
+  box-shadow:var(--shadow);
+}
+
+
+/* =============================================================================
+   RESPONSIVE FORMS
+============================================================================= */
+
+@media (max-width:980px){
+
+  .auth-layout{
+    grid-template-columns:1fr;
+  }
+
+}
+
+@media (max-width:760px){
+
+  .form-shell{
+    padding:24px;
+    border-radius:26px;
+  }
+
+  .form-actions{
+    flex-direction:column;
+  }
+
+}
+/* =============================================================================
+   11 — CTA / FOOTER SYSTEM
+   Purpose:
+   - Shared CTA sections
+   - Footer layout
+   - Footer navigation
+   - Closing conversion sections
+============================================================================= */
+
+
+/* =============================================================================
+   CTA SECTION
+============================================================================= */
+
+.cta-section{
+  position:relative;
+
+  overflow:hidden;
+
+  padding:
+    clamp(72px,8vw,120px)
+    0;
+}
+
+.cta-section::before{
+  content:"";
+
+  position:absolute;
+  inset:-10%;
+
+  pointer-events:none;
+
+  background:
+    radial-gradient(
+      800px 320px at 15% 0%,
+      rgba(76,141,255,.16),
+      transparent 60%
+    ),
+
+    radial-gradient(
+      700px 260px at 85% 0%,
+      rgba(255,138,31,.14),
+      transparent 60%
+    );
+}
+
+
+/* =============================================================================
+   CTA PANEL
+============================================================================= */
+
+.cta-panel{
+  position:relative;
+  z-index:2;
+
+  padding:
+    clamp(34px,5vw,56px);
+
+  border-radius:36px;
+
+  border:1px solid rgba(255,255,255,.08);
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,.08),
+      rgba(255,255,255,.03)
+    );
+
+  backdrop-filter:blur(16px);
+
+  box-shadow:var(--shadow);
+
+  text-align:center;
+}
+
+.cta-panel h2{
+  margin-bottom:16px;
+}
+
+.cta-panel p{
+  max-width:760px;
+
+  margin:
+    0
+    auto
+    24px;
+
+  color:rgba(230,236,248,.82);
+
+  font-size:20px;
+  line-height:1.75;
+}
+
+
+/* =============================================================================
+   CTA BUTTON ROW
+============================================================================= */
+
+.cta-actions{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:14px;
+}
+
+
+/* =============================================================================
+   FOOTER
+============================================================================= */
+
+.footer{
+  position:relative;
+
+  padding:
+    72px
+    0
+    48px;
+
+  border-top:1px solid rgba(255,255,255,.08);
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,.02),
+      rgba(255,255,255,.01)
+    );
+}
+
+
+/* =============================================================================
+   FOOTER GRID
+============================================================================= */
+
+.footer__grid{
+  display:grid;
+  grid-template-columns:1.2fr .8fr .8fr .8fr;
+  gap:28px;
+}
+
+.footer__brand{
+  display:grid;
+  gap:14px;
+}
+
+.footer__brand img{
+  width:52px;
+  height:52px;
+
+  object-fit:contain;
+}
+
+.footer__brand p{
+  max-width:420px;
+
+  color:rgba(218,228,244,.72);
+
+  line-height:1.7;
+}
+
+
+/* =============================================================================
+   FOOTER COLUMNS
+============================================================================= */
+
+.footer__col{
+  display:grid;
+  gap:12px;
+}
+
+.footer__title{
+  margin-bottom:6px;
+
+  color:#fff;
+
+  font-size:14px;
+  font-weight:800;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+}
+
+.footer__col a{
+  color:rgba(220,230,246,.72);
+
+  transition:color .18s ease;
+}
+
+.footer__col a:hover{
+  color:#fff;
+}
+
+
+/* =============================================================================
+   FOOTER BOTTOM
+============================================================================= */
+
+.footer__bottom{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
+
+  margin-top:42px;
+  padding-top:22px;
+
+  border-top:1px solid rgba(255,255,255,.08);
+
+  color:rgba(210,220,238,.58);
+
+  font-size:14px;
+}
+
+
+/* =============================================================================
+   RESPONSIVE CTA / FOOTER
+============================================================================= */
+
+@media (max-width:1100px){
+
+  .footer__grid{
+    grid-template-columns:1fr 1fr;
+  }
+
+}
+
+@media (max-width:760px){
+
+  .cta-panel{
+    border-radius:28px;
+    padding:28px 22px;
+  }
+
+  .cta-panel p{
+    font-size:18px;
+  }
+
+  .cta-actions{
+    flex-direction:column;
+    align-items:stretch;
+  }
+
+  .footer{
+    padding:
+      56px
+      0
+      42px;
+  }
+
+  .footer__grid{
+    grid-template-columns:1fr;
+  }
+
+  .footer__bottom{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+}
+/* =============================================================================
+   12 — RESPONSIVE UTILITIES
+   Purpose:
+   - Shared responsive helpers
+   - Visibility utilities
+   - Spacing helpers
+   - Final responsive overrides
+============================================================================= */
+
+
+/* =============================================================================
+   VISIBILITY UTILITIES
+============================================================================= */
+
+.hide{
+  display:none !important;
+}
+
+.show{
+  display:block !important;
+}
+
+.hide-mobile{
+  display:block;
+}
+
+.show-mobile{
+  display:none;
+}
+
+
+/* =============================================================================
+   ALIGNMENT UTILITIES
+============================================================================= */
+
+.center{
+  margin-left:auto;
+  margin-right:auto;
+}
+
+.text-center{
+  text-align:center;
+}
+
+.flex-center{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+
+/* =============================================================================
+   SPACING UTILITIES
+============================================================================= */
+
+.mt-0{ margin-top:0 !important; }
+.mt-1{ margin-top:8px !important; }
+.mt-2{ margin-top:16px !important; }
+.mt-3{ margin-top:24px !important; }
+.mt-4{ margin-top:32px !important; }
+
+.mb-0{ margin-bottom:0 !important; }
+.mb-1{ margin-bottom:8px !important; }
+.mb-2{ margin-bottom:16px !important; }
+.mb-3{ margin-bottom:24px !important; }
+.mb-4{ margin-bottom:32px !important; }
+
+
+/* =============================================================================
+   WIDTH UTILITIES
+============================================================================= */
+
+.w-full{
+  width:100%;
+}
+
+.max-w-sm{
+  max-width:480px;
+}
+
+.max-w-md{
+  max-width:680px;
+}
+
+.max-w-lg{
+  max-width:920px;
+}
+
+
+/* =============================================================================
+   RESPONSIVE UTILITIES
+============================================================================= */
+
+@media (max-width:760px){
+
+  .hide-mobile{
+    display:none !important;
+  }
+
+  .show-mobile{
+    display:block !important;
+  }
+
+  .mobile-center{
+    text-align:center;
+  }
+
+  .mobile-stack{
+    display:grid;
+    gap:14px;
+  }
+
+}
